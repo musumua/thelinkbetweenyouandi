@@ -37,9 +37,9 @@
 
 
         /* 糖果色主题 */
-        [data-candy="1"] { --primary: #FF8FB8; --primary-light: #4A2F66; --bg: #2B1D3A; --panel: rgba(48,30,66,0.98); --text-main: #FFF3FA; --text-sub: #E2B8D6; --border: rgba(255,160,210,0.24); --my-bubble: rgba(214,92,150,0.95); --other-bubble: rgba(74,50,102,0.95); --modal-bg: #382650; --input-bg: #FFF3FA; --input-text: #3A2150; --clock-bg1: #4A2F66; --clock-bg2: #2B1D3A; --clock-text: #FFE3F1; --wish-note-c1: #E8B4D4; --wish-note-c2: #D79FC2; --wish-note-text: #4A2A45; }
-        [data-candy="1"][data-theme="eye-care"] { --primary: #FF6FA5; --primary-light: #FFE8F2; --bg: #FFF2F8; --panel: rgba(255,246,250,0.98); --text-main: #4A2A45; --text-sub: #B0709E; --border: rgba(255,111,165,0.24); --my-bubble: rgba(255,190,214,0.96); --other-bubble: #FFFFFF; --modal-bg: #FFFBFD; --shadow-sm: 0 4px 12px rgba(255,111,165,0.10); --shadow-md: 0 6px 24px rgba(255,111,165,0.14); --shadow-lg: 0 14px 48px rgba(255,111,165,0.18); --input-bg: #FFFFFF; --input-text: #4A2A45; --clock-bg1: #FFFFFF; --clock-bg2: #FFD9EA; --clock-text: #A8326E; --wish-note-c1: #FFD1E6; --wish-note-c2: #FFBFDC; --wish-note-text: #6A2F57; }
-        [data-candy="1"][data-theme="eye-care"] .card-group-header { background:#FFE3EF; }
+        [data-candy="1"] { --primary: #7CC4F4; --primary-light: rgba(124,196,244,0.18); --bg: #1E3248; --panel: rgba(120,180,230,0.14); --text-main: #EAF6FF; --text-sub: #A9CCE6; --border: rgba(170,215,255,0.28); --my-bubble: rgba(110,185,240,0.55); --other-bubble: rgba(200,230,255,0.16); --modal-bg: rgba(38,66,94,0.92); --input-bg: rgba(240,249,255,0.95); --input-text: #24415C; --clock-bg1: rgba(140,200,245,0.28); --clock-bg2: rgba(30,50,72,0.9); --clock-text: #E6F4FF; --wish-note-c1: #B9DDF7; --wish-note-c2: #A3D0F0; --wish-note-text: #24415C; }
+        [data-candy="1"][data-theme="eye-care"] { --primary: #5BB4F0; --primary-light: rgba(91,180,240,0.14); --bg: #EAF6FF; --panel: rgba(255,255,255,0.62); --text-main: #2C4A66; --text-sub: #6F93B0; --border: rgba(91,180,240,0.26); --my-bubble: rgba(170,218,252,0.78); --other-bubble: rgba(255,255,255,0.82); --modal-bg: rgba(250,253,255,0.94); --shadow-sm: 0 4px 12px rgba(91,180,240,0.10); --shadow-md: 0 6px 24px rgba(91,180,240,0.14); --shadow-lg: 0 14px 48px rgba(91,180,240,0.18); --input-bg: rgba(255,255,255,0.9); --input-text: #2C4A66; --clock-bg1: rgba(255,255,255,0.7); --clock-bg2: rgba(190,225,250,0.7); --clock-text: #2F6FA0; --wish-note-c1: #D4ECFD; --wish-note-c2: #BFE1FA; --wish-note-text: #2C4A66; }
+        [data-candy="1"][data-theme="eye-care"] .card-group-header { background:rgba(200,230,252,0.6); }
 
         [data-theme="eye-care"] {
             --primary: #7C66A6;
@@ -157,6 +157,7 @@
         #chat { display: flex; flex-direction: column; gap: 4px; }
         .msg-group { display: flex; flex-direction: column; margin-bottom: 12px; }
         .msg { max-width: 75%; padding: 11px 14px; border-radius: 18px; font-size: 15px; line-height: 1.4; position: relative; word-break: break-all; box-shadow: var(--shadow-sm); }
+        .pro-star { position:absolute; top:-7px; left:-3px; font-size:11px; font-style:normal; color:var(--primary); line-height:1; text-shadow:0 0 4px rgba(0,0,0,.25); }
         .msg.my { background: var(--my-bubble); align-self: flex-end; color: var(--text-main); border-bottom-right-radius: 4px; }
         .msg.other { background: var(--other-bubble); align-self: flex-start; color: var(--text-main); border-bottom-left-radius: 4px; white-space: pre-wrap; }
         .system-msg { background: rgba(0,0,0,0.2); max-width: 90%; text-align: center; font-size: 11px; color: var(--text-sub); padding: 4px 12px; margin: 4px auto; align-self: center; border-radius: 10px; }
@@ -298,8 +299,10 @@
         @keyframes lkblink { 50% { background:var(--primary); } }
         .snake-lcd { background:#9DB06F; padding:10px; border-radius:10px; box-shadow:inset 0 0 0 3px #1B2A12, var(--shadow-md); }
         .snake-lcd canvas { display:block; image-rendering:pixelated; touch-action:none; }
-        .dpad { display:grid; grid-template-columns:repeat(3,64px); grid-template-rows:repeat(2,50px); gap:6px; justify-content:center; margin-top:2px; }
+        .date-reel { box-sizing:content-box; height:34px; overflow:hidden; border:1px solid var(--border); border-radius:10px; background:var(--panel); margin-bottom:6px; text-align:center; font-size:14px; color:var(--text-main); }
+        .dpad { display:grid; grid-template-columns:repeat(3,64px); grid-template-rows:repeat(3,44px); gap:6px; justify-content:center; margin-top:2px; }
         .dpad button.dp-s { grid-column:1; grid-row:1; padding:0; font-size:13px; }
+        .dpad .dp-u { grid-column:2; grid-row:1; } .dpad .dp-l { grid-column:1; grid-row:2; } .dpad .dp-r { grid-column:3; grid-row:2; } .dpad .dp-d { grid-column:2; grid-row:3; }
         .dpad button svg { pointer-events:none; }
         .dpad button { border-radius:14px; border:1px solid var(--border); background:var(--panel); color:var(--text-main); font-size:20px; touch-action:manipulation; }
         .dp-u { grid-column:2; grid-row:1; } .dp-l { grid-column:1; grid-row:2; } .dp-d { grid-column:2; grid-row:2; } .dp-r { grid-column:3; grid-row:2; }
@@ -341,6 +344,10 @@
         .lib-speak span { flex:1; }
         .speak-set { background:none; border:none; color:var(--text-sub); font-size:16px; padding:4px 0 4px 8px; cursor:pointer; }
         .game-speak { min-height:44px; }
+        .free-cats { display:flex; gap:6px; overflow-x:auto; padding:2px 0 10px; }
+        .free-cat { flex:0 0 auto; padding:6px 12px; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:13px; cursor:pointer; white-space:nowrap; }
+        .free-cat.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; } .free-cat i { font-style:normal; font-size:10px; margin-left:4px; opacity:.7; }
+        .free-tag { font-style:normal; font-size:10.5px; color:var(--text-sub); border:1px solid var(--border); border-radius:8px; padding:1px 6px; margin-left:6px; }
         .btn { padding: 9px 16px; background: var(--primary); color: #fff; border: none; border-radius: 14px; font-size: 14px; cursor: pointer; font-weight: 500; box-shadow: var(--shadow-sm); }
         .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
         .btn-danger { background: #CC5A5A; color: white; border: none; }
@@ -470,6 +477,12 @@
         .home-page-dots { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 6px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); position: relative; z-index: 1; }
 
         /* ==================== 🆕 首页第二页：日历 / 便利贴 / 心愿贴 ==================== */
+        .star-card { position:relative; height:150px; border-radius:16px; overflow:hidden; background:radial-gradient(ellipse at 50% 120%, #1c2a5a 0%, #0b1030 55%, #05071a 100%); box-shadow:0 4px 14px rgba(0,0,0,.28); flex-shrink:0; }
+        .star-card canvas { width:100%; height:100%; display:block; touch-action:none; }
+        .star-add { position:absolute; right:10px; bottom:9px; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12); color:#fff; border-radius:14px; padding:4px 11px; font-size:12px; backdrop-filter:blur(4px); }
+        .star-count { position:absolute; left:11px; bottom:10px; font-size:11px; color:rgba(255,255,255,.6); }
+        .star-tip { position:absolute; left:50%; top:10px; transform:translateX(-50%); max-width:84%; background:rgba(255,255,255,.16); color:#fff; font-size:13px; padding:5px 12px; border-radius:12px; opacity:0; transition:opacity .25s; pointer-events:none; backdrop-filter:blur(4px); text-align:center; }
+        .star-tip.on { opacity:1; }
         .home-page2-top { flex-shrink: 0; padding: 3.2vh 22px 1.6vh 22px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%; }
         .home-p2-calendar-card { padding: 12px 14px 10px 14px; border-radius: 16px; background: rgba(255,255,255,0.12); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.22); box-sizing: border-box; }
         [data-theme="eye-care"] .home-p2-calendar-card, [data-theme="light-green"] .home-p2-calendar-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.08); }
@@ -513,7 +526,7 @@
         .cal-cell-dot { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; }
         .special-tip-msg { align-self: center; max-width: 82%; margin: 10px auto; padding: 8px 16px; border-radius: 16px; background: linear-gradient(135deg, rgba(163,144,197,0.22), rgba(163,144,197,0.1)); border: 1px solid rgba(163,144,197,0.4); color: var(--text-main); font-size: 12.5px; text-align: center; }
         .home-p2-notes-row { display: flex; gap: 18px; height: 145px; box-sizing: border-box; width: 100%; margin-top: 6px; }
-        .home-p2-sticky-wrap { position: relative; width: calc(50% - 9px); flex: 0 0 auto; min-width: 0; height: 100%; }
+        .home-p2-sticky-wrap { position: relative; width: 100%; flex: 0 0 auto; min-width: 0; height: 100%; }
         .home-p2-sticky-wrap::before { content: ""; position: absolute; inset: 0; top: -5px; left: 5px; background: linear-gradient(160deg, #FFF6D2, #FFEDAE); border-radius: 0; transform: rotate(3deg); box-shadow: 0 3px 8px rgba(0,0,0,0.18); z-index: 0; }
         .home-p2-sticky-note, .home-p2-wish-note { min-width: 0; border-radius: 0; padding: 9px 11px; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.25); box-sizing: border-box; }
         .home-p2-wish-note { width: calc(50% - 9px); flex: 0 0 auto; }
@@ -686,6 +699,7 @@
             </div>
             <div class="home-master-page">
                 <div class="home-page2-top">
+                    <div class="star-card" id="starCard"><canvas id="starCanvas"></canvas><div class="star-tip" id="starTip"></div><button class="star-add" onclick="starMakeWish()">＋ 许个愿</button><div class="star-count" id="starCount"></div></div>
                     <div class="home-p2-calendar-card">
                         <div class="cal-header">
                             <button onclick="calendarPrevMonth()">‹</button>
@@ -702,10 +716,6 @@
                                 <div class="home-p2-note-label">便利贴</div>
                                 <textarea class="home-p2-note-textarea sticky-font" id="homeStickyNoteInput" placeholder="写点什么..." oninput="handleStickyNoteInput(this.value)"></textarea>
                             </div>
-                        </div>
-                        <div class="home-p2-wish-note">
-                            <div class="home-p2-note-label">心愿贴 <span class="home-p2-note-hint">次日自动清空</span></div>
-                            <textarea class="home-p2-note-textarea sticky-font" id="homeWishNoteInput" placeholder="今天想要什么...？" oninput="handleWishNoteInput(this.value)"></textarea>
                         </div>
                     </div>
                 </div>
@@ -1005,8 +1015,15 @@
         <div class="modal-box" onclick="event.stopPropagation()">
             <h2 id="datePlaceTitle">添加地点</h2>
             <input class="modal-input" id="datePlaceName" placeholder="地点名称，如：海边、咖啡店">
-            <input class="modal-input" id="datePlaceWeather" placeholder="这里的天气（用顿号分隔，如：晴、多云、小雨）" style="margin-top:8px;">
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('datePlaceModal')">取消</button><button class="btn" onclick="dateSavePlace()">保存</button></div>
+        </div>
+    </div>
+
+    <div class="universal-modal" id="emojiMoreModal" onclick="closeModal('emojiMoreModal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 id="emojiMoreMsg">已添加</h2>
+            <div style="font-size:12.5px;color:var(--text-sub);">如果你的浏览器一次只能选一张，可以点「继续添加」接着选。</div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px;"><button class="btn btn-outline" onclick="closeModal('emojiMoreModal')">完成</button><button class="btn" id="emojiMoreBtn">继续添加</button></div>
         </div>
     </div>
 
@@ -1025,7 +1042,7 @@
             <div style="font-size:12.5px; color:var(--text-sub); line-height:1.7;" id="dateStartInfo"></div>
             <div style="font-size:12px; color:var(--primary); margin-top:2px;" id="dateStartElapsed"></div>
             <div id="dateStartItems" style="margin:12px 0 6px;"></div>
-            <div style="display:flex; gap:8px; margin-bottom:10px;"><button class="btn btn-outline" style="font-size:12px; padding:6px 12px;" onclick="dateReroll()">重抽事件</button><button class="btn btn-outline" style="font-size:12px; padding:6px 12px;" onclick="dateRerollWeather()">换个天气</button></div>
+            <div style="display:flex; gap:8px; margin-bottom:10px; align-items:center;"><input class="modal-input" id="dateStartWeather" placeholder="今天的天气" oninput="dateSaveWeather(this.value)" style="flex:1; margin:0;"><button class="btn" style="font-size:13px; padding:8px 16px;" onclick="dateReroll()">刷新</button></div>
             <textarea class="modal-textarea" id="dateStartSentence" placeholder="把它们串成一句话吧…" oninput="dateSaveSentenceDraft(this.value)" style="min-height:90px;"></textarea>
             <div style="display:flex; justify-content:space-between; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="dateAbandon()">放弃</button><div style="display:flex; gap:8px;"><button class="btn btn-outline" onclick="dateCloseStart()">先收起</button><button class="btn" onclick="dateFinish()">完成约会</button></div></div>
         </div>
@@ -1157,17 +1174,21 @@
                     <div class="flex-row-between"><span>气泡数（他发几条）</span><div><input id="cfg_card_min" type="number"> 至 <input id="cfg_card_max" type="number"> 个</div></div>
                     <div class="flex-row-between"><span>合并字卡（单条含几张）</span><div><input id="cfg_merge_card_min" type="number"> 至 <input id="cfg_merge_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>回复间隔</span><div><input id="cfg_reply_min" type="number"> 至 <input id="cfg_reply_max" type="number"> 秒</div></div>
-                    <div class="flex-row-between"><span>随机打招呼频率</span><div><input id="cfg_rand_min" type="number"> 至 <input id="cfg_rand_max" type="number"> 秒</div></div>
-                    <div class="flex-row-between"><span>状态改变间隔</span><div><input id="cfg_status_min" type="number"> 至 <input id="cfg_status_max" type="number"> 分钟</div></div>
-                    <div class="flex-row-between"><span>念想更新间隔</span><div><input id="cfg_missing_min" type="number"> 至 <input id="cfg_missing_max" type="number"> 分钟</div></div>
+                    <div class="flex-row-between"><span>随机打招呼频率</span><div><input id="cfg_rand_min" type="number"> 至 <input id="cfg_rand_max" type="number"> 分钟</div></div>
                     <div class="flex-row-between"><span>朋友圈发布间隔</span><div><input id="cfg_pyq_min" type="number"> 至 <input id="cfg_pyq_max" type="number"> 小时</div></div>
                     <div class="flex-row-between"><span>朋友圈回复条数</span><div><input id="cfg_pyq_card_min" type="number"> 至 <input id="cfg_pyq_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>朋友圈回复间隔</span><div><input id="cfg_pyq_reply_min" type="number"> 至 <input id="cfg_pyq_reply_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>日记回复条数</span><div><input id="cfg_letter_num_min" type="number"> 至 <input id="cfg_letter_num_max" type="number"> 条</div></div>
-                    <div class="flex-row-between"><span>书房/游戏他说话间隔</span><div><input id="cfg_speak_min" type="number"> 至 <input id="cfg_speak_max" type="number"> 秒</div></div>
+                    <div class="flex-row-between"><span>日记回复间隔</span><div><input id="cfg_letter_min" type="number"> 至 <input id="cfg_letter_max" type="number"> 小时</div></div>
+                </div>
+                <p style="font-size:11px; color:var(--text-sub); margin:14px 0 8px; text-align:center;">以下每项只需填一个数字</p>
+                <div class="section" style="margin-bottom:0;">
+                    <div class="flex-row-between"><span>念想更新间隔</span><div><input id="cfg_missing_every" type="number"> 分钟</div></div>
+                    <div class="flex-row-between"><span>状态更新间隔</span><div><input id="cfg_status_every" type="number"> 分钟</div></div>
+                    <div class="flex-row-between"><span>书房/游戏他说话间隔</span><div><input id="cfg_speak_every" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>他发拍一拍概率</span><div><input id="cfg_nudge_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>他发表情包概率</span><div><input id="cfg_emoji_pct" type="number"> %</div></div>
-                    <div class="flex-row-between"><span>日记回复间隔</span><div><input id="cfg_letter_min" type="number"> 至 <input id="cfg_letter_max" type="number"> 小时</div></div>
+                    <div class="flex-row-between"><span>他自由造句概率</span><div><input id="cfg_free_pct" type="number"> %</div></div>
                 </div>
                 <button class="btn" style="width:100%; margin-top:14px;" onclick="saveFrequencies()">保存配置</button>
             </div>
@@ -1295,6 +1316,7 @@
                 <button class="card-tab-btn" onclick="switchCardTab(2)">拍一拍</button>
                 <button class="card-tab-btn" onclick="switchCardTab(3)">表情包</button>
                 <button class="card-tab-btn" onclick="switchCardTab(4)">念想</button>
+                <button class="card-tab-btn" onclick="switchCardTab(5)">自由造句</button>
             </div>
             <div class="card-tab-panel" id="cardTabPanel"></div>
             <input type="file" id="other_emoji_file" class="file" accept="image/*" multiple>
@@ -1352,10 +1374,19 @@
         </div>
     </div>
 
+    <div class="universal-modal" id="freeAddModal" onclick="closeModal('freeAddModal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2>批量添加词语</h2>
+            <select class="search-select" id="freeAddCat" style="margin-bottom:8px;"></select>
+            <textarea class="modal-textarea" id="freeAddText" placeholder="用空格或换行分隔多个词语"></textarea>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('freeAddModal')">取消</button><button class="btn" onclick="freeSubmitAdd()">添加</button></div>
+        </div>
+    </div>
+
     <div class="universal-modal" id="speakFreqModal" onclick="closeModal('speakFreqModal')">
         <div class="modal-box" onclick="event.stopPropagation()">
             <h2>他说话的间隔</h2>
-            <div class="flex-row-between"><span>两句之间隔</span><div><input id="sf_min" type="number" style="width:56px"> 至 <input id="sf_max" type="number" style="width:56px"> 秒</div></div>
+            <div class="flex-row-between"><span>两句之间隔</span><div><input id="sf_min" type="number" style="width:64px"> 秒</div></div>
             <div style="font-size:11.5px; color:var(--text-sub); margin:8px 2px;">每句话会停留 10 秒；这里设置的是一句消失后到下一句出现的等待时间。</div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('speakFreqModal')">取消</button><button class="btn" onclick="saveSpeakFreq()">保存</button></div>
         </div>
@@ -1765,14 +1796,61 @@
         function renderStickyAndWishNotes() {
             const sticky = document.getElementById("homeStickyNoteInput");
             if (sticky) sticky.value = db.stickyNote || "";
-            // 心愿贴：日期不是今天就自动清空
-            if (!db.wishNote) db.wishNote = { text: "", date: "" };
-            if (db.wishNote.date !== todayDateStr()) { db.wishNote = { text: "", date: todayDateStr() }; saveData(); }
-            const wish = document.getElementById("homeWishNoteInput");
-            if (wish) wish.value = db.wishNote.text || "";
+            starInit();
         }
         function handleStickyNoteInput(val) { db.stickyNote = val; saveData(); }
-        function handleWishNoteInput(val) { db.wishNote = { text: val, date: todayDateStr() }; saveData(); }
+
+        // ==================== 🌌 星图（愿望星星） ====================
+        let starRaf = 0, starYaw = 0, starPitch = -0.25, starVel = 0.0025, starDrag = false, starLast = null, starAmb = null, starProj = [], starTipT = 0, starLP = 0, starMoved = false, starBorn = {};
+        function starInit() {
+            if (!db.wishStars) db.wishStars = [];
+            const cv = document.getElementById("starCanvas"); if (!cv) return;
+            if (!starAmb) { starAmb = []; for (let i = 0; i < 110; i++) { const u = Math.random() * 2 - 1, a = Math.random() * 6.283, r = Math.sqrt(1 - u * u); starAmb.push({ x: r * Math.cos(a), y: u, z: r * Math.sin(a), s: Math.random() * 1.1 + 0.4, p: Math.random() * 6.283 }); } }
+            if (!cv._bound) {
+                cv._bound = true;
+                const pt = e => { const t = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e; const r = cv.getBoundingClientRect(); return { x: t.clientX - r.left, y: t.clientY - r.top }; };
+                const down = e => { e.stopPropagation(); starDrag = true; starMoved = false; starLast = pt(e); starLP = setTimeout(() => { if (!starMoved) { const h = starHit(starLast); if (h) starDelete(h); } }, 650); };
+                const move = e => { if (!starDrag) return; e.stopPropagation(); const p = pt(e); const dx = p.x - starLast.x, dy = p.y - starLast.y; if (Math.abs(dx) + Math.abs(dy) > 2) starMoved = true; starYaw += dx * 0.011; starPitch = Math.max(-1.2, Math.min(1.2, starPitch + dy * 0.011)); starVel = dx * 0.0008; starLast = p; if (starMoved) clearTimeout(starLP); };
+                const up = e => { if (!starDrag) return; e.stopPropagation(); starDrag = false; clearTimeout(starLP); if (!starMoved) { const h = starHit(pt(e)); if (h) starShowTip(h.text); } if (Math.abs(starVel) < 0.0015) starVel = 0.0025 * (starVel < 0 ? -1 : 1); };
+                cv.addEventListener("touchstart", down, { passive: true }); cv.addEventListener("touchmove", move, { passive: true }); cv.addEventListener("touchend", up);
+                cv.addEventListener("mousedown", down); window.addEventListener("mousemove", move); window.addEventListener("mouseup", up);
+            }
+            const c = document.getElementById("starCount"); if (c) c.innerText = db.wishStars.length ? `${db.wishStars.length} 颗愿望星` : "写下愿望，点亮第一颗星";
+            if (!starRaf) starRaf = requestAnimationFrame(starFrame);
+        }
+        function starHit(p) { let best = null, bd = 18; starProj.forEach(q => { if (!q.w) return; const d = Math.hypot(q.sx - p.x, q.sy - p.y); if (d < bd) { bd = d; best = q.w; } }); return best; }
+        function starShowTip(t) { const el = document.getElementById("starTip"); el.innerText = t; el.classList.add("on"); clearTimeout(starTipT); starTipT = setTimeout(() => el.classList.remove("on"), 3200); }
+        function starDelete(w) { if (confirm("要让这颗愿望星熄灭吗？\n「" + w.text + "」")) { db.wishStars = db.wishStars.filter(x => x.id !== w.id); saveData(); starInit(); } }
+        function starMakeWish() {
+            openSimpleEditModal("写下一个愿望，它会变成一颗星", "", v => {
+                v = (v || "").trim(); if (!v) return; if (!db.wishStars) db.wishStars = [];
+                const u = Math.random() * 2 - 1, a = Math.random() * 6.283, r = Math.sqrt(1 - u * u), cols = ["#FFE9A8", "#BFE3FF", "#FFD0E8", "#D8C8FF", "#C9FFE3"];
+                const w = { id: "w" + Date.now(), text: v, x: r * Math.cos(a), y: u, z: r * Math.sin(a), color: cols[Math.floor(Math.random() * cols.length)], ts: Date.now() };
+                db.wishStars.push(w); starBorn[w.id] = Date.now(); saveData(); starInit(); starShowTip("✦ " + v);
+            });
+        }
+        function starFrame(t) {
+            starRaf = requestAnimationFrame(starFrame);
+            const cv = document.getElementById("starCanvas"); if (!cv || currentHomePage !== 1 || document.hidden) return;
+            const rect = cv.getBoundingClientRect(); if (!rect.width) return;
+            const dpr = window.devicePixelRatio || 1, W = Math.round(rect.width), H = Math.round(rect.height);
+            if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+            const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+            if (!starDrag) { starYaw += starVel; starVel += (0.0025 * (starVel < 0 ? -1 : 1) - starVel) * 0.02; }
+            const cy = Math.cos(starYaw), sy = Math.sin(starYaw), cp = Math.cos(starPitch), sp = Math.sin(starPitch), R = Math.min(W * 0.46, 260), Hr = H * 0.62, f = 2.6;
+            const proj = o => { let x = o.x * cy - o.z * sy, z = o.x * sy + o.z * cy, y = o.y * cp - z * sp; z = o.y * sp + z * cp; const k = f / (f + z); return { sx: W / 2 + x * R * k * 1.0, sy: H / 2 + y * Hr * k, z, k }; };
+            starProj = [];
+            starAmb.forEach(o => { const p = proj(o); const a = (0.25 + 0.5 * (1 - (p.z + 1) / 2)) * (0.7 + 0.3 * Math.sin(t / 700 + o.p)); ctx.fillStyle = `rgba(255,255,255,${a.toFixed(3)})`; ctx.beginPath(); ctx.arc(p.sx, p.sy, o.s * p.k * 1.2, 0, 6.283); ctx.fill(); });
+            const ws = db.wishStars || [], pr = ws.map(w => ({ w, p: proj(w) }));
+            ctx.lineWidth = 0.7; for (let i = 1; i < pr.length; i++) { const a = pr[i - 1].p, b = pr[i].p; const al = 0.1 + 0.25 * ((a.k + b.k) / 2 - 0.6); ctx.strokeStyle = `rgba(190,215,255,${Math.max(0.05, al).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke(); }
+            pr.forEach(({ w, p }) => {
+                const born = starBorn[w.id] ? Math.min(1, (Date.now() - starBorn[w.id]) / 1200) : 1; const sz = (2.6 + 2.2 * (1 - (p.z + 1) / 2)) * (born < 1 ? 0.4 + 2.2 * (1 - born) + born * 0.6 : 1), tw = 0.75 + 0.25 * Math.sin(t / 420 + w.ts % 7);
+                const g = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, sz * 3.2); g.addColorStop(0, w.color); g.addColorStop(0.25, w.color + "aa"); g.addColorStop(1, "rgba(255,255,255,0)");
+                ctx.globalAlpha = tw * (p.z > 0.6 ? 0.55 : 1); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.sx, p.sy, sz * 3.2, 0, 6.283); ctx.fill();
+                ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(p.sx, p.sy, sz * 0.5, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+                starProj.push({ sx: p.sx, sy: p.sy, w });
+            });
+        }
 
         // ==================== 📅 首页第二页：生理期日历（精确到日期，可切换月份）====================
         let calendarViewYear = null, calendarViewMonth = null;
@@ -2103,7 +2181,13 @@
         }
         function sendRealNotification(title, body) {
             if (!("Notification" in window) || Notification.permission !== "granted") return;
-            try { new Notification(title, { body }); } catch (e) {}
+            try { const nt = new Notification(title, { body }); nt.onclick = () => { try { window.focus(); } catch (e) {} goToChatFromNotification(); nt.close(); }; } catch (e) {}
+        }
+        // 点通知：关掉所有打开的页面/弹窗，回到聊天窗
+        function goToChatFromNotification() {
+            document.querySelectorAll(".pyq-full-page.open, .universal-modal.open").forEach(e => e.classList.remove("open"));
+            try { if (typeof closeGamesPage === "function") { gameStopCurrent(); herSpeakStop("game"); herSpeakStop("lib"); } } catch (e) {}
+            openMainChatView();
         }
         function showInAppBanner(title, body, onTap) {
             let banner = document.getElementById("inAppNotifBanner");
@@ -2114,7 +2198,7 @@
                 document.body.appendChild(banner);
             }
             banner.innerHTML = `<img class="in-app-notif-avatar" src="${db.other.avatar || DEFAULT_SVG_AVATAR}"><div class="in-app-notif-text"><div class="in-app-notif-title">${title}</div><div class="in-app-notif-body">${body}</div></div>`;
-            banner.onclick = () => { hideInAppBanner(); if (onTap) onTap(); };
+            banner.onclick = () => { hideInAppBanner(); goToChatFromNotification(); };
             banner.classList.add("show");
             clearTimeout(banner._hideTimer);
             banner._hideTimer = setTimeout(() => hideInAppBanner(), 3500);
@@ -2130,7 +2214,7 @@
             const open = document.getElementById(pageId).classList.contains("open");
             if (!open) { db[key] = (db[key] || 0) + 1; saveData(); renderHomeScreen(); }
             if (document.hidden) sendRealNotification(db.other.name || "他", previewText);
-            else if (!open) showInAppBanner(db.other.name || "他", previewText, () => (kind === "letters" ? openLetterPage() : openPyqPage()));
+            else if (!open) showInAppBanner(db.other.name || "他", previewText, null);
         }
         // 收到一条来自"他"的新消息时统一调用：更新未读数 + 应用内横幅 + （切到后台时）真实系统通知
         function notifyIncomingOtherMessage(previewText) {
@@ -2150,8 +2234,8 @@
             'dark': ["#8F79B5", "#A390C5", "#7C66A6", "#6E5A94", "#5F4C82", "#B39DD0", "#9C87BE", "#524269"],
             'eye-care': ["#9C87BE", "#B39DD0", "#7C66A6", "#C4B3DE", "#8F79B5", "#A390C5", "#6E5A94", "#D6CCF2"],
             'dark-green': ["#6FA88A", "#5A8C71", "#7FB99A", "#4C7A62", "#8FC4A8", "#3F6B54", "#6FA88A", "#355A48"],
-            'candy-dark': ["#FF8FB8", "#7FD6C6", "#FFC857", "#8EC5FF", "#C3A6FF", "#FF9F7A", "#9BE37F", "#FF7AD1"],
-            'candy-light': ["#FF7FAF", "#6FCFBE", "#FFB94A", "#7DB8F5", "#B596F5", "#FF9168", "#8BD96E", "#FF6BC8"],
+            'candy-dark': ["#7CC4F4", "#7FD6C6", "#FFC857", "#A5B8FF", "#C3A6FF", "#FF9F9F", "#9BE37F", "#8FE3F0"],
+            'candy-light': ["#5BB4F0", "#6FCFBE", "#FFB94A", "#8FA6F5", "#B596F5", "#FF9168", "#8BD96E", "#5CCFE0"],
             'mono-dark': ["#8A8A8A", "#9E9E9E", "#767676", "#B2B2B2", "#666666", "#C4C4C4", "#7E7E7E", "#555555"],
             'mono-light': ["#5A5A5A", "#6E6E6E", "#7F7F7F", "#4A4A4A", "#8E8E8E", "#3C3C3C", "#686868", "#9A9A9A"],
             'light-green': ["#6FA37F", "#83B592", "#5A8C6C", "#9AC7AA", "#4C7A5C", "#B0D6BE", "#6FA37F", "#7FB08C"]
@@ -2323,7 +2407,6 @@
             if(db.readNoReplyEnabled === undefined) db.readNoReplyEnabled = false;
             if(!db.memories) db.memories = [];
             if(db.stickyNote === undefined) db.stickyNote = "";
-            if(!db.wishNote) db.wishNote = { text: "", date: "" };
             if(!db.periodDates) db.periodDates = {};
             if(!db.periodRanges) db.periodRanges = [];
             if(!db.anniversaries) db.anniversaries = [];
@@ -2337,7 +2420,10 @@
             if(db.bubbleOpacity === undefined) db.bubbleOpacity = 85;
             if(!db.freq) { db.freq = { cardMin:1, cardMax:3, mergeCardMin:1, mergeCardMax:1, replyMin:1, replyMax:5, randMin:30, randMax:120, statusMin:5, statusMax:15, missingMin:5, missingMax:20, pyqMin:2, pyqMax:6, pyqCardMin:1, pyqCardMax:3, pyqReplyMin:1, pyqReplyMax:5, letterMin:1, letterMax:3, letterNumMin:1, letterNumMax:3 }; }
             if(db.freq.mergeCardMin === undefined) { db.freq.mergeCardMin = 1; db.freq.mergeCardMax = 1; }
-            if(!db.freq.speakV2) { db.freq.speakMin = 3; db.freq.speakMax = 8; db.freq.speakV2 = 1; }
+            if(!db.freq.speakV3) { db.freq.speakEvery = 5; db.freq.statusEvery = db.freq.statusMin || 10; db.freq.missingEvery = db.freq.missingMin || 10; db.freq.freePct = 8; db.freq.randMin = 15; db.freq.randMax = 45; db.freq.speakV3 = 1; db.next = {}; }
+            if(!db.next) db.next = {};
+            if(!db.freeWords) db.freeWords = { "名词": [], "动词": [], "形容词": [], "副词": [], "助词": [], "介词": [], "连词": [] };
+            if(!db.wishStars) db.wishStars = [];
             if(db.freq.nudgePct === undefined) { db.freq.nudgePct = 5; db.freq.emojiPct = 8; }
             if(db.unreadLetters === undefined) { db.unreadLetters = 0; db.unreadPyq = 0; }
             if(db.freq.pyqReplyMin === undefined) db.freq.pyqReplyMin = 1;
@@ -2448,8 +2534,8 @@
             'eye-care': { my: '214, 204, 242', other: '255, 255, 255' },
             'dark-green': { my: '90, 140, 113', other: '43, 74, 61' },
             'light-green': { my: '196, 226, 204', other: '255, 255, 255' },
-            'candy-dark': { my: '214, 92, 150', other: '74, 50, 102' },
-            'candy-light': { my: '255, 190, 214', other: '255, 255, 255' },
+            'candy-dark': { my: '110, 185, 240', other: '200, 230, 255' },
+            'candy-light': { my: '170, 218, 252', other: '255, 255, 255' },
             'mono-dark': { my: '232, 232, 232', other: '44, 44, 44' },
             'mono-light': { my: '40, 40, 40', other: '255, 255, 255' }
         };
@@ -2505,17 +2591,7 @@
             currentMissingIndex = idx;
             el.innerText = pool[idx].text;
         }
-        function setupMissingQuoteAutomation() {
-            if (missingQuoteTimeoutId) clearTimeout(missingQuoteTimeoutId);
-            const f = db.freq;
-            const mMin = parseFloat(f.missingMin) || 5;
-            const mMax = parseFloat(f.missingMax) || 20;
-            const delay = (mMin + Math.random() * (mMax - mMin)) * 60 * 1000;
-            missingQuoteTimeoutId = setTimeout(() => {
-                cycleMissingQuote(false);
-                setupMissingQuoteAutomation();
-            }, delay);
-        }
+        function setupMissingQuoteAutomation() {}
         
         // 侧边栏已移除（首页图标已覆盖全部入口），保留空函数避免其它调用报错
         function toggleSidebar(open) {}
@@ -2757,6 +2833,23 @@
         }
 
         // 🎯 右上角头像区交互彩蛋：先展示“正在输入”动画，结束之后再优雅发送
+        // 自由造句：按词性随机抽词，词与词之间用空格连接
+        function makeFreeSentence() {
+            const W = db.freeWords || {};
+            const has = c => W[c] && W[c].length;
+            const pick = c => W[c][Math.floor(Math.random() * W[c].length)];
+            const patterns = [["名词", "助词", "动词", "名词"], ["副词", "动词", "介词", "名词"], ["名词", "副词", "形容词"], ["介词", "名词", "动词"], ["名词", "动词"], ["形容词", "助词", "名词"], ["名词", "连词", "名词", "动词"]];
+            const pat = patterns[Math.floor(Math.random() * patterns.length)];
+            let words = pat.filter(has).map(pick);
+            if (words.length < 2) {
+                const cats = Object.keys(W).filter(has); if (!cats.length) return "";
+                const n = 2 + Math.floor(Math.random() * 3); words = [];
+                for (let i = 0; i < n; i++) words.push(pick(cats[Math.floor(Math.random() * cats.length)]));
+            }
+            return words.join(" ");
+        }
+        function hasFreeWords() { return Object.values(db.freeWords || {}).reduce((n, a) => n + a.length, 0) >= 2; }
+        let chainProactive = false;
         function triggerRandomStarAction() {
             initAudio();
             const poolDecision = Math.random();
@@ -2774,26 +2867,31 @@
                 document.getElementById("typing").style.display = "none";
                 const _sigCards1 = getSignalCards();
                 let previewText = "";
-                const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100;
-                if (poolDecision < 1 - nudgeP - emojiP && _sigCards1.length > 0) {
+                const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100, freeP = (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100;
+                const cardEnd = 1 - nudgeP - emojiP - freeP, freeEnd = cardEnd + freeP, nudgeEnd = freeEnd + nudgeP;
+                if (poolDecision < cardEnd && _sigCards1.length > 0) {
                     const pickedTexts = pickMergedTexts(_sigCards1);
                     const mergedText = pickedTexts.join("\n");
-                    db.chat.push({ me: false, text: mergedText, time: timeStr, timeLabel: dateLabel });
+                    db.chat.push({ me: false, text: mergedText, time: timeStr, timeLabel: dateLabel, proactive: true });
                     previewText = pickedTexts[0];
                     const extraBubbles = pickBubbleCount();
-                    if (extraBubbles > 1) setTimeout(() => triggerNextChainDelay(1, extraBubbles), 300);
-                } else if (poolDecision < 1 - emojiP && db.nudgeList.length > 0) {
+                    if (extraBubbles > 1) { chainProactive = true; setTimeout(() => triggerNextChainDelay(1, extraBubbles), 300); }
+                } else if (poolDecision < freeEnd && hasFreeWords()) {
+                    const sen = makeFreeSentence();
+                    db.chat.push({ me: false, text: sen, time: timeStr, timeLabel: dateLabel, proactive: true });
+                    previewText = sen;
+                } else if (poolDecision < nudgeEnd && db.nudgeList.length > 0) {
                     let nudge = db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)];
                     const nudgeText = `${db.other.name}${nudge}`;
                     db.chat.push({ type: "system", text: nudgeText, isNudge: true, time: timeStr, timeLabel: dateLabel });
                     previewText = nudgeText;
                 } else if (db.otherEmojis.length > 0) {
                     let emo = db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)];
-                    db.chat.push({ me: false, img: emo, time: timeStr, timeLabel: dateLabel });
+                    db.chat.push({ me: false, img: emo, time: timeStr, timeLabel: dateLabel, proactive: true });
                     previewText = "[表情]";
                 } else if (_sigCards1.length > 0) {
                     let card = _sigCards1[Math.floor(Math.random() * _sigCards1.length)];
-                    db.chat.push({ me: false, text: card.text, time: timeStr, timeLabel: dateLabel });
+                    db.chat.push({ me: false, text: card.text, time: timeStr, timeLabel: dateLabel, proactive: true });
                     previewText = card.text;
                 }
                 saveData();
@@ -3138,7 +3236,7 @@
             const f = db.freq;
             const rMin = parseFloat(f.replyMin) || 1; const rMax = parseFloat(f.replyMax) || 5;
             const replyBaseDelay = (rMin + Math.random() * (rMax - rMin)) * 1000;
-            
+            chainProactive = false;
             setTimeout(() => {
                 document.getElementById("typing").style.display = "flex";
                 setTimeout(() => {
@@ -3168,12 +3266,21 @@
         }
 
         function executeChainBubbleReply(currentIndex, totalCount) {
-            if (currentIndex >= totalCount) { return; }
+            if (currentIndex >= totalCount) { chainProactive = false; return; }
 
+            if (currentIndex === 0 && hasFreeWords() && Math.random() < (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100) {
+                const now = new Date();
+                db.chat.push({ me: false, text: makeFreeSentence(), proactive: chainProactive,
+                    time: now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0'),
+                    timeLabel: `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日` });
+                saveData(); renderChat();
+                triggerNextChainDelay(currentIndex + 1, totalCount);
+                return;
+            }
             if (currentIndex === 0 && db.otherEmojis.length && Math.random() < (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100) { 
                 const now = new Date();
                 db.chat.push({
-                    me: false, 
+                    me: false, proactive: chainProactive, 
                     img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)],
                     time: now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0'),
                     timeLabel: `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`
@@ -3190,7 +3297,7 @@
             const gatheredTexts = pickMergedTexts(_sigCards4);
 
             db.chat.push({
-                me: false,
+                me: false, proactive: chainProactive,
                 text: gatheredTexts.join("\n"),
                 time: now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0'),
                 timeLabel: `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`
@@ -3215,52 +3322,44 @@
             }, nextBubbleInterval);
         }
 
+        function postHisPyq() {
+            const f = db.freq, _sigCards5 = getSignalCards();
+            if (!_sigCards5.length) return;
+            let pMin = parseInt(f.pyqCardMin, 10) || 1;
+            let pMax = Math.max(pMin, parseInt(f.pyqCardMax, 10) || 3);
+            let linesCount = Math.floor(pMin + Math.random() * (pMax - pMin + 1));
+            let gathered = [];
+            for (let k = 0; k < linesCount; k++) gathered.push(_sigCards5[Math.floor(Math.random() * _sigCards5.length)].text);
+            db.pyqPosts.unshift({
+                id: Date.now() + Math.random(), name: db.other.name, avatar: db.other.avatar, text: gathered.join(" "),
+                img: db.otherEmojis.length && Math.random() < 0.5 ? db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)] : "",
+                time: formatMinutePrecision(new Date()), likes: [], comments: []
+            });
+            saveData(); renderPyqStream();
+            notifyIncomingOther2("moments", "发了一条新动态");
+        }
+        // 统一的定时器：用“下一次触发时间戳”判断，切后台回来最多补发一次，不会连发
+        function runAutomationTick() {
+            if (!db || !db.freq) return;
+            const now = Date.now(), f = db.freq; if (!db.next) db.next = {};
+            const rnd = (a, b) => { a = parseFloat(a) || 0; b = Math.max(a, parseFloat(b) || a); return a + Math.random() * (b - a); };
+            const due = (key, delayFn) => {
+                if (!db.next[key]) { db.next[key] = now + delayFn(); return false; }
+                if (now >= db.next[key]) { db.next[key] = now + delayFn(); return true; }
+                return false;
+            };
+            if (db.autoMessageEnabled && due("auto", () => rnd(f.randMin || 15, f.randMax || 45) * 60000)) triggerRandomStarAction();
+            if (due("pyq", () => rnd(f.pyqMin || 2, f.pyqMax || 6) * 3600000)) postHisPyq();
+            if (due("status", () => (parseFloat(f.statusEvery) || 10) * 60000)) rollOtherStatus();
+            if (due("missing", () => (parseFloat(f.missingEvery) || 10) * 60000)) cycleMissingQuote(false);
+        }
+        let autoTickId = null;
         function setupPyqTimelineAutomation() {
-            if(pyqTimelineIntervalId) clearInterval(pyqTimelineIntervalId);
-            const f = db.freq;
-            const pMinHour = parseFloat(f.pyqMin) || 2; const pMaxHour = parseFloat(f.pyqMax) || 6;
-            const intervalHours = (pMinHour + Math.random() * (pMaxHour - pMinHour)) || 4;
-            const checkMs = Math.max(10000, intervalHours * 1000 * 30);
-            
-            pyqTimelineIntervalId = setInterval(() => {
-                const _sigCards5 = getSignalCards();
-                if(!_sigCards5.length) return;
-                if(Math.random() < 0.4) {
-                    let pMin = parseInt(f.pyqCardMin, 10) || 1;
-                    let pMax = Math.max(pMin, parseInt(f.pyqCardMax, 10) || 3);
-                    let linesCount = Math.floor(pMin + Math.random() * (pMax - pMin + 1));
-                    
-                    let gathered = [];
-                    for(let k=0; k<linesCount; k++) { gathered.push(_sigCards5[Math.floor(Math.random() * _sigCards5.length)].text); }
-
-                    setTimeout(() => notifyIncomingOther2("moments", "发了一条新动态"), 0);
-                    db.pyqPosts.unshift({
-                        id: Date.now() + Math.random(),
-                        name: db.other.name, avatar: db.other.avatar,
-                        text: gathered.join(" "),
-                        img: db.otherEmojis.length && Math.random() < 0.5 ? db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)] : "",
-                        time: formatMinutePrecision(new Date()),
-                        likes: [],
-                        comments: []
-                    });
-                    saveData(); renderPyqStream();
-                }
-            }, checkMs);
+            if (!autoTickId) { autoTickId = setInterval(runAutomationTick, 10000); document.addEventListener("visibilitychange", () => { if (!document.hidden) runAutomationTick(); }); }
         }
 
         // 🕰️ 高阶专属自动状态轮流计时组件
-        function setupStatusTimerAutomation() {
-            if(statusTimerTimeoutId) clearTimeout(statusTimerTimeoutId);
-            const f = db.freq;
-            const sMin = parseFloat(f.statusMin) || 5;
-            const sMax = parseFloat(f.statusMax) || 15;
-            const nextDelayMs = (sMin + Math.random() * (sMax - sMin)) * 60 * 1000;
-            
-            statusTimerTimeoutId = setTimeout(() => {
-                rollOtherStatus();
-                setupStatusTimerAutomation();
-            }, nextDelayMs);
-        }
+        function setupStatusTimerAutomation() {}
 
         function saveFrequencies() {
             db.freq.cardMin = Math.max(1, parseInt(document.getElementById("cfg_card_min").value, 10) || 1);
@@ -3271,10 +3370,8 @@
             db.freq.replyMax = Math.max(db.freq.replyMin, parseFloat(document.getElementById("cfg_reply_max").value) || 5);
             db.freq.randMin = Math.max(1, parseFloat(document.getElementById("cfg_rand_min").value) || 30);
             db.freq.randMax = Math.max(db.freq.randMin, parseFloat(document.getElementById("cfg_rand_max").value) || 120);
-            db.freq.statusMin = Math.max(0.1, parseFloat(document.getElementById("cfg_status_min").value) || 5);
-            db.freq.statusMax = Math.max(db.freq.statusMin, parseFloat(document.getElementById("cfg_status_max").value) || 15);
-            db.freq.missingMin = Math.max(0.5, parseFloat(document.getElementById("cfg_missing_min").value) || 5);
-            db.freq.missingMax = Math.max(db.freq.missingMin, parseFloat(document.getElementById("cfg_missing_max").value) || 20);
+            db.freq.statusEvery = Math.max(0.1, parseFloat(document.getElementById("cfg_status_every").value) || 10);
+            db.freq.missingEvery = Math.max(0.5, parseFloat(document.getElementById("cfg_missing_every").value) || 10);
             db.freq.pyqMin = Math.max(0.1, parseFloat(document.getElementById("cfg_pyq_min").value) || 2);
             db.freq.pyqMax = Math.max(db.freq.pyqMin, parseFloat(document.getElementById("cfg_pyq_max").value) || 6);
             db.freq.pyqCardMin = Math.max(1, parseInt(document.getElementById("cfg_pyq_card_min").value, 10) || 1);
@@ -3283,10 +3380,11 @@
             db.freq.pyqReplyMax = Math.max(db.freq.pyqReplyMin, parseFloat(document.getElementById("cfg_pyq_reply_max").value) || 5);
             db.freq.letterNumMin = Math.max(1, parseInt(document.getElementById("cfg_letter_num_min").value, 10) || 1);
             db.freq.letterNumMax = Math.max(db.freq.letterNumMin, parseInt(document.getElementById("cfg_letter_num_max").value, 10) || 3);
-            db.freq.speakMin = Math.max(3, parseFloat(document.getElementById("cfg_speak_min").value) || 20);
-            db.freq.speakMax = Math.max(db.freq.speakMin, parseFloat(document.getElementById("cfg_speak_max").value) || 40);
+            db.freq.speakEvery = Math.max(1, parseFloat(document.getElementById("cfg_speak_every").value) || 5);
             db.freq.nudgePct = Math.min(100, Math.max(0, parseFloat(document.getElementById("cfg_nudge_pct").value) || 0));
             db.freq.emojiPct = Math.min(100 - db.freq.nudgePct, Math.max(0, parseFloat(document.getElementById("cfg_emoji_pct").value) || 0));
+            db.freq.freePct = Math.min(100 - db.freq.nudgePct - db.freq.emojiPct, Math.max(0, parseFloat(document.getElementById("cfg_free_pct").value) || 0));
+            db.next = {};
             db.freq.letterMin = Math.max(1, parseFloat(document.getElementById("cfg_letter_min").value) || 1);
             db.freq.letterMax = Math.max(db.freq.letterMin, parseFloat(document.getElementById("cfg_letter_max").value) || 3);
             saveData(); setupPyqTimelineAutomation(); setupStatusTimerAutomation(); setupMissingQuoteAutomation(); setupAutoMessageAutomation(); closeModal("freqLargeModal"); alert("配置保存成功！");
@@ -3298,14 +3396,12 @@
             document.getElementById("cfg_read_no_reply_toggle").checked = !!db.readNoReplyEnabled;
             document.getElementById("cfg_card_min").value = f.cardMin; document.getElementById("cfg_card_max").value = f.cardMax;
             document.getElementById("cfg_nudge_pct").value = f.nudgePct === undefined ? 5 : f.nudgePct; document.getElementById("cfg_emoji_pct").value = f.emojiPct === undefined ? 8 : f.emojiPct;
-            document.getElementById("cfg_speak_min").value = f.speakMin || 20; document.getElementById("cfg_speak_max").value = f.speakMax || 40;
+            document.getElementById("cfg_free_pct").value = f.freePct === undefined ? 8 : f.freePct;
+            document.getElementById("cfg_speak_every").value = f.speakEvery || 5;
+            document.getElementById("cfg_status_every").value = f.statusEvery || 10; document.getElementById("cfg_missing_every").value = f.missingEvery || 10;
             document.getElementById("cfg_merge_card_min").value = f.mergeCardMin || 1; document.getElementById("cfg_merge_card_max").value = f.mergeCardMax || 1;
             document.getElementById("cfg_reply_min").value = f.replyMin; document.getElementById("cfg_reply_max").value = f.replyMax;
             document.getElementById("cfg_rand_min").value = f.randMin; document.getElementById("cfg_rand_max").value = f.randMax;
-            document.getElementById("cfg_status_min").value = f.statusMin !== undefined ? f.statusMin : 5;
-            document.getElementById("cfg_status_max").value = f.statusMax !== undefined ? f.statusMax : 15;
-            document.getElementById("cfg_missing_min").value = f.missingMin !== undefined ? f.missingMin : 5;
-            document.getElementById("cfg_missing_max").value = f.missingMax !== undefined ? f.missingMax : 20;
             document.getElementById("cfg_pyq_min").value = f.pyqMin; document.getElementById("cfg_pyq_max").value = f.pyqMax;
             document.getElementById("cfg_pyq_card_min").value = f.pyqCardMin !== undefined ? f.pyqCardMin : 1;
             document.getElementById("cfg_pyq_card_max").value = f.pyqCardMax !== undefined ? f.pyqCardMax : 3;
@@ -3318,21 +3414,10 @@
 
         // ==================== 🛎️ 主动发消息 / 已读不回 开关 ====================
         let autoMessageTimeoutId = null;
-        function toggleAutoMessage(checked) { db.autoMessageEnabled = checked; saveData(); setupAutoMessageAutomation(); }
+        function toggleAutoMessage(checked) { db.autoMessageEnabled = checked; db.next = db.next || {}; delete db.next.auto; saveData(); }
         function toggleReadNoReply(checked) { db.readNoReplyEnabled = checked; saveData(); }
 
-        function setupAutoMessageAutomation() {
-            if (autoMessageTimeoutId) clearTimeout(autoMessageTimeoutId);
-            if (!db.autoMessageEnabled) return;
-            const f = db.freq;
-            const rMin = parseFloat(f.randMin) || 30;
-            const rMax = parseFloat(f.randMax) || 120;
-            const delay = (rMin + Math.random() * (rMax - rMin)) * 1000;
-            autoMessageTimeoutId = setTimeout(() => {
-                triggerRandomStarAction();
-                setupAutoMessageAutomation();
-            }, delay);
-        }
+        function setupAutoMessageAutomation() {}
 
         function openSettingModal() { 
             toggleSidebar(false); 
@@ -3730,12 +3815,7 @@
         }
         function bottomAddAction() {
             if (document.getElementById("btnTab0").classList.contains("active")) {
-                document.getElementById("bottom_emoji_file").onchange = (e) => {
-                    const arr = Array.from(e.target.files || []); if (!arr.length) return;
-                    Promise.all(arr.map(f => compressImageFile(f, 400, 0.75))).then(list => { list.forEach(d => { if (d) db.myEmojis.push(d); }); saveData(); renderBottomContent(); });
-                    e.target.value = "";
-                };
-                document.getElementById("bottom_emoji_file").click();
+                emojiPick("bottom_emoji_file", "my");
             } else {
                 openTextInputModal("新增我的拍一拍动作（支持回车多行批量添加）", (val) => { 
                     if(!val) return; 
@@ -3867,7 +3947,8 @@
             else if (activeCardTab === 1) renderStatusTabContent(panel);
             else if (activeCardTab === 2) renderNudgeTabContent(panel);
             else if (activeCardTab === 3) renderEmojiTabContent(panel);
-            else renderMissingTabContent(panel);
+            else if (activeCardTab === 4) renderMissingTabContent(panel);
+            else renderFreeTabContent(panel);
         }
 
         function renderCardsTabContent(panel) {
@@ -4202,30 +4283,25 @@
         }
 
         // 🚀 核心赋能组件：支持异步全景批量表情包载入结构
-        function pickOtherEmoji() {
-            document.getElementById("other_emoji_file").onchange = (e) => { 
-                if(!e.target.files || !e.target.files.length) return;
-                let filesLoaded = 0;
-                const filesArray = Array.from(e.target.files);
-                filesArray.forEach(file => {
-                    compressImageFile(file, 400, 0.75).then(data => {
-                        db.otherEmojis.push(data);
-                        filesLoaded++;
-                        if(filesLoaded === filesArray.length) {
-                            saveData(); 
-                            renderCardTabPanel();
-                            // 部分手机浏览器（尤其微信内置浏览器）不支持一次选多张图，这里用连续单选来弥补
-                            if (confirm(`已导入 ${filesArray.length} 个表情，要继续添加更多吗？`)) {
-                                pickOtherEmoji();
-                            }
-                        }
-                    });
+function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
+        function emojiPick(inputId, who) {
+            const inp = document.getElementById(inputId);
+            inp.onchange = (e) => {
+                const arr = Array.from(e.target.files || []); if (!arr.length) return;
+                Promise.all(arr.map(f => compressImageFile(f, 400, 0.75).catch(() => null))).then(list => {
+                    const ok = list.filter(Boolean); const tgt = who === "my" ? db.myEmojis : db.otherEmojis; ok.forEach(d => tgt.push(d));
+                    saveData(); if (who === "my") renderBottomContent(); else renderCardTabPanel();
+                    // 部分手机浏览器一次只能选一张：弹出「继续添加」按钮，点它会重新唤起选图（需要真实点击才能唤起）
+                    document.getElementById("emojiMoreMsg").innerText = `已添加 ${ok.length} 个，目前共 ${tgt.length} 个`;
+                    document.getElementById("emojiMoreBtn").onclick = () => { closeModal("emojiMoreModal"); inp.click(); };
+                    openModalBox("emojiMoreModal");
                 });
+                e.target.value = "";
             };
-            document.getElementById("other_emoji_file").click();
+            inp.click();
         }
 
-        function renderMissingTabContent(panel) {
+                function renderMissingTabContent(panel) {
             const q = missingSearchQuery.trim();
             let html = listToolbarRows({ selectMode: missingSelectMode, selectedCount: missingSelectedSet.size, toggleFn: 'toggleMissingSelectMode', searchVal: missingSearchQuery, searchFn: 'handleMissingSearchInput', dedupeFn: 'checkMissingDuplicates', deleteFn: 'deleteSelectedMissing', batchFn: 'showMissingModal', label: '念想' });
             const items = [];
@@ -4530,6 +4606,7 @@
                     const group = document.createElement("div"); group.className = "msg-group";
                     const box = document.createElement("div"); box.className = m.me ? "msg my" : "msg other";
                     box.dataset.idx = idx;
+                    if (m.proactive && !m.me) { const st = document.createElement("i"); st.className = "pro-star"; st.innerText = "★"; box.appendChild(st); }
                     if (m.replyTo) {
                         const q = document.createElement("div"); q.className = "reply-quote-block";
                         q.innerHTML = `<b>${m.replyTo.author}</b>：${m.replyTo.text}`;
@@ -5088,25 +5165,39 @@
 
         // ---------- 贪吃蛇（90年代手机版：方向键，越来越快） ----------
         function gameSnake() {
-            const N = 26, body = document.getElementById("gameBody");
+            const N0 = 0, body = document.getElementById("gameBody");
             const arrow = (rot) => `<svg viewBox="0 0 24 24" width="22" height="22" style="transform:rotate(${rot}deg)"><path d="M12 5l8 12H4z" fill="currentColor"/></svg>`;
             body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，用方向键控制</div><div class="mine-score" id="snScore"></div><div class="snake-lcd"><canvas id="snCanvas"></canvas></div>
               <div class="dpad"><button class="btn dp-s" id="snStart">开始</button><button data-d="U" class="dp-u">${arrow(0)}</button><button data-d="L" class="dp-l">${arrow(-90)}</button><button data-d="D" class="dp-d">${arrow(180)}</button><button data-d="R" class="dp-r">${arrow(90)}</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("snCanvas"), ctx = cv.getContext("2d");
             const availH = body.clientHeight - 230;
-            const size = Math.max(260, Math.min(360, body.clientWidth - 44, availH)), cs = Math.floor(size / N), px = cs * N, dpr = window.devicePixelRatio || 1;
+            const size = Math.max(260, Math.min(360, body.clientWidth - 44, availH)), cs = 9, N = Math.floor(size / cs), px = cs * N, dpr = window.devicePixelRatio || 1;
             cv.style.width = cv.style.height = px + "px"; cv.width = cv.height = px * dpr; ctx.scale(dpr, dpr);
             const V = { U: [0, -1], D: [0, 1], L: [-1, 0], R: [1, 0] }, OPP = { U: "D", D: "U", L: "R", R: "L" };
             const base = { easy: 240, normal: 190, hard: 150 }[gameDiff];
             const mid = Math.floor(N / 2);
-            let me, him, food, running = false, over = false, timer = null, startAt = 0, myDir, hisDir, queued = null;
+            let me, him, foods = [], running = false, over = false, timer = null, startAt = 0, myDir, hisDir, queued = null;
             function reset() {
                 me = [[5, mid], [4, mid], [3, mid]]; him = [[N - 6, mid], [N - 5, mid], [N - 4, mid]]; myDir = "R"; hisDir = "L"; queued = null; over = false;
-                placeFood(); draw(); score();
+                foods = []; placeFood(0); placeFood(1); draw(); score();
             }
             function score() { document.getElementById("snScore").innerText = `${myName()} ${me.length}　|　${hisName()} ${him.length}`; }
             function occupied(x, y) { return me.some(s => s[0] === x && s[1] === y) || him.some(s => s[0] === x && s[1] === y); }
-            function placeFood() { let x, y, n = 0; do { x = Math.floor(Math.random() * N); y = Math.floor(Math.random() * N); } while (occupied(x, y) && n++ < 500); food = [x, y]; }
+            function mdist(a, b) { return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]); }
+            function isFood(x, y) { return foods.some(f => f && f[0] === x && f[1] === y); }
+            function placeFood(i) {
+                let best = null, bd = 1e9;
+                for (let n = 0; n < 400; n++) {
+                    const x = Math.floor(Math.random() * N), y = Math.floor(Math.random() * N);
+                    if (occupied(x, y) || isFood(x, y)) continue;
+                    const dm = mdist([x, y], me[0]), dh = mdist([x, y], him[0]), gap = Math.abs(dm - dh);
+                    if (dm < 4 || dh < 4) continue;
+                    if (gap < bd) { bd = gap; best = [x, y]; }
+                    if (gap <= 2) break;
+                }
+                if (!best) { let x, y, n = 0; do { x = Math.floor(Math.random() * N); y = Math.floor(Math.random() * N); } while ((occupied(x, y) || isFood(x, y)) && n++ < 500); best = [x, y]; }
+                foods[i] = best;
+            }
             function cell(x, y, hollow) {
                 ctx.fillStyle = "#1B2A12";
                 if (hollow) { ctx.fillRect(x * cs + 1, y * cs + 1, cs - 2, cs - 2); ctx.fillStyle = "#B7C98A"; ctx.fillRect(x * cs + 3, y * cs + 3, cs - 6, cs - 6); }
@@ -5116,12 +5207,12 @@
                 ctx.fillStyle = "#B7C98A"; ctx.fillRect(0, 0, px, px);
                 ctx.fillStyle = "rgba(27,42,18,.08)"; for (let i = 0; i <= N; i++) { ctx.fillRect(i * cs, 0, 1, px); ctx.fillRect(0, i * cs, px, 1); }
                 me.forEach(([x, y]) => cell(x, y, false)); him.forEach(([x, y]) => cell(x, y, true));
-                ctx.fillStyle = "#1B2A12"; const fx = food[0] * cs, fy = food[1] * cs, m = cs / 2;
-                ctx.fillRect(fx + m - 2, fy + 1, 4, cs - 2); ctx.fillRect(fx + 1, fy + m - 2, cs - 2, 4);
+                ctx.fillStyle = "#1B2A12"; foods.forEach(f => { const fx = f[0] * cs, fy = f[1] * cs, m = cs / 2;
+                    ctx.fillRect(fx + m - 1, fy + 1, 2, cs - 2); ctx.fillRect(fx + 1, fy + m - 1, cs - 2, 2); });
             }
             function free(x, y, bodyA, bodyB) { if (x < 0 || y < 0 || x >= N || y >= N) return false; return !bodyA.some(s => s[0] === x && s[1] === y) && !bodyB.some(s => s[0] === x && s[1] === y); }
             function flood(sx, sy, A, B2, limit) { const seen = new Set([sx + "," + sy]); const q = [[sx, sy]]; while (q.length && seen.size < limit) { const [x, y] = q.shift(); for (const d of Object.values(V)) { const nx = x + d[0], ny = y + d[1], k = nx + "," + ny; if (!seen.has(k) && free(nx, ny, A, B2)) { seen.add(k); q.push([nx, ny]); } } } return seen.size; }
-            function bfsDist(sx, sy, A, B2) { const seen = new Set([sx + "," + sy]); const q = [[sx, sy, 0]]; while (q.length) { const [x, y, d] = q.shift(); if (x === food[0] && y === food[1]) return d; for (const v of Object.values(V)) { const nx = x + v[0], ny = y + v[1], k = nx + "," + ny; if (!seen.has(k) && (free(nx, ny, A, B2) || (nx === food[0] && ny === food[1]))) { seen.add(k); q.push([nx, ny, d + 1]); } } } return 999; }
+            function bfsDist(sx, sy, A, B2) { const seen = new Set([sx + "," + sy]); const q = [[sx, sy, 0]]; while (q.length) { const [x, y, d] = q.shift(); if (isFood(x, y)) return d; for (const v of Object.values(V)) { const nx = x + v[0], ny = y + v[1], k = nx + "," + ny; if (!seen.has(k) && (free(nx, ny, A, B2) || isFood(nx, ny))) { seen.add(k); q.push([nx, ny, d + 1]); } } } return 999; }
             function aiDir() {
                 const head = him[0], opts = Object.keys(V).filter(d => d !== OPP[hisDir]);
                 const bodyHim = him.slice(0, -1), bodyMe = me.slice(0, -1);
@@ -5134,7 +5225,7 @@
                     return best;
                 }
                 let best = safe[0], bs = 1e9;
-                safe.forEach(d => { const nx = head[0] + V[d][0], ny = head[1] + V[d][1]; const dist = Math.abs(nx - food[0]) + Math.abs(ny - food[1]); if (dist < bs) { bs = dist; best = d; } });
+                safe.forEach(d => { const nx = head[0] + V[d][0], ny = head[1] + V[d][1]; const dist = Math.min(...foods.map(f => mdist([nx, ny], f))); if (dist < bs) { bs = dist; best = d; } });
                 return best;
             }
             function tick() {
@@ -5142,13 +5233,13 @@
                 if (queued && queued !== OPP[myDir]) myDir = queued; queued = null;
                 hisDir = aiDir();
                 const mh = [me[0][0] + V[myDir][0], me[0][1] + V[myDir][1]], hh = [him[0][0] + V[hisDir][0], him[0][1] + V[hisDir][1]];
-                const eatM = mh[0] === food[0] && mh[1] === food[1], eatH = hh[0] === food[0] && hh[1] === food[1];
+                const eatM = isFood(mh[0], mh[1]), eatH = isFood(hh[0], hh[1]);
                 const meBody = eatM ? me : me.slice(0, -1), himBody = eatH ? him : him.slice(0, -1);
                 const bothHead = mh[0] === hh[0] && mh[1] === hh[1];
                 const meDead = !free(mh[0], mh[1], meBody, himBody) || bothHead, himDead = !free(hh[0], hh[1], himBody, meBody) || bothHead;
                 if (!meDead) me.unshift(mh); if (!himDead) him.unshift(hh);
                 if (!eatM && !meDead) me.pop(); if (!eatH && !himDead) him.pop();
-                if (eatM || eatH) { placeFood(); gameSfx(eatM ? "eat" : "his"); }
+                if (eatM || eatH) { foods.forEach((f, i) => { if ((eatM && f[0] === mh[0] && f[1] === mh[1]) || (eatH && f[0] === hh[0] && f[1] === hh[1])) { foods[i] = null; } }); foods.forEach((f, i) => { if (!f) placeFood(i); }); gameSfx(eatM ? "eat" : "his"); }
                 draw(); score();
                 if (meDead || himDead) {
                     running = false; over = true;
@@ -5197,7 +5288,7 @@
             if (!db.datePlaces.length) return h + `<div class="lib-empty">还没有地点，点「添加地点」开始吧</div>`;
             h += db.datePlaces.map(p => `<div class="date-row ${dateSelected.has(p.id) ? "sel" : ""} ${dateSelectMode ? "lib-select-mode" : ""}">
                 <div class="lib-check"></div>
-                <div class="date-row-main" onclick="dateRowTap('${p.id}')"><div class="t">${escapeHtml(p.name)}</div><div class="s">${escapeHtml((p.weathers || []).join("、"))}</div></div>
+                <div class="date-row-main" onclick="dateRowTap('${p.id}')"><div class="t">${escapeHtml(p.name)}</div></div>
                 <button class="date-go" onclick="dateOpenStart('${p.id}')">→</button></div>`).join("");
             return h;
         }
@@ -5215,24 +5306,22 @@
             const p = id ? db.datePlaces.find(x => x.id === id) : null;
             document.getElementById("datePlaceTitle").innerText = p ? "编辑地点" : "添加地点";
             document.getElementById("datePlaceName").value = p ? p.name : "";
-            document.getElementById("datePlaceWeather").value = p ? (p.weathers || []).join("、") : DATE_DEFAULT_WEATHER.join("、");
             openModalBox("datePlaceModal");
         }
         function dateSavePlace() {
             const name = document.getElementById("datePlaceName").value.trim(); if (!name) { alert("请填写地点名称"); return; }
-            let weathers = document.getElementById("datePlaceWeather").value.split(/[,，、\s]+/).map(x => x.trim()).filter(Boolean);
-            if (!weathers.length) weathers = DATE_DEFAULT_WEATHER.slice();
-            if (dateEditingId) { const p = db.datePlaces.find(x => x.id === dateEditingId); if (p) { p.name = name; p.weathers = weathers; } }
-            else db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 5), name, weathers });
+            if (dateEditingId) { const p = db.datePlaces.find(x => x.id === dateEditingId); if (p) p.name = name; }
+            else db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 5), name });
             saveData(); closeModal("datePlaceModal"); renderDating();
         }
         // ---- 随机物品 / 事件 ----
         function renderDatePool() {
             let h = `<div class="lib-bar" style="padding:4px 0 8px;"><button class="btn" onclick="dateAddGroup()">新建分组</button><div style="flex:1"></div><button class="btn btn-outline" onclick="dateOpenBatch()">批量添加</button></div>`;
-            h += db.dateGroups.map(g => `<div class="date-group"><div class="date-group-head"><span class="t" onclick="dateRenameGroup('${g.id}')">${escapeHtml(g.name)}</span><span class="s">${g.items.length} 条</span><button class="simple-del-btn" onclick="dateDeleteGroup('${g.id}')">✕</button></div>
+            h += db.dateGroups.map(g => `<div class="date-group"><div class="date-group-head"><span class="t" onclick="dateRenameGroup('${g.id}')">${escapeHtml(g.name)}</span><span class="s">${g.items.length} 条</span><button class="btn btn-outline" style="padding:3px 10px;font-size:12px;margin-left:auto;" onclick="dateAddItem('${g.id}')">＋添加</button><button class="simple-del-btn" onclick="dateDeleteGroup('${g.id}')">✕</button></div>
                 ${g.items.length ? g.items.map((it, i) => `<div class="date-item"><span onclick="dateEditItem('${g.id}',${i})">${escapeHtml(it)}</span><button class="simple-del-btn" onclick="dateDeleteItem('${g.id}',${i})">✕</button></div>`).join("") : `<div class="lib-empty" style="padding:12px 0;">这个分组还没有内容</div>`}</div>`).join("");
             return h;
         }
+        function dateAddItem(gid) { const g = db.dateGroups.find(x => x.id === gid); openSimpleEditModal('添加到「' + g.name + '」', '', v => { v = (v || '').trim(); if (!v) return; if (!g.items.includes(v)) g.items.push(v); saveData(); renderDating(); }); }
         function dateAddGroup() { openSimpleEditModal("新建分组", "", n => { db.dateGroups.push({ id: "g" + Date.now(), name: n, items: [] }); saveData(); renderDating(); }); }
         function dateRenameGroup(id) { const g = db.dateGroups.find(x => x.id === id); openSimpleEditModal("重命名分组", g.name, n => { g.name = n; saveData(); renderDating(); }); }
         function dateDeleteGroup(id) { const g = db.dateGroups.find(x => x.id === id); if (!confirm("删除分组「" + g.name + "」及其中 " + g.items.length + " 条内容吗？")) return; db.dateGroups = db.dateGroups.filter(x => x.id !== id); saveData(); renderDating(); }
@@ -5263,8 +5352,7 @@
                 else {
                     if (!place) return;
                     if (!dateAllItems().length) { alert("「随机物品/事件」里还没有内容，先去添加一些吧"); return; }
-                    const w = (place.weathers && place.weathers.length ? place.weathers : DATE_DEFAULT_WEATHER);
-                    db.dateOngoing = { placeId, placeName: place.name, weather: w[Math.floor(Math.random() * w.length)], items: dateDraw(), startTs: Date.now(), sentence: "" };
+                                        db.dateOngoing = { placeId, placeName: place.name, weather: "", items: [], startTs: Date.now(), sentence: "" };
                     saveData();
                 }
             }
@@ -5276,22 +5364,41 @@
         function dateRenderStart() {
             const o = db.dateOngoing; if (!o) return;
             document.getElementById("dateStartTitle").innerText = o.placeName;
-            document.getElementById("dateStartInfo").innerText = `天气：${o.weather}　·　${dateFmtTime(o.startTs)} 出发，约 2 小时（预计 ${dateFmtTime(o.startTs + 7200000)} 结束）`;
-            document.getElementById("dateStartItems").innerHTML = o.items.map(t => `<span class="date-chip">${escapeHtml(t)}</span>`).join("");
+            document.getElementById("dateStartInfo").innerText = `${dateFmtTime(o.startTs)} 出发，约 2 小时（预计 ${dateFmtTime(o.startTs + 7200000)} 结束）`;
+            document.getElementById("dateStartWeather").value = o.weather || "";
+            document.getElementById("dateStartItems").innerHTML = o.items.length ? o.items.map(t => `<span class="date-chip">${escapeHtml(t)}</span>`).join("") : `<div style="font-size:12.5px;color:var(--text-sub);">填好天气，点「刷新」抽取今天的物品和事件</div>`;
             document.getElementById("dateStartSentence").value = o.sentence || "";
             dateTickElapsed();
         }
         function dateTickElapsed() { const o = db.dateOngoing; const el = document.getElementById("dateStartElapsed"); if (o && el) el.innerText = "已进行 " + dateFmtDur(Date.now() - o.startTs); }
-        function dateReroll() { const o = db.dateOngoing; if (!o) return; o.items = dateDraw(); saveData(); dateRenderStart(); }
-        function dateRerollWeather() { const o = db.dateOngoing; const p = db.datePlaces.find(x => x.id === o.placeId); const w = p && p.weathers && p.weathers.length ? p.weathers : DATE_DEFAULT_WEATHER; o.weather = w[Math.floor(Math.random() * w.length)]; saveData(); dateRenderStart(); }
+        function dateSaveWeather(v) { if (db.dateOngoing) { db.dateOngoing.weather = v.trim(); saveData(); } }
+        let dateReelBusy = false;
+        function dateReroll() {
+            const o = db.dateOngoing; if (!o || dateReelBusy) return;
+            const pool = dateAllItems().map(x => x.t); if (!pool.length) { alert("「随机物品/事件」里还没有内容"); return; }
+            const finals = dateDraw(); dateReelBusy = true;
+            const box = document.getElementById("dateStartItems"); const H = 34;
+            box.innerHTML = finals.map(() => `<div class="date-reel"><div class="date-reel-strip"></div></div>`).join("");
+            const strips = box.querySelectorAll(".date-reel-strip");
+            strips.forEach((st, i) => {
+                const L = 24 + i * 6, arr = []; for (let k = 0; k < L; k++) arr.push(pool[Math.floor(Math.random() * pool.length)]); arr.push(finals[i]);
+                st.innerHTML = arr.map(t => `<div style="height:${H}px;line-height:${H}px;">${escapeHtml(t)}</div>`).join("");
+                st.style.transform = "translateY(0)"; st.getBoundingClientRect();
+                st.style.transition = `transform ${1.3 + i * 0.35}s cubic-bezier(.15,.7,.2,1)`; st.style.transform = `translateY(${-L * H}px)`;
+            });
+            const total = (1.3 + (finals.length - 1) * 0.35) * 1000 + 100;
+            try { gameSfx("tap"); } catch (e) { }
+            setTimeout(() => { dateReelBusy = false; if (!db.dateOngoing) return; db.dateOngoing.items = finals; saveData(); dateRenderStart(); }, total);
+        }
         function dateSaveSentenceDraft(v) { if (db.dateOngoing) { db.dateOngoing.sentence = v; saveData(); } }
         function dateCloseStart() { clearInterval(dateTimer); closeModal("dateStartModal"); renderDating(); }
         function dateAbandon() { if (!confirm("放弃这场约会吗？不会生成轨迹记录。")) return; db.dateOngoing = null; saveData(); dateCloseStart(); }
         function dateFinish() {
             const o = db.dateOngoing; if (!o) return;
             const sentence = document.getElementById("dateStartSentence").value.trim();
+            if (dateReelBusy) return;
             if (!sentence && !confirm("还没有把它们写成一句话，直接完成吗？")) return;
-            db.dateRecords.unshift({ id: "r" + Date.now(), placeName: o.placeName, weather: o.weather, items: o.items, sentence, startTs: o.startTs, endTs: Date.now() });
+            db.dateRecords.unshift({ id: "r" + Date.now(), placeName: o.placeName, weather: o.weather || "未填", items: o.items, sentence, startTs: o.startTs, endTs: Date.now() });
             db.dateOngoing = null; saveData(); dateCloseStart(); dateSwitchTab(2);
         }
         // ---- 轨迹 ----
@@ -5306,10 +5413,53 @@
         }
         function dateDeleteRecord(id) { if (!confirm("删除这条约会记录吗？")) return; db.dateRecords = db.dateRecords.filter(r => r.id !== id); saveData(); renderDating(); }
 
-        function openSpeakFreq() { document.getElementById("sf_min").value = db.freq.speakMin || 3; document.getElementById("sf_max").value = db.freq.speakMax || 8; openModalBox("speakFreqModal"); }
+        // ==================== ✍️ 自由造句（信号里的词语库） ====================
+        let freeCat = "", freeSelectMode = false, freeSelectedSet = new Set(), freeSearch = "";
+        function renderFreeTabContent(panel) {
+            if (!db.freeWords) db.freeWords = {};
+            const cats = Object.keys(db.freeWords);
+            const q = freeSearch.trim();
+            let h = `<div class="free-cats"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" onclick="freeSetCat('${c}')">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button></div>`;
+            h += `<div class="card-toolbar-row1"><button class="btn ${freeSelectMode ? "" : "btn-outline"}" style="flex:0 0 auto; padding:10px 14px;" onclick="freeToggleSelect()">${freeSelectMode ? "完成" : "多选"}</button><input class="modal-input" placeholder="🔍 搜索..." value="${freeSearch.replace(/"/g, "&quot;")}" oninput="freeSearch=this.value;renderCardTabPanel()"><button class="btn btn-outline card-dedupe-btn" onclick="freeDeleteCat()" ${freeCat ? "" : "disabled style='opacity:.4'"}>删词类</button></div>`;
+            h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<button class="btn btn-danger" style="width:100%; margin-bottom:8px;" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
+            const rows = [];
+            cats.forEach(c => { if (freeCat && freeCat !== c) return; db.freeWords[c].forEach((w, i) => { if (!q || w.includes(q)) rows.push({ c, i, w }); }); });
+            if (!rows.length) h += `<div class="empty-state">${q ? "没有找到匹配的词语" : "还没有词语，点上方按钮添加吧。他会随机抽取名词、动词、助词、介词等，用空格连成一句话发给你"}</div>`;
+            else h += rows.map(r => { const key = r.c + "\u0001" + r.i; return `<div class="simple-list-row">${freeSelectMode ? `<input type="checkbox" class="item-select-checkbox" ${freeSelectedSet.has(key) ? "checked" : ""} onchange="freeToggleSel(this.dataset.k)" data-k="${key}">` : ""}<span>${escapeHtml(r.w)}${freeCat ? "" : ` <em class="free-tag">${escapeHtml(r.c)}</em>`}</span>${!freeSelectMode ? `<button class="simple-edit-btn" onclick="freeEdit('${r.c}',${r.i})">✎</button><button class="simple-del-btn" onclick="freeDelete('${r.c}',${r.i})">✕</button>` : ""}</div>`; }).join("");
+            panel.innerHTML = h;
+        }
+        function freeSetCat(c) { freeCat = c; freeSelectedSet.clear(); renderCardTabPanel(); }
+        function freeToggleSelect() { freeSelectMode = !freeSelectMode; freeSelectedSet.clear(); renderCardTabPanel(); }
+        function freeToggleSel(k) { freeSelectedSet.has(k) ? freeSelectedSet.delete(k) : freeSelectedSet.add(k); renderCardTabPanel(); }
+        function freeAddCat() { openSimpleEditModal("新增词类（如：代词、语气词）", "", n => { if (!db.freeWords[n]) db.freeWords[n] = []; freeCat = n; saveData(); renderCardTabPanel(); }); }
+        function freeDeleteCat() {
+            if (!freeCat) return; const n = db.freeWords[freeCat].length;
+            if (!confirm(`删除词类「${freeCat}」及其中 ${n} 个词语吗？`)) return;
+            delete db.freeWords[freeCat]; freeCat = ""; saveData(); renderCardTabPanel();
+        }
+        function freeEdit(c, i) { openSimpleEditModal("编辑词语", db.freeWords[c][i], v => { db.freeWords[c][i] = v; saveData(); renderCardTabPanel(); }); }
+        function freeDelete(c, i) { if (!confirm(`确定删除「${db.freeWords[c][i]}」吗？`)) return; db.freeWords[c].splice(i, 1); saveData(); renderCardTabPanel(); }
+        function freeDeleteSelected() {
+            if (!confirm(`确定删除选中的 ${freeSelectedSet.size} 个词语吗？`)) return;
+            const by = {}; freeSelectedSet.forEach(k => { const [c, i] = k.split("\u0001"); (by[c] = by[c] || []).push(+i); });
+            Object.keys(by).forEach(c => by[c].sort((a, b) => b - a).forEach(i => db.freeWords[c].splice(i, 1)));
+            freeSelectedSet.clear(); freeSelectMode = false; saveData(); renderCardTabPanel();
+        }
+        function freeOpenAdd() {
+            const cats = Object.keys(db.freeWords);
+            document.getElementById("freeAddCat").innerHTML = cats.map(c => `<option value="${escapeHtml(c)}" ${c === freeCat ? "selected" : ""}>${escapeHtml(c)}</option>`).join("");
+            document.getElementById("freeAddText").value = ""; openModalBox("freeAddModal");
+        }
+        function freeSubmitAdd() {
+            const c = document.getElementById("freeAddCat").value; if (!c || !db.freeWords[c]) return;
+            const words = document.getElementById("freeAddText").value.split(/[\s,，、]+/).map(x => x.trim()).filter(Boolean);
+            let n = 0; words.forEach(w => { if (!db.freeWords[c].includes(w)) { db.freeWords[c].push(w); n++; } });
+            saveData(); closeModal("freeAddModal"); freeCat = c; renderCardTabPanel();
+        }
+
+        function openSpeakFreq() { document.getElementById("sf_min").value = db.freq.speakEvery || 5; openModalBox("speakFreqModal"); }
         function saveSpeakFreq() {
-            db.freq.speakMin = Math.max(0, parseFloat(document.getElementById("sf_min").value) || 3);
-            db.freq.speakMax = Math.max(db.freq.speakMin, parseFloat(document.getElementById("sf_max").value) || 8);
+            db.freq.speakEvery = Math.max(1, parseFloat(document.getElementById("sf_min").value) || 5);
             saveData(); closeModal("speakFreqModal");
         }
         // ---- 他在顶部说话（书房/游戏共用）：停留10秒，间隔由频率里的秒数设置 ----
@@ -5325,8 +5475,7 @@
                     span.classList.add("show");
                     t.hide = setTimeout(() => span.classList.remove("show"), 10000);
                 }
-                const sMin = parseFloat(db.freq.speakMin) || 20, sMax = Math.max(sMin, parseFloat(db.freq.speakMax) || 40);
-                t.loop = setTimeout(once, 10600 + (sMin + Math.random() * (sMax - sMin)) * 1000);
+                t.loop = setTimeout(once, 10600 + (parseFloat(db.freq.speakEvery) || 5) * 1000);
             };
             t.loop = setTimeout(once, 1200);
         }
