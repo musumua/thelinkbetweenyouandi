@@ -27,6 +27,14 @@
             --wish-note-c1: #A79BB0; --wish-note-c2: #94879F; --wish-note-text: #3D3544;
         }
 
+
+        /* 黑白主题：叠加在紫色基础主题之上，覆盖变量 */
+        [data-mono="1"] { --primary: #E8E8E8; --primary-light: #2A2A2A; --bg: #121212; --panel: rgba(24,24,24,0.98); --text-main: #F2F2F2; --text-sub: #9A9A9A; --border: rgba(255,255,255,0.14); --my-bubble: rgba(235,235,235,0.92); --other-bubble: rgba(44,44,44,0.95); --modal-bg: #1E1E1E; --input-bg: #F2F2F2; --input-text: #111; --clock-bg1: #262626; --clock-bg2: #121212; --clock-text: #F2F2F2; --wish-note-c1: #BDBDBD; --wish-note-c2: #A8A8A8; --wish-note-text: #2B2B2B; }
+        [data-mono="1"] .bubble.me, [data-mono="1"] .msg-me .bubble { color:#111; }
+        [data-mono="1"][data-theme="eye-care"] { --primary: #222; --primary-light: #F2F2F2; --bg: #F5F5F5; --panel: rgba(250,250,250,0.98); --text-main: #161616; --text-sub: #7A7A7A; --border: rgba(0,0,0,0.12); --my-bubble: rgba(30,30,30,0.9); --other-bubble: #FFFFFF; --modal-bg: #FFFFFF; --shadow-sm: 0 4px 12px rgba(0,0,0,0.05); --shadow-md: 0 6px 24px rgba(0,0,0,0.08); --shadow-lg: 0 14px 48px rgba(0,0,0,0.12); --input-bg: #FFFFFF; --input-text: #161616; --clock-bg1: #FFFFFF; --clock-bg2: #E6E6E6; --clock-text: #222; --wish-note-c1: #DADADA; --wish-note-c2: #C8C8C8; --wish-note-text: #333; }
+        [data-mono="1"][data-theme="eye-care"] .bubble.me, [data-mono="1"][data-theme="eye-care"] .msg-me .bubble { color:#fff; }
+        [data-mono="1"][data-theme="eye-care"] .card-group-header { background:#EDEDED; }
+
         [data-theme="eye-care"] {
             --primary: #7C66A6;
             --primary-light: #F4F0FB;
@@ -260,6 +268,30 @@
         h3 { font-size: 14px; font-weight: 600; margin: 12px 0 8px 0; color: var(--text-main); }
         #simpleEditModal { z-index: 1020; }
 
+        .game-body { flex:1; overflow-y:auto; padding:14px 12px 40px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+        .game-diff { display:flex; gap:8px; width:100%; }
+        .game-diff button { flex:1; padding:9px 0; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:13px; cursor:pointer; }
+        .game-diff button.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; }
+        .game-card { width:100%; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow-sm); cursor:pointer; }
+        .gc-t { font-size:16px; font-weight:600; } .gc-d { font-size:12px; color:var(--text-sub); margin-top:4px; } .gc-r { font-size:11px; color:var(--text-sub); margin-top:8px; opacity:.8; }
+        .game-msg { font-size:13px; color:var(--text-sub); min-height:18px; text-align:center; }
+        .game-canvas { border-radius:4px; box-shadow:var(--shadow-md); touch-action:manipulation; }
+        .game-btns { display:flex; gap:10px; justify-content:center; margin-top:4px; }
+        .mine-score { font-size:13px; letter-spacing:1px; }
+        .mine-grid { display:grid; gap:2px; width:100%; max-width:380px; }
+        .mc { aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--primary); opacity:.85; border-radius:4px; font-size:15px; font-weight:700; color:var(--bg); user-select:none; }
+        .mc.open { background:var(--border); opacity:1; color:var(--text-main); }
+        .mc.boom { background:#C0485A; }
+        .mc.n1{color:#7FB2F0}.mc.n2{color:#7FD08A}.mc.n3{color:#F08A8A}.mc.n4{color:#B79CF0}.mc.n5{color:#F0B77F}
+        .link-grid { display:grid; gap:4px; width:100%; max-width:380px; }
+        .lk { aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--panel); border:1px solid var(--border); border-radius:8px; font-size:22px; user-select:none; }
+        .lk.gone { visibility:hidden; } .lk.sel { border-color:var(--primary); box-shadow:0 0 0 2px var(--primary); } .lk.hint { animation:lkblink .6s 3; }
+        @keyframes lkblink { 50% { background:var(--primary); } }
+        .snake-lcd { background:#9DB06F; padding:10px; border-radius:10px; box-shadow:inset 0 0 0 3px #1B2A12, var(--shadow-md); }
+        .snake-lcd canvas { display:block; image-rendering:pixelated; touch-action:none; }
+        .dpad { display:grid; grid-template-columns:repeat(3,64px); grid-template-rows:repeat(2,52px); gap:6px; justify-content:center; margin-top:4px; }
+        .dpad button { border-radius:14px; border:1px solid var(--border); background:var(--panel); color:var(--text-main); font-size:20px; touch-action:manipulation; }
+        .dp-u { grid-column:2; grid-row:1; } .dp-l { grid-column:1; grid-row:2; } .dp-d { grid-column:2; grid-row:2; } .dp-r { grid-column:3; grid-row:2; }
         .lib-bar { display:flex; gap:6px; align-items:center; padding:12px 14px 6px; }
         .lib-bar .btn { padding:8px 10px; font-size:12.5px; white-space:nowrap; }
         .lib-search { flex:1; min-width:0; background:var(--panel); border:1px solid var(--border); color:var(--text-main); border-radius:14px; padding:8px 12px; font-size:13px; outline:none; }
@@ -276,7 +308,12 @@
         .lib-speak { min-height:44px; padding:10px 20px; text-align:center; font-size:13.5px; color:var(--text-sub); display:flex; align-items:center; justify-content:center; flex-shrink:0; border-bottom:1px solid var(--border); }
         .lib-speak span { opacity:0; transition:opacity .6s ease; }
         .lib-speak span.show { opacity:1; }
-        .lib-text { flex:1; overflow-y:auto; padding:18px 20px 60px; font-size:16px; line-height:1.9; white-space:pre-wrap; word-break:break-word; }
+        .lib-text { flex:1; overflow:hidden; padding:18px 22px; font-size:16px; line-height:28px; white-space:pre-wrap; word-break:break-all; }
+        .lib-pager { display:flex; align-items:center; justify-content:center; gap:22px; padding:8px 0 calc(10px + env(safe-area-inset-bottom)); border-top:1px solid var(--border); font-size:12px; color:var(--text-sub); flex-shrink:0; }
+        .lib-pager button { background:none; border:none; color:var(--text-main); font-size:22px; padding:0 14px; cursor:pointer; }
+        .speak-avatar { width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px; flex-shrink:0; background:var(--border); }
+        .lib-speak { justify-content:flex-start !important; text-align:left !important; }
+        .lib-speak span { flex:1; }
         .game-speak { min-height:44px; }
         .btn { padding: 9px 16px; background: var(--primary); color: #fff; border: none; border-radius: 14px; font-size: 14px; cursor: pointer; font-weight: 500; box-shadow: var(--shadow-sm); }
         .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
@@ -494,6 +531,9 @@
         .app-page-title { font-size:16px; font-weight:bold; color: var(--text-main); }
         .app-page-body { padding: 16px; }
         .app-page-header-spacer { width: 32px; flex-shrink: 0; }
+        .month-pill { flex-shrink:0; padding:5px 11px; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:12px; cursor:pointer; min-width:32px; }
+        .month-opt { padding:12px 14px; border-bottom:1px solid var(--border); font-size:14px; cursor:pointer; display:flex; justify-content:space-between; }
+        .month-opt.active { color:var(--primary); font-weight:600; }
 
         /* ==================== 🗂️ 字卡管理分区 ==================== */
         .card-tab-bar { display:flex; gap: 20px; padding: 10px 18px 0 18px; flex-shrink:0; overflow-x:auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-bottom: 1px solid var(--border); }
@@ -740,7 +780,10 @@
             <div class="pyq-cover-section" id="pyqCover">
                 <div class="pyq-top-actions">
                     <button class="pyq-back-pure-symbol" onclick="closePyqPage()"></button>
-                    <button class="pyq-action-bubble-btn" onclick="triggerCoverUpload()">更换封面 📷</button>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <button class="pyq-action-bubble-btn" id="pyqMonthBtn" onclick="openMonthPicker('pyq')">全部</button>
+                        <button class="pyq-action-bubble-btn" onclick="triggerCoverUpload()">更换封面 📷</button>
+                    </div>
                 </div>
                 <div class="pyq-double-badges-bar">
                     <div class="pyq-user-badge-static">
@@ -769,7 +812,7 @@
             <div class="app-page-header">
                 <button class="pyq-back-pure-symbol" onclick="closeLetterPage()"></button>
                 <div class="app-page-title">交换日记</div>
-                <div class="app-page-header-spacer"></div>
+                <button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button>
             </div>
             <div class="diary-book-wrap">
                 <div class="diary-book">
@@ -921,6 +964,16 @@
         </div>
     </div>
 
+    <div class="pyq-full-page" id="gamesFullPage">
+        <div class="app-page-header">
+            <button class="pyq-back-pure-symbol" onclick="gameBack()"></button>
+            <div class="app-page-title" id="gameTitle">游戏</div>
+            <div class="app-page-header-spacer"></div>
+        </div>
+        <div class="lib-speak"><img class="speak-avatar" id="gameSpeakAvatar" src=""><span id="gameSpeakText"></span></div>
+        <div class="game-body" id="gameBody"></div>
+    </div>
+
     <div class="pyq-full-page" id="libraryFullPage">
         <div class="app-page-header">
             <button class="pyq-back-pure-symbol" onclick="closeLibraryPage()"></button>
@@ -942,8 +995,9 @@
             <div class="app-page-title" id="libReaderTitle" style="font-size:15px;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">书</div>
             <div class="app-page-header-spacer" id="libReaderPct" style="font-size:12px;color:var(--text-sub);text-align:right">0%</div>
         </div>
-        <div class="lib-speak"><span id="libSpeakText"></span></div>
-        <div class="lib-text" id="libText" onscroll="libOnScroll()"></div>
+        <div class="lib-speak"><img class="speak-avatar" id="libSpeakAvatar" src=""><span id="libSpeakText"></span></div>
+        <div class="lib-text" id="libText"></div>
+        <div class="lib-pager"><button onclick="libTurn(-1)">‹</button><span id="libPageLabel">1 / 1</span><button onclick="libTurn(1)">›</button></div>
     </div>
 
     <div class="pyq-full-page" id="statsFullPage">
@@ -1033,8 +1087,8 @@
                 </div>
                 <p style="font-size:11px; color:var(--text-sub); margin-bottom:12px; text-align:center;">控制对话、朋友圈及日记的自动流转频率</p>
                 <div class="section" style="margin-bottom:0;">
-                    <div class="flex-row-between"><span>回复气泡数</span><div><input id="cfg_card_min" type="number"> 至 <input id="cfg_card_max" type="number"> 个</div></div>
-                    <div class="flex-row-between"><span>随机合并字卡</span><div><input id="cfg_merge_card_min" type="number"> 至 <input id="cfg_merge_card_max" type="number"> 条</div></div>
+                    <div class="flex-row-between"><span>气泡数（他发几条）</span><div><input id="cfg_card_min" type="number"> 至 <input id="cfg_card_max" type="number"> 个</div></div>
+                    <div class="flex-row-between"><span>合并字卡（单条含几张）</span><div><input id="cfg_merge_card_min" type="number"> 至 <input id="cfg_merge_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>回复间隔</span><div><input id="cfg_reply_min" type="number"> 至 <input id="cfg_reply_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>随机打招呼频率</span><div><input id="cfg_rand_min" type="number"> 至 <input id="cfg_rand_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>状态改变间隔</span><div><input id="cfg_status_min" type="number"> 至 <input id="cfg_status_max" type="number"> 分钟</div></div>
@@ -1043,6 +1097,7 @@
                     <div class="flex-row-between"><span>朋友圈回复条数</span><div><input id="cfg_pyq_card_min" type="number"> 至 <input id="cfg_pyq_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>朋友圈回复间隔</span><div><input id="cfg_pyq_reply_min" type="number"> 至 <input id="cfg_pyq_reply_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>日记回复条数</span><div><input id="cfg_letter_num_min" type="number"> 至 <input id="cfg_letter_num_max" type="number"> 条</div></div>
+                    <div class="flex-row-between"><span>书房/游戏他说话间隔</span><div><input id="cfg_speak_min" type="number"> 至 <input id="cfg_speak_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>日记回复间隔</span><div><input id="cfg_letter_min" type="number"> 至 <input id="cfg_letter_max" type="number"> 小时</div></div>
                 </div>
                 <button class="btn" style="width:100%; margin-top:14px;" onclick="saveFrequencies()">保存配置</button>
@@ -1107,7 +1162,8 @@
             <div class="app-page-body">
                 <div class="section">
                     <h3>色系</h3>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin: 8px 0;">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin: 8px 0;">
+                        <button class="theme-btn-item" id="theme_color_mono" onclick="setThemeColor('mono')">黑白主题</button>
                         <button class="theme-btn-item" id="theme_color_purple" onclick="setThemeColor('purple')">紫色主题</button>
                         <button class="theme-btn-item" id="theme_color_green" onclick="setThemeColor('green')">绿色主题</button>
                     </div>
@@ -1116,6 +1172,7 @@
                         <button class="theme-btn-item" id="theme_bright_dark" onclick="setThemeBrightness('dark')">深色模式</button>
                         <button class="theme-btn-item" id="theme_bright_light" onclick="setThemeBrightness('light')">护眼/浅色模式</button>
                     </div>
+                    <button id="theme_monodark" style="display:none;"></button><button id="theme_monolight" style="display:none;"></button>
                     <button id="theme_dark" style="display:none;"></button>
                     <button id="theme_eye" style="display:none;"></button>
                     <button id="theme_darkgreen" style="display:none;"></button>
@@ -1232,6 +1289,13 @@
         </div>
     </div>
 
+    <div class="universal-modal" id="monthPickModal" onclick="closeModal('monthPickModal')">
+        <div class="modal-box" onclick="event.stopPropagation()" style="max-height:70vh; overflow-y:auto;">
+            <h2>按月份查阅</h2>
+            <div id="monthPickList"></div>
+        </div>
+    </div>
+
     <div class="universal-modal" id="simpleEditModal" onclick="closeModal('simpleEditModal')">
         <div class="modal-box" onclick="event.stopPropagation()">
             <h2 id="simpleEditTitle">编辑</h2>
@@ -1311,7 +1375,7 @@
     <input type="file" id="pyq_cover_file" class="file" accept="image/*">
 
     <script>
-        const DEFAULT_SVG_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23836FA9'/><text x='50%25' y='55%25' font-size='32' fill='%23FFF' text-anchor='middle' dominant-baseline='middle'>★</text></svg>";
+        const DEFAULT_SVG_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23808080'/><text x='50%25' y='55%25' font-size='32' fill='%23FFF' text-anchor='middle' dominant-baseline='middle'>★</text></svg>";
         
         let db = {
             chat: [], cards: [{group:"默认", text:"今晚的月色很美。"}, {group:"默认", text:"看见你在，我就安心了。"}], 
@@ -1319,7 +1383,7 @@
             myEmojis: [], otherEmojis: [], bottomNudges: ["戳了戳", "拍了拍"],
             sentLetters: [], receivedLetters: [], pyqCover: "", pyqPosts: [], memories: [],
             stickyNote: "", wishNote: { text: "", date: "" }, periodDates: {}, periodRanges: [], anniversaries: [], scheduleEvents: [], books: [],
-            backgroundImage: "", themeMode: "dark", bubbleOpacity: 85,
+            backgroundImage: "", themeMode: "mono-dark", bubbleOpacity: 85,
             wheelOptions: [], homeWallpaper: "",
             autoMessageEnabled: false, readNoReplyEnabled: false, unreadCount: 0,
             me: { name: "我", avatar: DEFAULT_SVG_AVATAR },
@@ -1485,8 +1549,8 @@
               svg: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' },
             { id: "theme", label: "主题", action: () => openThemeModal(),
               svg: '<path d="M12 21a9 9 0 1 1 9-9c0 1.66-1.34 3-3 3h-1.5a1.5 1.5 0 0 0 0 3H17a1 1 0 0 1 0 2 5.5 5.5 0 0 1-5 1z"/><circle cx="7.2" cy="11" r="1.1" fill="currentColor"/><circle cx="9.5" cy="6.8" r="1.1" fill="currentColor"/><circle cx="14.7" cy="6.8" r="1.1" fill="currentColor"/><circle cx="17" cy="11" r="1.1" fill="currentColor"/>' },
-            { id: "wheel", label: "抉择", action: () => openWheelModal(),
-              svg: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>' },
+            { id: "games", label: "游戏", action: () => openGamesPage(),
+              svg: '<rect x="2" y="7" width="20" height="11" rx="5"/><line x1="7" y1="10.5" x2="7" y2="14.5"/><line x1="5" y1="12.5" x2="9" y2="12.5"/><circle cx="15.5" cy="11.5" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="13.5" r="1" fill="currentColor" stroke="none"/>' },
             { id: "settings", label: "设置", action: () => openSettingModal(),
               svg: '<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>' }
         ];
@@ -1995,6 +2059,8 @@
             'dark': ["#8F79B5", "#A390C5", "#7C66A6", "#6E5A94", "#5F4C82", "#B39DD0", "#9C87BE", "#524269"],
             'eye-care': ["#9C87BE", "#B39DD0", "#7C66A6", "#C4B3DE", "#8F79B5", "#A390C5", "#6E5A94", "#D6CCF2"],
             'dark-green': ["#6FA88A", "#5A8C71", "#7FB99A", "#4C7A62", "#8FC4A8", "#3F6B54", "#6FA88A", "#355A48"],
+            'mono-dark': ["#8A8A8A", "#9E9E9E", "#767676", "#B2B2B2", "#666666", "#C4C4C4", "#7E7E7E", "#555555"],
+            'mono-light': ["#5A5A5A", "#6E6E6E", "#7F7F7F", "#4A4A4A", "#8E8E8E", "#3C3C3C", "#686868", "#9A9A9A"],
             'light-green': ["#6FA37F", "#83B592", "#5A8C6C", "#9AC7AA", "#4C7A5C", "#B0D6BE", "#6FA37F", "#7FB08C"]
         };
         const WHEEL_CSS_SIZE = 260;
@@ -2002,7 +2068,9 @@
         let wheelIsSpinning = false;
 
         function getCurrentThemeMode() {
-            return document.documentElement.getAttribute('data-theme') || 'dark';
+            const h = document.documentElement;
+            if (h.getAttribute('data-mono')) return h.getAttribute('data-theme') ? 'mono-light' : 'mono-dark';
+            return h.getAttribute('data-theme') || 'dark';
         }
         function getWheelPalette() {
             return WHEEL_PALETTES[getCurrentThemeMode()] || WHEEL_PALETTES['dark'];
@@ -2167,9 +2235,12 @@
             if(!db.anniversaries) db.anniversaries = [];
             if(!db.scheduleEvents) db.scheduleEvents = [];
             if(!db.books) db.books = [];
+            if(!db.gameStats) db.gameStats = {};
+            ["homeIconOrder", "homeIconOrderPage2"].forEach(k => { if (Array.isArray(db[k])) db[k] = db[k].map(id => id === "wheel" ? "games" : id); });
             if(db.bubbleOpacity === undefined) db.bubbleOpacity = 85;
             if(!db.freq) { db.freq = { cardMin:1, cardMax:3, mergeCardMin:1, mergeCardMax:1, replyMin:1, replyMax:5, randMin:30, randMax:120, statusMin:5, statusMax:15, missingMin:5, missingMax:20, pyqMin:2, pyqMax:6, pyqCardMin:1, pyqCardMax:3, pyqReplyMin:1, pyqReplyMax:5, letterMin:1, letterMax:3, letterNumMin:1, letterNumMax:3 }; }
             if(db.freq.mergeCardMin === undefined) { db.freq.mergeCardMin = 1; db.freq.mergeCardMax = 1; }
+            if(db.freq.speakMin === undefined) { db.freq.speakMin = 20; db.freq.speakMax = 40; }
             if(db.freq.pyqReplyMin === undefined) db.freq.pyqReplyMin = 1;
             if(db.freq.pyqReplyMax === undefined) db.freq.pyqReplyMax = 5;
             if(db.freq.statusMin === undefined) db.freq.statusMin = 5;
@@ -2191,7 +2262,7 @@
                 saveData();
             }
 
-            syncProfileUI(); applyBgUI(); applyHomeWallpaperUI(); setThemeMode(db.themeMode || 'dark', false); rollOtherStatus(); renderChat(); renderPyqStream();
+            syncProfileUI(); applyBgUI(); applyHomeWallpaperUI(); setThemeMode(db.themeMode || 'mono-dark', false); rollOtherStatus(); renderChat(); renderPyqStream();
             updateBubbleOpacity(db.bubbleOpacity, false);
             setupPyqTimelineAutomation();
             setupStatusTimerAutomation();
@@ -2215,20 +2286,26 @@
             await idbSet(IDB_KEY, db);
         }
 
-        const THEME_BUTTON_IDS = { 'dark': 'theme_dark', 'eye-care': 'theme_eye', 'dark-green': 'theme_darkgreen', 'light-green': 'theme_lightgreen' };
+        const THEME_BUTTON_IDS = { 'dark': 'theme_dark', 'eye-care': 'theme_eye', 'dark-green': 'theme_darkgreen', 'light-green': 'theme_lightgreen', 'mono-dark': 'theme_monodark', 'mono-light': 'theme_monolight' };
         // 主题拆分为 色系(purple/green) x 明暗(dark/light) 两个轴，组合出最终的 4 种模式
         const THEME_AXIS_MAP = {
             'purple-dark': 'dark', 'purple-light': 'eye-care',
-            'green-dark': 'dark-green', 'green-light': 'light-green'
+            'green-dark': 'dark-green', 'green-light': 'light-green',
+            'mono-dark': 'mono-dark', 'mono-light': 'mono-light'
         };
         const THEME_MODE_TO_AXIS = {
             'dark': { color: 'purple', bright: 'dark' }, 'eye-care': { color: 'purple', bright: 'light' },
-            'dark-green': { color: 'green', bright: 'dark' }, 'light-green': { color: 'green', bright: 'light' }
+            'dark-green': { color: 'green', bright: 'dark' }, 'light-green': { color: 'green', bright: 'light' },
+            'mono-dark': { color: 'mono', bright: 'dark' }, 'mono-light': { color: 'mono', bright: 'light' }
         };
         function setThemeMode(mode, triggerSave = true) {
             db.themeMode = mode;
-            if (mode === 'dark') { document.documentElement.removeAttribute('data-theme'); }
-            else { document.documentElement.setAttribute('data-theme', mode); }
+            const isMono = mode === 'mono-dark' || mode === 'mono-light';
+            const htmlEl = document.documentElement;
+            if (isMono) { htmlEl.setAttribute('data-mono', '1'); } else { htmlEl.removeAttribute('data-mono'); }
+            const realTheme = mode === 'mono-dark' ? 'dark' : (mode === 'mono-light' ? 'eye-care' : mode);
+            if (realTheme === 'dark') { htmlEl.removeAttribute('data-theme'); }
+            else { htmlEl.setAttribute('data-theme', realTheme); }
 
             Object.keys(THEME_BUTTON_IDS).forEach(key => {
                 const btn = document.getElementById(THEME_BUTTON_IDS[key]);
@@ -2236,6 +2313,8 @@
             });
             const axis = THEME_MODE_TO_AXIS[mode] || THEME_MODE_TO_AXIS['dark'];
             const colorBtn1 = document.getElementById("theme_color_purple"), colorBtn2 = document.getElementById("theme_color_green");
+            const colorBtn3 = document.getElementById("theme_color_mono");
+            if (colorBtn3) colorBtn3.classList.toggle("active", axis.color === 'mono');
             if (colorBtn1) colorBtn1.classList.toggle("active", axis.color === 'purple');
             if (colorBtn2) colorBtn2.classList.toggle("active", axis.color === 'green');
             const brightBtn1 = document.getElementById("theme_bright_dark"), brightBtn2 = document.getElementById("theme_bright_light");
@@ -2248,12 +2327,12 @@
             renderHomeScreen();
         }
         function setThemeColor(color) {
-            const curMode = db.themeMode || 'dark';
+            const curMode = db.themeMode || 'mono-dark';
             const bright = (THEME_MODE_TO_AXIS[curMode] || THEME_MODE_TO_AXIS['dark']).bright;
             setThemeMode(THEME_AXIS_MAP[`${color}-${bright}`]);
         }
         function setThemeBrightness(bright) {
-            const curMode = db.themeMode || 'dark';
+            const curMode = db.themeMode || 'mono-dark';
             const color = (THEME_MODE_TO_AXIS[curMode] || THEME_MODE_TO_AXIS['dark']).color;
             setThemeMode(THEME_AXIS_MAP[`${color}-${bright}`]);
         }
@@ -2263,7 +2342,9 @@
             'dark': { my: '121, 95, 161', other: '82, 66, 105' },
             'eye-care': { my: '214, 204, 242', other: '255, 255, 255' },
             'dark-green': { my: '90, 140, 113', other: '43, 74, 61' },
-            'light-green': { my: '196, 226, 204', other: '255, 255, 255' }
+            'light-green': { my: '196, 226, 204', other: '255, 255, 255' },
+            'mono-dark': { my: '232, 232, 232', other: '44, 44, 44' },
+            'mono-light': { my: '40, 40, 40', other: '255, 255, 255' }
         };
         function updateBubbleOpacity(val, triggerSave = true) {
             db.bubbleOpacity = parseInt(val, 10);
@@ -2272,7 +2353,7 @@
                 document.getElementById("opacity_percent_label").innerText = val + "%";
             }
             const opacityRatio = db.bubbleOpacity / 100;
-            const base = BUBBLE_BASE_COLORS[getCurrentThemeMode()] || BUBBLE_BASE_COLORS['dark'];
+            const base = BUBBLE_BASE_COLORS[db.themeMode] || BUBBLE_BASE_COLORS[getCurrentThemeMode()] || BUBBLE_BASE_COLORS['dark'];
 
             document.documentElement.style.setProperty('--my-bubble', `rgba(${base.my}, ${opacityRatio})`);
             document.documentElement.style.setProperty('--other-bubble', `rgba(${base.other}, ${opacityRatio})`);
@@ -2587,14 +2668,12 @@
                 const _sigCards1 = getSignalCards();
                 let previewText = "";
                 if (poolDecision < 0.87 && _sigCards1.length > 0) {
-                    const mMin = parseInt(db.freq.mergeCardMin, 10) || 1;
-                    const mMax = Math.max(mMin, parseInt(db.freq.mergeCardMax, 10) || 1);
-                    const mergeCount = Math.min(_sigCards1.length, Math.floor(mMin + Math.random() * (mMax - mMin + 1)));
-                    const pickedTexts = [];
-                    for (let k = 0; k < mergeCount; k++) pickedTexts.push(_sigCards1[Math.floor(Math.random() * _sigCards1.length)].text);
+                    const pickedTexts = pickMergedTexts(_sigCards1);
                     const mergedText = pickedTexts.join("\n");
                     db.chat.push({ me: false, text: mergedText, time: timeStr, timeLabel: dateLabel });
                     previewText = pickedTexts[0];
+                    const extraBubbles = pickBubbleCount();
+                    if (extraBubbles > 1) setTimeout(() => triggerNextChainDelay(1, extraBubbles), 300);
                 } else if (poolDecision < 0.92 && db.nudgeList.length > 0) {
                     let nudge = db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)];
                     const nudgeText = `${db.other.name}${nudge}了`;
@@ -2782,7 +2861,9 @@
             const box = document.getElementById("pyqStreamBox"); if(!box) return;
             if(!db.pyqPosts || !db.pyqPosts.length) { box.innerHTML = `<div class="empty-state" style="color:var(--text-sub);">动态轴空空如也</div>`; return; }
 
-            const htmlParts = db.pyqPosts.map(p => {
+            const shownPosts = pyqMonthFilter ? db.pyqPosts.filter(p => tsMonthKey(pyqPostTs(p)) === pyqMonthFilter) : db.pyqPosts;
+            if (!shownPosts.length) { box.innerHTML = `<div class="empty-state" style="color:var(--text-sub);">这个月没有动态</div>`; return; }
+            const htmlParts = shownPosts.map(p => {
                 if(!p.likes) p.likes = []; if(!p.comments) p.comments = [];
                 let likeHtml = p.likes.length ? `<div class="pyq-like-names"><span class="heart-icon"></span>${p.likes.join(", ")}</div>` : '';
                 let commentHtml = '';
@@ -2955,13 +3036,27 @@
                 setTimeout(() => {
                     document.getElementById("typing").style.display = "none"; 
                     
-                    const minBubbles = parseInt(f.cardMin, 10) || 1;
-                    const maxBubbles = Math.max(minBubbles, parseInt(f.cardMax, 10) || 3);
-                    const totalBubblesToSend = Math.floor(minBubbles + Math.random() * (maxBubbles - minBubbles + 1));
+                    const totalBubblesToSend = pickBubbleCount();
                     
                     executeChainBubbleReply(0, totalBubblesToSend);
                 }, 1500); 
             }, Math.max(50, replyBaseDelay));
+        }
+
+        // 合并字卡：单个气泡里包含几张字卡（频率里“随机合并字卡”）
+        function pickMergedTexts(cards) {
+            const mMin = Math.max(1, parseInt(db.freq.mergeCardMin, 10) || 1);
+            const mMax = Math.max(mMin, parseInt(db.freq.mergeCardMax, 10) || 1);
+            const n = Math.min(cards.length, mMin + Math.floor(Math.random() * (mMax - mMin + 1)));
+            const out = [];
+            for (let k = 0; k < n; k++) out.push(cards[Math.floor(Math.random() * cards.length)].text);
+            return out;
+        }
+        // 气泡数：他一次发几条消息（频率里“回复气泡数”）
+        function pickBubbleCount() {
+            const bMin = Math.max(1, parseInt(db.freq.cardMin, 10) || 1);
+            const bMax = Math.max(bMin, parseInt(db.freq.cardMax, 10) || 3);
+            return bMin + Math.floor(Math.random() * (bMax - bMin + 1));
         }
 
         function executeChainBubbleReply(currentIndex, totalCount) {
@@ -2984,9 +3079,7 @@
             if (!_sigCards4.length) return;
 
             const now = new Date();
-            let innerCardsCount = Math.floor(1 + Math.random() * 2);
-            let gatheredTexts = [];
-            for(let k = 0; k < innerCardsCount; k++) { gatheredTexts.push(_sigCards4[Math.floor(Math.random() * _sigCards4.length)].text); }
+            const gatheredTexts = pickMergedTexts(_sigCards4);
 
             db.chat.push({
                 me: false,
@@ -3081,6 +3174,8 @@
             db.freq.pyqReplyMax = Math.max(db.freq.pyqReplyMin, parseFloat(document.getElementById("cfg_pyq_reply_max").value) || 5);
             db.freq.letterNumMin = Math.max(1, parseInt(document.getElementById("cfg_letter_num_min").value, 10) || 1);
             db.freq.letterNumMax = Math.max(db.freq.letterNumMin, parseInt(document.getElementById("cfg_letter_num_max").value, 10) || 3);
+            db.freq.speakMin = Math.max(3, parseFloat(document.getElementById("cfg_speak_min").value) || 20);
+            db.freq.speakMax = Math.max(db.freq.speakMin, parseFloat(document.getElementById("cfg_speak_max").value) || 40);
             db.freq.letterMin = Math.max(1, parseFloat(document.getElementById("cfg_letter_min").value) || 1);
             db.freq.letterMax = Math.max(db.freq.letterMin, parseFloat(document.getElementById("cfg_letter_max").value) || 3);
             saveData(); setupPyqTimelineAutomation(); setupStatusTimerAutomation(); setupMissingQuoteAutomation(); setupAutoMessageAutomation(); closeModal("freqLargeModal"); alert("配置保存成功！");
@@ -3091,6 +3186,7 @@
             document.getElementById("cfg_auto_message_toggle").checked = !!db.autoMessageEnabled;
             document.getElementById("cfg_read_no_reply_toggle").checked = !!db.readNoReplyEnabled;
             document.getElementById("cfg_card_min").value = f.cardMin; document.getElementById("cfg_card_max").value = f.cardMax;
+            document.getElementById("cfg_speak_min").value = f.speakMin || 20; document.getElementById("cfg_speak_max").value = f.speakMax || 40;
             document.getElementById("cfg_merge_card_min").value = f.mergeCardMin || 1; document.getElementById("cfg_merge_card_max").value = f.mergeCardMax || 1;
             document.getElementById("cfg_reply_min").value = f.replyMin; document.getElementById("cfg_reply_max").value = f.replyMax;
             document.getElementById("cfg_rand_min").value = f.randMin; document.getElementById("cfg_rand_max").value = f.randMax;
@@ -4093,10 +4189,38 @@
         }
         function isRealMessage(m) { return !["system", "letter-tip", "diary-invite", "diary-return", "schedule-reminder"].includes(m.type) && (m.text || m.img); }
         let currentDiaryRound = 0;
+        // ---- 月份筛选（交换日记 / 朋友圈）----
+        let diaryMonthFilter = "", pyqMonthFilter = "", monthPickTarget = "";
+        function tsMonthKey(ts) { if (!ts) return ""; const d = new Date(ts); if (isNaN(d)) return ""; return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); }
+        function itemTs(o) { if (!o) return 0; return o.ts || Date.parse(o.time) || 0; }
+        function pyqPostTs(p) { return p.id > 1e12 ? Math.floor(p.id) : (Date.parse(p.time) || 0); }
+        function monthLabel(k) { return k ? k.replace("-", "年") + "月" : "全部"; }
+        function openMonthPicker(target) {
+            monthPickTarget = target;
+            const set = new Set();
+            if (target === "diary") {
+                db.sentLetters.concat(db.receivedLetters).forEach(l => { const k = tsMonthKey(itemTs(l)); if (k) set.add(k); });
+            } else {
+                (db.pyqPosts || []).forEach(p => { const k = tsMonthKey(pyqPostTs(p)); if (k) set.add(k); });
+            }
+            const cur = target === "diary" ? diaryMonthFilter : pyqMonthFilter;
+            const keys = ["", ...Array.from(set).sort().reverse()];
+            document.getElementById("monthPickList").innerHTML = keys.map(k => `<div class="month-opt ${k === cur ? "active" : ""}" onclick="applyMonthFilter('${k}')"><span>${monthLabel(k)}</span>${k === cur ? "✓" : ""}</div>`).join("");
+            openModalBox("monthPickModal");
+        }
+        function applyMonthFilter(k) {
+            if (monthPickTarget === "diary") { diaryMonthFilter = k; document.getElementById("diaryMonthBtn").innerText = k ? k.slice(2).replace("-", "/") : "全部"; currentDiaryRound = 9999; renderDiaryTimeline(); }
+            else { pyqMonthFilter = k; document.getElementById("pyqMonthBtn").innerText = k ? k.slice(2).replace("-", "/") : "全部"; renderPyqStream(); }
+            closeModal("monthPickModal");
+        }
         function getDiaryRounds() {
             const n = Math.max(db.sentLetters.length, db.receivedLetters.length, 1);
-            const rounds = [];
+            let rounds = [];
             for (let i = 0; i < n; i++) rounds.push({ mine: db.sentLetters[i] || null, his: db.receivedLetters[i] || null });
+            if (diaryMonthFilter) {
+                rounds = rounds.filter(r => tsMonthKey(itemTs(r.mine) || itemTs(r.his)) === diaryMonthFilter);
+                if (!rounds.length) rounds = [{ mine: null, his: null }];
+            }
             return rounds;
         }
         function renderDiaryTimeline() {
@@ -4352,47 +4476,483 @@
             libSelected.clear(); libSelectMode = false; document.getElementById("libSelBtn").innerText = "多选";
             saveDataImmediate(); renderLibrary();
         }
+        let libPages = [], libText = "", libPage = 0, libTouchX = null;
+        function libPaginate() {
+            const el = document.getElementById("libText");
+            const cs = getComputedStyle(el);
+            const w = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            const h = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+            const fs = parseFloat(cs.fontSize), lh = parseFloat(cs.lineHeight) || 28;
+            const cpl = Math.max(4, Math.floor(w / fs)), lpp = Math.max(3, Math.floor(h / lh));
+            const starts = [0]; let units = 0, lines = 1;
+            for (let i = 0; i < libText.length; i++) {
+                const ch = libText.charCodeAt(i);
+                if (ch === 10) { lines++; units = 0; }
+                else { units += ch < 256 ? 0.55 : 1; if (units > cpl) { lines++; units = ch < 256 ? 0.55 : 1; } }
+                if (lines > lpp) { starts.push(i); lines = 1; units = ch === 10 ? 0 : (ch < 256 ? 0.55 : 1); }
+            }
+            libPages = starts;
+        }
+        function libShowPage(p, save) {
+            libPage = Math.max(0, Math.min(libPages.length - 1, p));
+            const from = libPages[libPage], to = libPages[libPage + 1] === undefined ? libText.length : libPages[libPage + 1];
+            document.getElementById("libText").textContent = libText.slice(from, to).replace(/^\n/, "");
+            document.getElementById("libPageLabel").innerText = (libPage + 1) + " / " + libPages.length;
+            const pct = libText.length ? from / libText.length : 0;
+            document.getElementById("libReaderPct").innerText = Math.round(pct * 100) + "%";
+            if (libCurrent && save !== false) { libCurrent.pos = from; libCurrent.progress = libPages.length > 1 ? libPage / (libPages.length - 1) : 1; clearTimeout(libSaveT); libSaveT = setTimeout(() => saveData(), 500); }
+        }
+        function libTurn(d) { libShowPage(libPage + d); }
+        function libPageForPos(pos) { let p = 0; for (let i = 0; i < libPages.length; i++) { if (libPages[i] <= pos) p = i; else break; } return p; }
         async function openLibReader(id) {
             const b = db.books.find(x => x.id === id); if (!b) return;
             libCurrent = b;
-            const text = (await idbGet("book_text_" + id)) || "";
+            libText = (await idbGet("book_text_" + id)) || "";
             document.getElementById("libReaderTitle").innerText = b.title;
-            const el = document.getElementById("libText");
-            el.textContent = text;
+            document.getElementById("libSpeakAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
             document.getElementById("libReaderPage").classList.add("open");
             b.lastReadAt = Date.now();
-            requestAnimationFrame(() => { el.scrollTop = (b.progress || 0) * Math.max(0, el.scrollHeight - el.clientHeight); libOnScroll(true); });
-            libStartSpeak();
-        }
-        function libOnScroll(noSave) {
-            if (!libCurrent) return;
-            const el = document.getElementById("libText");
-            const max = Math.max(1, el.scrollHeight - el.clientHeight);
-            const p = Math.min(1, el.scrollTop / max);
-            libCurrent.progress = p;
-            document.getElementById("libReaderPct").innerText = Math.round(p * 100) + "%";
-            if (noSave === true) return;
-            clearTimeout(libSaveT); libSaveT = setTimeout(() => saveData(), 600);
+            requestAnimationFrame(() => {
+                libPaginate();
+                let pos = b.pos;
+                if (pos === undefined) pos = Math.floor((b.progress || 0) * libText.length);
+                libShowPage(libPageForPos(pos), false);
+            });
+            herSpeakStart("libSpeakText", "lib");
         }
         function closeLibReader() {
             document.getElementById("libReaderPage").classList.remove("open");
-            libStopSpeak(); clearTimeout(libSaveT); saveData(); libCurrent = null; renderLibrary();
+            herSpeakStop("lib"); clearTimeout(libSaveT); saveData(); libCurrent = null; libText = ""; libPages = []; renderLibrary();
         }
-        // 他在顶部说话：停留10秒，淡入淡出稍快
-        function libStartSpeak() {
-            libStopSpeak();
-            const span = document.getElementById("libSpeakText");
+        (function () {
+            window.addEventListener("load", () => {
+                const el = document.getElementById("libText");
+                el.addEventListener("touchstart", e => { libTouchX = e.touches[0].clientX; }, { passive: true });
+                el.addEventListener("touchend", e => {
+                    if (libTouchX === null) return;
+                    const dx = e.changedTouches[0].clientX - libTouchX; libTouchX = null;
+                    if (Math.abs(dx) > 40) libTurn(dx < 0 ? 1 : -1);
+                    else { const r = el.getBoundingClientRect(), x = e.changedTouches[0].clientX - r.left; if (x < r.width * 0.33) libTurn(-1); else if (x > r.width * 0.67) libTurn(1); }
+                });
+                el.addEventListener("click", e => { if ("ontouchstart" in window) return; const r = el.getBoundingClientRect(), x = e.clientX - r.left; if (x < r.width / 2) libTurn(-1); else libTurn(1); });
+                window.addEventListener("resize", () => { if (libCurrent && libText) { const pos = libCurrent.pos || 0; libPaginate(); libShowPage(libPageForPos(pos), false); } });
+            });
+        })();
+
+        // ==================== 🎮 游戏（双人：我 vs 他） ====================
+        let gameDiff = "normal", gameCurrent = "", gameCleanup = null;
+        const GAME_DIFF_NAMES = { easy: "简单", normal: "普通", hard: "困难" };
+        function openGamesPage() {
+            document.getElementById("gameSpeakAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
+            document.getElementById("gamesFullPage").classList.add("open");
+            renderGameMenu();
+            herSpeakStart("gameSpeakText", "game");
+        }
+        function closeGamesPage() {
+            gameStopCurrent(); herSpeakStop("game");
+            document.getElementById("gamesFullPage").classList.remove("open");
+        }
+        function gameBack() { if (gameCurrent) { gameStopCurrent(); renderGameMenu(); } else closeGamesPage(); }
+        function gameStopCurrent() { if (gameCleanup) { try { gameCleanup(); } catch (e) {} gameCleanup = null; } gameCurrent = ""; }
+        function gameStat(key, result) {
+            if (!db.gameStats) db.gameStats = {};
+            if (!db.gameStats[key]) db.gameStats[key] = { w: 0, l: 0, d: 0 };
+            db.gameStats[key][result]++; saveData();
+        }
+        function renderGameMenu() {
+            gameStopCurrent();
+            document.getElementById("gameTitle").innerText = "游戏";
+            const st = db.gameStats || {};
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"]];
+            const body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
+                list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}</div></div>`; }).join("");
+        }
+        function startGame(k) {
+            gameStopCurrent(); gameCurrent = k;
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看" };
+            document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
+            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink })[k]();
+        }
+        function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
+        function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
+        const hisName = () => db.other.name || "他", myName = () => db.me.name || "我";
+
+        // ---------- 五子棋 ----------
+        function gameGomoku() {
+            const N = 15, body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你执黑先手</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d");
+            const size = Math.min(body.clientWidth - 24, 420), dpr = window.devicePixelRatio || 1;
+            cv.style.width = cv.style.height = size + "px"; cv.width = cv.height = size * dpr; ctx.scale(dpr, dpr);
+            const cell = size / N;
+            const B = Array.from({ length: N }, () => new Array(N).fill(0)); // 1我 2他
+            let over = false, thinking = false, last = null, timer = null, moves = 0;
+            const css = getComputedStyle(document.documentElement);
+            function draw() {
+                ctx.clearRect(0, 0, size, size);
+                ctx.fillStyle = "#D9B777"; ctx.fillRect(0, 0, size, size);
+                ctx.strokeStyle = "rgba(60,40,10,.7)"; ctx.lineWidth = 1;
+                for (let i = 0; i < N; i++) { const p = cell / 2 + i * cell; ctx.beginPath(); ctx.moveTo(cell / 2, p); ctx.lineTo(size - cell / 2, p); ctx.moveTo(p, cell / 2); ctx.lineTo(p, size - cell / 2); ctx.stroke(); }
+                [[3, 3], [3, 11], [11, 3], [11, 11], [7, 7]].forEach(([x, y]) => { ctx.fillStyle = "rgba(60,40,10,.8)"; ctx.beginPath(); ctx.arc(cell / 2 + x * cell, cell / 2 + y * cell, 3, 0, 7); ctx.fill(); });
+                for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (B[y][x]) {
+                    const cx = cell / 2 + x * cell, cy = cell / 2 + y * cell;
+                    ctx.beginPath(); ctx.arc(cx, cy, cell * 0.42, 0, 7);
+                    ctx.fillStyle = B[y][x] === 1 ? "#161616" : "#F7F7F7"; ctx.fill();
+                    ctx.strokeStyle = "rgba(0,0,0,.45)"; ctx.stroke();
+                }
+                if (last) { ctx.strokeStyle = "#E0405A"; ctx.lineWidth = 2; ctx.strokeRect(cell / 2 + last[0] * cell - 5, cell / 2 + last[1] * cell - 5, 10, 10); }
+            }
+            function count(x, y, dx, dy, p) { let n = 0; x += dx; y += dy; while (x >= 0 && y >= 0 && x < N && y < N && B[y][x] === p) { n++; x += dx; y += dy; } return n; }
+            function win(x, y, p) { return [[1, 0], [0, 1], [1, 1], [1, -1]].some(([dx, dy]) => 1 + count(x, y, dx, dy, p) + count(x, y, -dx, -dy, p) >= 5); }
+            function endOf(x, y) { let a = 0, b = 0; return null; }
+            function openEnd(x, y, dx, dy, p) { let nx = x + dx, ny = y + dy; while (nx >= 0 && ny >= 0 && nx < N && ny < N && B[ny][nx] === p) { nx += dx; ny += dy; } return nx >= 0 && ny >= 0 && nx < N && ny < N && B[ny][nx] === 0 ? 1 : 0; }
+            function cellScore(x, y, p) {
+                let total = 0;
+                for (const [dx, dy] of [[1, 0], [0, 1], [1, 1], [1, -1]]) {
+                    const a = count(x, y, dx, dy, p), b = count(x, y, -dx, -dy, p), n = 1 + a + b;
+                    const open = openEnd(x, y, dx, dy, p) + openEnd(x, y, -dx, -dy, p);
+                    if (n >= 5) total += 100000;
+                    else if (n === 4) total += open === 2 ? 10000 : open === 1 ? 1000 : 0;
+                    else if (n === 3) total += open === 2 ? 1000 : open === 1 ? 100 : 0;
+                    else if (n === 2) total += open === 2 ? 100 : open === 1 ? 10 : 0;
+                    else total += open;
+                }
+                return total;
+            }
+            function candidates() {
+                const out = [];
+                for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+                    if (B[y][x]) continue;
+                    let near = false;
+                    for (let dy = -2; dy <= 2 && !near; dy++) for (let dx = -2; dx <= 2; dx++) { const nx = x + dx, ny = y + dy; if (nx >= 0 && ny >= 0 && nx < N && ny < N && B[ny][nx]) { near = true; break; } }
+                    if (near) out.push([x, y]);
+                }
+                return out.length ? out : [[7, 7]];
+            }
+            function aiMove() {
+                const cands = candidates();
+                const defW = gameDiff === "easy" ? 0.5 : gameDiff === "normal" ? 1 : 1.15;
+                let scored = cands.map(([x, y]) => ({ x, y, s: cellScore(x, y, 2) + defW * cellScore(x, y, 1) }));
+                scored.sort((a, b) => b.s - a.s);
+                if (gameDiff === "easy") { const pool = scored.slice(0, 6); const pick = Math.random() < 0.3 ? scored[Math.floor(Math.random() * scored.length)] : pool[Math.floor(Math.random() * pool.length)]; return pick; }
+                if (gameDiff === "normal") { const pool = scored.slice(0, 2); return pool[Math.floor(Math.random() * pool.length)]; }
+                // 困难：前6个候选再向前看一步（我方最佳回应）
+                let best = scored[0], bv = -1e18;
+                scored.slice(0, 6).forEach(c => {
+                    if (c.s >= 100000) { if (bv < 1e9) { best = c; bv = 1e9; } return; }
+                    B[c.y][c.x] = 2;
+                    let reply = 0;
+                    candidates().forEach(([x, y]) => { const v = cellScore(x, y, 1); if (v > reply) reply = v; });
+                    B[c.y][c.x] = 0;
+                    const v = c.s - reply * 0.9;
+                    if (v > bv) { bv = v; best = c; }
+                });
+                return best;
+            }
+            function finish(w) {
+                over = true;
+                if (w === 1) { gameResultBar("你赢了 🎉"); gameStat("gomoku", "w"); } else if (w === 2) { gameResultBar(hisName() + "赢了"); gameStat("gomoku", "l"); } else { gameResultBar("平局"); gameStat("gomoku", "d"); }
+                document.getElementById("gameEnd").innerHTML = gameEndButtons();
+            }
+            cv.addEventListener("click", e => {
+                if (over || thinking) return;
+                const r = cv.getBoundingClientRect(), x = Math.floor((e.clientX - r.left) / cell), y = Math.floor((e.clientY - r.top) / cell);
+                if (x < 0 || y < 0 || x >= N || y >= N || B[y][x]) return;
+                B[y][x] = 1; last = [x, y]; moves++; draw();
+                if (win(x, y, 1)) return finish(1);
+                if (moves >= N * N) return finish(0);
+                thinking = true; gameResultBar(hisName() + "在想…");
+                timer = setTimeout(() => {
+                    const m = aiMove(); B[m.y][m.x] = 2; last = [m.x, m.y]; moves++; draw(); thinking = false;
+                    if (win(m.x, m.y, 2)) return finish(2);
+                    if (moves >= N * N) return finish(0);
+                    gameResultBar("轮到你了");
+                }, 600 + Math.random() * 600);
+            });
+            draw();
+            gameCleanup = () => clearTimeout(timer);
+        }
+
+        // ---------- 扫雷 ----------
+        function gameMine() {
+            const R = 9, C = 9, M = { easy: 8, normal: 12, hard: 16 }[gameDiff];
+            const body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻</div><div class="mine-score" id="mineScore"></div><div class="mine-grid" id="mineGrid"></div><div class="game-btns"><button class="btn btn-outline" id="mineFlagBtn">⛏ 翻开</button></div><div id="gameEnd"></div>`;
+            let mines = null, rev = Array.from({ length: R }, () => new Array(C).fill(false)), flag = Array.from({ length: R }, () => new Array(C).fill(false)), num = null;
+            let over = false, thinking = false, flagMode = false, timer = null, myCnt = 0, hisCnt = 0, firstDone = false;
+            const nb = (r, c) => { const o = []; for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { if (!dr && !dc) continue; const nr = r + dr, nc = c + dc; if (nr >= 0 && nc >= 0 && nr < R && nc < C) o.push([nr, nc]); } return o; };
+            function place(sr, sc) {
+                mines = Array.from({ length: R }, () => new Array(C).fill(false)); let n = 0;
+                while (n < M) { const r = Math.floor(Math.random() * R), c = Math.floor(Math.random() * C); if (mines[r][c] || (Math.abs(r - sr) <= 1 && Math.abs(c - sc) <= 1)) continue; mines[r][c] = true; n++; }
+                num = Array.from({ length: R }, (_, r) => Array.from({ length: C }, (_, c) => nb(r, c).filter(([a, b]) => mines[a][b]).length));
+            }
+            function reveal(r, c, who) {
+                const st = [[r, c]]; let n = 0;
+                while (st.length) { const [a, b] = st.pop(); if (rev[a][b] || flag[a][b]) continue; rev[a][b] = true; n++; if (num[a][b] === 0) nb(a, b).forEach(x => st.push(x)); }
+                if (who === 1) myCnt += n; else hisCnt += n;
+            }
+            function render() {
+                document.getElementById("mineScore").innerText = `${myName()} ${myCnt}　|　${hisName()} ${hisCnt}`;
+                const g = document.getElementById("mineGrid");
+                g.style.gridTemplateColumns = `repeat(${C}, 1fr)`;
+                let h = "";
+                for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+                    let cls = "mc", t = "";
+                    if (rev[r][c]) { cls += " open"; if (mines && mines[r][c]) { t = "💣"; cls += " boom"; } else if (num[r][c]) { t = num[r][c]; cls += " n" + num[r][c]; } }
+                    else if (flag[r][c]) t = "🚩";
+                    else if (over && mines && mines[r][c]) t = "💣";
+                    h += `<div class="${cls}" data-r="${r}" data-c="${c}">${t}</div>`;
+                }
+                g.innerHTML = h;
+            }
+            function finish(msg, res) { over = true; gameResultBar(msg); gameStat("mine", res); render(); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function safeLeft() { let n = 0; for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) if (!mines[r][c] && !rev[r][c]) n++; return n; }
+            function checkAllDone() { if (safeLeft() === 0) { finish(myCnt > hisCnt ? "全部清完，你翻得更多，你赢了 🎉" : myCnt < hisCnt ? "全部清完，" + hisName() + "翻得更多" : "全部清完，平局", myCnt > hisCnt ? "w" : myCnt < hisCnt ? "l" : "d"); return true; } return false; }
+            function aiPick() {
+                const known = Array.from({ length: R }, () => new Array(C).fill(0)); // 1雷 2安全
+                let changed = true, guard = 0;
+                while (changed && guard++ < 20) {
+                    changed = false;
+                    for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+                        if (!rev[r][c] || !num[r][c]) continue;
+                        const hid = nb(r, c).filter(([a, b]) => !rev[a][b]);
+                        const km = hid.filter(([a, b]) => known[a][b] === 1).length;
+                        const unk = hid.filter(([a, b]) => known[a][b] === 0);
+                        if (!unk.length) continue;
+                        if (num[r][c] - km === unk.length) { unk.forEach(([a, b]) => known[a][b] = 1); changed = true; }
+                        else if (num[r][c] - km === 0) { unk.forEach(([a, b]) => known[a][b] = 2); changed = true; }
+                    }
+                }
+                const safe = [], unknown = [];
+                for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) { if (rev[r][c]) continue; if (known[r][c] === 2) safe.push([r, c]); else if (known[r][c] === 0) unknown.push([r, c]); }
+                const useLogic = gameDiff !== "easy" || Math.random() < 0.5;
+                if (useLogic && safe.length) return safe[Math.floor(Math.random() * safe.length)];
+                if (!unknown.length) return null;
+                if (gameDiff === "hard") {
+                    let best = null, bp = 2;
+                    unknown.forEach(([r, c]) => {
+                        let p = M / (R * C), cnt = 0, sum = 0;
+                        nb(r, c).forEach(([a, b]) => { if (rev[a][b] && num[a][b]) { const hid = nb(a, b).filter(([x, y]) => !rev[x][y]); const km = hid.filter(([x, y]) => known[x][y] === 1).length; const unk = hid.filter(([x, y]) => known[x][y] === 0).length; if (unk) { sum += (num[a][b] - km) / unk; cnt++; } } });
+                        if (cnt) p = sum / cnt;
+                        if (p < bp) { bp = p; best = [r, c]; }
+                    });
+                    return best;
+                }
+                return unknown[Math.floor(Math.random() * unknown.length)];
+            }
+            function hisTurn() {
+                thinking = true; gameResultBar(hisName() + "在想…");
+                timer = setTimeout(() => {
+                    const p = aiPick(); thinking = false;
+                    if (!p) { finish("没有可翻的格子了，平局", "d"); return; }
+                    if (mines[p[0]][p[1]]) { rev[p[0]][p[1]] = true; finish(hisName() + "踩到雷了，你赢了 🎉", "w"); return; }
+                    reveal(p[0], p[1], 2); render();
+                    if (checkAllDone()) return;
+                    gameResultBar("轮到你了");
+                }, 700 + Math.random() * 600);
+            }
+            document.getElementById("mineFlagBtn").onclick = function () { flagMode = !flagMode; this.innerText = flagMode ? "🚩 插旗" : "⛏ 翻开"; };
+            document.getElementById("mineGrid").addEventListener("click", e => {
+                if (over || thinking) return;
+                const t = e.target.closest(".mc"); if (!t) return;
+                const r = +t.dataset.r, c = +t.dataset.c;
+                if (rev[r][c]) return;
+                if (flagMode) { flag[r][c] = !flag[r][c]; render(); return; }
+                if (flag[r][c]) return;
+                if (!mines) place(r, c);
+                if (mines[r][c]) { rev[r][c] = true; finish("你踩到雷了，" + hisName() + "赢了", "l"); return; }
+                reveal(r, c, 1); render();
+                if (checkAllDone()) return;
+                hisTurn();
+            });
+            render();
+            gameCleanup = () => clearTimeout(timer);
+        }
+
+        // ---------- 连连看 ----------
+        function gameLink() {
+            const cfg = { easy: { r: 6, c: 6, k: 8 }, normal: { r: 8, c: 6, k: 12 }, hard: { r: 8, c: 8, k: 16 } }[gameDiff];
+            const R = cfg.r, C = cfg.c, EM = ["🍎", "🍋", "🍇", "🍓", "🍑", "🍒", "🥝", "🍉", "🌸", "🌙", "⭐", "🐱", "🐶", "🐰", "🦊", "🐼"].slice(0, cfg.k);
+            const body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点两个相同的图案</div><div class="mine-score" id="linkScore"></div><div class="link-grid" id="linkGrid"></div><div class="game-btns"><button class="btn btn-outline" id="linkHint">提示</button></div><div id="gameEnd"></div>`;
+            // 带外圈的棋盘，0=空
+            const W = C + 2, H = R + 2;
+            const g = Array.from({ length: H }, () => new Array(W).fill(0));
+            let tiles = []; for (let i = 0; i < R * C / 2; i++) { const k = 1 + (i % EM.length); tiles.push(k, k); }
+            tiles.sort(() => Math.random() - 0.5);
+            let t = 0; for (let r = 1; r <= R; r++) for (let c = 1; c <= C; c++) g[r][c] = tiles[t++];
+            let sel = null, my = 0, his = 0, over = false, thinking = false, timer = null;
+            function canLink(a, b) {
+                if (a[0] === b[0] && a[1] === b[1]) return false;
+                if (g[a[0]][a[1]] !== g[b[0]][b[1]]) return false;
+                const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+                const seen = new Set(); const q = [];
+                dirs.forEach((d, i) => q.push([a[0], a[1], i, 0]));
+                while (q.length) {
+                    const [r, c, di, tn] = q.shift();
+                    let nr = r + dirs[di][0], nc = c + dirs[di][1];
+                    while (nr >= 0 && nc >= 0 && nr < H && nc < W) {
+                        if (nr === b[0] && nc === b[1]) return true;
+                        if (g[nr][nc] !== 0) break;
+                        if (tn < 2) dirs.forEach((d, i2) => { if (i2 !== di && !(d[0] === -dirs[di][0] && d[1] === -dirs[di][1])) { const key = nr + "," + nc + "," + i2 + "," + (tn + 1); if (!seen.has(key)) { seen.add(key); q.push([nr, nc, i2, tn + 1]); } } });
+                        nr += dirs[di][0]; nc += dirs[di][1];
+                    }
+                }
+                return false;
+            }
+            function allTiles() { const o = []; for (let r = 1; r <= R; r++) for (let c = 1; c <= C; c++) if (g[r][c]) o.push([r, c]); return o; }
+            function findPair() { const ts = allTiles(); const pairs = []; for (let i = 0; i < ts.length; i++) for (let j = i + 1; j < ts.length; j++) if (canLink(ts[i], ts[j])) pairs.push([ts[i], ts[j]]); return pairs; }
+            function shuffleLeft() { const ts = allTiles(); const ks = ts.map(([r, c]) => g[r][c]).sort(() => Math.random() - 0.5); ts.forEach(([r, c], i) => g[r][c] = ks[i]); }
+            function render() {
+                document.getElementById("linkScore").innerText = `${myName()} ${my}　|　${hisName()} ${his}`;
+                const el = document.getElementById("linkGrid"); el.style.gridTemplateColumns = `repeat(${C}, 1fr)`;
+                let h = ""; for (let r = 1; r <= R; r++) for (let c = 1; c <= C; c++) { const k = g[r][c]; const on = sel && sel[0] === r && sel[1] === c; h += `<div class="lk ${k ? "" : "gone"} ${on ? "sel" : ""}" data-r="${r}" data-c="${c}">${k ? EM[k - 1] : ""}</div>`; }
+                el.innerHTML = h;
+            }
+            function ensureMoves() { let guard = 0; while (allTiles().length && !findPair().length && guard++ < 30) shuffleLeft(); }
+            function finishIfDone() {
+                if (allTiles().length) return false;
+                over = true; const res = my > his ? "w" : my < his ? "l" : "d";
+                gameResultBar(my > his ? "全部消完，你消得更多，你赢了 🎉" : my < his ? "全部消完，" + hisName() + "消得更多" : "全部消完，平局"); gameStat("link", res);
+                document.getElementById("gameEnd").innerHTML = gameEndButtons(); return true;
+            }
+            function hisTurn() {
+                thinking = true; gameResultBar(hisName() + "在找…");
+                timer = setTimeout(() => {
+                    const miss = { easy: 0.4, normal: 0.15, hard: 0 }[gameDiff];
+                    const pairs = findPair();
+                    if (Math.random() < miss || !pairs.length) { gameResultBar(hisName() + "没找到，轮到你了"); }
+                    else { const p = pairs[Math.floor(Math.random() * pairs.length)]; g[p[0][0]][p[0][1]] = 0; g[p[1][0]][p[1][1]] = 0; his++; ensureMoves(); }
+                    thinking = false; render();
+                    if (finishIfDone()) return;
+                    if (!over && !/没找到/.test(document.getElementById("gameMsg").innerText)) gameResultBar("轮到你了");
+                }, 900 + Math.random() * 900);
+            }
+            document.getElementById("linkHint").onclick = () => { if (over || thinking) return; const p = findPair(); if (p.length) { const q = p[0]; sel = null; render(); [q[0], q[1]].forEach(([r, c]) => { const n = document.querySelector(`.lk[data-r="${r}"][data-c="${c}"]`); if (n) n.classList.add("hint"); }); } };
+            document.getElementById("linkGrid").addEventListener("click", e => {
+                if (over || thinking) return;
+                const n = e.target.closest(".lk"); if (!n || n.classList.contains("gone")) return;
+                const r = +n.dataset.r, c = +n.dataset.c;
+                if (!sel) { sel = [r, c]; render(); return; }
+                if (sel[0] === r && sel[1] === c) { sel = null; render(); return; }
+                if (canLink(sel, [r, c])) {
+                    g[sel[0]][sel[1]] = 0; g[r][c] = 0; my++; sel = null; ensureMoves(); render();
+                    if (finishIfDone()) return;
+                    hisTurn();
+                } else { sel = [r, c]; render(); }
+            });
+            ensureMoves(); render();
+            gameCleanup = () => clearTimeout(timer);
+        }
+
+        // ---------- 贪吃蛇（90年代手机版：方向键，越来越快） ----------
+        function gameSnake() {
+            const N = 20, body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，用方向键控制</div><div class="mine-score" id="snScore"></div><div class="snake-lcd"><canvas id="snCanvas"></canvas></div>
+              <div class="dpad"><button data-d="U" class="dp-u">▲</button><button data-d="L" class="dp-l">◀</button><button data-d="R" class="dp-r">▶</button><button data-d="D" class="dp-d">▼</button></div>
+              <div class="game-btns"><button class="btn" id="snStart">开始</button></div><div id="gameEnd"></div>`;
+            const cv = document.getElementById("snCanvas"), ctx = cv.getContext("2d");
+            const size = Math.min(body.clientWidth - 40, 340), cs = Math.floor(size / N), px = cs * N, dpr = window.devicePixelRatio || 1;
+            cv.style.width = cv.style.height = px + "px"; cv.width = cv.height = px * dpr; ctx.scale(dpr, dpr);
+            const V = { U: [0, -1], D: [0, 1], L: [-1, 0], R: [1, 0] }, OPP = { U: "D", D: "U", L: "R", R: "L" };
+            const base = { easy: 240, normal: 190, hard: 150 }[gameDiff];
+            let me, him, food, running = false, over = false, timer = null, startAt = 0, myDir, hisDir, queued = null, mine = 0, hisN = 0;
+            function reset() {
+                me = [[4, 10], [3, 10], [2, 10]]; him = [[15, 10], [16, 10], [17, 10]]; myDir = "R"; hisDir = "L"; queued = null; mine = 0; hisN = 0; over = false;
+                placeFood(); draw(); score();
+            }
+            function score() { document.getElementById("snScore").innerText = `${myName()} ${me.length}　|　${hisName()} ${him.length}`; }
+            function occupied(x, y) { return me.some(s => s[0] === x && s[1] === y) || him.some(s => s[0] === x && s[1] === y); }
+            function placeFood() { let x, y, n = 0; do { x = Math.floor(Math.random() * N); y = Math.floor(Math.random() * N); } while (occupied(x, y) && n++ < 500); food = [x, y]; }
+            function cell(x, y, hollow) {
+                ctx.fillStyle = "#1B2A12";
+                if (hollow) { ctx.fillRect(x * cs + 1, y * cs + 1, cs - 2, cs - 2); ctx.fillStyle = "#B7C98A"; ctx.fillRect(x * cs + 3, y * cs + 3, cs - 6, cs - 6); }
+                else ctx.fillRect(x * cs + 1, y * cs + 1, cs - 2, cs - 2);
+            }
+            function draw() {
+                ctx.fillStyle = "#B7C98A"; ctx.fillRect(0, 0, px, px);
+                ctx.fillStyle = "rgba(27,42,18,.08)"; for (let i = 0; i <= N; i++) { ctx.fillRect(i * cs, 0, 1, px); ctx.fillRect(0, i * cs, px, 1); }
+                me.forEach(([x, y]) => cell(x, y, false)); him.forEach(([x, y]) => cell(x, y, true));
+                ctx.fillStyle = "#1B2A12"; const fx = food[0] * cs, fy = food[1] * cs, m = cs / 2;
+                ctx.fillRect(fx + m - 2, fy + 1, 4, cs - 2); ctx.fillRect(fx + 1, fy + m - 2, cs - 2, 4);
+            }
+            function free(x, y, bodyA, bodyB) { if (x < 0 || y < 0 || x >= N || y >= N) return false; return !bodyA.some(s => s[0] === x && s[1] === y) && !bodyB.some(s => s[0] === x && s[1] === y); }
+            function flood(sx, sy, A, B2, limit) { const seen = new Set([sx + "," + sy]); const q = [[sx, sy]]; while (q.length && seen.size < limit) { const [x, y] = q.shift(); for (const d of Object.values(V)) { const nx = x + d[0], ny = y + d[1], k = nx + "," + ny; if (!seen.has(k) && free(nx, ny, A, B2)) { seen.add(k); q.push([nx, ny]); } } } return seen.size; }
+            function bfsDist(sx, sy, A, B2) { const seen = new Set([sx + "," + sy]); const q = [[sx, sy, 0]]; while (q.length) { const [x, y, d] = q.shift(); if (x === food[0] && y === food[1]) return d; for (const v of Object.values(V)) { const nx = x + v[0], ny = y + v[1], k = nx + "," + ny; if (!seen.has(k) && (free(nx, ny, A, B2) || (nx === food[0] && ny === food[1]))) { seen.add(k); q.push([nx, ny, d + 1]); } } } return 999; }
+            function aiDir() {
+                const head = him[0], opts = Object.keys(V).filter(d => d !== OPP[hisDir]);
+                const bodyHim = him.slice(0, -1), bodyMe = me.slice(0, -1);
+                const safe = opts.filter(d => free(head[0] + V[d][0], head[1] + V[d][1], bodyHim, bodyMe));
+                if (gameDiff === "easy") { if (Math.random() < 0.1) return opts[Math.floor(Math.random() * opts.length)]; if (!safe.length) return hisDir; if (Math.random() < 0.5) return safe[Math.floor(Math.random() * safe.length)]; }
+                if (!safe.length) return hisDir;
+                if (gameDiff === "hard") {
+                    let best = safe[0], bs = 1e9;
+                    safe.forEach(d => { const nx = head[0] + V[d][0], ny = head[1] + V[d][1]; const area = flood(nx, ny, bodyHim, bodyMe, him.length + 8); let dist = bfsDist(nx, ny, bodyHim, bodyMe); if (area < him.length + 2) dist += 500 - area; const near = Math.abs(nx - me[0][0]) + Math.abs(ny - me[0][1]) <= 1 ? 50 : 0; if (dist + near < bs) { bs = dist + near; best = d; } });
+                    return best;
+                }
+                let best = safe[0], bs = 1e9;
+                safe.forEach(d => { const nx = head[0] + V[d][0], ny = head[1] + V[d][1]; const dist = Math.abs(nx - food[0]) + Math.abs(ny - food[1]); if (dist < bs) { bs = dist; best = d; } });
+                return best;
+            }
+            function tick() {
+                if (!running) return;
+                if (queued && queued !== OPP[myDir]) myDir = queued; queued = null;
+                hisDir = aiDir();
+                const mh = [me[0][0] + V[myDir][0], me[0][1] + V[myDir][1]], hh = [him[0][0] + V[hisDir][0], him[0][1] + V[hisDir][1]];
+                const eatM = mh[0] === food[0] && mh[1] === food[1], eatH = hh[0] === food[0] && hh[1] === food[1];
+                const meBody = eatM ? me : me.slice(0, -1), himBody = eatH ? him : him.slice(0, -1);
+                const meDead = !free(mh[0], mh[1], meBody, himBody), himDead = !free(hh[0], hh[1], himBody, meBody) || (mh[0] === hh[0] && mh[1] === hh[1]);
+                const bothHead = mh[0] === hh[0] && mh[1] === hh[1];
+                if (!meDead) me.unshift(mh); if (!himDead) him.unshift(hh);
+                if (!eatM && !meDead) me.pop(); if (!eatH && !himDead) him.pop();
+                if (eatM || eatH) placeFood();
+                draw(); score();
+                if (meDead || himDead || bothHead) {
+                    running = false; over = true;
+                    if ((meDead && himDead) || bothHead) { gameResultBar("同时撞上了，平局"); gameStat("snake", "d"); }
+                    else if (meDead) { gameResultBar("你撞到了，" + hisName() + "赢了"); gameStat("snake", "l"); }
+                    else { gameResultBar(hisName() + "撞到了，你赢了 🎉"); gameStat("snake", "w"); }
+                    document.getElementById("gameEnd").innerHTML = gameEndButtons(); return;
+                }
+                const el = Date.now() - startAt;
+                timer = setTimeout(tick, Math.max(70, base * Math.pow(0.5, el / 90000)));
+            }
+            function press(d) { if (!running) return; if (d !== OPP[myDir]) queued = d; }
+            document.querySelectorAll(".dpad button").forEach(b => { const f = e => { e.preventDefault(); press(b.dataset.d); }; b.addEventListener("touchstart", f, { passive: false }); b.addEventListener("mousedown", f); });
+            const key = e => { const m = { ArrowUp: "U", ArrowDown: "D", ArrowLeft: "L", ArrowRight: "R" }[e.key]; if (m) { e.preventDefault(); press(m); } };
+            document.addEventListener("keydown", key);
+            let tx = 0, ty = 0;
+            cv.addEventListener("touchstart", e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+            cv.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return; press(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "R" : "L") : (dy > 0 ? "D" : "U")); });
+            document.getElementById("snStart").onclick = () => { if (running) return; reset(); running = true; startAt = Date.now(); gameResultBar("加油！速度会越来越快"); clearTimeout(timer); timer = setTimeout(tick, base); };
+            reset();
+            gameCleanup = () => { running = false; clearTimeout(timer); document.removeEventListener("keydown", key); };
+        }
+
+        // ---- 他在顶部说话（书房/游戏共用）：停留10秒，间隔由频率里的秒数设置 ----
+        const herSpeakTimers = {};
+        function herSpeakStart(spanId, key) {
+            herSpeakStop(key);
+            const span = document.getElementById(spanId);
+            const t = herSpeakTimers[key] = { loop: null, hide: null };
             const once = () => {
                 const cards = getSignalCards();
-                if (!cards.length) return;
-                span.innerText = cards[Math.floor(Math.random() * cards.length)].text || "";
-                span.classList.add("show");
-                libHideT = setTimeout(() => { span.classList.remove("show"); }, 10000);
+                if (cards.length) {
+                    span.innerText = cards[Math.floor(Math.random() * cards.length)].text || "";
+                    span.classList.add("show");
+                    t.hide = setTimeout(() => span.classList.remove("show"), 10000);
+                }
+                const sMin = parseFloat(db.freq.speakMin) || 20, sMax = Math.max(sMin, parseFloat(db.freq.speakMax) || 40);
+                t.loop = setTimeout(once, 10600 + (sMin + Math.random() * (sMax - sMin)) * 1000);
             };
-            libFirstT = setTimeout(once, 1500);
-            libSpeakTimer = setInterval(once, 10000 + 600 + 20000 + Math.random() * 15000);
+            t.loop = setTimeout(once, 1200);
         }
-        function libStopSpeak() { clearInterval(libSpeakTimer); clearTimeout(libHideT); clearTimeout(libFirstT); const s = document.getElementById("libSpeakText"); if (s) s.classList.remove("show"); }
+        function herSpeakStop(key) {
+            const t = herSpeakTimers[key]; if (!t) return;
+            clearTimeout(t.loop); clearTimeout(t.hide); delete herSpeakTimers[key];
+            document.querySelectorAll(".lib-speak span.show").forEach(e => e.classList.remove("show"));
+        }
 
         window.onload = () => {
             loadData().then(() => { checkScheduleReminders(); });
