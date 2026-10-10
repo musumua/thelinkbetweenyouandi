@@ -300,6 +300,8 @@
         .snake-lcd { background:#9DB06F; padding:10px; border-radius:10px; box-shadow:inset 0 0 0 3px #1B2A12, var(--shadow-md); }
         .snake-lcd canvas { display:block; image-rendering:pixelated; touch-action:none; }
         .date-reel { box-sizing:content-box; height:34px; overflow:hidden; border:1px solid var(--border); border-radius:10px; background:var(--panel); margin-bottom:6px; text-align:center; font-size:14px; color:var(--text-main); }
+        .lk.pop { animation:lkpop .26s ease-out forwards; }
+        @keyframes lkpop { 0%{transform:scale(1);opacity:1} 60%{transform:scale(1.25);opacity:.9} 100%{transform:scale(.2);opacity:0} }
         .dpad { display:grid; grid-template-columns:repeat(3,64px); grid-template-rows:repeat(3,44px); gap:6px; justify-content:center; margin-top:2px; }
         .dpad button.dp-s { grid-column:1; grid-row:1; padding:0; font-size:13px; }
         .dpad .dp-u { grid-column:2; grid-row:1; } .dpad .dp-l { grid-column:1; grid-row:2; } .dpad .dp-r { grid-column:3; grid-row:2; } .dpad .dp-d { grid-column:2; grid-row:3; }
@@ -477,20 +479,39 @@
         .home-page-dots { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 6px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); position: relative; z-index: 1; }
 
         /* ==================== 🆕 首页第二页：日历 / 便利贴 / 心愿贴 ==================== */
+        .p2-strips { display:flex; gap:9px; height:196px; flex-shrink:0; }
+        .p2-strip { position:relative; border-radius:16px; overflow:hidden; box-shadow:0 4px 14px rgba(0,0,0,.28); cursor:pointer; background:#10142e; min-width:0; }
+        .p2-strip canvas { width:100%; height:100%; display:block; }
+        .p2-wish { flex:0 0 21%; } .p2-date { flex:0 0 29%; } .p2-pet { flex:1 1 0; }
+        .p2-lab { position:absolute; left:0; right:0; bottom:0; padding:14px 6px 6px; font-size:11.5px; color:#fff; text-align:center; background:linear-gradient(transparent, rgba(0,0,0,.5)); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none; }
+        .p2-cnt { position:absolute; top:6px; right:7px; font-size:10px; color:rgba(255,255,255,.7); pointer-events:none; }
+        .star-big { position:relative; height:46vh; flex-shrink:0; background:#070a24; } .star-big canvas { width:100%; height:100%; display:block; touch-action:none; }
+        .star-big .star-add { position:absolute; right:12px; bottom:12px; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.14); color:#fff; border-radius:16px; padding:6px 14px; font-size:13px; }
+        .star-big .star-tip { position:absolute; left:50%; top:12px; transform:translateX(-50%); max-width:84%; background:rgba(255,255,255,.16); color:#fff; font-size:14px; padding:6px 14px; border-radius:14px; opacity:0; transition:opacity .25s; pointer-events:none; text-align:center; } .star-big .star-tip.on { opacity:1; }
+        .star-list { flex:1; overflow-y:auto; padding:10px 18px 24px; }
+        .star-row { display:flex; align-items:center; gap:10px; padding:10px 4px; border-bottom:1px solid var(--border); color:var(--text-main); font-size:14px; } .star-row i { width:9px; height:9px; border-radius:50%; flex-shrink:0; } .star-row span { flex:1; } .star-row b { color:var(--text-sub); font-weight:400; padding:2px 8px; }
+        .pet-stage { position:relative; height:42vh; flex-shrink:0; } .pet-stage canvas { width:100%; height:100%; display:block; }
+        .pet-msg { position:absolute; top:12px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,.9); color:#5a4036; padding:5px 14px; border-radius:14px; font-size:13px; opacity:0; transition:opacity .25s; pointer-events:none; } .pet-msg.on { opacity:1; }
+        .pet-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; padding:12px 20px 4px; }
+        .pet-bar { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-sub); } .pet-bar span { width:30px; } .pet-bar i { flex:1; height:8px; border-radius:6px; background:var(--panel); border:1px solid var(--border); overflow:hidden; display:block; } .pet-bar b { display:block; height:100%; border-radius:6px; transition:width .4s; }
+        .pet-actions { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:10px 20px 4px; } .pet-actions button { border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:14px; padding:12px 0; font-size:13.5px; }
+        .pet-scenes { display:flex; gap:8px; padding:8px 20px 20px; } .pet-scenes button { flex:1; border:1px solid var(--border); background:transparent; color:var(--text-sub); border-radius:12px; padding:8px 0; font-size:12.5px; } .pet-scenes button.on { background:var(--primary); color:var(--bg); border-color:transparent; }
+        .pet-sec { font-size:12px; color:var(--text-sub); margin:8px 0 6px; } .pet-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; } .pet-food { border:1px solid var(--border); border-radius:12px; padding:8px 0; text-align:center; background:var(--panel); } .pet-food span { font-size:26px; display:block; } .pet-food b { font-size:12px; font-weight:500; color:var(--text-main); }
+        .date-quick { display:flex; gap:8px; align-items:center; padding:0 0 8px; font-size:12px; color:var(--text-sub); } .date-quick button { border:1px dashed var(--border); background:transparent; color:var(--text-main); border-radius:12px; padding:4px 10px; font-size:12px; }
         .star-card { position:relative; height:150px; border-radius:16px; overflow:hidden; background:radial-gradient(ellipse at 50% 120%, #1c2a5a 0%, #0b1030 55%, #05071a 100%); box-shadow:0 4px 14px rgba(0,0,0,.28); flex-shrink:0; }
         .star-card canvas { width:100%; height:100%; display:block; touch-action:none; }
         .star-add { position:absolute; right:10px; bottom:9px; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12); color:#fff; border-radius:14px; padding:4px 11px; font-size:12px; backdrop-filter:blur(4px); }
         .star-count { position:absolute; left:11px; bottom:10px; font-size:11px; color:rgba(255,255,255,.6); }
         .star-tip { position:absolute; left:50%; top:10px; transform:translateX(-50%); max-width:84%; background:rgba(255,255,255,.16); color:#fff; font-size:13px; padding:5px 12px; border-radius:12px; opacity:0; transition:opacity .25s; pointer-events:none; backdrop-filter:blur(4px); text-align:center; }
         .star-tip.on { opacity:1; }
-        .home-page2-top { flex-shrink: 0; padding: 3.2vh 22px 1.6vh 22px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%; }
+        .home-page2-top { flex: 1 1 auto; min-height: 0; padding: 3.2vh 22px 1.6vh 22px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%; }
         .home-p2-calendar-card { padding: 12px 14px 10px 14px; border-radius: 16px; background: rgba(255,255,255,0.12); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.22); box-sizing: border-box; }
         [data-theme="eye-care"] .home-p2-calendar-card, [data-theme="light-green"] .home-p2-calendar-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.08); }
         .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
         .cal-header button { background: none; border: none; color: var(--text-main); font-size: 19px; cursor: pointer; padding: 2px 12px; line-height: 1; opacity: 0.85; }
         .cal-header span { font-size: 14px; font-weight: 700; color: var(--text-main); }
         .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); font-size: 10.5px; color: var(--text-sub); text-align: center; margin-bottom: 4px; }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 20px; gap: 2px; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 24px; gap: 2px; }
         .cal-cell { display: flex; align-items: center; justify-content: center; font-size: 15px; font-family: 'Baloo 2', 'Nunito', 'PingFang SC', sans-serif; font-weight: 600; color: var(--text-main); border-radius: 50%; white-space: nowrap; cursor: pointer; position: relative; }
         .cal-cell.empty { cursor: default; }
         .cal-cell.today { font-weight: 700; }
@@ -524,20 +545,26 @@
         .importance-btn.active.mid { background: #E3B34D; color: #fff; }
         .importance-btn.active.high { background: #E36C86; color: #fff; }
         .cal-cell-dot { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; }
+        .anni-bubble { align-self:center; margin:12px auto; padding:14px 26px; border-radius:22px; text-align:center; background:linear-gradient(135deg, rgba(255,214,150,.30), rgba(255,160,190,.26)); border:1px solid rgba(255,200,140,.55); box-shadow:0 6px 20px rgba(255,170,120,.22); color:var(--text-main); position:relative; overflow:hidden; }
+        .anni-bubble::after { content:""; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent); animation:anniShine 3.2s ease-in-out infinite; }
+        @keyframes anniShine { 0%{left:-60%} 60%,100%{left:130%} }
+        .anni-bubble .ab-spark { font-size:12px; letter-spacing:6px; color:#FFC46B; } .anni-bubble .ab-t { font-size:15px; font-weight:700; margin:4px 0 2px; } .anni-bubble .ab-s { font-size:12px; color:var(--text-sub); }
         .special-tip-msg { align-self: center; max-width: 82%; margin: 10px auto; padding: 8px 16px; border-radius: 16px; background: linear-gradient(135deg, rgba(163,144,197,0.22), rgba(163,144,197,0.1)); border: 1px solid rgba(163,144,197,0.4); color: var(--text-main); font-size: 12.5px; text-align: center; }
-        .home-p2-notes-row { display: flex; gap: 18px; height: 145px; box-sizing: border-box; width: 100%; margin-top: 6px; }
+        .home-p2-notes-row { display: flex; flex: 1 1 0; min-height: 64px; box-sizing: border-box; width: 100%; margin-top: 2px; }
         .home-p2-sticky-wrap { position: relative; width: 100%; flex: 0 0 auto; min-width: 0; height: 100%; }
-        .home-p2-sticky-wrap::before { content: ""; position: absolute; inset: 0; top: -5px; left: 5px; background: linear-gradient(160deg, #FFF6D2, #FFEDAE); border-radius: 0; transform: rotate(3deg); box-shadow: 0 3px 8px rgba(0,0,0,0.18); z-index: 0; }
+        .home-p2-sticky-wrap::before { display:none; }
         .home-p2-sticky-note, .home-p2-wish-note { min-width: 0; border-radius: 0; padding: 9px 11px; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.25); box-sizing: border-box; }
         .home-p2-wish-note { width: calc(50% - 9px); flex: 0 0 auto; }
-        .home-p2-sticky-note { position: relative; z-index: 1; height: 100%; width: 100%; background: linear-gradient(160deg, #FFFCEA, #FFF5C2); }
+        .home-p2-sticky-note { position: relative; z-index: 1; height: 100%; width: 100%; border-radius: 14px !important; background: rgba(0,0,0,0.16); box-shadow: inset 0 3px 8px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(255,255,255,0.10) !important; border: 1px solid rgba(255,255,255,0.06); }
+        [data-theme="eye-care"] .home-p2-sticky-note, [data-theme="light-green"] .home-p2-sticky-note { background: rgba(0,0,0,0.045); box-shadow: inset 0 3px 7px rgba(0,0,0,0.16), inset 0 -1px 0 rgba(255,255,255,0.7) !important; border-color: rgba(0,0,0,0.04); }
         .home-p2-wish-note { background: linear-gradient(160deg, var(--wish-note-c1), var(--wish-note-c2)); }
         .home-p2-note-label { font-size: 11px; font-weight: 700; color: #7A6423; margin-bottom: 4px; flex-shrink: 0; }
         .home-p2-wish-note .home-p2-note-label { color: var(--wish-note-text); }
         .home-p2-note-hint { font-weight: 400; font-size: 9px; opacity: 0.75; margin-left: 4px; }
         .home-p2-note-textarea { flex: 1; min-width: 0; resize: none; border: none; outline: none; font-size: 13px; color: #4A3D14; }
         .sticky-font { font-family: 'Long Cang', 'Zhi Mang Xing', 'Xingkai SC', 'STXingkai', 'Kaiti SC', 'KaiTi', 'STKaiti', cursive, sans-serif; font-size: 17px !important; font-weight: 400; letter-spacing: 0.3px; }
-        .home-p2-sticky-note .home-p2-note-textarea { background: repeating-linear-gradient(to bottom, transparent 0, transparent 19px, rgba(120,100,40,0.28) 20px); background-attachment: local; line-height: 20px; padding-top: 1px; }
+        .home-p2-sticky-note .home-p2-note-textarea { background: transparent; color: var(--text-main); line-height: 22px; padding: 0; }
+        .home-p2-sticky-note .home-p2-note-label { color: var(--text-sub); }
         .home-p2-wish-note .home-p2-note-textarea { background: transparent; color: var(--wish-note-text); line-height: 1.6; }
         .home-page-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.35); cursor: pointer; transition: all 0.25s; }
         .home-page-dot.active { background: rgba(255,255,255,0.9); width: 16px; border-radius: 3px; }
@@ -699,7 +726,11 @@
             </div>
             <div class="home-master-page">
                 <div class="home-page2-top">
-                    <div class="star-card" id="starCard"><canvas id="starCanvas"></canvas><div class="star-tip" id="starTip"></div><button class="star-add" onclick="starMakeWish()">＋ 许个愿</button><div class="star-count" id="starCount"></div></div>
+                    <div class="p2-strips">
+                        <div class="p2-strip p2-wish" onclick="openStarPage()"><canvas id="starCanvas"></canvas><div class="p2-lab">许愿</div><div class="p2-cnt" id="starCount"></div></div>
+                        <div class="p2-strip p2-date" onclick="openDatingPage()"><canvas id="dateStripCanvas"></canvas><div class="p2-lab" id="dateStripLab">约会</div></div>
+                        <div class="p2-strip p2-pet" onclick="openPetPage()"><canvas id="petStripCanvas"></canvas><div class="p2-lab" id="petStripLab">宠物</div></div>
+                    </div>
                     <div class="home-p2-calendar-card">
                         <div class="cal-header">
                             <button onclick="calendarPrevMonth()">‹</button>
@@ -713,8 +744,8 @@
                     <div class="home-p2-notes-row">
                         <div class="home-p2-sticky-wrap">
                             <div class="home-p2-sticky-note">
-                                <div class="home-p2-note-label">便利贴</div>
-                                <textarea class="home-p2-note-textarea sticky-font" id="homeStickyNoteInput" placeholder="写点什么..." oninput="handleStickyNoteInput(this.value)"></textarea>
+                                <div class="home-p2-note-label">备忘录</div>
+                                <textarea class="home-p2-note-textarea sticky-font" id="homeStickyNoteInput" placeholder="· 写点什么..." oninput="handleStickyNoteInput(this.value)" onfocus="memoFocus(this)" onkeydown="memoKey(event,this)"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1019,6 +1050,24 @@
         </div>
     </div>
 
+    <div class="pyq-full-page" id="starFullPage">
+        <div class="app-page-header"><button class="pyq-back-pure-symbol" onclick="closeStarPage()"></button><div class="app-page-title">许愿星云</div><div class="app-page-header-spacer"></div></div>
+        <div class="star-big"><canvas id="starCanvasBig"></canvas><div class="star-tip" id="starTip"></div><button class="star-add" onclick="starMakeWish()">＋ 许个愿</button></div>
+        <div class="star-list" id="starList"></div>
+    </div>
+
+    <div class="pyq-full-page" id="petFullPage">
+        <div class="app-page-header"><button class="pyq-back-pure-symbol" onclick="closePetPage()"></button><div class="app-page-title" id="petName" onclick="petRename()">团子</div><div class="app-page-header-spacer"></div></div>
+        <div class="pet-stage"><canvas id="petCanvas"></canvas><div class="pet-msg" id="petMsg"></div></div>
+        <div class="pet-stats" id="petStats"></div>
+        <div class="pet-actions"><button onclick="openPetFood()">🍙 吃喝</button><button onclick="petClean()">🧹 清理</button><button onclick="petPlay()">🎾 玩耍</button><button id="petSleepBtn" onclick="petSleep()">🌙 睡觉</button></div>
+        <div class="pet-scenes" id="petScenes"></div>
+    </div>
+
+    <div class="universal-modal" id="petFoodModal" onclick="closeModal('petFoodModal')">
+        <div class="modal-box" onclick="event.stopPropagation()"><h2>吃什么？</h2><div id="petFoodGrid"></div></div>
+    </div>
+
     <div class="universal-modal" id="emojiMoreModal" onclick="closeModal('emojiMoreModal')">
         <div class="modal-box" onclick="event.stopPropagation()">
             <h2 id="emojiMoreMsg">已添加</h2>
@@ -1054,7 +1103,7 @@
             <div class="app-page-title" id="gameTitle">游戏</div>
             <div class="app-page-header-spacer"></div>
         </div>
-        <div class="lib-speak"><img class="speak-avatar" id="gameSpeakAvatar" src=""><span id="gameSpeakText"></span><button class="speak-set" onclick="openSpeakFreq()">⏱</button></div>
+        <div class="lib-speak" id="gameSpeakBar" style="display:none"><img class="speak-avatar" id="gameSpeakAvatar" src=""><span id="gameSpeakText"></span><button class="speak-set" onclick="openSpeakFreq()">⏱</button></div>
         <div class="game-body" id="gameBody"></div>
     </div>
 
@@ -1795,61 +1844,296 @@
         function todayDateStr() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; }
         function renderStickyAndWishNotes() {
             const sticky = document.getElementById("homeStickyNoteInput");
-            if (sticky) sticky.value = db.stickyNote || "";
-            starInit();
+            if (sticky) sticky.value = memoNormalize(db.stickyNote || "");
+            p2Init();
         }
-        function handleStickyNoteInput(val) { db.stickyNote = val; saveData(); }
+        function memoNormalize(t) { return t.split("\n").map(l => (l.trim() && !l.startsWith("· ")) ? "· " + l.replace(/^[·•\-]\s*/, "") : l).join("\n"); }
+        function memoFocus(el) { if (!el.value.trim()) el.value = "· "; }
+        function memoKey(e, el) { if (e.key === "Enter") { e.preventDefault(); const p = el.selectionStart; el.value = el.value.slice(0, p) + "\n· " + el.value.slice(el.selectionEnd); el.selectionStart = el.selectionEnd = p + 3; handleStickyNoteInput(el.value); } }
+        function handleStickyNoteInput(val) { const n = memoNormalize(val); const el = document.getElementById("homeStickyNoteInput"); if (el && n !== val) { const p = el.selectionStart + (n.length - val.length); el.value = n; el.selectionStart = el.selectionEnd = Math.max(0, p); } db.stickyNote = (n.trim() === "·" ? "" : n); saveData(); }
 
-        // ==================== 🌌 星图（愿望星星） ====================
-        let starRaf = 0, starYaw = 0, starPitch = -0.25, starVel = 0.0025, starDrag = false, starLast = null, starAmb = null, starProj = [], starTipT = 0, starLP = 0, starMoved = false, starBorn = {};
+        // ==================== 🌌 许愿星云 / 🏠 约会像素 / 🐾 宠物（首页第二页三个长条） ====================
+        const p2Vis = () => currentHomePage === 1 && !document.hidden && !document.querySelector(".pyq-full-page.open");
+        function p2Fit(cv) { const r = cv.getBoundingClientRect(); if (!r.width) return null; const dpr = window.devicePixelRatio || 1, W = Math.round(r.width), H = Math.round(r.height); if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; } const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); return { ctx, W, H }; }
+        let p2Raf = 0;
+        function p2Init() {
+            if (!db.wishStars) db.wishStars = [];
+            starInit(); petInit(); dateStripInit();
+            if (!p2Raf) p2Raf = requestAnimationFrame(p2Frame);
+        }
+        function p2Frame(t) {
+            p2Raf = requestAnimationFrame(p2Frame);
+            if (p2Vis()) { starDrawOn("starCanvas", t, false); dateStripDraw(t); petDrawStrip(t); }
+            const sp = document.getElementById("starFullPage"); if (sp && sp.classList.contains("open") && !document.hidden) starDrawOn("starCanvasBig", t, true);
+            const pp = document.getElementById("petFullPage"); if (pp && pp.classList.contains("open") && !document.hidden) petDrawPage(t);
+        }
+
+        // ---------- 星云 ----------
+        let starYaw = 0, starPitch = -0.25, starVel = 0.0025, starDrag = false, starLast = null, starAmb = null, starProj = [], starTipT = 0, starLP = 0, starMoved = false, starBorn = {};
+        const NEB = [[0.3, 0.3, 0.55, "120,90,255", 0.0003, 0.0004], [0.7, 0.55, 0.6, "255,110,190", 0.00035, 0.0003], [0.45, 0.8, 0.5, "70,170,255", 0.0004, 0.00035], [0.6, 0.15, 0.45, "180,120,255", 0.0003, 0.0005]];
         function starInit() {
             if (!db.wishStars) db.wishStars = [];
-            const cv = document.getElementById("starCanvas"); if (!cv) return;
-            if (!starAmb) { starAmb = []; for (let i = 0; i < 110; i++) { const u = Math.random() * 2 - 1, a = Math.random() * 6.283, r = Math.sqrt(1 - u * u); starAmb.push({ x: r * Math.cos(a), y: u, z: r * Math.sin(a), s: Math.random() * 1.1 + 0.4, p: Math.random() * 6.283 }); } }
-            if (!cv._bound) {
+            if (!starAmb) { starAmb = []; for (let i = 0; i < 130; i++) { const u = Math.random() * 2 - 1, a = Math.random() * 6.283, r = Math.sqrt(1 - u * u); starAmb.push({ x: r * Math.cos(a), y: u, z: r * Math.sin(a), s: Math.random() * 1.1 + 0.4, p: Math.random() * 6.283 }); } }
+            const c = document.getElementById("starCount"); if (c) c.innerText = db.wishStars.length ? db.wishStars.length + " 颗" : "";
+            const cv = document.getElementById("starCanvasBig");
+            if (cv && !cv._bound) {
                 cv._bound = true;
                 const pt = e => { const t = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0]) || e; const r = cv.getBoundingClientRect(); return { x: t.clientX - r.left, y: t.clientY - r.top }; };
-                const down = e => { e.stopPropagation(); starDrag = true; starMoved = false; starLast = pt(e); starLP = setTimeout(() => { if (!starMoved) { const h = starHit(starLast); if (h) starDelete(h); } }, 650); };
-                const move = e => { if (!starDrag) return; e.stopPropagation(); const p = pt(e); const dx = p.x - starLast.x, dy = p.y - starLast.y; if (Math.abs(dx) + Math.abs(dy) > 2) starMoved = true; starYaw += dx * 0.011; starPitch = Math.max(-1.2, Math.min(1.2, starPitch + dy * 0.011)); starVel = dx * 0.0008; starLast = p; if (starMoved) clearTimeout(starLP); };
-                const up = e => { if (!starDrag) return; e.stopPropagation(); starDrag = false; clearTimeout(starLP); if (!starMoved) { const h = starHit(pt(e)); if (h) starShowTip(h.text); } if (Math.abs(starVel) < 0.0015) starVel = 0.0025 * (starVel < 0 ? -1 : 1); };
+                const down = e => { starDrag = true; starMoved = false; starLast = pt(e); starLP = setTimeout(() => { if (!starMoved) { const h = starHit(starLast); if (h) starDelete(h); } }, 650); };
+                const move = e => { if (!starDrag) return; const p = pt(e); const dx = p.x - starLast.x, dy = p.y - starLast.y; if (Math.abs(dx) + Math.abs(dy) > 2) starMoved = true; starYaw += dx * 0.011; starPitch = Math.max(-1.2, Math.min(1.2, starPitch + dy * 0.011)); starVel = dx * 0.0008; starLast = p; if (starMoved) clearTimeout(starLP); };
+                const up = e => { if (!starDrag) return; starDrag = false; clearTimeout(starLP); if (!starMoved) { const h = starHit(pt(e)); if (h) starShowTip(h.text); } if (Math.abs(starVel) < 0.0015) starVel = 0.0025 * (starVel < 0 ? -1 : 1); };
                 cv.addEventListener("touchstart", down, { passive: true }); cv.addEventListener("touchmove", move, { passive: true }); cv.addEventListener("touchend", up);
                 cv.addEventListener("mousedown", down); window.addEventListener("mousemove", move); window.addEventListener("mouseup", up);
             }
-            const c = document.getElementById("starCount"); if (c) c.innerText = db.wishStars.length ? `${db.wishStars.length} 颗愿望星` : "写下愿望，点亮第一颗星";
-            if (!starRaf) starRaf = requestAnimationFrame(starFrame);
         }
-        function starHit(p) { let best = null, bd = 18; starProj.forEach(q => { if (!q.w) return; const d = Math.hypot(q.sx - p.x, q.sy - p.y); if (d < bd) { bd = d; best = q.w; } }); return best; }
+        function openStarPage() { starInit(); renderStarList(); document.getElementById("starFullPage").classList.add("open"); }
+        function closeStarPage() { document.getElementById("starFullPage").classList.remove("open"); }
+        function renderStarList() {
+            const el = document.getElementById("starList"); if (!el) return;
+            const ws = (db.wishStars || []).slice().reverse();
+            el.innerHTML = ws.length ? ws.map(w => `<div class="star-row"><i style="background:${w.color}"></i><span>${escapeHtml(w.text)}</span><b onclick="starDeleteById('${w.id}')">✕</b></div>`).join("") : `<div class="lib-empty" style="padding:14px 0;">还没有愿望，点上方「许个愿」</div>`;
+            const c = document.getElementById("starCount"); if (c) c.innerText = db.wishStars.length ? db.wishStars.length + " 颗" : "";
+        }
+        function starHit(p) { let best = null, bd = 20; starProj.forEach(q => { const d = Math.hypot(q.sx - p.x, q.sy - p.y); if (d < bd) { bd = d; best = q.w; } }); return best; }
         function starShowTip(t) { const el = document.getElementById("starTip"); el.innerText = t; el.classList.add("on"); clearTimeout(starTipT); starTipT = setTimeout(() => el.classList.remove("on"), 3200); }
-        function starDelete(w) { if (confirm("要让这颗愿望星熄灭吗？\n「" + w.text + "」")) { db.wishStars = db.wishStars.filter(x => x.id !== w.id); saveData(); starInit(); } }
+        function starDelete(w) { if (confirm("要让这颗愿望星熄灭吗？\n「" + w.text + "」")) { db.wishStars = db.wishStars.filter(x => x.id !== w.id); saveData(); renderStarList(); } }
+        function starDeleteById(id) { const w = db.wishStars.find(x => x.id === id); if (w) starDelete(w); }
         function starMakeWish() {
             openSimpleEditModal("写下一个愿望，它会变成一颗星", "", v => {
                 v = (v || "").trim(); if (!v) return; if (!db.wishStars) db.wishStars = [];
                 const u = Math.random() * 2 - 1, a = Math.random() * 6.283, r = Math.sqrt(1 - u * u), cols = ["#FFE9A8", "#BFE3FF", "#FFD0E8", "#D8C8FF", "#C9FFE3"];
                 const w = { id: "w" + Date.now(), text: v, x: r * Math.cos(a), y: u, z: r * Math.sin(a), color: cols[Math.floor(Math.random() * cols.length)], ts: Date.now() };
-                db.wishStars.push(w); starBorn[w.id] = Date.now(); saveData(); starInit(); starShowTip("✦ " + v);
+                db.wishStars.push(w); starBorn[w.id] = Date.now(); saveData(); renderStarList(); starShowTip("✦ " + v);
             });
         }
-        function starFrame(t) {
-            starRaf = requestAnimationFrame(starFrame);
-            const cv = document.getElementById("starCanvas"); if (!cv || currentHomePage !== 1 || document.hidden) return;
-            const rect = cv.getBoundingClientRect(); if (!rect.width) return;
-            const dpr = window.devicePixelRatio || 1, W = Math.round(rect.width), H = Math.round(rect.height);
-            if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
-            const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
-            if (!starDrag) { starYaw += starVel; starVel += (0.0025 * (starVel < 0 ? -1 : 1) - starVel) * 0.02; }
-            const cy = Math.cos(starYaw), sy = Math.sin(starYaw), cp = Math.cos(starPitch), sp = Math.sin(starPitch), R = Math.min(W * 0.46, 260), Hr = H * 0.62, f = 2.6;
-            const proj = o => { let x = o.x * cy - o.z * sy, z = o.x * sy + o.z * cy, y = o.y * cp - z * sp; z = o.y * sp + z * cp; const k = f / (f + z); return { sx: W / 2 + x * R * k * 1.0, sy: H / 2 + y * Hr * k, z, k }; };
-            starProj = [];
-            starAmb.forEach(o => { const p = proj(o); const a = (0.25 + 0.5 * (1 - (p.z + 1) / 2)) * (0.7 + 0.3 * Math.sin(t / 700 + o.p)); ctx.fillStyle = `rgba(255,255,255,${a.toFixed(3)})`; ctx.beginPath(); ctx.arc(p.sx, p.sy, o.s * p.k * 1.2, 0, 6.283); ctx.fill(); });
+        function starDrawOn(id, t, big) {
+            const cv = document.getElementById(id); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f;
+            if (!starDrag || !big) { starYaw += starVel; starVel += (0.0025 * (starVel < 0 ? -1 : 1) - starVel) * 0.02; }
+            // 星云底色
+            ctx.fillStyle = "#070a24"; ctx.fillRect(0, 0, W, H); ctx.globalCompositeOperation = "lighter";
+            NEB.forEach((n, i) => { const cx = (n[0] + Math.sin(t * n[4] + i) * 0.14) * W, cy = (n[1] + Math.cos(t * n[5] + i * 2) * 0.12) * H, r = n[2] * Math.max(W, H) * 0.8; const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, `rgba(${n[3]},0.42)`); g.addColorStop(0.5, `rgba(${n[3]},0.13)`); g.addColorStop(1, `rgba(${n[3]},0)`); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); });
+            ctx.globalCompositeOperation = "source-over";
+            const cy_ = Math.cos(starYaw), sy_ = Math.sin(starYaw), cp = Math.cos(starPitch), sp = Math.sin(starPitch), Rx = Math.min(W, H * 1.2) * 0.46, Ry = Math.min(H * 0.46, W * 0.9), fd = 2.6;
+            const proj = o => { let x = o.x * cy_ - o.z * sy_, z = o.x * sy_ + o.z * cy_, y = o.y * cp - z * sp; z = o.y * sp + z * cp; const k = fd / (fd + z); return { sx: W / 2 + x * Rx * k, sy: H / 2 + y * Ry * k, z, k }; };
+            if (big) starProj = [];
+            starAmb.forEach(o => { const p = proj(o); const a = (0.25 + 0.5 * (1 - (p.z + 1) / 2)) * (0.7 + 0.3 * Math.sin(t / 700 + o.p)); ctx.fillStyle = `rgba(255,255,255,${a.toFixed(3)})`; ctx.beginPath(); ctx.arc(p.sx, p.sy, o.s * p.k * (big ? 1.3 : 1), 0, 6.283); ctx.fill(); });
             const ws = db.wishStars || [], pr = ws.map(w => ({ w, p: proj(w) }));
             ctx.lineWidth = 0.7; for (let i = 1; i < pr.length; i++) { const a = pr[i - 1].p, b = pr[i].p; const al = 0.1 + 0.25 * ((a.k + b.k) / 2 - 0.6); ctx.strokeStyle = `rgba(190,215,255,${Math.max(0.05, al).toFixed(3)})`; ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke(); }
             pr.forEach(({ w, p }) => {
-                const born = starBorn[w.id] ? Math.min(1, (Date.now() - starBorn[w.id]) / 1200) : 1; const sz = (2.6 + 2.2 * (1 - (p.z + 1) / 2)) * (born < 1 ? 0.4 + 2.2 * (1 - born) + born * 0.6 : 1), tw = 0.75 + 0.25 * Math.sin(t / 420 + w.ts % 7);
+                const born = starBorn[w.id] ? Math.min(1, (Date.now() - starBorn[w.id]) / 1200) : 1; const sz = (2.4 + 2 * (1 - (p.z + 1) / 2)) * (big ? 1.25 : 1) * (born < 1 ? 0.4 + 2.2 * (1 - born) + born * 0.6 : 1), tw = 0.75 + 0.25 * Math.sin(t / 420 + w.ts % 7);
                 const g = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, sz * 3.2); g.addColorStop(0, w.color); g.addColorStop(0.25, w.color + "aa"); g.addColorStop(1, "rgba(255,255,255,0)");
                 ctx.globalAlpha = tw * (p.z > 0.6 ? 0.55 : 1); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.sx, p.sy, sz * 3.2, 0, 6.283); ctx.fill();
                 ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(p.sx, p.sy, sz * 0.5, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
-                starProj.push({ sx: p.sx, sy: p.sy, w });
+                if (big) starProj.push({ sx: p.sx, sy: p.sy, w });
             });
+        }
+
+        // ---------- 约会像素画 ----------
+        const SCENE_RE = [["living", /客厅|living/i, "客厅"], ["terrace", /露台|阳台|terrace/i, "露台"], ["bedroom", /房间|卧室|bedroom/i, "房间"]];
+        function sceneOfName(n) { for (const s of SCENE_RE) if (s[1].test(n || "")) return s[0]; return null; }
+        const isNightNow = () => { const h = new Date().getHours(); return h < 6 || h >= 18; };
+        let dateScene = null, dateSceneKey = "";
+        function dateStripInit() { dateSceneKey = ""; }
+        function dateStripPick() {
+            let name = null, scene = null;
+            if (db.dateOngoing) { scene = sceneOfName(db.dateOngoing.placeName); if (scene) name = db.dateOngoing.placeName; }
+            if (!scene) for (let i = (db.datePlaces || []).length - 1; i >= 0; i--) { const sc = sceneOfName(db.datePlaces[i].name); if (sc) { scene = sc; name = db.datePlaces[i].name; break; } }
+            return { scene, name };
+        }
+        function pixScene(kind, night) {
+            const cv = document.createElement("canvas"); cv.width = 64; cv.height = 96; const c = cv.getContext("2d"), sparks = [];
+            const R = (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(x, y, w, h); };
+            const D = (a, b) => night ? b : a;
+            const Ci = (cx, cy, r, col) => { c.fillStyle = col; for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) if (x * x + y * y <= r * r + 1) c.fillRect(cx + x, cy + y, 1, 1); };
+            const sp = (x, y, col, big) => sparks.push({ x, y, col, big: !!big, ph: Math.random() * 6.28 });
+            const buildings = (y0, floor) => { const cols = [D("#9db4cc", "#10173a"), D("#8aa3be", "#161f48"), D("#b0c3d8", "#0c1230")]; let x = 0, i = 0; while (x < 64) { const w = 5 + (i * 3) % 6, h = 12 + (i * 7) % 22; R(x, y0 - h, w, h + (floor - y0), cols[i % 3]); if (night) for (let k = 0; k < 4; k++) { const wx = x + 1 + (k * 2) % Math.max(2, w - 1), wy = y0 - h + 2 + k * 5; if (wy < y0 - 1 && (i + k) % 2 === 0) { R(wx, wy, 1, 1, "#ffe08a"); if ((i + k) % 3 === 0) sp(wx, wy, "#fff2b0"); } } x += w + 1; i++; } };
+            if (kind === "living") {
+                R(0, 0, 64, 60, D("#e8edf4", "#46405c")); R(0, 60, 64, 36, D("#dcb68c", "#5a4636")); for (let y = 62; y < 96; y += 5) R(0, y, 64, 1, D("#c99f72", "#4a392c"));
+                R(30, 4, 30, 42, D("#f6f6f6", "#7d7a99")); R(32, 6, 26, 38, D("#bfe3ff", "#121838")); R(32, 6, 26, 14, D("#a6d6fb", "#0c1230")); buildings(38, 44); R(44, 6, 2, 38, D("#f6f6f6", "#7d7a99")); R(32, 24, 26, 2, D("#f6f6f6", "#7d7a99"));
+                if (night) { sp(36, 10, "#fff", 1); sp(52, 14, "#fff", 1); sp(40, 18, "#fff"); } else { sp(36, 10, "#fff", 1); sp(54, 12, "#fff"); }
+                R(6, 10, 10, 14, D("#f2efe8", "#8a8296")); R(7, 11, 8, 12, D("#d8e6d0", "#5b6a5e")); R(10, 15, 2, 6, D("#6fae6a", "#3f6a48"));
+                R(2, 14, 1, 46, "#d6d6d6"); R(0, 12, 7, 3, D("#f4dfb6", "#e8c98a")); sp(3, 14, "#ffe9a8", 1);
+                R(22, 48, 7, 8, D("#e0d9cd", "#8e8884")); for (let i = 0; i < 6; i++) { R(24 + (i % 3) - 1, 30 + i * 3, 2, 4, D("#5aa05a", "#2f5a3a")); R(21 + i, 34 + i * 2, 2, 2, D("#6fbf6a", "#38704a")); }
+                R(6, 44, 40, 12, D("#f3e8dc", "#9d8f98")); R(4, 52, 44, 10, D("#f6ece1", "#a89aa4")); R(2, 48, 6, 14, D("#efe2d3", "#94868f")); R(44, 48, 5, 14, D("#efe2d3", "#94868f")); Ci(15, 49, 4, D("#f1c9a5", "#c9a08a")); R(25, 46, 8, 7, D("#ece6dd", "#b9aeb3")); R(36, 46, 8, 7, D("#ece6dd", "#b9aeb3")); R(8, 62, 4, 3, "#8a6a4e"); R(40, 62, 4, 3, "#8a6a4e");
+                R(8, 78, 48, 14, D("#f4f0e8", "#8c8494")); for (let i = 0; i < 6; i++) { R(10 + i * 8, 80, 1, 10, D("#aab9cf", "#6f7690")); } R(8, 78, 48, 1, D("#aab9cf", "#6f7690")); R(8, 91, 48, 1, D("#aab9cf", "#6f7690"));
+                R(30, 66, 28, 4, D("#cf9a62", "#a8764a")); R(30, 70, 28, 3, D("#b7824f", "#8d5e3a")); R(32, 73, 2, 7, "#9a6c40"); R(54, 73, 2, 7, "#9a6c40"); R(40, 64, 4, 2, "#fff"); R(46, 65, 6, 1, D("#e07070", "#c06068"));
+                R(50, 46, 12, 16, D("#dcbd90", "#9a7a56")); R(51, 48, 10, 3, D("#6b4f3a", "#3a2c24")); for (let i = 0; i < 5; i++) R(52 + i * 2, 53, 1, 7, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6"][i]);
+                if (night) { R(50, 63, 2, 3, "#fff6d8"); R(54, 63, 2, 3, "#fff6d8"); sp(51, 62, "#ffd98a", 1); sp(55, 62, "#ffd98a", 1); sp(3, 14, "#ffe9a8", 1); sp(8, 12, "#ffe9a8"); } else { sp(36, 40, "#fff"); sp(26, 56, "#fff"); }
+            } else if (kind === "terrace") {
+                for (let y = 0; y < 60; y++) { const t = y / 60; c.fillStyle = night ? `rgb(${11 + t * 22},${18 + t * 28},${54 + t * 46})` : `rgb(${190 + t * 40},${222 + t * 22},${250})`; c.fillRect(0, y, 64, 1); }
+                if (night) { for (let i = 0; i < 14; i++) sp((i * 37) % 64, (i * 11) % 24, "#fff", i % 3 === 0); } else { R(6, 8, 14, 3, "#fff"); R(10, 6, 8, 3, "#fff"); R(44, 18, 12, 3, "#f4faff"); }
+                buildings(58, 64); R(0, 58, 64, 2, D("#e8eef6", "#2a3358")); for (let x = 1; x < 64; x += 6) R(x, 56, 1, 6, D("#5b6b7e", "#1a2040"));
+                R(0, 64, 64, 32, D("#c98652", "#6a4430")); for (let y = 66; y < 96; y += 4) R(0, y, 64, 1, D("#b5733f", "#563524"));
+                R(0, 6, 64, 4, D("#7a5d44", "#4a3828")); R(6, 6, 4, 60, D("#7a5d44", "#4a3828")); R(52, 6, 4, 60, D("#7a5d44", "#4a3828"));
+                for (let x = 1; x < 64; x += 2) { const l = 3 + ((x * 7) % 11); R(x, 10, 1, l, D("#4f8f4a", "#24502f")); if (x % 6 === 1) R(x, 10 + l, 1, 2, D("#6fb560", "#2f6a3c")); }
+                for (let i = 0; i < 9; i++) { const x = 3 + i * 7, y = 12 + Math.round(Math.sin(i * 0.9) * 2); R(x, y, 1, 3, D("#fff", "#fff3b8")); R(x - 1, y + 1, 3, 1, D("#fff", "#fff3b8")); sp(x, y + 1, "#fffbe0", 1); }
+                Ci(46, 50, 9, D("#c8a070", "#8a6a48")); Ci(46, 50, 7, D("#f1ece2", "#6c6a7c")); R(40, 52, 12, 5, D("#efe9de", "#9c98a8")); R(43, 44, 6, 4, D("#e9e0d4", "#a09cab")); R(46, 30, 1, 12, "#8a6a48");
+                R(8, 62, 14, 12, D("#a36a3c", "#5a3a22")); R(10, 58, 3, 5, D("#4f9a4f", "#2a5a36")); R(15, 56, 3, 7, D("#5fb05c", "#336a40")); R(19, 59, 2, 4, D("#e06a6a", "#b04a5a"));
+                R(24, 66, 10, 8, D("#a36a3c", "#5a3a22")); for (let i = 0; i < 5; i++) R(24 + i * 2, 62 + (i % 2) * 2, 2, 5, D("#5fb05c", "#336a40")); R(26, 63, 2, 2, D("#fff", "#e8e8f8")); R(30, 62, 2, 2, D("#e06a6a", "#c0607a"));
+                for (let y = -6; y <= 6; y++) { const w = Math.round(22 * Math.sqrt(Math.max(0, 1 - (y * y) / 36))); R(34 - w, 82 + y, w * 2, 1, y % 5 === 0 ? D("#b9a58a", "#6e6458") : D("#f0e8d8", "#9a9084")); }
+                R(48, 70, 8, 2, D("#e6c9a0", "#a98c68")); R(51, 72, 1, 9, "#a98c68"); R(53, 66, 3, 4, D("#fff", "#eef")); if (night) { R(49, 69, 1, 2, "#ffd98a"); sp(49, 68, "#ffd98a", 1); }
+                if (night) { R(58, 40, 5, 22, "#223a3a"); R(56, 52, 3, 8, "#2d4d46"); }
+            } else {
+                R(0, 0, 64, 62, D("#e9e3da", "#3c3e4e")); R(0, 62, 64, 34, D("#cc9d6c", "#4a3a33")); for (let y = 64; y < 96; y += 5) R(0, y, 64, 1, D("#b98a5c", "#3a2d28"));
+                R(4, 6, 26, 22, "#3a3a3a"); R(5, 7, 24, 20, D("#ddd0bf", "#59574f")); Ci(14, 14, 5, D("#9a9a9a", "#2a2d33")); Ci(21, 20, 4, D("#6a6a6a", "#1c1f26")); R(8, 20, 14, 6, D("#cfc0ab", "#4c4a43"));
+                R(40, 4, 22, 48, D("#f6f6f6", "#7c7a8f")); R(42, 6, 18, 44, D("#d8ecff", "#1a2248")); R(50, 6, 2, 44, D("#f6f6f6", "#7c7a8f")); R(42, 26, 18, 2, D("#f6f6f6", "#7c7a8f")); if (night) { R(42, 6, 18, 44, "#2a2c4a"); for (let i = 0; i < 8; i++) sp(44 + (i * 5) % 16, 8 + (i * 9) % 40, "#ffe9a8", i % 2 === 0); } else { for (let i = 0; i < 5; i++) sp(44 + (i * 5) % 16, 10 + (i * 9) % 36, "#fff"); }
+                R(54, 36, 6, 14, D("#9aa6a0", "#58605c")); for (let i = 0; i < 5; i++) { R(55 + (i % 3), 20 + i * 3, 2, 5, D("#5aa05a", "#2f5a3a")); R(52 + i, 24 + i * 2, 2, 2, D("#6fbf6a", "#38704a")); }
+                R(6, 34, 44, 12, D("#6b5a50", "#4a3c36")); R(2, 46, 52, 18, D("#e6dfdb", "#8d8c98")); R(2, 54, 52, 12, D("#a69aa6", "#6a6478")); for (let x = 3; x < 54; x += 3) R(x, 66, 1, 3, D("#a69aa6", "#6a6478")); R(8, 43, 14, 6, D("#f6f2ee", "#b8b6c4")); R(24, 43, 14, 6, D("#f6f2ee", "#b8b6c4"));
+                R(0, 62, 4, 4, "#8a6a40"); R(52, 62, 4, 4, "#8a6a40");
+                R(44, 52, 14, 14, D("#dab76f", "#6b5436")); R(46, 56, 10, 1, "#8a6a30"); R(46, 61, 10, 1, "#8a6a30"); R(50, 40, 1, 12, D("#c9c9c9", "#9a9aa8")); Ci(51, 38, 4, D("#fff6d8", "#fff0c0")); if (night) { sp(51, 38, "#fff2c0", 1); sp(49, 36, "#fff"); }
+                R(6, 78, 52, 14, D("#8c8791", "#5a5662")); for (let x = 8; x < 56; x += 4) R(x, 78, 1, 14, D("#9c97a1", "#666270")); R(1, 18, 2, 40, D("#c7c7c7", "#8a8a96")); Ci(3, 62, 4, D("#fffbe8", "#fff6c8")); if (night) sp(3, 62, "#fff6c8", 1);
+            }
+            return { cv, sparks };
+        }
+        function dateStripDraw(t) {
+            const cv = document.getElementById("dateStripCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f;
+            const pick = dateStripPick(), night = isNightNow(), key = (pick.scene || "none") + (night ? "n" : "d");
+            const lab = document.getElementById("dateStripLab");
+            if (!pick.scene) {
+                ctx.fillStyle = "rgba(255,255,255,0.06)"; ctx.fillRect(0, 0, W, H); ctx.fillStyle = "rgba(255,255,255,0.7)"; ctx.font = "12px sans-serif"; ctx.textAlign = "center";
+                ["去约会里添加", "「客厅」「露台」", "「房间」", "这里会出现像素画"].forEach((s, i) => ctx.fillText(s, W / 2, H / 2 - 24 + i * 18)); if (lab) lab.innerText = "约会"; return;
+            }
+            if (key !== dateSceneKey) { dateScene = pixScene(pick.scene, night); dateSceneKey = key; }
+            ctx.imageSmoothingEnabled = false; const sc = Math.max(W / 64, H / 96), dw = 64 * sc, dh = 96 * sc, ox = (W - dw) / 2, oy = (H - dh) / 2; ctx.drawImage(dateScene.cv, ox, oy, dw, dh);
+            dateScene.sparks.forEach(s => { const a = 0.25 + 0.75 * Math.max(0, Math.sin(t / (380 + s.ph * 60) + s.ph)); const x = ox + s.x * sc, y = oy + s.y * sc; ctx.globalAlpha = a; ctx.fillStyle = s.col; if (s.big) { const g = ctx.createRadialGradient(x, y, 0, x, y, sc * 5); g.addColorStop(0, s.col); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.globalAlpha = a * 0.55; ctx.fillStyle = g; ctx.fillRect(x - sc * 5, y - sc * 5, sc * 10, sc * 10); ctx.globalAlpha = a; ctx.fillStyle = s.col; ctx.fillRect(x, y, sc, sc); ctx.fillRect(x - sc, y, sc, sc); ctx.fillRect(x + sc, y, sc, sc); ctx.fillRect(x, y - sc, sc, sc); ctx.fillRect(x, y + sc, sc, sc); } else ctx.fillRect(x, y, sc, sc); });
+            ctx.globalAlpha = 1; if (lab) lab.innerText = pick.name;
+        }
+        function dateQuickAdd(n) { dateInit(); if (!db.datePlaces.some(p => p.name === n)) { db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 5), name: n }); saveData(); } renderDating(); }
+
+        // ---------- 🐾 宠物 ----------
+        const PET_FOODS = [
+            { id: "rice", e: "🍙", n: "饭团", full: 30, mood: 3, digest: 70 }, { id: "apple", e: "🍎", n: "苹果", full: 18, mood: 4, water: 6, digest: 50 },
+            { id: "cake", e: "🍰", n: "小蛋糕", full: 22, mood: 12, digest: 80 }, { id: "fish", e: "🐟", n: "小鱼干", full: 24, mood: 6, digest: 60 },
+            { id: "bread", e: "🍞", n: "面包", full: 26, mood: 2, digest: 75 }, { id: "berry", e: "🍓", n: "草莓", full: 12, mood: 7, water: 6, digest: 40 },
+            { id: "water", e: "💧", n: "清水", water: 38, digest: 0, drink: true }, { id: "milk", e: "🥛", n: "牛奶", water: 26, full: 8, mood: 3, digest: 40, drink: true }, { id: "juice", e: "🧃", n: "果汁", water: 26, mood: 7, digest: 30, drink: true }
+        ];
+        const PET_SCENES = [{ id: "house", n: "小屋" }, { id: "grass", n: "草地" }, { id: "sea", n: "海边" }, { id: "night", n: "星夜" }];
+        let petAnim = { kind: "", until: 0, food: "" };
+        function petInit() {
+            if (!db.pet) db.pet = { name: "团子", scene: "house", full: 80, water: 80, energy: 90, mood: 80, poops: 0, sleeping: false, digest: 0, lastTs: Date.now(), born: Date.now() };
+            petTick();
+        }
+        function petTick() {
+            const p = db.pet; if (!p) return; const now = Date.now(); let dt = (now - p.lastTs) / 60000; if (dt <= 0) return; dt = Math.min(dt, 600); p.lastTs = now;
+            p.full = Math.max(0, p.full - dt * 0.22); p.water = Math.max(0, p.water - dt * 0.3);
+            if (p.sleeping) { p.energy = Math.min(100, p.energy + dt * 1.1); if (p.energy >= 100) p.sleeping = false; } else p.energy = Math.max(0, p.energy - dt * 0.1);
+            if (p.digest > 0) { p.digest -= dt; if (p.digest <= 0) { p.digest = 0; p.poops = Math.min(4, p.poops + 1); } }
+            const base = (Math.min(p.full, 100) + Math.min(p.water, 100) + p.energy) / 3;
+            const target = Math.max(0, Math.min(100, base - p.poops * 9));
+            p.mood += (target - p.mood) * Math.min(1, dt * 0.05);
+            if (Math.random() < 0.02) saveData();
+        }
+        function petState() {
+            const p = db.pet, now = Date.now();
+            if (p.sleeping) return "sleep";
+            if (petAnim.until > now) return petAnim.kind;
+            if (p.full < 22 || p.water < 22 || p.poops >= 2) return "sad";
+            if (p.energy < 18) return "tired";
+            return "idle";
+        }
+        function petMsg(m) { const el = document.getElementById("petMsg"); if (!el) return; el.innerText = m; el.classList.add("on"); clearTimeout(petMsg._t); petMsg._t = setTimeout(() => el.classList.remove("on"), 2200); }
+        function petEat(id) {
+            const p = db.pet, f = PET_FOODS.find(x => x.id === id); petTick();
+            if (p.sleeping) { petMsg(p.name + "睡着了，先别吵醒它"); return; }
+            if (f.drink ? p.water > 96 : p.full > 96) { petMsg(f.drink ? "喝饱了～" : "吃不下啦～"); return; }
+            if (f.full) p.full = Math.min(100, p.full + f.full); if (f.water) p.water = Math.min(100, p.water + f.water); if (f.mood) p.mood = Math.min(100, p.mood + f.mood);
+            if (f.digest) p.digest = Math.max(p.digest, 1) + f.digest * 0.5;
+            petAnim = { kind: "eat", until: Date.now() + 2400, food: f.e }; saveData(); closeModal("petFoodModal"); petBars(); petMsg(f.drink ? "咕嘟咕嘟～" : "好吃！");
+        }
+        function petClean() { const p = db.pet; if (!p.poops) { petMsg("很干净呢"); return; } p.poops = 0; p.mood = Math.min(100, p.mood + 6); petAnim = { kind: "happy", until: Date.now() + 1500 }; saveData(); petBars(); petMsg("清理干净啦"); }
+        function petPlay() {
+            const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (p.energy < 15) { petMsg("太累了，让它睡一会吧"); return; }
+            p.energy -= 10; p.mood = Math.min(100, p.mood + 14); p.full = Math.max(0, p.full - 4); p.water = Math.max(0, p.water - 4); petAnim = { kind: "happy", until: Date.now() + 2200 }; saveData(); petBars(); petMsg("好开心！");
+        }
+        function petSleep() { const p = db.pet; petTick(); p.sleeping = !p.sleeping; petAnim = { kind: "", until: 0 }; saveData(); petBars(); petMsg(p.sleeping ? "晚安，zZ…" : "睡醒啦"); }
+        function petSetScene(id) { db.pet.scene = id; saveData(); petBars(); }
+        function petRename() { openSimpleEditModal("给宠物起个名字", db.pet.name, n => { db.pet.name = n; saveData(); petBars(); }); }
+        function openPetPage() { petInit(); petBars(); document.getElementById("petFullPage").classList.add("open"); }
+        function closePetPage() { document.getElementById("petFullPage").classList.remove("open"); }
+        function openPetFood() { petInit(); const g = (arr) => arr.map(f => `<div class="pet-food" onclick="petEat('${f.id}')"><span>${f.e}</span><b>${f.n}</b></div>`).join(""); document.getElementById("petFoodGrid").innerHTML = `<div class="pet-sec">食物</div><div class="pet-grid">${g(PET_FOODS.filter(f => !f.drink))}</div><div class="pet-sec">饮品</div><div class="pet-grid">${g(PET_FOODS.filter(f => f.drink))}</div>`; openModalBox("petFoodModal"); }
+        function petBars() {
+            const p = db.pet; if (!p) return;
+            const row = (n, v, c) => `<div class="pet-bar"><span>${n}</span><i><b style="width:${Math.round(Math.max(0, Math.min(100, v)))}%;background:${c}"></b></i></div>`;
+            const el = document.getElementById("petStats"); if (el) el.innerHTML = row("饱腹", p.full, "#FFB36B") + row("水分", p.water, "#6BC4FF") + row("精力", p.energy, "#B79BFF") + row("心情", p.mood, "#FF8FB1");
+            const nm = document.getElementById("petName"); if (nm) nm.innerText = p.name;
+            const sc = document.getElementById("petScenes"); if (sc) sc.innerHTML = PET_SCENES.map(s => `<button class="${p.scene === s.id ? "on" : ""}" onclick="petSetScene('${s.id}')">${s.n}</button>`).join("");
+            const sb = document.getElementById("petSleepBtn"); if (sb) sb.innerText = p.sleeping ? "☀️ 叫醒" : "🌙 睡觉";
+        }
+        // 背景
+        function petBg(ctx, W, H, scene, t) {
+            const g = ctx.createLinearGradient(0, 0, 0, H); const floor = H * 0.72;
+            if (scene === "house") { g.addColorStop(0, "#f6e7d4"); g.addColorStop(1, "#ecd3b4"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.fillStyle = "#c99e74"; ctx.fillRect(0, floor, W, H - floor); ctx.fillStyle = "rgba(0,0,0,.07)"; for (let x = 0; x < W; x += 26) ctx.fillRect(x, floor, 1.5, H - floor); ctx.fillStyle = "#bfe3ff"; ctx.fillRect(W * 0.62, H * 0.12, W * 0.26, H * 0.34); ctx.fillStyle = "#fff"; ctx.fillRect(W * 0.74, H * 0.12, 3, H * 0.34); ctx.fillRect(W * 0.62, H * 0.28, W * 0.26, 3); ctx.strokeStyle = "#fff"; ctx.lineWidth = 4; ctx.strokeRect(W * 0.62, H * 0.12, W * 0.26, H * 0.34); ctx.fillStyle = "rgba(160,110,70,.35)"; ctx.beginPath(); ctx.ellipse(W * 0.4, floor + (H - floor) * 0.55, W * 0.3, (H - floor) * 0.3, 0, 0, 6.283); ctx.fill(); }
+            else if (scene === "grass") { g.addColorStop(0, "#9fd8ff"); g.addColorStop(1, "#e4f6ff"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.fillStyle = "#fff"; [[0.2, 0.15], [0.65, 0.1], [0.85, 0.28]].forEach(([x, y], i) => { const cx = ((x * W + t * 0.01 * (i + 1)) % (W + 80)) - 40, cy = y * H; [[0, 0, 16], [14, 4, 12], [-14, 4, 11]].forEach(([dx, dy, r]) => { ctx.beginPath(); ctx.arc(cx + dx, cy + dy, r, 0, 6.283); ctx.fill(); }); }); ctx.fillStyle = "#8fd081"; ctx.beginPath(); ctx.moveTo(0, floor - 10); ctx.quadraticCurveTo(W * 0.3, floor - 40, W * 0.6, floor - 8); ctx.quadraticCurveTo(W * 0.85, floor + 6, W, floor - 18); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill(); ctx.fillStyle = "#6fbf62"; ctx.fillRect(0, floor + 6, W, H - floor); [[0.12, 0.88, "#ff9ab8"], [0.4, 0.93, "#fff1a0"], [0.78, 0.86, "#ffffff"], [0.9, 0.95, "#ffb36b"]].forEach(([x, y, c]) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x * W, y * H, 3.2, 0, 6.283); ctx.fill(); }); }
+            else if (scene === "sea") { g.addColorStop(0, "#ffd9b0"); g.addColorStop(0.5, "#ffe9d2"); g.addColorStop(1, "#fff4e6"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.fillStyle = "#ffcf7a"; ctx.beginPath(); ctx.arc(W * 0.78, H * 0.2, 20, 0, 6.283); ctx.fill(); ctx.fillStyle = "#7cc7ee"; ctx.fillRect(0, H * 0.42, W, H * 0.22); ctx.strokeStyle = "rgba(255,255,255,.7)"; ctx.lineWidth = 2; for (let i = 0; i < 4; i++) { ctx.beginPath(); for (let x = 0; x <= W; x += 8) { const y = H * (0.46 + i * 0.045) + Math.sin(x / 16 + t / 600 + i) * 2.5; x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); } ctx.stroke(); } ctx.fillStyle = "#f3dcae"; ctx.fillRect(0, H * 0.64, W, H * 0.36); ctx.fillStyle = "#ffb0a0"; ctx.beginPath(); ctx.arc(W * 0.12, H * 0.9, 5, 0, 6.283); ctx.fill(); }
+            else { g.addColorStop(0, "#0b1033"); g.addColorStop(1, "#27336b"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); for (let i = 0; i < 24; i++) { const x = (i * 53 % 100) / 100 * W, y = (i * 29 % 62) / 100 * H; ctx.globalAlpha = 0.4 + 0.6 * Math.abs(Math.sin(t / 600 + i)); ctx.fillStyle = "#fff"; ctx.fillRect(x, y, 1.6, 1.6); } ctx.globalAlpha = 1; ctx.fillStyle = "#fff4c4"; ctx.beginPath(); ctx.arc(W * 0.8, H * 0.18, 16, 0, 6.283); ctx.fill(); ctx.fillStyle = "#0b1033"; ctx.beginPath(); ctx.arc(W * 0.8 + 6, H * 0.18 - 3, 14, 0, 6.283); ctx.fill(); ctx.fillStyle = "#1c2552"; ctx.beginPath(); ctx.moveTo(0, floor); ctx.quadraticCurveTo(W * 0.5, floor - 24, W, floor + 4); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill(); }
+        }
+        // 宠物形象（自己画的矢量小团子：宽扁的豆形身体、小耳朵、小尾巴，透明底）
+        function drawPet(ctx, cx, by, s, st, t) {
+            ctx.save(); ctx.translate(cx, by); ctx.scale(s, s);
+            let bob = Math.sin(t / 420) * 2, sx = 1, sy = 1, hop = 0;
+            if (st === "happy") { hop = Math.abs(Math.sin(t / 150)) * 16; sy = 1 + Math.sin(t / 150) * 0.04; }
+            else if (st === "eat") { bob = Math.sin(t / 110) * 2.5; }
+            else if (st === "sleep") { sy = 1 + Math.sin(t / 900) * 0.035; sx = 1 - Math.sin(t / 900) * 0.015; bob = 0; }
+            else if (st === "sad" || st === "tired") { bob = Math.sin(t / 900) * 1; sy = 0.96; }
+            ctx.translate(0, -hop + bob * 0.5); ctx.scale(sx, sy);
+            const body = "#FFD8C2", dark = "#F0B89E", belly = "#FFF1E6", line = "#7A4B3A";
+            // 尾巴
+            ctx.strokeStyle = dark; ctx.lineWidth = 9; ctx.lineCap = "round"; ctx.beginPath(); const tw = Math.sin(t / 380) * 6; ctx.moveTo(40, -18); ctx.quadraticCurveTo(66, -30 + tw, 58, -58 + tw); ctx.stroke();
+            ctx.strokeStyle = "#FFF1E6"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(56, -52 + tw); ctx.lineTo(58, -58 + tw); ctx.stroke();
+            // 脚
+            ctx.fillStyle = dark; ctx.beginPath(); ctx.ellipse(-22, -3, 13, 8, 0, 0, 6.283); ctx.fill(); ctx.beginPath(); ctx.ellipse(22, -3, 13, 8, 0, 0, 6.283); ctx.fill();
+            // 耳朵
+            const ear = (dir) => { ctx.fillStyle = body; ctx.beginPath(); ctx.moveTo(dir * 20, -62); ctx.quadraticCurveTo(dir * 34, -92, dir * 44, -62); ctx.quadraticCurveTo(dir * 34, -52, dir * 20, -56); ctx.fill(); ctx.fillStyle = "#FFB5B5"; ctx.beginPath(); ctx.moveTo(dir * 26, -62); ctx.quadraticCurveTo(dir * 34, -80, dir * 39, -62); ctx.quadraticCurveTo(dir * 33, -57, dir * 26, -59); ctx.fill(); };
+            ear(-1); ear(1);
+            // 身体
+            ctx.fillStyle = body; ctx.beginPath(); ctx.ellipse(0, -36, 54, 40, 0, 0, 6.283); ctx.fill();
+            ctx.fillStyle = belly; ctx.beginPath(); ctx.ellipse(0, -22, 33, 22, 0, 0, 6.283); ctx.fill();
+            // 小手
+            ctx.fillStyle = dark; ctx.beginPath(); ctx.ellipse(-46, -28, 8, 11, 0.4, 0, 6.283); ctx.fill(); ctx.beginPath(); ctx.ellipse(46, -28, 8, 11, -0.4, 0, 6.283); ctx.fill();
+            // 腮红
+            ctx.fillStyle = "rgba(255,130,150,.45)"; ctx.beginPath(); ctx.ellipse(-33, -34, 8, 5, 0, 0, 6.283); ctx.fill(); ctx.beginPath(); ctx.ellipse(33, -34, 8, 5, 0, 0, 6.283); ctx.fill();
+            // 眼睛
+            const blink = (Math.floor(t / 3000) % 2 === 0) && (t % 3000 < 130);
+            ctx.strokeStyle = line; ctx.fillStyle = line; ctx.lineWidth = 3.2; ctx.lineCap = "round";
+            const eye = (x) => {
+                if (st === "sleep" || blink) { ctx.beginPath(); ctx.arc(x, -46, 6, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke(); }
+                else if (st === "happy") { ctx.beginPath(); ctx.arc(x, -42, 6, 1.15 * Math.PI, 1.85 * Math.PI); ctx.stroke(); }
+                else if (st === "sad" || st === "tired") { ctx.beginPath(); ctx.ellipse(x, -45, 4.6, 5.6, 0, 0, 6.283); ctx.fill(); ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(x + 1.4, -47, 1.6, 0, 6.283); ctx.fill(); ctx.fillStyle = line; ctx.beginPath(); ctx.moveTo(x - 8, -56 + (x < 0 ? 4 : 0)); ctx.lineTo(x + 8, -56 + (x < 0 ? 0 : 4)); ctx.stroke(); }
+                else { ctx.beginPath(); ctx.ellipse(x, -46, 5, 6.4, 0, 0, 6.283); ctx.fill(); ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(x + 1.6, -48.4, 1.9, 0, 6.283); ctx.fill(); ctx.fillStyle = line; }
+            };
+            eye(-20); eye(20);
+            // 嘴
+            ctx.lineWidth = 2.6;
+            if (st === "eat") { const o = 3 + Math.abs(Math.sin(t / 110)) * 4; ctx.fillStyle = "#C25B6B"; ctx.beginPath(); ctx.ellipse(0, -32, 5, o, 0, 0, 6.283); ctx.fill(); }
+            else if (st === "sad") { ctx.beginPath(); ctx.arc(0, -26, 5, 1.2 * Math.PI, 1.8 * Math.PI); ctx.stroke(); }
+            else if (st === "sleep") { ctx.beginPath(); ctx.arc(0, -34, 3, 0, Math.PI); ctx.stroke(); }
+            else { ctx.beginPath(); ctx.arc(-4, -34, 4, 0.1 * Math.PI, 0.9 * Math.PI); ctx.stroke(); ctx.beginPath(); ctx.arc(4, -34, 4, 0.1 * Math.PI, 0.9 * Math.PI); ctx.stroke(); }
+            // 状态小装饰
+            ctx.font = "bold 18px sans-serif"; ctx.textAlign = "center";
+            if (st === "sleep") { ctx.fillStyle = "rgba(120,140,255,.9)"; const a = (t / 900) % 3; for (let i = 0; i < 3; i++) { const k = (a + i) % 3; ctx.globalAlpha = 1 - k / 3; ctx.font = `bold ${12 + i * 3}px sans-serif`; ctx.fillText("z", 50 + k * 10, -72 - k * 16); } ctx.globalAlpha = 1; }
+            if (st === "sad") { ctx.fillStyle = "#7CC4F4"; ctx.beginPath(); ctx.ellipse(-30, -34 + (t / 15 % 18), 2.4, 3.6, 0, 0, 6.283); ctx.fill(); }
+            if (st === "happy") { ctx.fillStyle = "#FF8FB1"; ctx.fillText("♥", -50, -76 - Math.sin(t / 200) * 4); ctx.fillText("♥", 52, -80 + Math.sin(t / 220) * 4); }
+            ctx.restore();
+        }
+        function drawPoop(ctx, x, y, s) { ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.fillStyle = "#9A6B45"; [[0, 0, 12, 7], [0, -8, 9, 6], [0, -15, 5.5, 4.5]].forEach(([a, b, rx, ry]) => { ctx.beginPath(); ctx.ellipse(a, b, rx, ry, 0, 0, 6.283); ctx.fill(); }); ctx.fillStyle = "#fff"; ctx.fillRect(-4, -10, 2, 2); ctx.fillRect(2, -10, 2, 2); ctx.restore(); }
+        function petScene(ctx, W, H, t, s, withHud) {
+            const p = db.pet; petTick(); const st = petState(); petBg(ctx, W, H, p.scene, t);
+            const by = H * 0.86, cx = W * 0.5;
+            for (let i = 0; i < p.poops; i++) drawPoop(ctx, W * (0.14 + i * 0.12), H * 0.9 + (i % 2) * 4, s * 0.9);
+            if (p.scene === "night" || p.sleeping) { /* 夜间柔光 */ }
+            ctx.fillStyle = "rgba(0,0,0,.14)"; ctx.beginPath(); ctx.ellipse(cx, by + 2, 54 * s, 8 * s, 0, 0, 6.283); ctx.fill();
+            drawPet(ctx, cx, by, s, st, t);
+            if (st === "eat" && petAnim.food) { const k = ((petAnim.until - Date.now()) / 2400); ctx.font = `${26 * s}px sans-serif`; ctx.textAlign = "center"; ctx.globalAlpha = Math.min(1, k * 3); ctx.fillText(petAnim.food, cx + 30 * s, by - 28 * s - (1 - k) * 30 * s + Math.sin(t / 110) * 3); ctx.globalAlpha = 1; }
+            if (p.sleeping) { ctx.fillStyle = "rgba(10,14,50,.28)"; ctx.fillRect(0, 0, W, H); }
+        }
+        function petDrawPage(t) {
+            const cv = document.getElementById("petCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; petScene(f.ctx, f.W, f.H, t, Math.min(f.W / 260, f.H / 230) * 1.2, true);
+            if (!petDrawPage._t || t - petDrawPage._t > 2000) { petDrawPage._t = t; petBars(); }
+        }
+        function petDrawStrip(t) {
+            const cv = document.getElementById("petStripCanvas"); if (!cv || !db.pet) return; const f = p2Fit(cv); if (!f) return;
+            petScene(f.ctx, f.W, f.H, t, Math.min(f.W / 230, f.H / 260) * 0.9, false);
+            const p = db.pet, lab = document.getElementById("petStripLab"); if (lab) { const st = petState(); lab.innerText = p.name + (st === "sleep" ? " · 睡觉中" : st === "sad" ? " · 需要照顾" : p.poops ? " · 💩" : ""); }
         }
 
         // ==================== 📅 首页第二页：生理期日历（精确到日期，可切换月份）====================
@@ -2083,9 +2367,49 @@
                     if (!isMainChatViewOpen()) showInAppBanner(db.other.name || "他", reminderText, () => openMainChatView());
                 }
             });
+            // 纪念日：当天推送一次，聊天里他发一个特殊气泡
+            (db.anniversaries || []).forEach(a => {
+                const m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(a.date || ""); if (!m) return;
+                if (+m[2] !== now.getMonth() + 1 || +m[3] !== now.getDate()) return;
+                const yr = now.getFullYear(); if (a.lastNotified === yr) return;
+                const n = yr - +m[1]; if (n < 0) return;
+                const nm = db.other.name || "他";
+                const txt = n === 0 ? `今天是「${a.title}」！` : `今天是「${a.title}」${n}周年！`;
+                db.chat.push({ type: "anniv", text: txt, sub: n === 0 ? "把这一天好好记住" : "又一年了，谢谢你一直在" });
+                a.lastNotified = yr; changed = true;
+                sendRealNotification(nm, "🎉 " + txt);
+                if (!isMainChatViewOpen()) showInAppBanner(nm, "🎉 " + txt);
+            });
             if (changed) { saveData(); if (document.getElementById("mainAppView") && document.getElementById("mainAppView").style.display !== "none") renderChat(); }
         }
         setInterval(checkScheduleReminders, 60000);
+
+        // ---- 从屏幕左边缘向右滑：返回上一级（任意全屏页面 / 聊天窗） ----
+        (function setupEdgeSwipeBack() {
+            let sx = 0, sy = 0, target = null, mode = 0, dx = 0, t0 = 0;
+            document.addEventListener("touchstart", e => {
+                target = null; mode = 0; const t = e.touches[0]; if (t.clientX > 26) return;
+                if (document.querySelector(".universal-modal.open")) return;
+                const el = document.elementFromPoint(Math.max(1, t.clientX), t.clientY); if (!el) return;
+                const pg = el.closest(".pyq-full-page.open"); const chat = document.getElementById("mainAppView");
+                if (pg) { target = pg; mode = 1; } else if (chat && chat.style.display !== "none" && el.closest("#mainAppView")) { target = chat; mode = 2; } else return;
+                sx = t.clientX; sy = t.clientY; dx = 0; t0 = Date.now(); target.style.transition = "none";
+            }, { passive: true });
+            document.addEventListener("touchmove", e => {
+                if (!target) return; const t = e.touches[0]; const mx = t.clientX - sx, my = t.clientY - sy;
+                if (mode && Math.abs(my) > Math.abs(mx) * 1.4 && dx === 0) { target.style.transition = ""; target = null; return; }
+                dx = Math.max(0, mx); target.style.transform = `translateX(${dx}px)`; if (e.cancelable) e.preventDefault();
+            }, { passive: false });
+            document.addEventListener("touchend", () => {
+                if (!target) return; const el = target, m = mode; target = null;
+                const fast = dx / Math.max(1, Date.now() - t0) > 0.5;
+                el.style.transition = "transform .22s ease"; 
+                if (dx > 90 || (fast && dx > 40)) {
+                    el.style.transform = "translateX(100%)";
+                    setTimeout(() => { el.style.transition = ""; el.style.transform = ""; if (m === 2) goHome(); else { const b = el.querySelector(".pyq-back-pure-symbol, .home-back-btn"); if (b) b.click(); } }, 200);
+                } else { el.style.transform = ""; setTimeout(() => { el.style.transition = ""; }, 240); }
+            });
+        })();
 
         // ---- 首页整页左右滑动翻页（含顶部内容与图标区）----
         let currentHomePage = 0;
@@ -3105,27 +3429,10 @@
         }
 
         // ==================== 💬 自动流转与气泡驱动系统 ====================
-        // 长按气泡触发引用回复（替代原先右下角的小图标）
-        function attachLongPressReply(el, idx) {
-            let pressTimer = null, moved = false, startX = 0, startY = 0;
-            const LONG_PRESS_MS = 450;
-            const clear = () => { if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; } };
-            const begin = (x, y) => {
-                moved = false; startX = x; startY = y;
-                clear();
-                pressTimer = setTimeout(() => {
-                    if (!moved) { if (navigator.vibrate) navigator.vibrate(15); openBubbleActionMenu(idx); }
-                }, LONG_PRESS_MS);
-            };
-            const move = (x, y) => { if (Math.abs(x - startX) > 8 || Math.abs(y - startY) > 8) { moved = true; clear(); } };
-            el.addEventListener("touchstart", (e) => { const t = e.touches[0]; begin(t.clientX, t.clientY); }, { passive: true });
-            el.addEventListener("touchmove", (e) => { const t = e.touches[0]; move(t.clientX, t.clientY); }, { passive: true });
-            el.addEventListener("touchend", clear);
-            el.addEventListener("touchcancel", clear);
-            el.addEventListener("mousedown", (e) => begin(e.clientX, e.clientY));
-            el.addEventListener("mousemove", (e) => move(e.clientX, e.clientY));
-            el.addEventListener("mouseup", clear);
-            el.addEventListener("mouseleave", clear);
+                function attachLongPressReply(el, idx) {
+            // 现在改为：直接点气泡弹出菜单（引用 / 多选 / 撤回）
+            el.style.cursor = "pointer";
+            el.addEventListener("click", (e) => { if (window.getSelection && String(window.getSelection()).length > 0) return; e.stopPropagation(); openBubbleActionMenu(idx); });
         }
         // 长按气泡弹出的统一操作菜单：引用 / 多选 / 撤回
         let bubbleActionIdx = null;
@@ -4379,7 +4686,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 reader.readAsDataURL(file);
             });
         }
-        function isRealMessage(m) { return !["system", "letter-tip", "diary-invite", "diary-return", "schedule-reminder"].includes(m.type) && (m.text || m.img); }
+        function isRealMessage(m) { return !["system", "letter-tip", "diary-invite", "diary-return", "schedule-reminder", "anniv"].includes(m.type) && (m.text || m.img); }
         let currentDiaryRound = 0;
         // ---- 月份筛选（交换日记 / 朋友圈）----
         let diaryMonthFilter = "", pyqMonthFilter = "", monthPickTarget = "";
@@ -4600,6 +4907,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                         }
                     }
                     container.appendChild(tip);
+                } else if (m.type === "anniv") {
+                    const tip = document.createElement("div"); tip.className = "anni-bubble";
+                    tip.innerHTML = `<div class="ab-spark">✦ ✧ ✦</div><div class="ab-t">${escapeHtml(m.text)}</div><div class="ab-s">${escapeHtml(m.sub || "")}</div>`; container.appendChild(tip);
                 } else if (m.type === "diary-invite" || m.type === "diary-return" || m.type === "schedule-reminder") {
                     const tip = document.createElement("div"); tip.className = "special-tip-msg"; tip.innerText = m.text; container.appendChild(tip);
                 } else {
@@ -4779,14 +5089,24 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             document.getElementById("gameSpeakAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
             document.getElementById("gamesFullPage").classList.add("open");
             renderGameMenu();
-            herSpeakStart("gameSpeakText", "game");
         }
         function closeGamesPage() {
-            gameStopCurrent(); herSpeakStop("game");
+            gameStash(); herSpeakStop("game");
             document.getElementById("gamesFullPage").classList.remove("open");
         }
-        function gameBack() { if (gameCurrent) { gameStopCurrent(); renderGameMenu(); } else closeGamesPage(); }
-        function gameStopCurrent() { if (gameCleanup) { try { gameCleanup(); } catch (e) {} gameCleanup = null; } gameCurrent = ""; }
+        function gameBack() { if (gameCurrent) { gameStash(); renderGameMenu(); } else closeGamesPage(); }
+        // 中途退出：把游戏界面暂存起来，回来点「继续」接着玩（仅本次打开期间有效，刷新页面后会丢）
+        let gameStashes = {}, gamePause = null, gameResume = null;
+        function gameStash() {
+            if (!gameCurrent) return; const k = gameCurrent, body = document.getElementById("gameBody"); const frag = document.createDocumentFragment();
+            while (body.firstChild) frag.appendChild(body.firstChild);
+            const over = !!frag.querySelector("#gameEnd .game-btns");
+            if (over) { try { gameCleanup && gameCleanup(); } catch (e) { } }
+            else { gameStashes[k] = { frag, cleanup: gameCleanup, pause: gamePause, resume: gameResume, title: document.getElementById("gameTitle").innerText }; try { gamePause && gamePause(); } catch (e) { } }
+            gameCleanup = null; gamePause = null; gameResume = null; gameCurrent = "";
+        }
+        function gameDropStash(k) { const st = gameStashes[k]; if (!st) return; try { st.cleanup && st.cleanup(); } catch (e) { } delete gameStashes[k]; }
+        function gameStopCurrent() { if (gameCleanup) { try { gameCleanup(); } catch (e) {} gameCleanup = null; } gamePause = null; gameResume = null; gameCurrent = ""; }
         function gameStat(key, result) {
             if (!db.gameStats) db.gameStats = {};
             if (!db.gameStats[key]) db.gameStats[key] = { w: 0, l: 0, d: 0 };
@@ -4838,22 +5158,30 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             requestAnimationFrame(frame);
         }
         function renderGameMenu() {
-            gameStopCurrent();
+            gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
             const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
-                list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}</div></div>`; }).join("");
+                list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
         }
-        function startGame(k) {
+        function startGame(k, fresh) {
             gameStopCurrent(); gameCurrent = k;
+            document.getElementById("gameSpeakBar").style.display = ""; herSpeakStart("gameSpeakText", "game");
+            const st = gameStashes[k];
+            if (st && !fresh) {
+                delete gameStashes[k]; const body = document.getElementById("gameBody"); body.innerHTML = ""; body.appendChild(st.frag);
+                gameCleanup = st.cleanup; gamePause = st.pause; gameResume = st.resume; document.getElementById("gameTitle").innerText = st.title;
+                try { gameResume && gameResume(); } catch (e) { } return;
+            }
+            if (st) gameDropStash(k);
             const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
             ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
-        function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
+        function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
         const hisName = () => db.other.name || "他", myName = () => db.me.name || "我";
 
         // ---------- 五子棋 ----------
@@ -5110,10 +5438,21 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 el.innerHTML = h;
             }
             function drawPath(path, who) {
-                const svg = document.getElementById("linkSvg");
-                const pts = path.map(([r, c]) => `${c - 0.5},${r - 0.5}`).join(" ");
-                svg.innerHTML = `<polyline points="${pts}" fill="none" stroke="${who === 2 ? "#FF8FA3" : "#7DD3FC"}" stroke-width="0.09" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke-width:3px"/>`;
-                later(() => { svg.innerHTML = ""; }, 420);
+                const svg = document.getElementById("linkSvg"); svg.style.overflow = "visible";
+                const P = path.map(([r, c]) => [c - 0.5, r - 0.5]), rad = 0.28;
+                let d = `M${P[0][0]},${P[0][1]}`;
+                for (let i = 1; i < P.length - 1; i++) {
+                    const [x0, y0] = P[i - 1], [x1, y1] = P[i], [x2, y2] = P[i + 1];
+                    const l1 = Math.hypot(x1 - x0, y1 - y0) || 1, l2 = Math.hypot(x2 - x1, y2 - y1) || 1, r1 = Math.min(rad, l1 / 2), r2 = Math.min(rad, l2 / 2);
+                    d += ` L${x1 - (x1 - x0) / l1 * r1},${y1 - (y1 - y0) / l1 * r1} Q${x1},${y1} ${x1 + (x2 - x1) / l2 * r2},${y1 + (y2 - y1) / l2 * r2}`;
+                }
+                d += ` L${P[P.length - 1][0]},${P[P.length - 1][1]}`;
+                const col = who === 2 ? "#FF8FA3" : "#7DD3FC";
+                svg.innerHTML = `<path class="lk-glow" d="${d}" pathLength="1" fill="none" stroke="${col}" stroke-opacity=".35" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke-width:10px"/>
+                  <path class="lk-line" d="${d}" pathLength="1" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke-width:2.5px;filter:drop-shadow(0 0 3px ${col})"/>`;
+                svg.querySelectorAll("path").forEach(p => { p.style.strokeDasharray = "1"; p.style.strokeDashoffset = "1"; p.getBoundingClientRect(); p.style.transition = "stroke-dashoffset .3s ease-out, opacity .25s ease .3s"; p.style.strokeDashoffset = "0"; });
+                later(() => { svg.querySelectorAll("path").forEach(p => p.style.opacity = "0"); }, 330);
+                later(() => { svg.innerHTML = ""; }, 600);
             }
             function finishIfDone() {
                 if (allTiles().length) return false;
@@ -5126,7 +5465,8 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 [a, b].forEach(([r, c]) => { const n = tileEl(r, c); if (n) n.classList.add("sel"); });
                 if (path) drawPath(path, who);
                 gameSfx(who === 2 ? "his" : "match");
-                later(() => { g[a[0]][a[1]] = 0; g[b[0]][b[1]] = 0; if (who === 1) my++; else his++; ensureMoves(); render(); after(); }, 460);
+                later(() => { [a, b].forEach(([r, c]) => { const n = tileEl(r, c); if (n) n.classList.add("pop"); }); }, 300);
+                later(() => { g[a[0]][a[1]] = 0; g[b[0]][b[1]] = 0; if (who === 1) my++; else his++; ensureMoves(); render(); after(); }, 560);
             }
             function hisTurn() {
                 busy = true; gameResultBar(hisName() + "在找…");
@@ -5261,6 +5601,8 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             document.getElementById("snStart").onclick = () => { if (running) return; reset(); document.getElementById("gameEnd").innerHTML = ""; running = true; startAt = Date.now(); gameResultBar("加油！速度会越来越快"); gameSfx("tap"); clearTimeout(timer); timer = setTimeout(tick, base); };
             reset();
             gameCleanup = () => { running = false; clearTimeout(timer); document.removeEventListener("keydown", key); };
+            gamePause = () => { clearTimeout(timer); document.removeEventListener("keydown", key); };
+            gameResume = () => { document.addEventListener("keydown", key); if (running) { clearTimeout(timer); timer = setTimeout(tick, 400); } };
         }
 
         // ==================== 💞 约会 ====================
@@ -5284,6 +5626,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         // ---- 准备约会 ----
         function renderDatePrepare() {
             let h = `<div class="lib-bar" style="padding:4px 0 8px;"><button class="btn btn-outline" onclick="dateToggleSelect()">${dateSelectMode ? "取消" : "多选"}</button><div style="flex:1"></div><button class="btn" onclick="dateOpenPlaceModal()">添加地点</button><button class="btn btn-outline" onclick="dateDeletePlaces()">删除</button></div>`;
+            h += `<div class="date-quick">快捷添加：<button onclick="dateQuickAdd('客厅')">＋客厅</button><button onclick="dateQuickAdd('露台')">＋露台</button><button onclick="dateQuickAdd('房间')">＋房间</button></div>`;
             if (db.dateOngoing) { const pl = db.datePlaces.find(x => x.id === db.dateOngoing.placeId); h += `<div class="date-ongoing" onclick="dateOpenStart('${db.dateOngoing.placeId}')">进行中的约会：${escapeHtml(pl ? pl.name : db.dateOngoing.placeName)}　继续 →</div>`; }
             if (!db.datePlaces.length) return h + `<div class="lib-empty">还没有地点，点「添加地点」开始吧</div>`;
             h += db.datePlaces.map(p => `<div class="date-row ${dateSelected.has(p.id) ? "sel" : ""} ${dateSelectMode ? "lib-select-mode" : ""}">
