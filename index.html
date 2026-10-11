@@ -37,8 +37,8 @@
 
 
         /* 糖果色主题 */
-        [data-candy="1"] { --primary: #7CC4F4; --primary-light: rgba(124,196,244,0.18); --bg: #1E3248; --panel: rgba(120,180,230,0.14); --text-main: #EAF6FF; --text-sub: #A9CCE6; --border: rgba(170,215,255,0.28); --my-bubble: rgba(110,185,240,0.55); --other-bubble: rgba(200,230,255,0.16); --modal-bg: rgba(38,66,94,0.92); --input-bg: rgba(240,249,255,0.95); --input-text: #24415C; --clock-bg1: rgba(140,200,245,0.28); --clock-bg2: rgba(30,50,72,0.9); --clock-text: #E6F4FF; --wish-note-c1: #B9DDF7; --wish-note-c2: #A3D0F0; --wish-note-text: #24415C; }
-        [data-candy="1"][data-theme="eye-care"] { --primary: #5BB4F0; --primary-light: rgba(91,180,240,0.14); --bg: #EAF6FF; --panel: rgba(255,255,255,0.62); --text-main: #2C4A66; --text-sub: #6F93B0; --border: rgba(91,180,240,0.26); --my-bubble: rgba(170,218,252,0.78); --other-bubble: rgba(255,255,255,0.82); --modal-bg: rgba(250,253,255,0.94); --shadow-sm: 0 4px 12px rgba(91,180,240,0.10); --shadow-md: 0 6px 24px rgba(91,180,240,0.14); --shadow-lg: 0 14px 48px rgba(91,180,240,0.18); --input-bg: rgba(255,255,255,0.9); --input-text: #2C4A66; --clock-bg1: rgba(255,255,255,0.7); --clock-bg2: rgba(190,225,250,0.7); --clock-text: #2F6FA0; --wish-note-c1: #D4ECFD; --wish-note-c2: #BFE1FA; --wish-note-text: #2C4A66; }
+        [data-candy="1"] { --primary: #FF8FB8; --primary-light: rgba(255,143,184,0.18); --bg: #1E3248; --panel: rgba(130,190,240,0.14); --text-main: #EAF6FF; --text-sub: #A9CCE6; --border: rgba(190,225,255,0.26); --my-bubble: rgba(255,143,184,0.62); --other-bubble: rgba(200,230,255,0.16); --modal-bg: rgba(38,66,94,0.92); --input-bg: rgba(240,249,255,0.95); --input-text: #24415C; --clock-bg1: rgba(140,200,245,0.28); --clock-bg2: rgba(30,50,72,0.9); --clock-text: #E6F4FF; --wish-note-c1: #B9DDF7; --wish-note-c2: #A3D0F0; --wish-note-text: #24415C; }
+        [data-candy="1"][data-theme="eye-care"] { --primary: #FF7FAF; --primary-light: rgba(255,127,175,0.14); --bg: #EAF6FF; --panel: rgba(255,255,255,0.55); --text-main: #34506A; --text-sub: #7A9BB6; --border: rgba(120,190,245,0.30); --my-bubble: rgba(255,198,220,0.82); --other-bubble: rgba(255,255,255,0.78); --modal-bg: rgba(252,254,255,0.92); --shadow-sm: 0 4px 12px rgba(120,190,245,0.12); --shadow-md: 0 6px 22px rgba(120,190,245,0.16); --shadow-lg: 0 14px 44px rgba(120,190,245,0.20); --input-bg: rgba(255,255,255,0.85); --input-text: #34506A; --clock-bg1: rgba(255,255,255,0.65); --clock-bg2: rgba(200,230,252,0.6); --clock-text: #5C9BD0; --wish-note-c1: #D4ECFD; --wish-note-c2: #BFE1FA; --wish-note-text: #34506A; }
         [data-candy="1"][data-theme="eye-care"] .card-group-header { background:rgba(200,230,252,0.6); }
 
         [data-theme="eye-care"] {
@@ -291,9 +291,9 @@
         .mc.open { background:var(--border); opacity:1; color:var(--text-main); }
         .mc.boom { background:#C0485A; }
         .mc.n1{color:#7FB2F0}.mc.n2{color:#7FD08A}.mc.n3{color:#F08A8A}.mc.n4{color:#B79CF0}.mc.n5{color:#F0B77F}
-        .link-wrap { position:relative; width:100%; max-width:380px; }
+        .link-wrap { position:relative; width:100%; max-width:440px; padding:34px; box-sizing:border-box; } .link-inner { position:relative; }
         .link-grid { display:grid; gap:4px; width:100%; }
-        .link-svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+        .link-svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; z-index:3; }
         .lk { aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--panel); border:1px solid var(--border); border-radius:8px; font-size:22px; user-select:none; }
         .lk.gone { visibility:hidden; } .lk.sel { border-color:var(--primary); box-shadow:0 0 0 2px var(--primary); } .lk.hint { animation:lkblink .6s 3; }
         @keyframes lkblink { 50% { background:var(--primary); } }
@@ -302,11 +302,21 @@
         .date-reel { box-sizing:content-box; height:34px; overflow:hidden; border:1px solid var(--border); border-radius:10px; background:var(--panel); margin-bottom:6px; text-align:center; font-size:14px; color:var(--text-main); }
         .lk.pop { animation:lkpop .26s ease-out forwards; }
         @keyframes lkpop { 0%{transform:scale(1);opacity:1} 60%{transform:scale(1.25);opacity:.9} 100%{transform:scale(.2);opacity:0} }
-        .dpad { display:grid; grid-template-columns:repeat(3,64px); grid-template-rows:repeat(3,44px); gap:6px; justify-content:center; margin-top:2px; }
+        .tt-pad { display:grid; grid-template-columns:repeat(3,88px); grid-template-rows:repeat(2,64px); gap:8px; justify-content:center; margin-top:4px; } .tt-pad button { font-size:22px; } .tt-pad .tt-s { font-size:14px; }
+        .ar-grid { display:grid; gap:6px; width:100%; max-width:380px; margin:6px auto; }
+        .ar { aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--panel); border:2px solid var(--border); border-radius:12px; color:var(--text-main); box-shadow:0 3px 0 rgba(0,0,0,.25); transition:transform .08s; }
+        .ar:active { transform:translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,.25); } .ar.empty { visibility:hidden; }
+        .ar.fly { animation:arfly .38s ease-in forwards; z-index:5; position:relative; } .ar.mine { color:var(--primary); border-color:var(--primary); } .ar.his { color:#FF8FA3; border-color:#FF8FA3; }
+        @keyframes arfly { to { transform:translate(var(--dx), var(--dy)) scale(.5); opacity:0; } }
+        .ar.his-try { border-color:#FF8FA3; box-shadow:0 0 0 3px #FF8FA3; } .ar.hint { animation:lkblink .5s 3; }
+        .ar.shake { animation:arshake .35s; } @keyframes arshake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+        .dpad { display:grid; grid-template-columns:repeat(3,88px); grid-template-rows:repeat(3,64px); gap:8px; justify-content:center; margin-top:2px; }
         .dpad button.dp-s { grid-column:1; grid-row:1; padding:0; font-size:13px; }
         .dpad .dp-u { grid-column:2; grid-row:1; } .dpad .dp-l { grid-column:1; grid-row:2; } .dpad .dp-r { grid-column:3; grid-row:2; } .dpad .dp-d { grid-column:2; grid-row:3; }
         .dpad button svg { pointer-events:none; }
-        .dpad button { border-radius:14px; border:1px solid var(--border); background:var(--panel); color:var(--text-main); font-size:20px; touch-action:manipulation; }
+        .dpad button, .pad-btn { border-radius:16px; border:2px solid var(--border); background:var(--panel); color:var(--text-main); font-size:20px; touch-action:manipulation; box-shadow:0 5px 0 rgba(0,0,0,.35); transition:transform .05s, box-shadow .05s, background .05s; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; }
+        .dpad button:active, .dpad button.down, .pad-btn:active, .pad-btn.down { transform:translateY(4px) scale(.96); box-shadow:0 1px 0 rgba(0,0,0,.35); background:var(--primary); color:var(--bg); }
+        .dpad button svg { width:30px; height:30px; }
         .dp-u { grid-column:2; grid-row:1; } .dp-l { grid-column:1; grid-row:2; } .dp-d { grid-column:2; grid-row:2; } .dp-r { grid-column:3; grid-row:2; }
         .date-tabs { display:flex; gap:6px; padding:10px 14px 4px; flex-shrink:0; }
         .date-tabs button { flex:1; padding:8px 0; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:12.5px; cursor:pointer; }
@@ -2667,8 +2677,8 @@
             'dark': ["#8F79B5", "#A390C5", "#7C66A6", "#6E5A94", "#5F4C82", "#B39DD0", "#9C87BE", "#524269"],
             'eye-care': ["#9C87BE", "#B39DD0", "#7C66A6", "#C4B3DE", "#8F79B5", "#A390C5", "#6E5A94", "#D6CCF2"],
             'dark-green': ["#6FA88A", "#5A8C71", "#7FB99A", "#4C7A62", "#8FC4A8", "#3F6B54", "#6FA88A", "#355A48"],
-            'candy-dark': ["#7CC4F4", "#7FD6C6", "#FFC857", "#A5B8FF", "#C3A6FF", "#FF9F9F", "#9BE37F", "#8FE3F0"],
-            'candy-light': ["#5BB4F0", "#6FCFBE", "#FFB94A", "#8FA6F5", "#B596F5", "#FF9168", "#8BD96E", "#5CCFE0"],
+            'candy-dark': ["rgba(110,185,240,.88)", "rgba(110,210,190,.88)", "rgba(255,185,110,.88)", "rgba(150,170,255,.88)", "rgba(190,160,255,.88)", "rgba(255,140,175,.88)", "rgba(140,215,130,.88)", "rgba(110,210,225,.88)"],
+            'candy-light': ["rgba(126,195,247,.80)", "rgba(127,217,198,.80)", "rgba(255,200,130,.82)", "rgba(157,178,255,.80)", "rgba(196,165,255,.80)", "rgba(255,157,184,.82)", "rgba(150,222,140,.80)", "rgba(110,212,227,.80)"],
             'mono-dark': ["#8A8A8A", "#9E9E9E", "#767676", "#B2B2B2", "#666666", "#C4C4C4", "#7E7E7E", "#555555"],
             'mono-light': ["#5A5A5A", "#6E6E6E", "#7F7F7F", "#4A4A4A", "#8E8E8E", "#3C3C3C", "#686868", "#9A9A9A"],
             'light-green': ["#6FA37F", "#83B592", "#5A8C6C", "#9AC7AA", "#4C7A5C", "#B0D6BE", "#6FA37F", "#7FB08C"]
@@ -2967,8 +2977,8 @@
             'eye-care': { my: '214, 204, 242', other: '255, 255, 255' },
             'dark-green': { my: '90, 140, 113', other: '43, 74, 61' },
             'light-green': { my: '196, 226, 204', other: '255, 255, 255' },
-            'candy-dark': { my: '110, 185, 240', other: '200, 230, 255' },
-            'candy-light': { my: '170, 218, 252', other: '255, 255, 255' },
+            'candy-dark': { my: '255, 143, 184', other: '200, 230, 255' },
+            'candy-light': { my: '255, 198, 220', other: '255, 255, 255' },
             'mono-dark': { my: '232, 232, 232', other: '44, 44, 44' },
             'mono-light': { my: '40, 40, 40', other: '255, 255, 255' }
         };
@@ -5272,7 +5282,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
@@ -5287,9 +5297,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink })[k]();
+            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
@@ -5510,7 +5520,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const cfg = { easy: { r: 6, c: 6, k: 8 }, normal: { r: 8, c: 6, k: 12 }, hard: { r: 8, c: 8, k: 16 } }[gameDiff];
             const R = cfg.r, C = cfg.c, EM = ["🍎", "🍋", "🍇", "🍓", "🍑", "🍒", "🥝", "🍉", "🌸", "🌙", "⭐", "🐱", "🐶", "🐰", "🦊", "🐼"].slice(0, cfg.k);
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点两个相同的图案</div><div class="mine-score" id="linkScore"></div><div class="link-wrap"><div class="link-grid" id="linkGrid"></div><svg class="link-svg" id="linkSvg" viewBox="0 0 ${C} ${R}" preserveAspectRatio="none"></svg></div><div class="game-btns"><button class="btn btn-outline" id="linkHint">提示</button></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点两个相同的图案</div><div class="mine-score" id="linkScore"></div><div class="link-wrap"><div class="link-inner"><div class="link-grid" id="linkGrid"></div><svg class="link-svg" id="linkSvg" viewBox="0 0 ${C} ${R}" preserveAspectRatio="none"></svg></div></div><div class="game-btns"><button class="btn btn-outline" id="linkHint">提示</button></div><div id="gameEnd"></div>`;
             const W = C + 2, H = R + 2;
             const g = Array.from({ length: H }, () => new Array(W).fill(0));
             let tiles = []; for (let i = 0; i < R * C / 2; i++) { const k = 1 + (i % EM.length); tiles.push(k, k); }
@@ -5561,6 +5571,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const col = who === 2 ? "#FF8FA3" : "#7DD3FC";
                 svg.innerHTML = `<path class="lk-glow" d="${d}" pathLength="1" fill="none" stroke="${col}" stroke-opacity=".35" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke-width:10px"/>
                   <path class="lk-line" d="${d}" pathLength="1" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" style="stroke-width:2.5px;filter:drop-shadow(0 0 3px ${col})"/>`;
+                [P[0], P[P.length - 1]].forEach(([x, y]) => { svg.insertAdjacentHTML("beforeend", `<circle cx="${x}" cy="${y}" r="0.1" fill="none" stroke="${col}" vector-effect="non-scaling-stroke" style="stroke-width:2.5px"><animate attributeName="r" from="0.1" to="0.62" dur=".5s" fill="freeze"/><animate attributeName="opacity" from="1" to="0" dur=".5s" fill="freeze"/></circle><circle cx="${x}" cy="${y}" r="0.13" fill="#fff"><animate attributeName="opacity" from="1" to="0" dur=".6s" fill="freeze"/></circle>`); });
                 svg.querySelectorAll("path").forEach(p => { p.style.strokeDasharray = "1"; p.style.strokeDashoffset = "1"; p.getBoundingClientRect(); p.style.transition = "stroke-dashoffset .3s ease-out, opacity .25s ease .3s"; p.style.strokeDashoffset = "0"; });
                 later(() => { svg.querySelectorAll("path").forEach(p => p.style.opacity = "0"); }, 330);
                 later(() => { svg.innerHTML = ""; }, 600);
@@ -5621,7 +5632,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，用方向键控制</div><div class="mine-score" id="snScore"></div><div class="snake-lcd"><canvas id="snCanvas"></canvas></div>
               <div class="dpad"><button class="btn dp-s" id="snStart">开始</button><button data-d="U" class="dp-u">${arrow(0)}</button><button data-d="L" class="dp-l">${arrow(-90)}</button><button data-d="D" class="dp-d">${arrow(180)}</button><button data-d="R" class="dp-r">${arrow(90)}</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("snCanvas"), ctx = cv.getContext("2d");
-            const availH = body.clientHeight - 230;
+            const availH = body.clientHeight - 320;
             const size = Math.max(260, Math.min(360, body.clientWidth - 44, availH)), cs = 9, N = Math.floor(size / cs), px = cs * N, dpr = window.devicePixelRatio || 1;
             cv.style.width = cv.style.height = px + "px"; cv.width = cv.height = px * dpr; ctx.scale(dpr, dpr);
             const V = { U: [0, -1], D: [0, 1], L: [-1, 0], R: [1, 0] }, OPP = { U: "D", D: "U", L: "R", R: "L" };
@@ -5703,7 +5714,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 timer = setTimeout(tick, Math.max(70, base * Math.pow(0.5, el / 90000)));
             }
             function press(d) { if (!running) return; if (d !== OPP[myDir]) queued = d; }
-            document.querySelectorAll(".dpad button[data-d]").forEach(b => { const f = e => { e.preventDefault(); press(b.dataset.d); }; b.addEventListener("touchstart", f, { passive: false }); b.addEventListener("mousedown", f); });
+            document.querySelectorAll(".dpad button[data-d]").forEach(b => { const f = e => { e.preventDefault(); b.classList.add("down"); if (navigator.vibrate) navigator.vibrate(8); try { gameSfx("tap"); } catch (er) { } press(b.dataset.d); }; const u = () => b.classList.remove("down"); b.addEventListener("touchstart", f, { passive: false }); b.addEventListener("mousedown", f); ["touchend", "touchcancel", "mouseup", "mouseleave"].forEach(ev => b.addEventListener(ev, u)); });
             const key = e => { const m = { ArrowUp: "U", ArrowDown: "D", ArrowLeft: "L", ArrowRight: "R" }[e.key]; if (m) { e.preventDefault(); press(m); } };
             document.addEventListener("keydown", key);
             let tx = 0, ty = 0;
@@ -5714,6 +5725,136 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameCleanup = () => { running = false; clearTimeout(timer); document.removeEventListener("keydown", key); };
             gamePause = () => { clearTimeout(timer); document.removeEventListener("keydown", key); };
             gameResume = () => { document.addEventListener("keydown", key); if (running) { clearTimeout(timer); timer = setTimeout(tick, 400); } };
+        }
+
+        // ---------- 俄罗斯方块（90年代掌机版：你一盘、他一盘，消行给对方加垃圾行） ----------
+        function gameTetris() {
+            const COLS = 10, ROWS = 20, body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，消 2 行以上会给对方加垃圾行</div><div class="mine-score" id="ttScore"></div><div class="snake-lcd"><canvas id="ttCanvas"></canvas></div>
+              <div class="tt-pad"><button class="pad-btn tt-s" id="ttStart">开始</button><button class="pad-btn" data-a="rot">↻</button><button class="pad-btn" data-a="drop">⤓</button><button class="pad-btn" data-a="L">◀</button><button class="pad-btn" data-a="D">▼</button><button class="pad-btn" data-a="R">▶</button></div><div id="gameEnd"></div>`;
+            const cv = document.getElementById("ttCanvas"), ctx = cv.getContext("2d"), dpr = window.devicePixelRatio || 1;
+            const availH = body.clientHeight - 330, wAvail = Math.min(body.clientWidth - 44, 400);
+            const cs = Math.max(10, Math.floor(Math.min(availH / ROWS, wAvail * 0.64 / COLS))), cs2 = Math.max(6, Math.floor(cs * 0.55)), gap = 14;
+            const pw = COLS * cs + gap + COLS * cs2 + 4, ph = ROWS * cs + 2;
+            cv.style.width = pw + "px"; cv.style.height = ph + "px"; cv.width = pw * dpr; cv.height = ph * dpr; ctx.scale(dpr, dpr);
+            const SH = { I: [[0, 0], [1, 0], [2, 0], [3, 0]], O: [[0, 0], [1, 0], [0, 1], [1, 1]], T: [[0, 0], [1, 0], [2, 0], [1, 1]], S: [[1, 0], [2, 0], [0, 1], [1, 1]], Z: [[0, 0], [1, 0], [1, 1], [2, 1]], J: [[0, 0], [0, 1], [1, 1], [2, 1]], L: [[2, 0], [0, 1], [1, 1], [2, 1]] };
+            const rot = cells => { const r = cells.map(([x, y]) => [-y, x]); const mx = Math.min(...r.map(c => c[0])), my = Math.min(...r.map(c => c[1])); return r.map(([x, y]) => [x - mx, y - my]); };
+            const ROTS = {}; Object.keys(SH).forEach(k => { const a = [SH[k]]; for (let i = 0; i < 3; i++) a.push(rot(a[i])); ROTS[k] = a; });
+            const KEYS = Object.keys(SH);
+            const mk = () => ({ b: Array.from({ length: ROWS }, () => new Array(COLS).fill(0)), p: null, nx: KEYS[Math.floor(Math.random() * 7)], lines: 0, dead: false, acc: 0, aiAcc: 0, plan: null, sent: 0 });
+            let me, him, running = false, over = false, loop = null, last = 0;
+            const base = { easy: 900, normal: 650, hard: 430 }[gameDiff], aiStep = { easy: 330, normal: 210, hard: 110 }[gameDiff];
+            const fits = (P, cells, x, y) => cells.every(([cx, cy]) => { const X = x + cx, Y = y + cy; return X >= 0 && X < COLS && Y < ROWS && (Y < 0 || !P.b[Y][X]); });
+            function spawn(P) { const k = P.nx; P.nx = KEYS[Math.floor(Math.random() * 7)]; P.p = { k, r: 0, x: 3, y: 0 }; P.plan = null; if (!fits(P, ROTS[k][0], 3, 0)) P.dead = true; }
+            const cells = P => ROTS[P.p.k][P.p.r];
+            function gI(P) { return Math.max(70, base * Math.pow(0.9, Math.floor(P.lines / 6))); }
+            function move(P, dx) { if (P.p && fits(P, cells(P), P.p.x + dx, P.p.y)) { P.p.x += dx; return true; } return false; }
+            function rotate(P) { if (!P.p) return false; const nr = (P.p.r + 1) % 4, c = ROTS[P.p.k][nr]; for (const k of [0, -1, 1, -2, 2]) if (fits(P, c, P.p.x + k, P.p.y)) { P.p.r = nr; P.p.x += k; return true; } return false; }
+            function step(P) { if (!P.p) return; if (fits(P, cells(P), P.p.x, P.p.y + 1)) P.p.y++; else lock(P); }
+            function hardDrop(P) { if (!P.p) return; while (fits(P, cells(P), P.p.x, P.p.y + 1)) P.p.y++; lock(P); }
+            function garbage(P, n) { for (let i = 0; i < n; i++) { if (P.b[0].some(v => v)) { P.dead = true; return; } P.b.shift(); const row = new Array(COLS).fill(9); row[Math.floor(Math.random() * COLS)] = 0; P.b.push(row); if (P.p && !fits(P, cells(P), P.p.x, P.p.y)) { P.p.y--; if (P.p.y < -1) P.dead = true; } } }
+            function lock(P) {
+                const col = P === me ? 1 : 2; cells(P).forEach(([cx, cy]) => { const X = P.p.x + cx, Y = P.p.y + cy; if (Y >= 0) P.b[Y][X] = col; });
+                let n = 0; for (let y = ROWS - 1; y >= 0; y--) if (P.b[y].every(v => v)) { P.b.splice(y, 1); P.b.unshift(new Array(COLS).fill(0)); n++; y++; }
+                if (n) { P.lines += n; gameSfx(P === me ? "match" : "his"); if (n >= 2) garbage(P === me ? him : me, n - 1); }
+                P.p = null; spawn(P);
+            }
+            function evalBoard(b) { const h = new Array(COLS).fill(0); let holes = 0; for (let x = 0; x < COLS; x++) { let seen = false; for (let y = 0; y < ROWS; y++) { if (b[y][x]) { if (!seen) { h[x] = ROWS - y; seen = true; } } else if (seen) holes++; } } let agg = 0, bump = 0; h.forEach((v, i) => { agg += v; if (i) bump += Math.abs(v - h[i - 1]); }); let lines = 0; b.forEach(r => { if (r.every(v => v)) lines++; }); return -0.51 * agg + 0.76 * lines * 3 - 0.36 * holes * 1.6 - 0.18 * bump; }
+            function plan(P) {
+                const opts = []; for (let r = 0; r < 4; r++) { const c = ROTS[P.p.k][r]; for (let x = -2; x < COLS; x++) { if (!fits(P, c, x, 0)) continue; let y = 0; while (fits(P, c, x, y + 1)) y++; const b = P.b.map(row => row.slice()); c.forEach(([cx, cy]) => { if (y + cy >= 0) b[y + cy][x + cx] = 1; }); opts.push({ r, x, s: evalBoard(b) }); } }
+                opts.sort((a, b) => b.s - a.s); const pick = gameDiff === "easy" ? opts[Math.min(opts.length - 1, Math.floor(Math.random() * 6))] : gameDiff === "normal" ? opts[Math.min(opts.length - 1, Math.random() < 0.25 ? 1 + Math.floor(Math.random() * 2) : 0)] : opts[0]; return pick || { r: 0, x: 3 };
+            }
+            function aiAct(P) { if (!P.p) return; if (!P.plan) P.plan = plan(P); const t = P.plan; if (P.p.r !== t.r) { if (!rotate(P)) P.plan.r = P.p.r; } else if (P.p.x < t.x) { if (!move(P, 1)) t.x = P.p.x; } else if (P.p.x > t.x) { if (!move(P, -1)) t.x = P.p.x; } else step(P); }
+            function cell(x, y, s, mode) { ctx.fillStyle = "#1B2A12"; if (mode === 2) { ctx.fillRect(x + 1, y + 1, s - 2, s - 2); ctx.fillStyle = "#B7C98A"; ctx.fillRect(x + 3, y + 3, Math.max(1, s - 6), Math.max(1, s - 6)); } else if (mode === 9) { ctx.fillRect(x + 1, y + 1, s - 2, s - 2); ctx.fillStyle = "#B7C98A"; ctx.fillRect(x + 2, y + s / 2 - 1, s - 4, 2); } else ctx.fillRect(x + 1, y + 1, s - 2, s - 2); }
+            function drawBoard(P, ox, s, nextBox) {
+                ctx.fillStyle = "rgba(27,42,18,.08)"; for (let i = 0; i <= COLS; i++) ctx.fillRect(ox + i * s, 0, 1, ROWS * s); for (let i = 0; i <= ROWS; i++) ctx.fillRect(ox, i * s, COLS * s, 1);
+                ctx.fillStyle = "#1B2A12"; ctx.fillRect(ox - 2, 0, 2, ROWS * s); ctx.fillRect(ox + COLS * s, 0, 2, ROWS * s);
+                for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) if (P.b[y][x]) cell(ox + x * s, y * s, s, P.b[y][x]);
+                if (P.p && !P.dead) { const col = P === me ? 1 : 2; cells(P).forEach(([cx, cy]) => { const y = P.p.y + cy; if (y >= 0) cell(ox + (P.p.x + cx) * s, y * s, s, col); }); }
+                if (nextBox) { const c = ROTS[P.nx][0]; ctx.fillStyle = "#1B2A12"; ctx.font = "10px monospace"; ctx.fillText("下一个", ox, ROWS * s - 46); c.forEach(([cx, cy]) => cell(ox + cx * s * 0.7, ROWS * s - 38 + cy * s * 0.7, s * 0.7, 1)); }
+            }
+            function draw() {
+                ctx.fillStyle = "#B7C98A"; ctx.fillRect(0, 0, pw, ph);
+                drawBoard(me, 1, cs, false); drawBoard(him, cs * COLS + gap + 2, cs2, true);
+                ctx.fillStyle = "#1B2A12"; ctx.font = "11px monospace"; ctx.fillText(myName(), 4, 12); ctx.fillText(hisName(), cs * COLS + gap + 4, 12);
+                document.getElementById("ttScore").innerText = `${myName()} ${me.lines} 行　|　${hisName()} ${him.lines} 行`;
+            }
+            function reset() { me = mk(); him = mk(); spawn(me); spawn(him); over = false; draw(); }
+            function finish() {
+                running = false; over = true; clearInterval(loop);
+                if (me.dead && him.dead) { gameResultBar("同时堆满了，平局"); gameStat("tetris", "d"); } else if (me.dead) { gameResultBar("你堆满了，" + hisName() + "赢了"); gameStat("tetris", "l"); } else { gameResultBar(hisName() + "堆满了，你赢了 🎉"); gameStat("tetris", "w"); }
+                document.getElementById("gameEnd").innerHTML = gameEndButtons(); draw();
+            }
+            function tick() {
+                const now = performance.now(), dt = Math.min(100, now - last); last = now; if (!running) return;
+                me.acc += dt; while (me.acc >= gI(me) && !me.dead) { me.acc -= gI(me); step(me); }
+                him.acc += dt; him.aiAcc += dt; while (him.aiAcc >= aiStep && !him.dead) { him.aiAcc -= aiStep; aiAct(him); }
+                draw(); if (me.dead || him.dead) finish();
+            }
+            const act = a => { if (!running || me.dead || !me.p) return; if (a === "L") move(me, -1); else if (a === "R") move(me, 1); else if (a === "D") { step(me); me.acc = 0; } else if (a === "rot") rotate(me); else if (a === "drop") hardDrop(me); draw(); };
+            let rep = null, repT = null;
+            document.querySelectorAll(".tt-pad button[data-a]").forEach(b => {
+                const a = b.dataset.a, rpt = a === "L" || a === "R" || a === "D";
+                const s = e => { e.preventDefault(); b.classList.add("down"); if (navigator.vibrate) navigator.vibrate(8); try { gameSfx("tap"); } catch (er) { } act(a); if (rpt) { clearTimeout(repT); clearInterval(rep); repT = setTimeout(() => { rep = setInterval(() => act(a), 70); }, 180); } };
+                const u = () => { b.classList.remove("down"); clearTimeout(repT); clearInterval(rep); };
+                b.addEventListener("touchstart", s, { passive: false }); b.addEventListener("mousedown", s); ["touchend", "touchcancel", "mouseup", "mouseleave"].forEach(ev => b.addEventListener(ev, u));
+            });
+            const key = e => { const m = { ArrowLeft: "L", ArrowRight: "R", ArrowDown: "D", ArrowUp: "rot", " ": "drop" }[e.key]; if (m) { e.preventDefault(); act(m); } };
+            document.addEventListener("keydown", key);
+            const startLoop = () => { clearInterval(loop); last = performance.now(); loop = setInterval(tick, 30); };
+            document.getElementById("ttStart").onclick = () => { if (running) return; reset(); document.getElementById("gameEnd").innerHTML = ""; running = true; gameResultBar("加油！"); gameSfx("tap"); startLoop(); };
+            reset();
+            gameCleanup = () => { running = false; clearInterval(loop); clearInterval(rep); document.removeEventListener("keydown", key); };
+            gamePause = () => { clearInterval(loop); clearInterval(rep); document.removeEventListener("keydown", key); };
+            gameResume = () => { document.addEventListener("keydown", key); if (running) startLoop(); };
+        }
+
+        // ---------- 箭头消除（轮流消除：箭头指向的前方没有别的箭头挡着才能消掉） ----------
+        function gameArrow() {
+            const cfg = { easy: [6, 6], normal: [7, 7], hard: [8, 8] }[gameDiff], R = cfg[0], C = cfg[1], body = document.getElementById("gameBody");
+            const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // 0上 1右 2下 3左
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点一个前方没被挡住的箭头</div><div class="mine-score" id="arScore"></div><div class="ar-grid" id="arGrid" style="grid-template-columns:repeat(${C},1fr)"></div><div class="game-btns"><button class="btn btn-outline" id="arHint">提示</button></div><div id="gameEnd"></div>`;
+            const g = Array.from({ length: R }, () => new Array(C).fill(-1));
+            const cellsOrder = []; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) cellsOrder.push([x, y]); cellsOrder.sort(() => Math.random() - 0.5);
+            const clearRay = (x, y, d) => { let cx = x + DIRS[d][0], cy = y + DIRS[d][1]; while (cx >= 0 && cy >= 0 && cx < C && cy < R) { if (g[cy][cx] >= 0) return false; cx += DIRS[d][0]; cy += DIRS[d][1]; } return true; };
+            // 按放置顺序生成：每个新箭头前方不能有“更早放置”的箭头，保证一定有解（后放的先消）
+            cellsOrder.forEach(([x, y]) => { if (Math.random() < 0.08) return; const ds = [0, 1, 2, 3].sort(() => Math.random() - 0.5); for (const d of ds) if (clearRay(x, y, d)) { g[y][x] = d; return; } });
+            let my = 0, his = 0, over = false, busy = false, timers = [], total = g.flat().filter(v => v >= 0).length;
+            const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
+            const arrowSvg = d => `<svg viewBox="0 0 24 24" width="62%" height="62%" style="transform:rotate(${d * 90}deg)"><path d="M12 3l8 10h-5v8H9v-8H4z" fill="currentColor"/></svg>`;
+            const removable = (x, y) => g[y][x] >= 0 && clearRay(x, y, g[y][x]);
+            const allRemovable = () => { const o = []; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (removable(x, y)) o.push([x, y]); return o; };
+            const el = (x, y) => document.querySelector(`.ar[data-x="${x}"][data-y="${y}"]`);
+            function render() {
+                document.getElementById("arScore").innerText = `${myName()} ${my}　|　${hisName()} ${his}　|　还剩 ${total - my - his}`;
+                let h = ""; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) h += g[y][x] >= 0 ? `<div class="ar" data-x="${x}" data-y="${y}">${arrowSvg(g[y][x])}</div>` : `<div class="ar empty"></div>`;
+                document.getElementById("arGrid").innerHTML = h;
+            }
+            function remove(x, y, who, after) {
+                const d = g[y][x], n = el(x, y); g[y][x] = -1; gameSfx(who === 1 ? "match" : "his");
+                if (n) { n.classList.add(who === 1 ? "mine" : "his"); n.style.setProperty("--dx", DIRS[d][0] * 130 + "%"); n.style.setProperty("--dy", DIRS[d][1] * 130 + "%"); n.classList.add("fly"); }
+                if (who === 1) my++; else his++;
+                later(() => { render(); after(); }, 380);
+            }
+            function finish() { over = true; const res = my > his ? "w" : my < his ? "l" : "d"; gameResultBar(my > his ? "全部消完，你消得更多，你赢了 🎉" : my < his ? "全部消完，" + hisName() + "消得更多" : "全部消完，平局"); gameStat("arrow", res); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function hisTurn() {
+                if (my + his >= total) { finish(); return; } busy = true; gameResultBar(hisName() + "在找…");
+                later(() => {
+                    const opts = allRemovable(); if (!opts.length) { busy = false; finish(); return; }
+                    const missP = { easy: 0.35, normal: 0.12, hard: 0 }[gameDiff];
+                    if (Math.random() < missP) { const blocked = []; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (g[y][x] >= 0 && !removable(x, y)) blocked.push([x, y]); if (blocked.length) { const [bx, by] = blocked[Math.floor(Math.random() * blocked.length)], n = el(bx, by); if (n) { n.classList.add("his-try"); gameSfx("his"); later(() => { n.classList.remove("his-try"); n.classList.add("shake"); gameSfx("miss"); }, 420); } later(() => hisTurn2(), 1000); return; } }
+                    hisTurn2();
+                }, 650 + Math.random() * 400);
+            }
+            function hisTurn2() { const opts = allRemovable(); if (!opts.length) { busy = false; finish(); return; } const [x, y] = opts[Math.floor(Math.random() * opts.length)], n = el(x, y); if (n) n.classList.add("his-try"); gameSfx("his"); later(() => remove(x, y, 2, () => { busy = false; if (my + his >= total) { finish(); return; } gameResultBar("轮到你了"); }), 450); }
+            document.getElementById("arHint").onclick = () => { if (over || busy) return; const o = allRemovable(); if (o.length) { const n = el(o[0][0], o[0][1]); if (n) { n.classList.add("hint"); setTimeout(() => n.classList.remove("hint"), 1500); } } };
+            document.getElementById("arGrid").addEventListener("click", e => {
+                if (over || busy) return; const n = e.target.closest(".ar"); if (!n || n.classList.contains("empty")) return; const x = +n.dataset.x, y = +n.dataset.y;
+                if (removable(x, y)) { busy = true; remove(x, y, 1, () => { if (my + his >= total) { finish(); return; } hisTurn(); }); }
+                else { gameSfx("miss"); n.classList.remove("shake"); void n.offsetWidth; n.classList.add("shake"); gameResultBar("前面有箭头挡着，换一个"); }
+            });
+            render(); if (!total) { render(); }
+            gameCleanup = () => timers.forEach(clearTimeout);
         }
 
         // ==================== 💞 约会 ====================
