@@ -302,9 +302,9 @@
         .date-reel { box-sizing:content-box; height:34px; overflow:hidden; border:1px solid var(--border); border-radius:10px; background:var(--panel); margin-bottom:6px; text-align:center; font-size:14px; color:var(--text-main); }
         .lk.pop { animation:lkpop .26s ease-out forwards; }
         @keyframes lkpop { 0%{transform:scale(1);opacity:1} 60%{transform:scale(1.25);opacity:.9} 100%{transform:scale(.2);opacity:0} }
-        .tt-pad { display:grid; grid-template-columns:repeat(3,88px); grid-template-rows:repeat(2,64px); gap:8px; justify-content:center; margin-top:4px; } .tt-pad button { font-size:22px; } .tt-pad .tt-s { font-size:14px; }
+        .tt-pad { display:grid; grid-template-columns:repeat(3,88px); grid-template-rows:repeat(2,56px); gap:8px; justify-content:center; margin-top:4px; } .tt-pad button { font-size:22px; } .tt-pad .tt-s { font-size:14px; }
         .ar-svg { display:block; margin:8px auto; max-width:100%; touch-action:manipulation; }
-        .arp { cursor:pointer; color:var(--text-main); transition:transform .5s ease-in, opacity .5s ease-in; } .arp.fly { opacity:0; pointer-events:none; }
+        .arp { cursor:pointer; color:var(--text-main); } .arp.fly { pointer-events:none; }
         .arp-line { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; } .arp-hit { fill:none; stroke:transparent; stroke-width:14; stroke-linecap:round; stroke-linejoin:round; pointer-events:stroke; }
         .arp.mine { color:var(--primary); } .arp.his { color:#FF8FA3; } .arp.his-try { color:#FF8FA3; } .arp.blk { color:#E36C86; } .arp.hint { animation:lkblink .5s 3; }
         .arp.shake { animation:arshake .35s; } @keyframes arshake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-5px)} 40%{transform:translateX(5px)} 60%{transform:translateX(-3px)} 80%{transform:translateX(3px)} }
@@ -1973,7 +1973,7 @@
             gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(34,22,18,.42)"); g.addColorStop(1, "rgba(34,22,18,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
             ctx.globalCompositeOperation = "lighter";
             // 粉色发光区
-            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(255,80,150,.9)"); g.addColorStop(0.4, "rgba(240,60,130,.28)"); g.addColorStop(1, "rgba(240,60,130,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
+            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(190,225,255,.9)"); g.addColorStop(0.4, "rgba(150,200,255,.26)"); g.addColorStop(1, "rgba(150,200,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
             // 明亮的核心
             { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,252,240,1)"); g.addColorStop(0.12, "rgba(255,236,190,.85)"); g.addColorStop(0.45, "rgba(236,200,140,.3)"); g.addColorStop(1, "rgba(220,180,120,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
             ctx.globalCompositeOperation = "source-over";
@@ -5618,8 +5618,8 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         // ---------- 连连看 ----------
         function gameLink() {
-            const cfg = { easy: { r: 6, c: 6, k: 8 }, normal: { r: 8, c: 6, k: 12 }, hard: { r: 8, c: 8, k: 16 } }[gameDiff];
-            const R = cfg.r, C = cfg.c, EM = ["🍎", "🍋", "🍇", "🍓", "🍑", "🍒", "🥝", "🍉", "🌸", "🌙", "⭐", "🐱", "🐶", "🐰", "🦊", "🐼"].slice(0, cfg.k);
+            const cfg = { easy: { r: 6, c: 6, k: 8 }, normal: { r: 8, c: 6, k: 12 }, hard: { r: 12, c: 8, k: 20 } }[gameDiff];
+            const R = cfg.r, C = cfg.c, EM = ["🍎", "🍋", "🍇", "🍓", "🍑", "🍒", "🥝", "🍉", "🌸", "🌙", "⭐", "🐱", "🐶", "🐰", "🦊", "🐼", "🍍", "🥕", "🍄", "🐸"].slice(0, cfg.k);
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点两个相同的图案</div><div class="mine-score" id="linkScore"></div><div class="link-wrap"><div class="link-inner"><div class="link-grid" id="linkGrid"></div><svg class="link-svg" id="linkSvg" viewBox="0 0 ${C} ${R}" preserveAspectRatio="none"></svg></div></div><div class="game-btns"><button class="btn btn-outline" id="linkHint">提示</button></div><div id="gameEnd"></div>`;
             const W = C + 2, H = R + 2;
@@ -5835,11 +5835,11 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         // ---------- 俄罗斯方块（90年代掌机版：你一盘、他一盘，消行给对方加垃圾行） ----------
         function gameTetris() {
-            const COLS = 10, ROWS = 20, body = document.getElementById("gameBody");
+            const COLS = 10, ROWS = 24, body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，消 2 行以上会给对方加垃圾行</div><div class="mine-score" id="ttScore"></div><div class="snake-lcd"><canvas id="ttCanvas"></canvas></div>
               <div class="tt-pad"><button class="pad-btn tt-s" id="ttStart">开始</button><button class="pad-btn" data-a="drop">⤓</button><button class="pad-btn" data-a="rot">↻</button><button class="pad-btn" data-a="L">◀</button><button class="pad-btn" data-a="D">▼</button><button class="pad-btn" data-a="R">▶</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("ttCanvas"), ctx = cv.getContext("2d"), dpr = window.devicePixelRatio || 1;
-            const availH = body.clientHeight - 330, wAvail = Math.min(body.clientWidth - 44, 400);
+            const availH = body.clientHeight - 300, wAvail = Math.min(body.clientWidth - 44, 400);
             const cs = Math.max(10, Math.floor(Math.min(availH / ROWS, wAvail * 0.64 / COLS))), cs2 = Math.max(6, Math.floor(cs * 0.55)), gap = 14;
             const pw = COLS * cs + gap + COLS * cs2 + 4, ph = ROWS * cs + 2;
             cv.style.width = pw + "px"; cv.style.height = ph + "px"; cv.width = pw * dpr; cv.height = ph * dpr; ctx.scale(dpr, dpr);
@@ -5849,11 +5849,11 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const KEYS = Object.keys(SH);
             const mk = () => ({ b: Array.from({ length: ROWS }, () => new Array(COLS).fill(0)), p: null, nx: KEYS[Math.floor(Math.random() * 7)], lines: 0, dead: false, acc: 0, aiAcc: 0, plan: null, sent: 0 });
             let me, him, running = false, over = false, loop = null, last = 0;
-            const base = { easy: 900, normal: 650, hard: 430 }[gameDiff], aiStep = { easy: 330, normal: 210, hard: 110 }[gameDiff];
+            const base = { easy: 1000, normal: 800, hard: 600 }[gameDiff], aiStep = { easy: 700, normal: 520, hard: 340 }[gameDiff];
             const fits = (P, cells, x, y) => cells.every(([cx, cy]) => { const X = x + cx, Y = y + cy; return X >= 0 && X < COLS && Y < ROWS && (Y < 0 || !P.b[Y][X]); });
             function spawn(P) { const k = P.nx; P.nx = KEYS[Math.floor(Math.random() * 7)]; P.p = { k, r: 0, x: 3, y: 0 }; P.plan = null; if (!fits(P, ROTS[k][0], 3, 0)) P.dead = true; }
             const cells = P => ROTS[P.p.k][P.p.r];
-            function gI(P) { return Math.max(70, base * Math.pow(0.9, Math.floor(P.lines / 6))); }
+            function gI(P) { return Math.max(160, base * Math.pow(0.92, Math.floor(P.lines / 10))); }
             function move(P, dx) { if (P.p && fits(P, cells(P), P.p.x + dx, P.p.y)) { P.p.x += dx; return true; } return false; }
             function rotate(P) { if (!P.p) return false; const nr = (P.p.r + 1) % 4, c = ROTS[P.p.k][nr]; for (const k of [0, -1, 1, -2, 2]) if (fits(P, c, P.p.x + k, P.p.y)) { P.p.r = nr; P.p.x += k; return true; } return false; }
             function step(P) { if (!P.p) return; if (fits(P, cells(P), P.p.x, P.p.y + 1)) P.p.y++; else lock(P); }
@@ -5870,7 +5870,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const opts = []; for (let r = 0; r < 4; r++) { const c = ROTS[P.p.k][r]; for (let x = -2; x < COLS; x++) { if (!fits(P, c, x, 0)) continue; let y = 0; while (fits(P, c, x, y + 1)) y++; const b = P.b.map(row => row.slice()); c.forEach(([cx, cy]) => { if (y + cy >= 0) b[y + cy][x + cx] = 1; }); opts.push({ r, x, s: evalBoard(b) }); } }
                 opts.sort((a, b) => b.s - a.s); const pick = gameDiff === "easy" ? opts[Math.min(opts.length - 1, Math.floor(Math.random() * 6))] : gameDiff === "normal" ? opts[Math.min(opts.length - 1, Math.random() < 0.25 ? 1 + Math.floor(Math.random() * 2) : 0)] : opts[0]; return pick || { r: 0, x: 3 };
             }
-            function aiAct(P) { if (!P.p) return; if (!P.plan) P.plan = plan(P); const t = P.plan; if (P.p.r !== t.r) { if (!rotate(P)) P.plan.r = P.p.r; } else if (P.p.x < t.x) { if (!move(P, 1)) t.x = P.p.x; } else if (P.p.x > t.x) { if (!move(P, -1)) t.x = P.p.x; } else step(P); }
+            function aiAct(P) { if (!P.p) return; if (!P.plan) P.plan = plan(P); const t = P.plan; if (P.p.r !== t.r) { if (!rotate(P)) P.plan.r = P.p.r; } else if (P.p.x < t.x) { if (!move(P, 1)) t.x = P.p.x; } else if (P.p.x > t.x) { if (!move(P, -1)) t.x = P.p.x; } else if (gameDiff === "hard") step(P); }
             function cell(x, y, s, mode) { ctx.fillStyle = "#1B2A12"; if (mode === 2) { ctx.fillRect(x + 1, y + 1, s - 2, s - 2); ctx.fillStyle = "#B7C98A"; ctx.fillRect(x + 3, y + 3, Math.max(1, s - 6), Math.max(1, s - 6)); } else if (mode === 9) { ctx.fillRect(x + 1, y + 1, s - 2, s - 2); ctx.fillStyle = "#B7C98A"; ctx.fillRect(x + 2, y + s / 2 - 1, s - 4, 2); } else ctx.fillRect(x + 1, y + 1, s - 2, s - 2); }
             function drawBoard(P, ox, s, nextBox) {
                 ctx.fillStyle = "rgba(27,42,18,.08)"; for (let i = 0; i <= COLS; i++) ctx.fillRect(ox + i * s, 0, 1, ROWS * s); for (let i = 0; i <= ROWS; i++) ctx.fillRect(ox, i * s, COLS * s, 1);
@@ -5883,7 +5883,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 ctx.fillStyle = "#B7C98A"; ctx.fillRect(0, 0, pw, ph);
                 drawBoard(me, 1, cs, false); drawBoard(him, cs * COLS + gap + 2, cs2, true);
                 ctx.fillStyle = "#1B2A12"; ctx.font = "11px monospace"; ctx.fillText(myName(), 4, 12); ctx.fillText(hisName(), cs * COLS + gap + 4, 12);
-                document.getElementById("ttScore").innerText = `${myName()} ${me.lines} 行　|　${hisName()} ${him.lines} 行`;
+                document.getElementById("ttScore").innerText = `${myName()} ${me.lines} 行　|　${hisName()} ${him.lines} 行　|　速度 Lv.${1 + Math.floor(me.lines / 10)}（每消 10 行加快一级）`;
             }
             function reset() { me = mk(); him = mk(); spawn(me); spawn(him); over = false; draw(); }
             function finish() {
@@ -5917,9 +5917,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         // ---------- 箭头消除（轮流消除：箭头指向的前方没有别的箭头挡着才能消掉） ----------
         function gameArrow() {
-            const cfg = { easy: [9, 9, 9], normal: [13, 13, 16], hard: [17, 17, 26] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
+            const cfg = { easy: [10, 10, 12], normal: [16, 16, 24], hard: [22, 22, 42] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
             const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // 0上 1右 2下 3左
-            const cs = Math.max(18, Math.floor(Math.min(body.clientWidth - 24, 400) / C)), SZ = cs * C;
+            const cs = Math.max(14, Math.floor(Math.min(body.clientWidth - 24, 400) / C)), SZ = cs * C;
             body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点一条前方没被挡住的线</div><div class="mine-score" id="arScore"></div><svg id="arSvg" class="ar-svg" width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}"></svg><div class="game-btns"><button class="btn btn-outline" id="arHint">提示</button></div><div id="gameEnd"></div>`;
             const occ = Array.from({ length: R }, () => new Array(C).fill(-1)), paths = [];
             const inb = (x, y) => x >= 0 && y >= 0 && x < C && y < R;
@@ -5931,7 +5931,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const st = free[Math.floor(Math.random() * free.length)]; if (!st || occ[st[1]][st[0]] >= 0) continue;
                 const len = 2 + Math.floor(Math.pow(Math.random(), 0.7) * (MAXL - 1)), cells = [st], seen = new Set([st.join()]); let dir = Math.floor(Math.random() * 4), ok = true;
                 for (let k = 1; k < len; k++) {
-                    const order = [dir, dir, (dir + 1) % 4, (dir + 3) % 4].sort(() => Math.random() - 0.5); let moved = false; const last = cells[cells.length - 1];
+                    const order = (gameDiff === "hard" ? [dir, (dir + 1) % 4, (dir + 3) % 4] : [dir, dir, (dir + 1) % 4, (dir + 3) % 4]).sort(() => Math.random() - 0.5); let moved = false; const last = cells[cells.length - 1];
                     for (const dd of order) { const nx = last[0] + DIRS[dd][0], ny = last[1] + DIRS[dd][1]; if (inb(nx, ny) && occ[ny][nx] < 0 && !seen.has(nx + "," + ny)) { cells.push([nx, ny]); seen.add(nx + "," + ny); dir = dd; moved = true; break; } }
                     if (!moved) break;
                 }
@@ -5947,21 +5947,31 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
             const svg = document.getElementById("arSvg"), NS = "http://www.w3.org/2000/svg";
             const ctr = c => [c[0] * cs + cs / 2, c[1] * cs + cs / 2];
+            const tipOf = p => { const c = ctr(p.cells[p.cells.length - 1]), d = DIRS[p.dir]; return [c[0] + d[0] * cs * 0.32, c[1] + d[1] * cs * 0.32]; };
             paths.forEach(p => {
                 const g = document.createElementNS(NS, "g"); g.setAttribute("class", "arp"); g.dataset.i = p.id;
-                const pts = p.cells.map(ctr), d = DIRS[p.dir], hx = pts[pts.length - 1][0] + d[0] * cs * 0.32, hy = pts[pts.length - 1][1] + d[1] * cs * 0.32;
-                pts[pts.length - 1] = [hx, hy]; const dstr = "M" + pts.map(q => q[0].toFixed(1) + " " + q[1].toFixed(1)).join("L");
-                const s = cs * 0.2, px = -d[1], py = d[0];
-                const head = `M${(hx - d[0] * s + px * s).toFixed(1)} ${(hy - d[1] * s + py * s).toFixed(1)}L${hx.toFixed(1)} ${hy.toFixed(1)}L${(hx - d[0] * s - px * s).toFixed(1)} ${(hy - d[1] * s - py * s).toFixed(1)}`;
-                g.innerHTML = `<path class="arp-hit" d="${dstr}"/><path class="arp-line" d="${dstr}"/><path class="arp-line" d="${head}"/>`; svg.appendChild(g); p.el = g;
+                const pts = p.cells.map(ctr); pts[pts.length - 1] = tipOf(p); const d = DIRS[p.dir];
+                const far = [pts[pts.length - 1][0] + d[0] * SZ * 2, pts[pts.length - 1][1] + d[1] * SZ * 2]; p.full = pts.concat([far]);
+                p.cum = [0]; for (let i = 1; i < p.full.length; i++) p.cum.push(p.cum[i - 1] + Math.hypot(p.full[i][0] - p.full[i - 1][0], p.full[i][1] - p.full[i - 1][1]));
+                p.L0 = p.cum[pts.length - 1];
+                g.innerHTML = `<path class="arp-hit"/><path class="arp-line arp-body"/><path class="arp-line arp-head"/>`; svg.appendChild(g); p.el = g;
+                p.setWin = sOff => {
+                    const at = q => { let i = 1; while (i < p.cum.length - 1 && p.cum[i] < q) i++; const t = (q - p.cum[i - 1]) / (p.cum[i] - p.cum[i - 1] || 1); return [p.full[i - 1][0] + (p.full[i][0] - p.full[i - 1][0]) * t, p.full[i - 1][1] + (p.full[i][1] - p.full[i - 1][1]) * t]; };
+                    const q0 = sOff, q1 = sOff + p.L0, arr = [at(q0)]; for (let i = 1; i < p.full.length - 1; i++) if (p.cum[i] > q0 && p.cum[i] < q1) arr.push(p.full[i]); const e = at(q1); arr.push(e);
+                    const body = "M" + arr.map(q => q[0].toFixed(1) + " " + q[1].toFixed(1)).join("L"), sz = cs * 0.2, px = -d[1], py = d[0];
+                    const head = `M${(e[0] - d[0] * sz + px * sz).toFixed(1)} ${(e[1] - d[1] * sz + py * sz).toFixed(1)}L${e[0].toFixed(1)} ${e[1].toFixed(1)}L${(e[0] - d[0] * sz - px * sz).toFixed(1)} ${(e[1] - d[1] * sz - py * sz).toFixed(1)}`;
+                    g.children[1].setAttribute("d", body); g.children[2].setAttribute("d", head); if (sOff === 0) g.children[0].setAttribute("d", body);
+                };
+                p.setWin(0);
             });
             const removable = p => p.alive && rayBlocker(p) < 0;
             const allRemovable = () => paths.filter(removable);
             function remove(p, who, after) {
                 p.alive = false; p.cells.forEach(c => { occ[c[1]][c[0]] = -1; }); gameSfx(who === 1 ? "match" : "his");
-                const d = DIRS[p.dir]; p.el.classList.add(who === 1 ? "mine" : "his", "fly"); p.el.style.transform = `translate(${d[0] * SZ}px,${d[1] * SZ}px)`;
-                if (who === 1) my++; else his++; score();
-                later(() => { p.el.remove(); after(); }, 520);
+                p.el.classList.add(who === 1 ? "mine" : "his", "fly"); if (who === 1) my++; else his++; score();
+                const tip = tipOf(p), d = DIRS[p.dir], dist = d[0] > 0 ? SZ - tip[0] : d[0] < 0 ? tip[0] : d[1] > 0 ? SZ - tip[1] : tip[1], Send = dist + p.L0 + cs, dur = Math.max(380, Send / 0.9), t0 = performance.now();
+                const fr = now => { const k = Math.min(1, (now - t0) / dur), e = k * k * (0.35 + 0.65 * k); p.setWin(Send * Math.min(1, e)); if (k < 1 && !over) requestAnimationFrame(fr); else { p.el.remove(); after(); } };
+                requestAnimationFrame(fr);
             }
             function score() { document.getElementById("arScore").innerText = `${myName()} ${my}　|　${hisName()} ${his}　|　还剩 ${total - my - his}`; }
             function finish() { over = true; const res = my > his ? "w" : my < his ? "l" : "d"; gameResultBar(my > his ? "全部消完，你消得更多，你赢了 🎉" : my < his ? "全部消完，" + hisName() + "消得更多" : "全部消完，平局"); gameStat("arrow", res); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
