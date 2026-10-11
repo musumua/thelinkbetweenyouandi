@@ -177,6 +177,20 @@
         .chat-collect-toggle-btn { width: 34px; height: 34px; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-main); flex-shrink: 0; opacity: 0.85; }
 
         /* ==================== 📊 数据统计页 ==================== */
+        .div-board { position:relative; margin:6px auto 8px; } .div-board .slot { position:absolute; border:1px dashed var(--border); border-radius:8px; box-sizing:border-box; display:flex; align-items:flex-end; justify-content:center; } .div-board .slot span { font-size:9px; color:var(--text-sub); padding-bottom:2px; text-align:center; line-height:1.1; }
+        .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
+        .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
+        .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); }
+        .cardx .cf { transform:rotateY(180deg); background:var(--panel); border:1.5px solid var(--primary); display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-main); text-align:center; padding:2px; } .cf .cn { font-size:9px; color:var(--text-sub); } .cf .cm { font-size:14px; font-weight:bold; line-height:1.15; } .cardx.sm .cm { font-size:11px; } .cf .cr { font-size:9px; color:var(--primary); } .cf.rv .cm, .cf.rv .cn { transform:rotate(180deg); }
+        .div-deckwrap { display:flex; justify-content:center; margin:10px 0 6px; } .div-deck { position:relative; cursor:pointer; } .div-deck .dk { position:absolute; inset:0; } .div-deck.ready { animation:divPulse 1.4s infinite; } @keyframes divPulse { 50% { filter:drop-shadow(0 0 6px var(--primary)); } }
+        .div-deck.shuf .dk { animation:divShuf .42s ease-in-out 4; } .div-deck.shuf .dk:nth-child(odd) { animation-name:divShufL; } @keyframes divShuf { 0%,100% { transform:translate(0,0) rotate(0); } 50% { transform:translate(34px,-6px) rotate(10deg); } } @keyframes divShufL { 0%,100% { transform:translate(0,0) rotate(0); } 50% { transform:translate(-34px,4px) rotate(-10deg); } }
+        .div-deck.cut .dk:nth-child(n+3) { animation:divCut 1.2s ease-in-out; } @keyframes divCut { 0% { transform:translate(0,0); } 40% { transform:translate(60px,-14px); } 70% { transform:translate(60px,8px); } 100% { transform:translate(0,0); } }
+        .div-status { text-align:center; font-size:12.5px; color:var(--text-sub); margin:6px 0 10px; min-height:18px; } .div-row button:disabled { opacity:.4; }
+        .div-dice { display:flex; gap:10px; justify-content:center; margin:8px 0 14px; } .die { flex:1; max-width:110px; border:1.5px solid var(--primary); border-radius:16px; background:var(--panel); padding:12px 4px; text-align:center; color:var(--text-main); } .die .dn { font-size:11px; color:var(--text-sub); } .die .dv { font-size:19px; font-weight:bold; margin:10px 0 6px; min-height:26px; } .die .dk { font-size:11px; color:var(--text-sub); min-height:28px; line-height:1.3; }
+        .die.roll { animation:divRoll .22s linear infinite; } @keyframes divRoll { 0% { transform:rotate(-8deg) translateY(0); } 50% { transform:rotate(8deg) translateY(-8px); } 100% { transform:rotate(-8deg) translateY(0); } } .die.land { animation:divLand .5s ease-out; } @keyframes divLand { 0% { transform:scale(1.15) rotate(6deg); } 60% { transform:scale(.96); } 100% { transform:none; } }
+        .hxs { display:flex; gap:24px; justify-content:center; margin:10px 0 14px; } .hxc { text-align:center; } .hxt { font-size:12px; color:var(--text-sub); margin-bottom:6px; } .hxn { margin-top:8px; font-size:16px; font-weight:bold; color:var(--text-main); min-height:22px; } .hx { width:84px; display:flex; flex-direction:column; gap:7px; margin:auto; }
+        .hl { height:9px; display:flex; justify-content:space-between; transition:opacity .3s; } .hl i { display:block; height:100%; background:var(--text-main); border-radius:2px; width:100%; } .hl.yin i { width:44%; } .hl.pop { animation:divIn .35s both; } .hl.mv i { background:var(--primary); } .hl.blink { animation:divBlink .45s 3; } @keyframes divBlink { 50% { opacity:.15; } }
+        .div-pal { display:flex; gap:6px; margin:10px 0 14px; } .pc { flex:1; text-align:center; padding:14px 0 10px; border:1px solid var(--border); border-radius:12px; background:var(--panel); color:var(--text-main); font-size:14px; position:relative; transition:transform .12s, background .12s; } .pc.hop { background:var(--primary); color:var(--bg); transform:translateY(-6px); } .pc.fix::after, .pc.last::after { content:attr(data-t); position:absolute; top:2px; left:0; right:0; font-size:10px; color:var(--primary); } .pc.last { border-color:var(--primary); border-width:2px; }
         .div-tabs { display:flex; gap:6px; padding:8px 14px; overflow-x:auto; flex-shrink:0; } .div-tabs button { flex:0 0 auto; border:1px solid var(--border); background:var(--panel); color:var(--text-sub); border-radius:14px; padding:7px 14px; font-size:13px; } .div-tabs button.on { background:var(--primary); color:var(--bg); border-color:transparent; }
         .div-body { flex:1; overflow-y:auto; padding:8px 16px 40px; } .div-q { width:100%; box-sizing:border-box; border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:10px 12px; font-size:14px; margin-bottom:10px; outline:none; }
         .div-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; } .div-row button, .div-act button { border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:9px 14px; font-size:13px; } .div-row button.main { background:var(--primary); color:var(--bg); border-color:transparent; }
@@ -615,8 +629,8 @@
         .home-p2-sticky-note { position: relative; z-index: 1; height: 100%; width: 100%; overflow: hidden; border-radius: 18px !important; background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05)); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 8px 24px rgba(0,0,0,0.16) !important; border: 1px solid rgba(255,255,255,0.22); }
                 .home-p2-sticky-note::before { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; background: radial-gradient(120% 50% at 20% 0%, rgba(255,255,255,0.08), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(255,255,255,0.06) 21px, rgba(255,255,255,0.06) 22px); background-position: 0 0, 0 31px; z-index:0; }
         .home-p2-sticky-note > * { position: relative; z-index: 1; }
-        [data-theme="eye-care"] .home-p2-sticky-note::before, [data-theme="light-green"] .home-p2-sticky-note::before { background: radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.9), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(110,150,190,0.08) 21px, rgba(110,150,190,0.08) 22px); background-position: 0 0, 0 31px; }
-        [data-theme="eye-care"] .home-p2-sticky-note, [data-theme="light-green"] .home-p2-sticky-note { background: linear-gradient(145deg, rgba(255,255,255,0.72), rgba(255,255,255,0.38)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(120,160,200,0.16) !important; border-color: rgba(255,255,255,0.8); }
+        [data-theme="eye-care"] .home-p2-sticky-note::before, [data-theme="light-green"] .home-p2-sticky-note::before { background: radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.35), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(110,150,190,0.12) 21px, rgba(110,150,190,0.08) 22px); background-position: 0 0, 0 31px; }
+        [data-theme="eye-care"] .home-p2-sticky-note, [data-theme="light-green"] .home-p2-sticky-note { background: linear-gradient(145deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1)); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 24px rgba(120,160,200,0.14) !important; border-color: rgba(255,255,255,0.55); }
         .home-p2-wish-note { background: linear-gradient(160deg, var(--wish-note-c1), var(--wish-note-c2)); }
         .home-p2-note-label { font-size: 11px; font-weight: 700; color: #7A6423; margin-bottom: 4px; flex-shrink: 0; }
         .home-p2-wish-note .home-p2-note-label { color: var(--wish-note-text); }
@@ -1530,6 +1544,14 @@
         </div>
     </div>
 
+    <div class="universal-modal" id="anniEditModal" onclick="closeModal('anniEditModal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2>修改纪念日</h2>
+            <input class="modal-input" id="anniEditTitle" placeholder="名称" maxlength="30">
+            <input class="modal-input" id="anniEditDate" type="date" style="margin-top:8px">
+            <div style="display:flex; justify-content: flex-end; gap: 8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('anniEditModal')">取消</button><button class="btn" id="anniEditSave">保存</button></div>
+        </div>
+    </div>
     <div class="universal-modal" id="simpleEditModal" onclick="closeModal('simpleEditModal')">
         <div class="modal-box" onclick="event.stopPropagation()">
             <h2 id="simpleEditTitle">编辑</h2>
@@ -1960,7 +1982,7 @@
             for (let i = 0; i < 700; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.4 + Math.random() * 0.5 }); }
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
-            for (let i = 0; i < 70; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
+            for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,214,160", "255,255,255", "255,190,140", "200,220,255"][i % 4] });
             gal = { parts, bg, dust, pink, halo, shoot: null, nextShoot: 3000 };
         }
@@ -1980,7 +2002,7 @@
             const pos = (r, th) => { const x = r * Rx * Math.cos(th), y = r * Ry * Math.sin(th); return [cx + x * cph - y * sph, cy + x * sph + y * cph]; };
             const omega = r => 0.000026 / (0.22 + r);
             // 伴星系（左上亮点、右下椭圆光斑）
-            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; blob(W * 0.22, H * 0.34, 7, 7, 0.95, "255,248,236"); blob(W * 0.8, H * 0.82, 15, 8, 0.55, "255,238,214"); }
+            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); };  }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（奶白偏灰蓝的盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(225,208,176,.5)"); g.addColorStop(0.4, "rgba(160,172,204,.26)"); g.addColorStop(0.75, "rgba(120,138,184,.1)"); g.addColorStop(1, "rgba(110,130,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
@@ -2001,14 +2023,14 @@
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
                 if (w.arrive && nowMs < w.arrive) return; const [x, y] = pos(w.r, w.a + omega(w.r) * t); const tw = 0.7 + 0.3 * Math.sin(t / 380 + w.ts % 9);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 5); g.addColorStop(0, `hsla(${w.hue},100%,85%,${0.8 * tw})`); g.addColorStop(1, `hsla(${w.hue},100%,70%,0)`); ctx.fillStyle = g; ctx.fillRect(x - 5, y - 5, 10, 10);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 5); g.addColorStop(0, `rgba(255,255,255,${0.8 * tw})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 5, y - 5, 10, 10);
                 ctx.fillStyle = "#fff"; ctx.globalAlpha = tw; ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4); ctx.fillRect(x - 2.2 * tw, y - 0.3, 4.4 * tw, 0.6); ctx.fillRect(x - 0.3, y - 2.2 * tw, 0.6, 4.4 * tw); ctx.globalAlpha = 1;
-                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `hsla(${w.hue},100%,85%,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + k * 16, 0, 6.283); ctx.stroke(); }
+                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + k * 16, 0, 6.283); ctx.stroke(); }
             });
             // 一颗星星从下方飞进去
             if (galFly) {
                 const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const [tx, ty] = pos(w.r, w.a + omega(w.r) * t);
-                if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,250,220,1)"); g.addColorStop(1, "rgba(255,230,160,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#fffbe8"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
+                if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#fffbe8"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
         }
@@ -2330,11 +2352,13 @@
                 R(9, y0 - 16, 3, 16, "#c9996f"); Bl(10, y0 - 18, 7, 2, "#6fbf86"); Bl(5, y0 - 16, 3, 2, "#8fd09c"); Bl(15, y0 - 16, 3, 2, "#8fd09c");
                 Bl(w - 13, y0 + 8, 4, 2, "#f59ea8");
             } else {
-                for (let y = 0; y < y0; y++) { const q = y / y0; R(0, y, w, 1, q < 0.4 ? "#56609f" : q < 0.75 ? "#737bb8" : "#929acb"); }
-                for (let i = 0; i < 14; i++) { const x = (i * 37) % w, y = (i * 23) % Math.round(y0 * 0.8); if (Math.sin(t / 500 + i) > -0.3) P(x, y, "#fffbe6"); }
-                Bl(w * 0.42, 13, 5, 5, "#fff2c0");
-                Bl(w * 0.3, y0 + 1, 36, 9, "#6d74b4"); R(0, y0, w, h - y0, "#6b72b2"); for (let x = 5; x < w; x += 11) P(x, y0 + 4 + (x * 3) % 6, "#7e86c4");
-                R(w - 20, y0 + 4, 11, 3, "#d9a98a"); const fl = Math.floor(t / 180) % 3; Bl(w - 15, y0 + 1 - fl, 1, 1 + fl, "#ffc66e");
+                for (let y = 0; y < y0; y++) { const q = y / y0; R(0, y, w, 1, q < 0.5 ? "#2c3472" : q < 0.8 ? "#3d4786" : "#52599a"); }
+                for (let i = 0; i < 16; i++) { const x = (i * 37 + 5) % w, y = (i * 23 + 3) % Math.round(y0 * 0.7); if (Math.sin(t / 500 + i) > -0.4) P(x, y, "#ffffff"); }
+                Bl(w * 0.27, 14, 7, 7, "#fff1bd"); Bl(w * 0.27 + 3, 12, 6, 6, "#2f3777");
+                Bl(w * 0.25, y0 + 2, 34, 9, "#3b4482"); Bl(w * 0.82, y0 + 3, 30, 8, "#343c78");
+                { const hx = Math.round(w * 0.6), hy = y0 - 9; R(hx, hy, 17, 11, "#232a5c"); for (let k = 0; k < 6; k++) R(hx - 2 + k, hy - k, 21 - 2 * k, 1, "#1c2250"); R(hx + 5, hy + 3, 4, 4, "#ffd77a"); R(hx + 12, hy + 3, 3, 4, "#ffe9a8"); }
+                R(0, y0 + 4, w, h - y0 - 4, "#3a5f7e"); R(0, y0, w, 4, "#3a5f7e"); for (let x = 3; x < w; x += 7) { P(x, y0 + 6 + (x * 3) % 7, "#4d7a99"); P(x + 1, y0 + 5 + (x * 3) % 7, "#4d7a99"); }
+                for (let i = 0; i < 5; i++) { const fx = (i * 29 + 11) % w, fy = y0 + 5 + (i * 13) % 12 + Math.round(Math.sin(t / 700 + i) * 2); if (Math.sin(t / 400 + i * 2) > -0.2) { P(fx, fy, "#e6ff9a"); } }
             }
         }
         function petScene(ctxOut, W, H, t) {
@@ -2755,14 +2779,15 @@
 
         function goHome() {
             const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView");
-            h.style.transition = "none"; h.style.opacity = "0"; h.style.display = "flex"; h.getBoundingClientRect();
-            h.style.transition = "opacity .32s ease"; h.style.opacity = "1"; setTimeout(() => { m.style.display = "none"; h.style.transition = ""; }, 340);
+            m.style.transition = "opacity .2s ease, transform .2s ease"; m.style.opacity = "0"; m.style.transform = "translateY(10px)";
+            setTimeout(() => { m.style.display = "none"; m.style.transition = ""; m.style.opacity = ""; m.style.transform = ""; h.style.transition = "none"; h.style.opacity = "0"; h.style.display = "flex"; h.getBoundingClientRect(); h.style.transition = "opacity .26s ease"; h.style.opacity = "1"; setTimeout(() => { h.style.transition = ""; }, 280); }, 200);
         }
         function openMainChatView() {
             const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView");
-            m.style.display = "flex"; m.classList.remove("chat-in"); m.getBoundingClientRect(); m.classList.add("chat-in");
-            h.style.transition = "opacity .3s ease"; h.style.opacity = "0"; setTimeout(() => { h.style.display = "none"; h.style.transition = ""; h.style.opacity = "1"; }, 320);
-            setTimeout(() => { const c = document.getElementById("content"); if (c) c.scrollTop = c.scrollHeight; }, 30);
+            h.style.transition = "opacity .18s ease"; h.style.opacity = "0";
+            setTimeout(() => { h.style.display = "none"; h.style.transition = ""; h.style.opacity = "1"; m.style.display = "flex"; m.classList.remove("chat-in"); m.getBoundingClientRect(); m.classList.add("chat-in");
+                const c = document.getElementById("content"); if (c) c.scrollTop = c.scrollHeight; }, 180);
+            setTimeout(() => { const c = document.getElementById("content"); if (c) c.scrollTop = c.scrollHeight; }, 230);
             if (db.unreadCount) { db.unreadCount = 0; saveData(); renderHomeScreen(); }
         }
         function isMainChatViewOpen() {
@@ -4315,13 +4340,15 @@
             db.anniversaries = (db.anniversaries || []).filter(a => a.id !== id);
             saveData(); renderAnniversaryTimeline();
         }
-        function editAnniversary(id, field) {
+        function editAnniversary(id) {
             const a = (db.anniversaries || []).find(x => x.id === id); if (!a) return;
-            openSimpleEditModal(field === "title" ? "修改纪念日名称" : "修改日期（格式 2026-10-11）", a[field], v => {
-                v = (v || "").trim(); if (!v) return;
-                if (field === "date") { if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(v)) { alert("日期格式不对，例如 2026-10-11"); return; } const [y, m, d] = v.split("-"); v = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`; a.lastNotified = undefined; }
-                a[field] = v; saveData(); renderAnniversaryTimeline();
-            });
+            document.getElementById("anniEditTitle").value = a.title; const m = (a.date || "").match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/); document.getElementById("anniEditDate").value = m ? `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}` : "";
+            document.getElementById("anniEditSave").onclick = () => {
+                const t = document.getElementById("anniEditTitle").value.trim(), d = document.getElementById("anniEditDate").value;
+                if (!t) { alert("名称不能为空"); return; } if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) { alert("请选择日期"); return; }
+                if (a.date !== d) a.lastNotified = undefined; a.title = t; a.date = d; saveData(); renderAnniversaryTimeline(); closeModal("anniEditModal");
+            };
+            openModalBox("anniEditModal");
         }
         let anniImgTargetId = null;
         function triggerAnniImageUpload(id) {
@@ -4347,8 +4374,8 @@
                     : `<div class="anni-add-img-box" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋</div>`;
                 return `<div class="anni-item ${side}" data-id="${a.id}">
                     <div class="anni-dot"></div>
-                    <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}', 'title')">${escapeHtml(a.title)}</span>${imgHtml}</div>
-                    <div class="anni-date" onclick="event.stopPropagation(); editAnniversary('${a.id}', 'date')">${escapeHtml(a.date)}</div>
+                    <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span>${imgHtml}</div>
+                    <div class="anni-date" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.date)}</div>
                     ${a.img ? `<img class="anni-img-large" src="${a.img}">` : ''}
                 </div>`;
             }).join("");
@@ -5255,57 +5282,125 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function closeDivPage() { document.getElementById("divFullPage").classList.remove("open"); }
         function divTabTo(t) { divTab = t; divLast = null; renderDiv(); }
         const pickN = (arr, n) => { const a = arr.map((v, i) => i); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, n); };
+        const SPREADS = {
+            tarot: [
+                { id: "t1", n: "单张", pos: [[0, 0, ""]] },
+                { id: "t3", n: "三张", pos: [[0, 0, "过去"], [1.15, 0, "现在"], [2.3, 0, "未来"]] },
+                { id: "t5", n: "关系五张", pos: [[1.15, 0, "阻碍"], [0, 1.55, "你"], [1.15, 1.55, "关系"], [2.3, 1.55, "他"], [1.15, 3.1, "建议"]] },
+                { id: "t7", n: "马蹄七张", pos: [[0, 0, "过去"], [0.35, 1.6, "现在"], [1.2, 3.0, "隐藏影响"], [2.4, 3.4, "自己"], [3.6, 3.0, "他人"], [4.45, 1.6, "建议"], [4.8, 0, "结果"]] },
+                { id: "t10", n: "凯尔特十字", rot: [1], pos: [[1.3, 1.55, "现状"], [1.3, 1.55, "阻碍"], [1.3, 3.1, "根基"], [0, 1.55, "过去"], [1.3, 0, "目标"], [2.6, 1.55, "近期"], [4, 4.65, "自己"], [4, 3.1, "环境"], [4, 1.55, "希望与恐惧"], [4, 0, "结果"]] }
+            ],
+            leno: [
+                { id: "l3", n: "三张", pos: [[0, 0, "过去"], [1.15, 0, "现在"], [2.3, 0, "未来"]] },
+                { id: "l5", n: "五张", pos: [[0, 0, "背景"], [1.15, 0, "过去"], [2.3, 0, "现在"], [3.45, 0, "未来"], [4.6, 0, "结果"]] },
+                { id: "l9", n: "九宫格", pos: Array.from({ length: 9 }, (_, i) => [(i % 3) * 1.15, Math.floor(i / 3) * 1.55, ["左上", "上", "右上", "左", "中心", "右", "左下", "下", "右下"][i]]) },
+                { id: "l36", n: "大牌阵", pos: Array.from({ length: 36 }, (_, i) => [(i % 9) * 1.1, Math.floor(i / 9) * 1.5, ""]) }
+            ]
+        };
+        const ROM = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"];
+        let divSpread = { tarot: "t3", leno: "l3" }, divS = null;
         function renderDiv() {
             document.getElementById("divTabs").innerHTML = DIV_TABS.map(([k, n]) => `<button class="${k === divTab ? "on" : ""}" onclick="divTabTo('${k}')">${n}</button>`).join("");
-            const b = document.getElementById("divBody"); if (divTab === "rec") { renderDivRec(b); return; }
+            const b = document.getElementById("divBody"); divS = null; if (divTab === "rec") { renderDivRec(b); return; }
             const q = '<input class="div-q" id="divQ" placeholder="心里想着问题（可不写）" maxlength="60">';
-            let ctl = "";
-            if (divTab === "tarot") ctl = `<div class="div-row"><button class="main" onclick="divTarot(1)">单张</button><button class="main" onclick="divTarot(3)">三张（过去·现在·未来）</button></div>`;
-            else if (divTab === "leno") ctl = `<div class="div-row"><button class="main" onclick="divLeno(3)">三张</button><button class="main" onclick="divLeno(9)">九宫格</button></div>`;
-            else if (divTab === "dice") ctl = `<div class="div-row"><button class="main" onclick="divDice()">掷骰</button></div><div class="div-hint">行星骰 + 星座骰 + 宫位骰：谁在，以什么方式，发生在哪个领域</div>`;
-            else if (divTab === "mhyi") ctl = `<div class="div-row"><button class="main" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint">按现在的农历年月日时起卦，得本卦与变卦</div>`;
-            else ctl = `<div class="div-row"><button class="main" onclick="divXlr()">以此刻起课</button></div><div class="div-hint">按现在的农历月、日、时依次掐算</div>`;
-            b.innerHTML = q + ctl + '<div id="divOut"></div>';
+            if (divTab === "tarot" || divTab === "leno") {
+                const list = SPREADS[divTab];
+                b.innerHTML = q + `<div class="div-row">${list.map(sp => `<button class="${sp.id === divSpread[divTab] ? "main" : ""}" onclick="divPick('${sp.id}')">${sp.n}</button>`).join("")}</div><div id="divStage"></div><div id="divOut"></div>`;
+                divStageInit();
+            } else if (divTab === "dice") b.innerHTML = q + `<div class="div-dice" id="divDiceBox">${["行星", "星座", "宫位"].map((n, i) => `<div class="die" id="die${i}"><div class="dn">${n}</div><div class="dv">?</div><div class="dk"></div></div>`).join("")}</div><div class="div-row"><button class="main" id="divRoll" onclick="divDice()">掷骰</button></div><div class="div-hint">行星骰 + 星座骰 + 宫位骰：谁在，以什么方式，发生在哪个领域</div><div id="divOut"></div>`;
+            else if (divTab === "mhyi") b.innerHTML = q + `<div class="div-hex" id="divHex"></div><div class="div-row"><button class="main" id="divGo" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint">按现在的农历年月日时起卦，得本卦与变卦</div><div id="divOut"></div>`;
+            else b.innerHTML = q + `<div class="div-pal" id="divPal">${XLR.map(x => `<div class="pc">${x[0]}</div>`).join("")}</div><div class="div-row"><button class="main" id="divGo" onclick="divXlr()">以此刻起课</button></div><div class="div-hint">按现在的农历月、日、时依次掐算</div><div id="divOut"></div>`;
         }
-        function divShow(title, cards, text) {
-            const q = (document.getElementById("divQ") || {}).value || "";
-            const full = (q ? "问：" + q + "\n" : "") + title + "\n" + text;
+        function divPick(id) { divSpread[divTab] = id; renderDiv(); }
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        function divStageInit() {
+            const sp = SPREADS[divTab].find(x => x.id === divSpread[divTab]), W = Math.min(document.getElementById("divBody").clientWidth - 32, 420);
+            const maxX = Math.max(...sp.pos.map(p => p[0])) + 1, cw = Math.min(divTab === "tarot" ? 64 : 58, Math.floor(W / (maxX + 0.1))), ch = Math.round(cw * 1.4), maxY = Math.max(...sp.pos.map(p => p[1])), bh = Math.round(maxY * cw + ch + 6), bw = Math.round(maxX * cw);
+            divS = { sp, cw, ch, bw, bh, deck: divTab === "tarot" ? TAROT : LENO, order: [], shuffled: false, cut: false, drawn: 0, cards: [], busy: false, tab: divTab, total: sp.pos.length };
+            const slots = sp.pos.map((p, i) => `<div class="slot" style="left:${Math.round(p[0] * cw)}px;top:${Math.round(p[1] * cw)}px;width:${cw}px;height:${ch}px;${sp.rot && sp.rot.includes(i) ? "transform:rotate(90deg);" : ""}"><span>${sp.total === 36 ? "" : p[2]}</span></div>`).join("");
+            document.getElementById("divStage").innerHTML = `<div class="div-board" id="divBoard" style="width:${bw}px;height:${bh}px">${slots}</div>
+              <div class="div-deckwrap"><div class="div-deck" id="divDeck" style="width:${cw}px;height:${ch}px" onclick="divDraw()">${[0, 1, 2, 3, 4].map(i => `<div class="dk" style="transform:translate(${i * 0.8}px,${-i * 0.8}px)"></div>`).join("")}</div></div>
+              <div class="div-status" id="divStatus">先「洗牌」，再「切牌」，然后点牌堆一张张抽</div>
+              <div class="div-row" style="justify-content:center"><button id="bShuf" class="main" onclick="divShuffle()">洗牌</button><button id="bCut" disabled onclick="divCut()">切牌</button><button id="bDraw" disabled onclick="divDraw()">抽一张</button><button id="bAuto" disabled onclick="divAuto()">全部抽出</button></div>`;
+        }
+        function divBtns() { const s = divS; if (!s) return; const d = (id, v) => { const e = document.getElementById(id); if (e) e.disabled = v; }; d("bShuf", s.busy || s.drawn > 0); d("bCut", s.busy || !s.shuffled || s.cut || s.drawn > 0); d("bDraw", s.busy || !s.cut || s.drawn >= s.total); d("bAuto", s.busy || !s.cut || s.drawn >= s.total); }
+        const divSt = t => { const e = document.getElementById("divStatus"); if (e) e.innerText = t; };
+        async function divShuffle() {
+            const s = divS; if (!s || s.busy) return; s.busy = true; divBtns(); divSt("洗牌中…");
+            const dk = document.getElementById("divDeck"); dk.classList.add("shuf"); s.order = pickN(s.deck, s.deck.length);
+            await wait(1700); dk.classList.remove("shuf"); s.shuffled = true; s.cut = false; s.busy = false; divSt("洗好了，点「切牌」"); divBtns();
+        }
+        async function divCut() {
+            const s = divS; if (!s || s.busy || !s.shuffled) return; s.busy = true; divBtns(); divSt("切牌中…");
+            const dk = document.getElementById("divDeck"); dk.classList.add("cut"); const k = 8 + Math.floor(Math.random() * (s.order.length - 16)); s.order = s.order.slice(k).concat(s.order.slice(0, k));
+            await wait(1300); dk.classList.remove("cut"); s.cut = true; s.busy = false; divSt(`切好了，点牌堆或「抽一张」（共 ${s.total} 张）`); divBtns(); dk.classList.add("ready");
+        }
+        async function divDraw(fast) {
+            const s = divS; if (!s || s.busy || !s.cut || s.drawn >= s.total) return; s.busy = true; divBtns();
+            const i = s.drawn, p = s.sp.pos[i], idx = s.order[i], rev = s.tab === "tarot" && Math.random() < 0.4, board = document.getElementById("divBoard"), dk = document.getElementById("divDeck");
+            const br = board.getBoundingClientRect(), dr = dk.getBoundingClientRect(), tx = Math.round(p[0] * s.cw), ty = Math.round(p[1] * s.cw);
+            const data = s.tab === "tarot" ? TAROT[idx] : LENO[idx], el = document.createElement("div"); el.className = "cardx" + (s.tab === "leno" ? " sm" : "");
+            el.style.cssText = `left:${tx}px;top:${ty}px;width:${s.cw}px;height:${s.ch}px;`;
+            const nm = data[0], sub = s.tab === "tarot" ? ROM[idx] : String(idx + 1);
+            el.innerHTML = `<div class="cin"><div class="cb"></div><div class="cf${rev ? " rv" : ""}"><div class="cn">${sub}</div><div class="cm">${nm}</div>${rev ? '<div class="cr">逆</div>' : ""}</div></div>`;
+            const rot = s.sp.rot && s.sp.rot.includes(i) ? 90 : 0; el.dataset.rot = rot;
+            el.style.transform = `translate(${Math.round(dr.left - br.left - tx)}px,${Math.round(dr.top - br.top - ty)}px) scale(.96)`; el.style.transition = "none"; board.appendChild(el); el.getBoundingClientRect();
+            const sf = s.total > 10; el.style.transition = `transform ${sf ? 0.2 : fast ? 0.35 : 0.7}s cubic-bezier(.2,.8,.3,1)`; el.style.transform = `rotate(${rot}deg)`; await wait(sf ? 200 : fast ? 330 : 700);
+            el.classList.add("flip"); s.cards.push({ i, idx, rev, label: p[2], data }); s.drawn++; await wait(sf ? 40 : fast ? 160 : 560);
+            s.busy = false; if (divS !== s) return; if (s.drawn >= s.total) { dk.classList.remove("ready"); divSt("牌都摆好了"); divReadSpread(); } else divSt(`已抽 ${s.drawn}/${s.total}${p[2] ? "（" + p[2] + "）" : ""}，继续点牌堆`); divBtns();
+        }
+        async function divAuto() { const s = divS; if (!s || s.busy) return; const fast = s.total > 10; while (divS === s && s.drawn < s.total) { await divDraw(true); await wait(fast ? 5 : 120); } }
+        function divReadSpread() {
+            const s = divS, name = (s.tab === "tarot" ? "塔罗 " : "雷诺曼 ") + s.sp.n; let txt = "";
+            if (s.tab === "tarot") txt = s.cards.map(c => `${c.label ? c.label + "：" : ""}${c.data[0]}（${c.rev ? "逆位" : "正位"}）— ${c.rev ? c.data[2] : c.data[1]}`).join("\n");
+            else if (s.sp.id === "l36") {
+                const rows = [0, 1, 2, 3].map(r => s.cards.slice(r * 9, r * 9 + 9).map(c => c.data[0]).join(" ")); txt = rows.join("\n");
+                const near = (nm) => { const k = s.cards.findIndex(c => c.data[0] === nm); if (k < 0) return ""; const x = k % 9, y = Math.floor(k / 9), o = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { if (!dx && !dy) continue; const xx = x + dx, yy = y + dy; if (xx >= 0 && xx < 9 && yy >= 0 && yy < 4) o.push(s.cards[yy * 9 + xx].data[0]); } return `${nm}（第${y + 1}行第${x + 1}列）周围：${o.join("、")}`; };
+                txt += "\n\n" + near("男人") + "\n" + near("女人");
+            } else if (s.sp.id === "l9") txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n中心牌：${s.cards[4].data[0]} — ${s.cards[4].data[1]}`;
+            else txt = s.cards.map(c => `${c.label}：${c.data[0]} — ${c.data[1]}`).join("\n");
+            divResult(name, txt);
+        }
+        function divResult(title, text) {
+            const q = (document.getElementById("divQ") || {}).value || "", full = (q ? "问：" + q + "\n" : "") + title + "\n" + text;
             divLast = { type: title.split(" ")[0], text: full };
-            const ch = cards ? '<div class="div-cards">' + cards.map((c, i) => `<div class="div-card${c.rev ? " rev" : ""}" style="animation-delay:${i * 0.12}s"><div class="pos">${c.pos || ""}</div><div class="nm">${c.nm}</div>${c.tag ? `<div class="rv">${c.tag}</div>` : ""}<div class="kw">${c.kw || ""}</div></div>`).join("") + "</div>" : "";
-            document.getElementById("divOut").innerHTML = ch + `<div class="div-res">${full.replace(/</g, "&lt;")}</div><div class="div-act"><button onclick="divSave()">存入记录</button><button onclick="divSend()">发给他</button></div>`;
-            divSave(true);
+            document.getElementById("divOut").innerHTML = `<div class="div-res">${full.replace(/</g, "&lt;")}</div><div class="div-act"><button onclick="divSave()">存入记录</button><button onclick="divSend()">发给他</button></div>`; divSave(true);
         }
-        function divTarot(n) {
-            const idx = pickN(TAROT, n), pos = n === 1 ? [""] : ["过去", "现在", "未来"];
-            const cs = idx.map((i, k) => { const rev = Math.random() < 0.4; return { pos: pos[k], nm: TAROT[i][0], rev, tag: rev ? "逆位" : "正位", kw: rev ? TAROT[i][2] : TAROT[i][1] }; });
-            divShow("塔罗 " + (n === 1 ? "单张" : "三张"), cs, cs.map(c => `${c.pos ? c.pos + "：" : ""}${c.nm}（${c.tag}）— ${c.kw}`).join("\n"));
+        async function divDice() {
+            const btn = document.getElementById("divRoll"); if (btn.disabled) return; btn.disabled = true; document.getElementById("divOut").innerHTML = "";
+            const pools = [DPL.map(x => x[0]), DSG.map(x => x[0]), DHS.map((x, i) => "第" + (i + 1) + "宫")], res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)], stop = [1200, 1700, 2200], t0 = Date.now(), done = [0, 0, 0];
+            const els = [0, 1, 2].map(i => document.getElementById("die" + i)); els.forEach(e => { e.classList.remove("land"); e.classList.add("roll"); e.querySelector(".dk").innerText = ""; });
+            await new Promise(r => { const iv = setInterval(() => { const el = Date.now() - t0; els.forEach((e, i) => { if (done[i]) return; if (el >= stop[i]) { done[i] = 1; e.classList.remove("roll"); e.classList.add("land"); e.querySelector(".dv").innerText = pools[i][res[i]]; e.querySelector(".dk").innerText = i === 0 ? DPL[res[i]][1] : i === 1 ? DSG[res[i]][1] : DHS[res[i]]; } else e.querySelector(".dv").innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; }); if (done.every(Boolean)) { clearInterval(iv); r(); } }, 80); });
+            const [p, s2, h] = [DPL[res[0]], DSG[res[1]], res[2]];
+            divResult("星骰", `${p[0]}（${p[1]}）落在${s2[0]}（${s2[1]}），在第${h + 1}宫：${DHS[h]}。`); btn.disabled = false;
         }
-        function divLeno(n) {
-            const idx = pickN(LENO, n), pos = n === 3 ? ["过去", "现在", "未来"] : [];
-            const cs = idx.map((i, k) => ({ pos: pos[k] || "第" + (k + 1) + "张", nm: LENO[i][0], kw: LENO[i][1] }));
-            divShow("雷诺曼 " + (n === 3 ? "三张" : "九宫格"), cs, cs.map(c => `${c.pos}：${c.nm} — ${c.kw}`).join("\n"));
+        function hexDraw(bits, mv, id) { return `<div class="hx" id="${id}">${bits.map((b, i) => `<div class="hl${b ? "" : " yin"}${mv === i + 1 ? " mv" : ""}" data-i="${i}"><i></i><i></i></div>`).reverse().join("")}</div>`; }
+        async function divMhyi() {
+            const btn = document.getElementById("divGo"); btn.disabled = true; document.getElementById("divOut").innerHTML = "";
+            const L = divLunar(), s3 = L.y + L.m + L.d, up = (s3 % 8) || 8, lo = ((s3 + L.h) % 8) || 8, mv = ((s3 + L.h) % 6) || 6;
+            const bits = [...TRI_BITS[lo - 1], ...TRI_BITS[up - 1]], nb = bits.slice(); nb[mv - 1] ^= 1;
+            const find = a => TRI_BITS.findIndex(t => t[0] === a[0] && t[1] === a[1] && t[2] === a[2]) + 1, nlo = find(nb.slice(0, 3)), nup = find(nb.slice(3));
+            const nm = (u, l) => HEX[u - 1][l - 1] + (u === l ? "为" + ["天", "泽", "火", "雷", "风", "水", "山", "地"][u - 1] : ""), ben = nm(up, lo), bian = nm(nup, nlo);
+            const box = document.getElementById("divHex"); box.innerHTML = `<div class="hxs"><div class="hxc"><div class="hxt">本卦</div>${hexDraw(bits, mv, "hx1")}<div class="hxn" id="hxn1"></div></div><div class="hxc" style="opacity:0" id="hxw2"><div class="hxt">变卦</div>${hexDraw(nb, 0, "hx2")}<div class="hxn" id="hxn2"></div></div></div>`;
+            const lines = [...document.querySelectorAll("#hx1 .hl")].reverse(); lines.forEach(l => l.style.opacity = 0);
+            for (let i = 0; i < 6; i++) { await wait(380); lines[i].style.opacity = 1; lines[i].classList.add("pop"); }
+            await wait(300); document.getElementById("hxn1").innerText = ben; await wait(500); lines[mv - 1].classList.add("blink"); await wait(900);
+            const w2 = document.getElementById("hxw2"); w2.style.transition = "opacity .6s"; w2.style.opacity = 1; await wait(650); document.getElementById("hxn2").innerText = bian;
+            const tiTri = mv <= 3 ? up : lo, yongTri = mv <= 3 ? lo : up;
+            divResult("梅花易数", `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n动爻：第${mv}爻\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}：本卦看当下，变卦看走向。`); btn.disabled = false;
         }
-        function divDice() {
-            const p = DPL[Math.floor(Math.random() * 10)], s = DSG[Math.floor(Math.random() * 12)], h = Math.floor(Math.random() * 12);
-            divShow("星骰", [{ pos: "行星", nm: p[0], kw: p[1] }, { pos: "星座", nm: s[0], kw: s[1] }, { pos: "宫位", nm: "第" + (h + 1) + "宫", kw: DHS[h] }], `${p[0]}（${p[1]}）落在${s[0]}（${s[1]}），在第${h + 1}宫：${DHS[h]}。`);
+        async function divXlr() {
+            const btn = document.getElementById("divGo"); btn.disabled = true; document.getElementById("divOut").innerHTML = "";
+            const L = divLunar(), a = (L.m - 1) % 6, b = (a + L.d - 1) % 6, c = (b + L.h - 1) % 6, chips = [...document.querySelectorAll("#divPal .pc")]; chips.forEach(x => { x.className = "pc"; x.removeAttribute("data-t"); });
+            const seq = []; for (let k = 0; k <= a; k++) seq.push([k, k === a ? "月" : ""]); for (let k = 1; k <= (L.d - 1) % 6 + 6; k++) seq.push([(a + k) % 6, k === (L.d - 1) % 6 + 6 ? "日" : ""]); for (let k = 1; k <= (L.h - 1) % 6 + 6; k++) seq.push([(b + k) % 6, k === (L.h - 1) % 6 + 6 ? "时" : ""]);
+            for (const [i, tag] of seq) { chips.forEach(x => x.classList.remove("hop")); chips[i].classList.add("hop"); if (tag) { chips[i].setAttribute("data-t", (chips[i].getAttribute("data-t") || "") + tag); chips[i].classList.add("fix"); await wait(420); } else await wait(130); }
+            chips.forEach(x => x.classList.remove("hop")); chips[c].classList.add("last");
+            divResult("小六壬", `农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n月：${XLR[a][0]}　日：${XLR[b][0]}　时：${XLR[c][0]}\n结果：${XLR[c][0]}——${XLR[c][1]}`); btn.disabled = false;
         }
         function divLunar() {
             const d = new Date(); let y = d.getFullYear(), m = d.getMonth() + 1, dd = d.getDate();
             try { const pt = new Intl.DateTimeFormat("en-u-ca-chinese", { year: "numeric", month: "numeric", day: "numeric" }).formatToParts(d); const g = k => (pt.find(x => x.type === k) || {}).value; const ry = parseInt(g("relatedYear")), lm = parseInt(g("month")), ld = parseInt(g("day")); if (ry && lm && ld) { y = ry; m = lm; dd = ld; } } catch (e) { }
             return { y: ((y - 4) % 12 + 12) % 12 + 1, m, d: dd, h: Math.floor(((d.getHours() + 1) % 24) / 2) + 1, lm: m, ld: dd };
-        }
-        function divMhyi() {
-            const L = divLunar(), s3 = L.y + L.m + L.d, up = (s3 % 8) || 8, lo = ((s3 + L.h) % 8) || 8, mv = ((s3 + L.h) % 6) || 6;
-            const name = (u, l) => HEX[u - 1][l - 1] + (HEX[u - 1][l - 1] === TRI[u - 1] && u === l ? "为" + ["天", "泽", "火", "雷", "风", "水", "山", "地"][u - 1] : "");
-            const bits = [...TRI_BITS[lo - 1], ...TRI_BITS[up - 1]]; bits[mv - 1] ^= 1; // 自下而上
-            const find = a => TRI_BITS.findIndex(t => t[0] === a[0] && t[1] === a[1] && t[2] === a[2]) + 1, nlo = find(bits.slice(0, 3)), nup = find(bits.slice(3));
-            const ben = name(up, lo), bian = name(nup, nlo), tiTri = mv <= 3 ? up : lo, yongTri = mv <= 3 ? lo : up;
-            const txt = `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n动爻：第${mv}爻\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}：本卦看当下，变卦看走向。`;
-            divShow("梅花易数", [{ pos: "本卦", nm: ben, kw: TRI[up - 1] + "上" + TRI[lo - 1] + "下" }, { pos: "动爻", nm: "第" + mv + "爻", kw: "" }, { pos: "变卦", nm: bian, kw: TRI[nup - 1] + "上" + TRI[nlo - 1] + "下" }], txt);
-        }
-        function divXlr() {
-            const L = divLunar(), a = (L.m - 1) % 6, b = (a + L.d - 1) % 6, c = (b + L.h - 1) % 6;
-            divShow("小六壬", [{ pos: "月", nm: XLR[a][0], kw: "" }, { pos: "日", nm: XLR[b][0], kw: "" }, { pos: "时（结果）", nm: XLR[c][0], kw: XLR[c][1] }], `农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n月：${XLR[a][0]}　日：${XLR[b][0]}　时：${XLR[c][0]}\n结果：${XLR[c][0]}——${XLR[c][1]}`);
         }
         function divSave(auto) {
             if (!divLast || divLast.saved) { if (!auto) divToast("已经存过了"); return; }
@@ -6025,7 +6120,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             function tick() {
                 const now = performance.now(), dt = Math.min(100, now - last); last = now; if (!running) return;
                 me.acc += dt; while (me.acc >= gI(me) && !me.dead) { me.acc -= gI(me); step(me); }
-                him.acc += dt; him.aiAcc += dt; while (him.aiAcc >= aiStep && !him.dead) { him.aiAcc -= aiStep; aiAct(him); }
+                him.acc += dt; while (him.acc >= gI(him) && !him.dead) { him.acc -= gI(him); step(him); } him.aiAcc += dt; while (him.aiAcc >= aiStep && !him.dead) { him.aiAcc -= aiStep; aiAct(him); }
                 draw(); if (me.dead || him.dead) finish();
             }
             const act = a => { if (!running || me.dead || !me.p) return; if (a === "L") move(me, -1); else if (a === "R") move(me, 1); else if (a === "D") { step(me); me.acc = 0; } else if (a === "rot") rotate(me); else if (a === "drop") hardDrop(me); draw(); };
@@ -6122,7 +6217,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             svg.addEventListener("click", e => {
                 if (over || busy) return; const gEl = e.target.closest(".arp"); if (!gEl) return; const p = paths[+gEl.dataset.i]; if (!p || !p.alive) return;
                 if (removable(p)) { busy = true; remove(p, 1, () => { if (my + his >= total) { finish(); return; } hisTurn(); }); }
-                else { gameSfx("miss"); shake(p); const b = paths[rayBlocker(p)]; if (b) { b.el.classList.add("blk"); setTimeout(() => b.el.classList.remove("blk"), 700); } gameResultBar("前面有线挡着，先消掉挡路的"); }
+                else { gameSfx("miss"); shake(p); const b = paths[rayBlocker(p)]; if (b) { b.el.classList.add("blk"); setTimeout(() => b.el.classList.remove("blk"), 700); } if (gameDiff === "easy") gameResultBar("前面有线挡着，先消掉挡路的"); else { busy = true; gameResultBar("点到被挡住的线了，轮到" + hisName()); later(() => { busy = false; if (!over) hisTurn(); }, 900); } }
             });
             score();
             gameCleanup = () => timers.forEach(clearTimeout);
