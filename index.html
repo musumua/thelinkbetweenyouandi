@@ -177,6 +177,13 @@
         .chat-collect-toggle-btn { width: 34px; height: 34px; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-main); flex-shrink: 0; opacity: 0.85; }
 
         /* ==================== 📊 数据统计页 ==================== */
+        .div-tabs { display:flex; gap:6px; padding:8px 14px; overflow-x:auto; flex-shrink:0; } .div-tabs button { flex:0 0 auto; border:1px solid var(--border); background:var(--panel); color:var(--text-sub); border-radius:14px; padding:7px 14px; font-size:13px; } .div-tabs button.on { background:var(--primary); color:var(--bg); border-color:transparent; }
+        .div-body { flex:1; overflow-y:auto; padding:8px 16px 40px; } .div-q { width:100%; box-sizing:border-box; border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:10px 12px; font-size:14px; margin-bottom:10px; outline:none; }
+        .div-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; } .div-row button, .div-act button { border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:9px 14px; font-size:13px; } .div-row button.main { background:var(--primary); color:var(--bg); border-color:transparent; }
+        .div-cards { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 12px; } .div-card { flex:1 1 28%; min-width:92px; border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:12px 8px; text-align:center; color:var(--text-main); animation:divIn .45s both; } .div-card .pos { font-size:11px; color:var(--text-sub); } .div-card .nm { font-size:16px; font-weight:bold; margin:6px 0 2px; } .div-card .rv { font-size:11px; color:var(--primary); } .div-card .kw { font-size:12px; color:var(--text-sub); margin-top:4px; line-height:1.5; } .div-card.rev .nm { transform:rotate(180deg); }
+        @keyframes divIn { from { opacity:0; transform:translateY(8px) scale(.96); } to { opacity:1; transform:none; } }
+        .div-res { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:12px 14px; font-size:13.5px; line-height:1.7; color:var(--text-main); white-space:pre-wrap; margin-bottom:10px; } .div-act { display:flex; gap:8px; margin-bottom:12px; }
+        .div-rec { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:10px 12px; margin-bottom:10px; } .div-rec .h { display:flex; justify-content:space-between; font-size:12px; color:var(--text-sub); margin-bottom:6px; } .div-rec .t { font-size:13px; color:var(--text-main); white-space:pre-wrap; line-height:1.6; } .div-hint { font-size:12px; color:var(--text-sub); margin:4px 2px 10px; }
         .stats-page-body { padding: 16px 16px 40px 16px; display: flex; flex-direction: column; gap: 20px; }
         .stats-summary-row { display: flex; gap: 12px; }
         .stats-summary-card { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 8px; text-align: center; box-shadow: var(--shadow-sm); }
@@ -448,6 +455,7 @@
         .search-input { flex: 1; padding: 6px 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); color: var(--text-main); font-size: 12px; outline: none; }
 
         /* ==================== 🏠 桌面主页样式 ==================== */
+        #mainAppView.chat-in { animation: chatIn .38s cubic-bezier(.22,.8,.3,1) both; } @keyframes chatIn { from { opacity:0; transform:translateY(18px) scale(.985); } to { opacity:1; transform:none; } }
         .home-screen { position: fixed; top: 0; left: 0; width: 100%; height: var(--home-h, 100%); z-index: 50; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); background-size: cover; background-position: center; }
         .home-wallpaper-mask { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.16);} [data-theme="eye-care"] .home-wallpaper-mask, [data-theme="light-green"] .home-wallpaper-mask { background: rgba(255,255,255,0.10); } .home-wallpaper-mask {  pointer-events: none; z-index: 0; }
         /* ==================== 💑 首页双方头像 + 心跳连接 ==================== */
@@ -500,7 +508,7 @@
         .wish-bar { position:absolute; left:12px; right:12px; bottom:12px; z-index:2; display:flex; align-items:center; gap:6px; height:38px; padding:0 4px 0 15px; border-radius:19px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-sizing:border-box; }
         .wish-bar input { flex:1; min-width:0; background:transparent; border:none; outline:none; color:#fff; font-size:16px; padding:0; } .wish-bar input::placeholder { color:rgba(255,255,255,.62); font-size:14px; }
         .wish-bar button { width:30px; height:30px; border-radius:50%; border:none; background:rgba(255,255,255,.88); color:#4a3f78; font-size:14px; flex-shrink:0; transition:transform .1s; } .wish-bar button:active { transform:scale(.9); }
-        .pet-mini { position:absolute; right:8px; top:7px; background:#fff1ea; border-radius:10px; padding:5px 7px; display:flex; flex-direction:column; gap:5px; pointer-events:none; } .pet-mini div { display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:10px; line-height:10px; color:#7a6a64; } .pet-mini i { display:block; width:40px; height:5px; border-radius:3px; background:#f1d6cb; overflow:hidden; } .pet-mini b { display:block; height:100%; border-radius:3px; }
+        .pet-mini { position:absolute; right:8px; top:7px; text-shadow:0 0 3px #fff, 0 0 3px #fff; display:flex; flex-direction:column; gap:5px; pointer-events:none; } .pet-mini div { display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:10px; line-height:10px; color:#7a6a64; } .pet-mini i { display:block; width:40px; height:5px; border-radius:3px; background:rgba(255,255,255,.7); box-shadow:0 0 0 1px rgba(120,90,80,.25); overflow:hidden; } .pet-mini b { display:block; height:100%; border-radius:3px; }
         .pet-ctl { position:absolute; left:10px; right:10px; bottom:9px; display:flex; gap:6px; justify-content:center; z-index:3; }
         .pet-ctl button { flex:1; max-width:52px; height:36px; border-radius:12px; border:1px solid #e9bfb3; background:#fff1ea; font-size:17px; line-height:1; padding:0; color:#6a5a54; transition:transform .08s, background .08s; }
         .pet-ctl button:active, .pet-ctl button.down { transform:translateY(1px) scale(.94); background:#ffd9c6; } .pet-ctl button.on { background:#ffd9c6; }
@@ -746,7 +754,7 @@
         <div class="home-master-track" id="homeMasterTrack">
             <div class="home-master-page home-widgets-page">
                 <div class="wg-wrap">
-                    <div class="wg wg-wish"><canvas id="starCanvas"></canvas><div class="wish-bar"><input id="wishInput" type="text" maxlength="60" placeholder="写个愿，送给星空…" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();starMakeWish();}"><button onclick="starMakeWish()" aria-label="送出">✦</button></div></div>
+                    <div class="wg wg-wish"><canvas id="starCanvas"></canvas><div class="wish-bar"><input id="wishInput" type="text" maxlength="60" placeholder="朝宇宙许个愿" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();starMakeWish();}"><button onclick="starMakeWish()" aria-label="送出">✦</button></div></div>
                     <div class="wg wg-date" onclick="openDatingPage()"><canvas id="dateStripCanvas"></canvas><div class="wg-lab" id="dateStripLab">约会</div></div>
                     <div class="wg wg-pet"><canvas id="petStripCanvas"></canvas><div class="wg-lab" id="petStripLab">宠物</div><div class="pet-mini" id="petMini"></div><div class="pet-msg" id="petMsgHome"></div><div class="pet-tray" id="petTray"></div><div class="pet-ctl" id="petCtl"></div></div>
                 </div>
@@ -1172,6 +1180,15 @@
         <div class="game-body" id="gameBody"></div>
     </div>
 
+    <div class="pyq-full-page" id="divFullPage">
+        <div class="app-page-header">
+            <button class="pyq-back-pure-symbol" onclick="closeDivPage()"></button>
+            <div class="app-page-title">占卜</div>
+            <div class="app-page-header-spacer"></div>
+        </div>
+        <div class="div-tabs" id="divTabs"></div>
+        <div class="div-body" id="divBody"></div>
+    </div>
     <div class="pyq-full-page" id="libraryFullPage">
         <div class="app-page-header">
             <button class="pyq-back-pure-symbol" onclick="closeLibraryPage()"></button>
@@ -1316,6 +1333,7 @@
                 <div class="app-page-header-spacer"></div>
             </div>
             <div class="app-page-body">
+                <div class="section" id="storageBox"><div style="font-size:13px;color:var(--text-main);margin-bottom:6px">存储占用</div><div style="height:8px;border-radius:5px;background:var(--panel);border:1px solid var(--border);overflow:hidden"><div id="storageBar" style="height:100%;width:0;background:var(--primary);transition:width .4s"></div></div><div id="storageTxt" style="font-size:12px;color:var(--text-sub);margin-top:6px;line-height:1.6">计算中…</div></div>
                 <div class="section">
                     <h3>功能开关</h3>
                     <div class="flex-row-between" style="margin: 8px 0;">
@@ -1778,6 +1796,8 @@
               svg: '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>' },
             { id: "stats", label: "数据", action: () => openStatsPage(),
               svg: '<line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="12" width="3" height="8"/><rect x="11" y="7" width="3" height="13"/><rect x="16" y="15" width="3" height="5"/>' },
+            { id: "divine", label: "占卜", action: () => openDivPage(),
+              svg: '<circle cx="12" cy="12" r="9"/><path d="M12 6l1.8 4.2L18 12l-4.2 1.8L12 18l-1.8-4.2L6 12l4.2-1.8z"/>' },
             { id: "library", label: "书房", action: () => openLibraryPage(),
               svg: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>' }
         ];
@@ -1884,8 +1904,6 @@
             const apps2 = getOrderedApps(HOME_APPS_PAGE2, "homeIconOrderPage2");
             renderIconGrid("homePages", apps1, palette);
             renderIconGrid("homePages2", apps2, palette);
-            attachIconReorder("homePages", apps1, "homeIconOrder");
-            attachIconReorder("homePages2", apps2, "homeIconOrderPage2");
             { const need = Math.ceil(apps1.length / 4) * 4, box2 = document.getElementById("homePages2"); if (box2) for (let k = Math.ceil(apps2.length / 4) * 4; k < need; k++) { const ph = document.createElement("div"); ph.className = "app-icon-item"; ph.style.visibility = "hidden"; ph.style.pointerEvents = "none"; ph.innerHTML = '<div class="app-icon-glyph"></div><div class="app-icon-label">&nbsp;</div>'; box2.appendChild(ph); } }
             renderStickyAndWishNotes();
             renderCalendarGrid();
@@ -1942,8 +1960,8 @@
             for (let i = 0; i < 700; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.4 + Math.random() * 0.5 }); }
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
-            for (let i = 0; i < 230; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "255,255,255", "255,225,190", "190,210,255", "255,190,150"][Math.floor(Math.random() * 5)] });
-            const halo = []; for (let i = 0; i < 9; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,214,160", "255,255,255", "255,190,140", "200,220,255"][i % 4] });
+            for (let i = 0; i < 70; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
+            const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,214,160", "255,255,255", "255,190,140", "200,220,255"][i % 4] });
             gal = { parts, bg, dust, pink, halo, shoot: null, nextShoot: 3000 };
         }
         function galStarColor(r) { if (r < 0.2) return "255,238,196"; if (r < 0.5) return "238,228,208"; if (r < 0.8) return "180,198,228"; return "146,170,210"; }
@@ -2015,6 +2033,7 @@
         // 字符画精灵：'.' 透明，字母对应调色板
         function sprCanvas(art, pal) { const h = art.length, w = Math.max(...art.map(r => r.length)); const cv = document.createElement("canvas"); cv.width = w; cv.height = h; const c = cv.getContext("2d"); art.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const ch = row[x]; if (ch !== "." && pal[ch]) { c.fillStyle = pal[ch]; c.fillRect(x, y, 1, 1); } } }); return cv; }
         const SPR_PAL = { o: PX_OUT, r: "#e8454e", R: "#ff9aa0", g: "#4caf50", G: "#8fe07a", w: "#fffdf4", W: "#d9d4e8", k: "#2e3a3a", y: "#ffd98a", Y: "#ffb94a", b: "#c8803c", B: "#e8a860", p: "#ff9fc0", P: "#ffd2e2", a: "#ff8a4c", A: "#ffc09a", u: "#4aa8e8", U: "#a8dcff", n: "#9a6b45", N: "#c49066", t: "#fff" };
+        Object.keys(SPR_PAL).forEach(k => { SPR_PAL[k] = k === "o" ? "#a8857c" : pxMix(SPR_PAL[k], "#fff4ee", 0.24); });
         const SPR = {
             apple: ["......g.....", ".....og.....", "..oo.oo.oo..", ".orrrorrrro.", "orRRrrrrrrro", "orRrrrrrrrro", "orrrrrrrrrro", "orrrrrrrrrro", ".orrrrrrrro.", ".orrrrrrrro.", "..orrrooro..", "...oo..oo..."],
             cake: ["............", "...orro.....", "..orrrro....", ".owwwwwwoo..", "owwwwwwwwwo.", "oppppppppppo", "oPPPPPPPPPPo", "oppppppppppo", "oPPPPPPPPPPo", "oppppppppppo", ".oooooooooo.", "............"],
@@ -2117,17 +2136,18 @@
                 // 桌子：A字金属支架腿（深灰金属，和地板形成对比）+ 横杆 + 薄白桌面
                 const LEG = D("#6a7282", "#a8aec8"), shade = D("rgba(120,90,60,.28)", "rgba(0,0,0,.3)");
                 E(30, 46, 26, 2, shade);
-                for (const [ax, fl2, fr] of [[11, 6, 15], [37, 31, 42], [52, 49, 57]]) { L(ax, 31, fl2, 47, LEG); L(ax + 1, 31, fl2 + 1, 47, LEG); L(ax + 2, 31, fr, 47, LEG); L(ax + 3, 31, fr + 1, 47, LEG); R(ax - (ax - fl2) * 0.62 + 1, 41, (fr - fl2) * 0.38 + 3, 1, LEG); }
                 B(4, 29, 56, 3, D("#fffdf8", "#c4c6de")); R(5, 29, 54, 1, D("#ffffff", "#dcdef0"));
                 // 桌上物件：打字机、地球仪、笔筒、书
                 B(20, 25, 10, 4, C("#4a4a52")); R(22, 27, 6, 1, C("#8a8a94")); E(33, 25, 3, 3, C("#e8c88a")); L(33, 28, 33, 29, PX_OUT);
                 B(38, 25, 3, 4, D("#fffdf8", "#aab0c8")); L(39, 25, 39, 23, "#e06a6a"); L(40, 25, 41, 23, "#6a9ae0"); B(44, 27, 8, 2, C("#e8c9a0")); B(7, 26, 7, 3, C("#e0d0b0")); B(8, 24, 5, 2, C("#c96f6f"));
                 // 地面物件
-                B(30, 41, 9, 7, C("#d9a45e")); for (let x = 31; x < 38; x += 2) R(x, 42, 1, 5, D("#b8823e", "#4a361c"));
-                B(41, 39, 15, 9, C("#f6f0e6")); R(42, 36, 6, 3, C("#f6f0e6")); R(50, 36, 6, 3, C("#ece4d6")); R(44, 43, 2, 4, PX_OUT); R(47, 43, 1, 4, PX_OUT); R(49, 43, 2, 4, PX_OUT);
-                B(14, 39, 13, 9, D("#fbfbfb", "#9496b4")); R(15, 43, 11, 1, D("#e0e0e8", "#777894"));
+                B(28, 42, 8, 6, C("#d9a45e")); for (let x = 29; x < 35; x += 2) R(x, 43, 1, 4, D("#b8823e", "#4a361c"));
+                B(37, 39, 10, 9, C("#f6f0e6")); R(37, 36, 4, 3, C("#f6f0e6")); R(43, 36, 4, 3, C("#ece4d6")); R(39, 43, 2, 4, PX_OUT); R(42, 43, 1, 4, PX_OUT); R(44, 43, 2, 4, PX_OUT);
+                B(16, 40, 11, 8, D("#fbfbfb", "#9496b4")); R(17, 44, 9, 1, D("#e0e0e8", "#777894"));
                 B(1, 42, 10, 8, C("#8a5a48")); leaf(5, 40, 0, -3, 4, D("#4f9a52", "#244a34")); leaf(5, 40, -3, -2, 3, D("#5fb05c", "#2c5a3c")); leaf(5, 40, 3, -2, 3, D("#5fb05c", "#2c5a3c"));
                 E(2, 21, 3, 2, D("#4f9a52", "#244a34")); E(5, 26, 3, 2, D("#5fb05c", "#2c5a3c")); E(2, 31, 3, 2, D("#4f9a52", "#244a34")); E(5, 36, 3, 2, D("#5fb05c", "#2c5a3c"));
+                { const LG = D("#59606e", "#6b7391"), HL = D("#9aa3b2", "#9aa3c4"); // 金属A字桌腿：深色粗线 + 高光 + 横杆，画在最上层
+                  for (const [ax, fl2, fr] of [[10, 5, 15], [53, 49, 58]]) { for (let k2 = 0; k2 < 2; k2++) { L(ax + k2, 32, fl2 + k2, 47, LG); L(ax + 2 + k2, 32, fr + k2, 47, LG); } L(ax, 32, fl2, 47, HL); L(ax + 3, 32, fr + 1, 47, HL); const yb = 41, xl = ax + (fl2 - ax) * (yb - 32) / 15, xr = ax + 2 + (fr - ax - 2) * (yb - 32) / 15; R(xl, yb, xr - xl + 2, 2, LG); R(fl2 - 1, 47, 4, 1, LG); R(fr - 1, 47, 4, 1, LG); } }
                 B(66, 38, 8, 8, C("#d9a45e")); for (let x = 67; x < 73; x += 2) R(x, 39, 1, 6, D("#b8823e", "#4a361c")); E(70, 36, 4, 2, D("#e8e4f0", "#8a88a8"));
                 E(70, 48, 14, 2, D("#f0e6e8", "#4c4660")); B(80, 45, 10, 5, C("#2a2a30"));
                 if (night) { sp(14, 15, "#cfe0ff", 1); sp(30, 30, "#cfe0ff"); sp(60, 20, "#cfe0ff"); } else { sp(33, 24, "#fff", 1); sp(58, 20, "#fff"); sp(70, 44, "#fff"); sp(46, 24, "#fff"); }
@@ -2197,7 +2217,7 @@
             { id: "bread", spr: "bread", n: "面包", full: 26, mood: 2, digest: 75 }, { id: "berry", spr: "berry", n: "草莓", full: 12, mood: 7, water: 6, digest: 40 },
             { id: "water", spr: "water", n: "清水", water: 38, digest: 0, drink: true }, { id: "milk", spr: "milk", n: "牛奶", water: 26, full: 8, mood: 3, digest: 40, drink: true }
         ];
-        const PET_SCENES = [{ id: "house", n: "小屋" }, { id: "grass", n: "草地" }, { id: "sea", n: "海边" }, { id: "night", n: "星夜" }];
+        const PET_SCENES = [{ id: "house", n: "小屋" }, { id: "grass", n: "草地" }, { id: "sea", n: "海边" }, { id: "night", n: "夜晚" }];
         const PET_MENU = [["food", "🍙", "喂食"], ["light", "💡", "睡觉"], ["play", "🎾", "玩耍"], ["clean", "🧹", "清理"], ["scene", "🖼", "换场景"]];
         const SHELLS = ["#ffb6d0", "#a8d8ff", "#c8f0b8", "#ffe08a", "#d6c0ff"];
         let petAnim = { kind: "", until: 0, food: "" }, petSel = 0, petPos = { x: 30, dir: 1, pause: 0, last: 0 }, petBuf = null, petSprCache = { v: -1, cv: null };
@@ -2283,36 +2303,39 @@
         }
         // 场景（像素，带描边）
         function petBgPix(K, w, h, scene, t) {
-            const { R, B, E, L, P, leaf } = K, y0 = Math.round(h * 0.52); K.out = "#b08f86"; // 平涂风：中等明度的粉彩色块，明暗分明，不铺白雾
+            // 无描边的平涂插画风：只用色块，物件靠颜色明暗区分
+            const { R, P } = K, c = K.c, y0 = Math.round(h * 0.52);
+            const Bl = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let y = -ry; y <= ry; y++) { const half = Math.round(rx * Math.sqrt(Math.max(0, 1 - (y * y) / ((ry + 0.5) * (ry + 0.5))))); c.fillRect(Math.round(cx - half), Math.round(cy + y), half * 2 + 1, 1); } };
+            const cloud = (x, y, col) => { Bl(x, y, 6, 2, col); Bl(x - 4, y + 1, 4, 1, col); Bl(x + 5, y + 1, 4, 1, col); Bl(x + 1, y - 2, 3, 1, col); };
+            const tree = (x, base, tr, lf, lf2) => { R(x - 1, base - 12, 3, 12, tr); Bl(x, base - 15, 7, 6, lf); Bl(x - 2, base - 17, 4, 3, lf2); };
             if (scene === "house") {
-                R(0, 0, w, y0, "#f7c6bd"); R(0, y0 - 3, w, 3, "#eda79d");
-                R(0, y0, w, h - y0, "#efd3a2"); for (let y = y0 + 5; y < h; y += 6) R(0, y, w, 1, "#e3bf86");
-                B(w - 31, 5, 23, 21, "#fff6ea"); R(w - 29, 7, 19, 17, "#9fd3f0"); R(w - 20, 7, 1, 17, "#fff6ea"); R(w - 29, 15, 19, 1, "#fff6ea"); R(w - 28, 8, 5, 3, "#cdeafb");
-                B(7, 7, 16, 13, "#fff6ea"); R(9, 9, 12, 9, "#bfe3c4"); E(15, 14, 4, 3, "#f08fa4");
-                B(w * 0.5 - 6, y0 - 14, 11, 13, "#e8a07e"); leaf(w * 0.5 - 1, y0 - 15, 0, -3, 3, "#6fbf86"); leaf(w * 0.5 - 1, y0 - 14, -3, -1, 2, "#8fd09c"); leaf(w * 0.5 - 1, y0 - 14, 3, -1, 2, "#8fd09c");
-                E(w * 0.42, y0 + (h - y0) * 0.55, 27, 5, "#8ccfc0"); E(w * 0.42, y0 + (h - y0) * 0.55, 19, 3, "#b2e2d6");
+                R(0, 0, w, y0, "#f9d5cc"); for (let x = 0; x < w; x += 8) R(x, 0, 4, y0, "#f6c9bf"); R(0, y0 - 3, w, 3, "#e9a99d");
+                R(0, y0, w, h - y0, "#f2dcae"); for (let y = y0 + 5; y < h; y += 6) R(0, y, w, 1, "#e6c68e");
+                R(w - 31, 5, 23, 21, "#ffffff"); R(w - 29, 7, 19, 17, "#9fd3f0"); R(w - 20, 7, 1, 17, "#ffffff"); R(w - 29, 15, 19, 1, "#ffffff"); R(w - 33, 4, 5, 23, "#f59db3"); R(w - 9, 4, 4, 23, "#f59db3");
+                R(8, 8, 16, 12, "#ffffff"); R(10, 10, 12, 8, "#c3e6c2"); Bl(16, 14, 3, 2, "#f08fa4");
+                R(w * 0.5 - 6, y0 - 13, 11, 13, "#e8a07e"); Bl(w * 0.5 - 1, y0 - 18, 5, 4, "#6fbf86"); Bl(w * 0.5 - 4, y0 - 15, 3, 2, "#8fd09c"); Bl(w * 0.5 + 3, y0 - 15, 3, 2, "#8fd09c");
+                Bl(w * 0.42, y0 + (h - y0) * 0.58, 27, 5, "#8ccfc0"); Bl(w * 0.42, y0 + (h - y0) * 0.58, 19, 3, "#b4e3d7");
             } else if (scene === "grass") {
                 for (let y = 0; y < y0; y++) R(0, y, w, 1, y < y0 * 0.5 ? "#8fd0f0" : "#b4e1f8");
-                E(18 + (t / 500 % (w + 40)) - 20, 9, 8, 3, "#fff"); E(w * 0.7, 15, 7, 2, "#fff");
-                E(w * 0.25, y0 - 1, 34, 11, "#8fd09a"); E(w * 0.85, y0, 30, 8, "#7cc88c");
+                cloud(((t / 600) % (w + 30)) - 10, 9, "#ffffff"); cloud(w * 0.62, 17, "#f4fbff");
+                Bl(w * 0.25, y0, 30, 9, "#8fd09a"); Bl(w * 0.8, y0, 28, 7, "#7cc88c");
                 R(0, y0, w, h - y0, "#86cd8c"); for (let x = 3; x < w; x += 7) { P(x, y0 + 4 + (x * 3) % 7, "#6fbd7c"); P(x + 1, y0 + 3 + (x * 3) % 7, "#6fbd7c"); }
-                B(w - 11, y0 - 15, 4, 15, "#c9996f"); E(w - 9, y0 - 20, 8, 7, "#7cc88c");
-                [[12, 6, "#f58fb0"], [28, 10, "#ffe27a"], [48, 5, "#ffffff"], [66, 9, "#ffb27a"]].forEach(([x, dy, c]) => { L(x, y0 + dy, x, y0 + dy + 3, "#5fb872"); P(x, y0 + dy - 1, c); P(x - 1, y0 + dy, c); P(x + 1, y0 + dy, c); P(x, y0 + dy, "#ffe27a"); });
+                tree(w - 10, y0 + 2, "#c9996f", "#5fb872", "#7cc88c");
+                [[12, 6, "#f58fb0"], [28, 10, "#ffe27a"], [48, 5, "#ffffff"], [66, 9, "#ffb27a"]].forEach(([x, dy, col]) => { R(x, y0 + dy, 1, 4, "#5fb872"); P(x, y0 + dy - 1, col); P(x - 1, y0 + dy, col); P(x + 1, y0 + dy, col); P(x, y0 + dy, "#ffe27a"); });
             } else if (scene === "sea") {
                 for (let y = 0; y < y0 * 0.6; y++) R(0, y, w, 1, y < 8 ? "#f8b79a" : y < 16 ? "#fbcdb0" : "#fddcc4");
-                E(w * 0.78, 11, 6, 6, "#ffd78a"); R(0, Math.round(y0 * 0.6), w, Math.round(y0 * 0.4), "#7fc4e8");
+                Bl(w * 0.5, 13, 6, 6, "#ffd78a"); R(0, Math.round(y0 * 0.6), w, Math.round(y0 * 0.4) + 1, "#7fc4e8");
                 for (let i = 0; i < 2; i++) { const y = Math.round(y0 * 0.66) + i * 4; for (let x = 0; x < w; x += 2) R(x, y + Math.round(Math.sin(x / 5 + t / 600 + i) * 1.1), 2, 1, "#d2edfa"); }
                 R(0, y0, w, h - y0, "#f0d398"); for (let x = 4; x < w; x += 9) P(x, y0 + 3 + (x * 5) % 8, "#e0be7c");
-                B(9, y0 - 18, 3, 18, "#c9996f"); leaf(10, y0 - 20, 3, -1, 3, "#6fbf86"); leaf(10, y0 - 20, -3, -1, 3, "#6fbf86"); leaf(10, y0 - 21, 0, -2, 2, "#8fd09c");
-                E(w - 13, y0 + 7, 4, 2, "#f59ea8");
+                R(9, y0 - 16, 3, 16, "#c9996f"); Bl(10, y0 - 18, 7, 2, "#6fbf86"); Bl(5, y0 - 16, 3, 2, "#8fd09c"); Bl(15, y0 - 16, 3, 2, "#8fd09c");
+                Bl(w - 13, y0 + 8, 4, 2, "#f59ea8");
             } else {
-                for (let y = 0; y < y0; y++) { const q = y / y0; R(0, y, w, 1, q < 0.4 ? "#5a60a6" : q < 0.75 ? "#7b7fc0" : "#9b9ed4"); }
-                for (let i = 0; i < 22; i++) { const x = (i * 37) % w, y = (i * 23) % Math.round(y0 * 0.8); if (Math.sin(t / 500 + i) > -0.3) P(x, y, "#fffbe6"); }
-                E(w * 0.78, 11, 6, 6, "#fff2c0"); E(w * 0.78 + 2, 10, 5, 5, "#7b7fc0", "#7b7fc0");
-                E(w * 0.3, y0 + 1, 38, 10, "#7878bc"); R(0, y0, w, h - y0, "#7a7abe"); for (let x = 5; x < w; x += 11) P(x, y0 + 4 + (x * 3) % 6, "#8a8acb");
-                B(w - 20, y0 + 4, 11, 3, "#d9a98a"); const fl = Math.floor(t / 180) % 3; E(w - 15, y0 + 1 - fl, 2, 2 + fl, "#ffc66e");
+                for (let y = 0; y < y0; y++) { const q = y / y0; R(0, y, w, 1, q < 0.4 ? "#56609f" : q < 0.75 ? "#737bb8" : "#929acb"); }
+                for (let i = 0; i < 14; i++) { const x = (i * 37) % w, y = (i * 23) % Math.round(y0 * 0.8); if (Math.sin(t / 500 + i) > -0.3) P(x, y, "#fffbe6"); }
+                Bl(w * 0.42, 13, 5, 5, "#fff2c0");
+                Bl(w * 0.3, y0 + 1, 36, 9, "#6d74b4"); R(0, y0, w, h - y0, "#6b72b2"); for (let x = 5; x < w; x += 11) P(x, y0 + 4 + (x * 3) % 6, "#7e86c4");
+                R(w - 20, y0 + 4, 11, 3, "#d9a98a"); const fl = Math.floor(t / 180) % 3; Bl(w - 15, y0 + 1 - fl, 1, 1 + fl, "#ffc66e");
             }
-            K.out = null;
         }
         function petScene(ctxOut, W, H, t) {
             const w = 76, h = Math.max(40, Math.round(76 * H / W)); if (!petBuf) petBuf = document.createElement("canvas"); if (petBuf.width !== w || petBuf.height !== h) { petBuf.width = w; petBuf.height = h; }
@@ -2345,7 +2368,7 @@
         let ped = { G: 32, px: [], tool: "pen", color: "#8d7a82", undo: [], drawing: false, last: null, cs: 10 };
         function petEditOpen() {
             petInit(); const G = ped.G; ped.px = new Array(G * G).fill(0); ped.undo = [];
-            const spr = petSprite(), w = spr.width, h = spr.height, c = spr.getContext("2d").getImageData(0, 0, w, h).data, ox = Math.floor((G - w) / 2), oy = Math.floor((G - h) / 2);
+            const spr = (db.pet.sprite && db.pet.sprite.px) ? (() => { const cv0 = document.createElement("canvas"); cv0.width = db.pet.sprite.w; cv0.height = db.pet.sprite.h; const c0 = cv0.getContext("2d"); db.pet.sprite.px.forEach((col, i) => { if (col) { c0.fillStyle = col; c0.fillRect(i % db.pet.sprite.w, Math.floor(i / db.pet.sprite.w), 1, 1); } }); return cv0; })() : petDefaultSprite(), w = spr.width, h = spr.height, c = spr.getContext("2d").getImageData(0, 0, w, h).data, ox = Math.floor((G - w) / 2), oy = Math.floor((G - h) / 2);
             for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = (y * w + x) * 4; if (c[i + 3] > 128 && ox + x >= 0 && oy + y >= 0 && ox + x < G && oy + y < G) ped.px[(oy + y) * G + ox + x] = "#" + [c[i], c[i + 1], c[i + 2]].map(v => v.toString(16).padStart(2, "0")).join(""); }
             document.getElementById("petEditPage").classList.add("open"); petEditLayout(); petEditPalette(); petEditDraw();
             const cv = document.getElementById("pedCanvas"); if (!cv._bound) { cv._bound = true; cv.addEventListener("pointerdown", pedDown); cv.addEventListener("pointermove", pedMove); cv.addEventListener("pointerup", pedUp); cv.addEventListener("pointercancel", pedUp); }
@@ -2731,12 +2754,14 @@
         }
 
         function goHome() {
-            document.getElementById("mainAppView").style.display = "none";
-            document.getElementById("homeScreen").style.display = "flex";
+            const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView");
+            h.style.transition = "none"; h.style.opacity = "0"; h.style.display = "flex"; h.getBoundingClientRect();
+            h.style.transition = "opacity .32s ease"; h.style.opacity = "1"; setTimeout(() => { m.style.display = "none"; h.style.transition = ""; }, 340);
         }
         function openMainChatView() {
-            document.getElementById("homeScreen").style.display = "none";
-            document.getElementById("mainAppView").style.display = "flex";
+            const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView");
+            m.style.display = "flex"; m.classList.remove("chat-in"); m.getBoundingClientRect(); m.classList.add("chat-in");
+            h.style.transition = "opacity .3s ease"; h.style.opacity = "0"; setTimeout(() => { h.style.display = "none"; h.style.transition = ""; h.style.opacity = "1"; }, 320);
             setTimeout(() => { const c = document.getElementById("content"); if (c) c.scrollTop = c.scrollHeight; }, 30);
             if (db.unreadCount) { db.unreadCount = 0; saveData(); renderHomeScreen(); }
         }
@@ -3955,7 +3980,22 @@
             toggleSidebar(false); 
             const notifCheckbox = document.getElementById("cfg_notification_toggle");
             if (notifCheckbox) notifCheckbox.checked = ("Notification" in window) && Notification.permission === "granted";
-            openModalBox("settingLargeModal"); 
+            openModalBox("settingLargeModal"); updateStorageInfo();
+        }
+        async function updateStorageInfo() {
+            const t = document.getElementById("storageTxt"), bar = document.getElementById("storageBar"); if (!t) return;
+            const mb = v => v >= 1048576 ? (v / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(v / 1024)) + " KB";
+            let own = 0; try { own = JSON.stringify(db).length; } catch (e) { }
+            try {
+                if (navigator.storage && navigator.storage.estimate) {
+                    const e = await navigator.storage.estimate(), u = e.usage || 0, q = e.quota || 0, pct = q ? u / q * 100 : 0;
+                    bar.style.width = Math.max(pct > 0 ? 1 : 0, Math.min(100, pct)) + "%";
+                    t.innerHTML = `本站已用 ${mb(u)} / 浏览器给的上限约 ${q ? mb(q) : "未知"}（${pct.toFixed(pct < 1 ? 2 : 1)}%）<br>其中聊天等数据约 ${mb(own)}。上限是浏览器估算值，夸克等浏览器可能偏大或不准；建议数据变多时先去备份。`;
+                    if (pct > 70) t.style.color = "#e5484d";
+                    return;
+                }
+            } catch (e) { }
+            bar.style.width = "0"; t.innerText = `聊天等数据约 ${mb(own)}（此浏览器无法给出总上限）`;
         }
         async function toggleSystemNotification(checked) {
             if (checked) {
@@ -5198,6 +5238,86 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         // ==================== 📚 书房 ====================
         let libHideT = null, libFirstT = null, libSelectMode = false, libSelected = new Set(), libCurrent = null, libSpeakTimer = null, libSaveT = null;
+        // ==================== 🔮 占卜 ====================
+        const TAROT = [["愚者", "新的开始、自由", "冒失、不切实际"], ["魔术师", "创造、行动力", "操纵、心不在焉"], ["女祭司", "直觉、静观", "隐瞒、压抑"], ["女皇", "丰盛、滋养", "依赖、过度付出"], ["皇帝", "秩序、稳固", "专断、僵硬"], ["教皇", "传统、指引", "拘泥、反叛"], ["恋人", "选择、契合", "失衡、犹豫"], ["战车", "前进、意志", "失控、方向不明"], ["力量", "勇气、温柔的掌控", "自我怀疑"], ["隐者", "内省、独处", "孤立、逃避"], ["命运之轮", "转机、循环", "停滞、时机未到"], ["正义", "公平、因果", "偏颇、逃避责任"], ["倒吊人", "换个角度、等待", "徒劳、无谓牺牲"], ["死神", "结束与重生", "抗拒改变"], ["节制", "调和、平衡", "失衡、过度"], ["恶魔", "欲望、束缚", "挣脱、觉醒"], ["高塔", "突变、打破旧局", "拖延崩塌、余震"], ["星辰", "希望、疗愈", "失落、信心不足"], ["月亮", "不安、潜意识", "迷雾渐散"], ["太阳", "喜悦、坦率", "暂时受挫"], ["审判", "觉醒、召唤", "自责、不愿放下"], ["世界", "圆满、完成", "未竟、差最后一步"]];
+        const LENO = [["骑士", "消息到来"], ["三叶草", "小小的幸运"], ["船", "远行、距离"], ["房子", "家、稳定"], ["树", "健康、成长"], ["云", "困惑、不清晰"], ["蛇", "复杂、绕弯"], ["棺材", "结束、停顿"], ["花束", "礼物、善意"], ["镰刀", "突然的决断"], ["鞭子", "争执、重复"], ["鸟", "交谈、絮语"], ["孩子", "新生、纯真"], ["狐狸", "心机、谨慎"], ["熊", "力量、保护"], ["星辰", "指引、清晰"], ["鹳", "变化、迁移"], ["狗", "忠诚、朋友"], ["塔", "孤立、权威"], ["花园", "社交、公开场合"], ["山", "阻碍、需耐心"], ["岔路", "选择"], ["鼠", "损耗、焦虑"], ["心", "爱、心意"], ["戒指", "承诺、约定"], ["书", "秘密、未知"], ["信", "文字、通知"], ["男人", "他"], ["女人", "她"], ["百合", "平和、成熟"], ["太阳", "成功、温暖"], ["月亮", "情感、认可"], ["钥匙", "答案、解开"], ["鱼", "财富、丰足"], ["锚", "稳定、坚持"], ["十字架", "负担、使命"]];
+        const DPL = [["太阳", "自我与活力"], ["月亮", "情绪与安全感"], ["水星", "沟通与想法"], ["金星", "爱与喜好"], ["火星", "行动与冲动"], ["木星", "机遇与扩张"], ["土星", "考验与责任"], ["天王星", "突变与自由"], ["海王星", "幻想与直觉"], ["冥王星", "蜕变与深层力量"]];
+        const DSG = [["白羊座", "直接、开拓"], ["金牛座", "稳定、享受"], ["双子座", "好奇、多变"], ["巨蟹座", "照顾、敏感"], ["狮子座", "热情、表达"], ["处女座", "细致、整理"], ["天秤座", "平衡、关系"], ["天蝎座", "深入、占有"], ["射手座", "探索、乐观"], ["摩羯座", "务实、长远"], ["水瓶座", "独立、新奇"], ["双鱼座", "柔软、想象"]];
+        const DHS = ["自我与外在", "金钱与价值", "沟通与学习", "家与根基", "恋爱与创造", "日常与健康", "伴侣与合作", "亲密与共享", "远方与信念", "事业与目标", "朋友与愿景", "内心与潜意识"];
+        const TRI = ["乾", "兑", "离", "震", "巽", "坎", "艮", "坤"], TRI_IMG = ["天·刚健", "泽·喜悦", "火·光明", "雷·启动", "风·渗透", "水·险陷", "山·静止", "地·承载"], TRI_BITS = [[1, 1, 1], [0, 1, 1], [1, 0, 1], [0, 0, 1], [1, 1, 0], [0, 1, 0], [1, 0, 0], [0, 0, 0]];
+        const HEX = [["乾", "履", "同人", "无妄", "姤", "讼", "遁", "否"], ["夬", "兑", "革", "随", "大过", "困", "咸", "萃"], ["大有", "睽", "离", "噬嗑", "鼎", "未济", "旅", "晋"], ["大壮", "归妹", "丰", "震", "恒", "解", "小过", "豫"], ["小畜", "中孚", "家人", "益", "巽", "涣", "渐", "观"], ["需", "节", "既济", "屯", "井", "坎", "蹇", "比"], ["大畜", "损", "贲", "颐", "蛊", "蒙", "艮", "剥"], ["泰", "临", "明夷", "复", "升", "师", "谦", "坤"]];
+        const XLR = [["大安", "安稳、静待，事情平顺"], ["留连", "拖延、纠缠，慢一点会好"], ["速喜", "好消息很快，宜主动"], ["赤口", "口舌是非，说话留余地"], ["小吉", "小有收获，贵人相助"], ["空亡", "落空、不确定，先放一放"]];
+        const BR = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+        function divToast(t) { let e = document.getElementById("divToast"); if (!e) { e = document.createElement("div"); e.id = "divToast"; e.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:8px 16px;border-radius:16px;font-size:13px;z-index:3000;transition:opacity .25s;pointer-events:none"; document.body.appendChild(e); } e.textContent = t; e.style.opacity = 1; clearTimeout(e._t); e._t = setTimeout(() => e.style.opacity = 0, 1600); }
+        let divTab = "tarot", divLast = null;
+        const DIV_TABS = [["tarot", "塔罗"], ["leno", "雷诺曼"], ["dice", "星骰"], ["mhyi", "梅花易数"], ["xlr", "小六壬"], ["rec", "记录"]];
+        function openDivPage() { if (!db.divRecords) db.divRecords = []; divLast = null; renderDiv(); document.getElementById("divFullPage").classList.add("open"); }
+        function closeDivPage() { document.getElementById("divFullPage").classList.remove("open"); }
+        function divTabTo(t) { divTab = t; divLast = null; renderDiv(); }
+        const pickN = (arr, n) => { const a = arr.map((v, i) => i); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, n); };
+        function renderDiv() {
+            document.getElementById("divTabs").innerHTML = DIV_TABS.map(([k, n]) => `<button class="${k === divTab ? "on" : ""}" onclick="divTabTo('${k}')">${n}</button>`).join("");
+            const b = document.getElementById("divBody"); if (divTab === "rec") { renderDivRec(b); return; }
+            const q = '<input class="div-q" id="divQ" placeholder="心里想着问题（可不写）" maxlength="60">';
+            let ctl = "";
+            if (divTab === "tarot") ctl = `<div class="div-row"><button class="main" onclick="divTarot(1)">单张</button><button class="main" onclick="divTarot(3)">三张（过去·现在·未来）</button></div>`;
+            else if (divTab === "leno") ctl = `<div class="div-row"><button class="main" onclick="divLeno(3)">三张</button><button class="main" onclick="divLeno(9)">九宫格</button></div>`;
+            else if (divTab === "dice") ctl = `<div class="div-row"><button class="main" onclick="divDice()">掷骰</button></div><div class="div-hint">行星骰 + 星座骰 + 宫位骰：谁在，以什么方式，发生在哪个领域</div>`;
+            else if (divTab === "mhyi") ctl = `<div class="div-row"><button class="main" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint">按现在的农历年月日时起卦，得本卦与变卦</div>`;
+            else ctl = `<div class="div-row"><button class="main" onclick="divXlr()">以此刻起课</button></div><div class="div-hint">按现在的农历月、日、时依次掐算</div>`;
+            b.innerHTML = q + ctl + '<div id="divOut"></div>';
+        }
+        function divShow(title, cards, text) {
+            const q = (document.getElementById("divQ") || {}).value || "";
+            const full = (q ? "问：" + q + "\n" : "") + title + "\n" + text;
+            divLast = { type: title.split(" ")[0], text: full };
+            const ch = cards ? '<div class="div-cards">' + cards.map((c, i) => `<div class="div-card${c.rev ? " rev" : ""}" style="animation-delay:${i * 0.12}s"><div class="pos">${c.pos || ""}</div><div class="nm">${c.nm}</div>${c.tag ? `<div class="rv">${c.tag}</div>` : ""}<div class="kw">${c.kw || ""}</div></div>`).join("") + "</div>" : "";
+            document.getElementById("divOut").innerHTML = ch + `<div class="div-res">${full.replace(/</g, "&lt;")}</div><div class="div-act"><button onclick="divSave()">存入记录</button><button onclick="divSend()">发给他</button></div>`;
+            divSave(true);
+        }
+        function divTarot(n) {
+            const idx = pickN(TAROT, n), pos = n === 1 ? [""] : ["过去", "现在", "未来"];
+            const cs = idx.map((i, k) => { const rev = Math.random() < 0.4; return { pos: pos[k], nm: TAROT[i][0], rev, tag: rev ? "逆位" : "正位", kw: rev ? TAROT[i][2] : TAROT[i][1] }; });
+            divShow("塔罗 " + (n === 1 ? "单张" : "三张"), cs, cs.map(c => `${c.pos ? c.pos + "：" : ""}${c.nm}（${c.tag}）— ${c.kw}`).join("\n"));
+        }
+        function divLeno(n) {
+            const idx = pickN(LENO, n), pos = n === 3 ? ["过去", "现在", "未来"] : [];
+            const cs = idx.map((i, k) => ({ pos: pos[k] || "第" + (k + 1) + "张", nm: LENO[i][0], kw: LENO[i][1] }));
+            divShow("雷诺曼 " + (n === 3 ? "三张" : "九宫格"), cs, cs.map(c => `${c.pos}：${c.nm} — ${c.kw}`).join("\n"));
+        }
+        function divDice() {
+            const p = DPL[Math.floor(Math.random() * 10)], s = DSG[Math.floor(Math.random() * 12)], h = Math.floor(Math.random() * 12);
+            divShow("星骰", [{ pos: "行星", nm: p[0], kw: p[1] }, { pos: "星座", nm: s[0], kw: s[1] }, { pos: "宫位", nm: "第" + (h + 1) + "宫", kw: DHS[h] }], `${p[0]}（${p[1]}）落在${s[0]}（${s[1]}），在第${h + 1}宫：${DHS[h]}。`);
+        }
+        function divLunar() {
+            const d = new Date(); let y = d.getFullYear(), m = d.getMonth() + 1, dd = d.getDate();
+            try { const pt = new Intl.DateTimeFormat("en-u-ca-chinese", { year: "numeric", month: "numeric", day: "numeric" }).formatToParts(d); const g = k => (pt.find(x => x.type === k) || {}).value; const ry = parseInt(g("relatedYear")), lm = parseInt(g("month")), ld = parseInt(g("day")); if (ry && lm && ld) { y = ry; m = lm; dd = ld; } } catch (e) { }
+            return { y: ((y - 4) % 12 + 12) % 12 + 1, m, d: dd, h: Math.floor(((d.getHours() + 1) % 24) / 2) + 1, lm: m, ld: dd };
+        }
+        function divMhyi() {
+            const L = divLunar(), s3 = L.y + L.m + L.d, up = (s3 % 8) || 8, lo = ((s3 + L.h) % 8) || 8, mv = ((s3 + L.h) % 6) || 6;
+            const name = (u, l) => HEX[u - 1][l - 1] + (HEX[u - 1][l - 1] === TRI[u - 1] && u === l ? "为" + ["天", "泽", "火", "雷", "风", "水", "山", "地"][u - 1] : "");
+            const bits = [...TRI_BITS[lo - 1], ...TRI_BITS[up - 1]]; bits[mv - 1] ^= 1; // 自下而上
+            const find = a => TRI_BITS.findIndex(t => t[0] === a[0] && t[1] === a[1] && t[2] === a[2]) + 1, nlo = find(bits.slice(0, 3)), nup = find(bits.slice(3));
+            const ben = name(up, lo), bian = name(nup, nlo), tiTri = mv <= 3 ? up : lo, yongTri = mv <= 3 ? lo : up;
+            const txt = `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n动爻：第${mv}爻\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}：本卦看当下，变卦看走向。`;
+            divShow("梅花易数", [{ pos: "本卦", nm: ben, kw: TRI[up - 1] + "上" + TRI[lo - 1] + "下" }, { pos: "动爻", nm: "第" + mv + "爻", kw: "" }, { pos: "变卦", nm: bian, kw: TRI[nup - 1] + "上" + TRI[nlo - 1] + "下" }], txt);
+        }
+        function divXlr() {
+            const L = divLunar(), a = (L.m - 1) % 6, b = (a + L.d - 1) % 6, c = (b + L.h - 1) % 6;
+            divShow("小六壬", [{ pos: "月", nm: XLR[a][0], kw: "" }, { pos: "日", nm: XLR[b][0], kw: "" }, { pos: "时（结果）", nm: XLR[c][0], kw: XLR[c][1] }], `农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n月：${XLR[a][0]}　日：${XLR[b][0]}　时：${XLR[c][0]}\n结果：${XLR[c][0]}——${XLR[c][1]}`);
+        }
+        function divSave(auto) {
+            if (!divLast || divLast.saved) { if (!auto) divToast("已经存过了"); return; }
+            divLast.saved = true; db.divRecords.unshift({ id: Date.now(), type: divLast.type, text: divLast.text, ts: Date.now() }); db.divRecords = db.divRecords.slice(0, 300); saveData(); if (!auto) divToast("已存入记录");
+        }
+        function divSend() { if (!divLast) return; const i = document.getElementById("msg"); if (!i) return; i.value = "🔮 " + divLast.text; send(); divToast("已发给他"); }
+        function renderDivRec(b) {
+            const r = db.divRecords || [];
+            b.innerHTML = r.length ? r.map(x => { const d = new Date(x.ts); return `<div class="div-rec"><div class="h"><span>${x.type} · ${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}</span><span><a onclick="divRecSend(${x.id})">发给他</a>　<a onclick="divRecDel(${x.id})">删除</a></span></div><div class="t">${x.text.replace(/</g, "&lt;")}</div></div>`; }).join("") : '<div class="div-hint" style="text-align:center;margin-top:40px">还没有记录，抽过的牌会自动存在这里</div>';
+        }
+        function divRecDel(id) { db.divRecords = db.divRecords.filter(x => x.id !== id); saveData(); renderDiv(); }
+        function divRecSend(id) { const x = db.divRecords.find(v => v.id === id); if (!x) return; document.getElementById("msg").value = "🔮 " + x.text; send(); divToast("已发给他"); }
         function openLibraryPage() { libSelectMode = false; libSelected.clear(); renderLibrary(); document.getElementById("libraryFullPage").classList.add("open"); }
         function closeLibraryPage() { document.getElementById("libraryFullPage").classList.remove("open"); }
         function libToggleSelect() {
@@ -5731,7 +5851,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 if (linkPath(sel, [r, c])) {
                     const a = sel; sel = null; busy = true;
                     doMatch(a, [r, c], 1, () => { if (finishIfDone()) return; hisTurn(); });
-                } else { sel = [r, c]; gameSfx("miss"); render(); }
+                } else { const a = sel; sel = null; busy = true; gameSfx("miss"); render(); [a, [r, c]].forEach(([rr, cc]) => { const e2 = tileEl(rr, cc); if (e2) e2.classList.add("sel"); }); gameResultBar("连错了，轮到" + hisName()); later(() => { render(); if (!over) hisTurn(); }, 700); }
             });
             ensureMoves(); render();
             gameCleanup = () => timers.forEach(clearTimeout);
@@ -5748,7 +5868,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const size = Math.max(260, Math.min(360, body.clientWidth - 44, availH)), cs = 9, N = Math.floor(size / cs), px = cs * N, dpr = window.devicePixelRatio || 1;
             cv.style.width = cv.style.height = px + "px"; cv.width = cv.height = px * dpr; ctx.scale(dpr, dpr);
             const V = { U: [0, -1], D: [0, 1], L: [-1, 0], R: [1, 0] }, OPP = { U: "D", D: "U", L: "R", R: "L" };
-            const base = { easy: 240, normal: 190, hard: 150 }[gameDiff];
+            const base = { easy: 360, normal: 250, hard: 170 }[gameDiff];
             const mid = Math.floor(N / 2);
             let me, him, foods = [], running = false, over = false, timer = null, startAt = 0, myDir, hisDir, queued = null;
             function reset() {
@@ -5801,7 +5921,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 // 简单/普通：不总走最近的食物——随机挑一颗当目标，偶尔改主意、偶尔随手拐弯、偶尔直走发呆
                 const fl = foods.filter(Boolean); if (!fl.length) return safe[Math.floor(Math.random() * safe.length)];
                 if (!aiDir.t || !fl.some(f => f[0] === aiDir.t[0] && f[1] === aiDir.t[1]) || Math.random() < 0.07) aiDir.t = fl[Math.floor(Math.random() * fl.length)];
-                const wander = gameDiff === "easy" ? 0.16 : 0.1; if (Math.random() < wander) return safe[Math.floor(Math.random() * safe.length)];
+                const wander = gameDiff === "easy" ? 0.05 : 0.04; if (Math.random() < wander) return safe[Math.floor(Math.random() * safe.length)];
                 if (safe.includes(hisDir) && Math.random() < 0.18) return hisDir;
                 let best = safe[0], bs = 1e9;
                 safe.forEach(d => { const nx = head[0] + V[d][0], ny = head[1] + V[d][1]; const dist = mdist([nx, ny], aiDir.t) + Math.random() * 1.5; if (dist < bs) { bs = dist; best = d; } });
@@ -5928,9 +6048,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         // ---------- 箭头消除（轮流消除：箭头指向的前方没有别的箭头挡着才能消掉） ----------
         function gameArrow() {
-            const cfg = { easy: [10, 10, 12], normal: [16, 16, 24], hard: [22, 22, 42] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
+            const cfg = { easy: [14, 14, 20], normal: [22, 22, 42], hard: [28, 28, 80] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
             const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // 0上 1右 2下 3左
-            const cs = Math.max(14, Math.floor(Math.min(body.clientWidth - 24, 400) / C)), SZ = cs * C;
+            const cs = Math.max(11, Math.floor(Math.min(body.clientWidth - 24, 400) / C)), SZ = cs * C;
             body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点一条前方没被挡住的线</div><div class="mine-score" id="arScore"></div><svg id="arSvg" class="ar-svg" width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}"></svg><div class="game-btns"><button class="btn btn-outline" id="arHint">提示</button></div><div id="gameEnd"></div>`;
             const occ = Array.from({ length: R }, () => new Array(C).fill(-1)), paths = [];
             const inb = (x, y) => x >= 0 && y >= 0 && x < C && y < R;
@@ -5959,6 +6079,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const svg = document.getElementById("arSvg"), NS = "http://www.w3.org/2000/svg";
             const ctr = c => [c[0] * cs + cs / 2, c[1] * cs + cs / 2];
             const tipOf = p => { const c = ctr(p.cells[p.cells.length - 1]), d = DIRS[p.dir]; return [c[0] + d[0] * cs * 0.32, c[1] + d[1] * cs * 0.32]; };
+            { let dots = ""; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) dots += `<circle cx="${x * cs + cs / 2}" cy="${y * cs + cs / 2}" r="${Math.max(1, cs * 0.08)}" fill="currentColor" opacity=".28"/>`; svg.insertAdjacentHTML("afterbegin", dots); }
             paths.forEach(p => {
                 const g = document.createElementNS(NS, "g"); g.setAttribute("class", "arp"); g.dataset.i = p.id;
                 const pts = p.cells.map(ctr); pts[pts.length - 1] = tipOf(p); const d = DIRS[p.dir];
