@@ -195,6 +195,14 @@
         .div-fan { display:flex; overflow-x:auto; padding:8px 14px 12px; margin:6px 0; -webkit-overflow-scrolling:touch; } .div-fan .fc { flex:0 0 auto; border-radius:8px; background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); box-sizing:border-box; cursor:pointer; animation:divIn .4s both; box-shadow:-3px 0 0 0 var(--bg), -3px 0 8px rgba(0,0,0,.35); transition:transform .12s; } .div-fan .fc:active { transform:translateY(-10px); }
         .div-cupwrap { height:92px; position:relative; margin-top:6px; } .cup { position:absolute; left:50%; top:10px; margin-left:-44px; width:88px; height:78px; background:linear-gradient(160deg, var(--primary), var(--text-sub)); clip-path:polygon(14% 0, 86% 0, 100% 100%, 0 100%); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:16px; transform-origin:50% 100%; transition:transform .45s, opacity .45s; } .cup.shake { animation:divCup .18s linear infinite; } .cup.lift { transform:translateY(-12px) rotate(-38deg) translateX(-34px); opacity:.25; } @keyframes divCup { 0% { transform:translate(-5px,0) rotate(-5deg); } 50% { transform:translate(5px,-9px) rotate(5deg); } 100% { transform:translate(-5px,0) rotate(-5deg); } }
         .div-hand { max-width:290px; margin:6px auto 4px; } .hf { fill:var(--panel); stroke:var(--border); stroke-width:2; } .hp circle { fill:var(--bg); stroke:var(--text-sub); stroke-width:1.5; transition:all .15s; } .hp text { font-size:12px; fill:var(--text-main); } .hp text.tag { font-size:11px; fill:var(--primary); font-weight:bold; } .hp.on circle { fill:var(--primary); stroke:var(--primary); } .hp.on text { fill:var(--bg); } .hp.fix circle { stroke:var(--primary); stroke-width:2.5; } .hp.last circle { fill:var(--primary); } .hp.last text:not(.tag) { fill:var(--bg); } .hd { fill:var(--text-main); opacity:0; transition:cx .28s ease, cy .28s ease; }
+        .div-pop { position:absolute; left:0; right:0; top:calc(100% - 4px); z-index:30; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:10px; flex-wrap:wrap; gap:8px; box-shadow:0 10px 28px rgba(0,0,0,.4); } .div-pop button { border:1px solid var(--border); background:var(--bg); color:var(--text-main); border-radius:12px; padding:8px 12px; font-size:13px; display:flex; flex-direction:column; align-items:center; line-height:1.25; } .div-pop button small { font-size:10px; color:var(--text-sub); } .div-pop button.main { background:var(--primary); color:var(--bg); border-color:transparent; } .div-pop button.main small { color:inherit; opacity:.75; }
+        .div-table { position:relative; margin:8px 0 6px; border-radius:18px; background:radial-gradient(ellipse at center, rgba(80,120,90,.35), rgba(40,60,50,.25) 70%), var(--panel); border:1px solid var(--border); overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--panel); box-shadow:0 1px 3px rgba(0,0,0,.45); will-change:transform; }
+        .div-table .pile { position:absolute; top:6px; bottom:6px; transform:translateX(-50%); border:1.5px dashed transparent; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; cursor:pointer; padding-bottom:2px; } .div-table .pile span { font-size:11px; color:var(--text-sub); } .div-table .pile b { position:absolute; top:4px; width:22px; height:22px; border-radius:50%; background:var(--primary); color:var(--bg); font-size:13px; display:none; align-items:center; justify-content:center; } .div-table .pile.on b { display:flex; } .div-table .pile:not(.on) { border-color:var(--primary); animation:divPulse 1.4s infinite; }
+        .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--panel); box-shadow:0 0 3px rgba(0,0,0,.5); cursor:pointer; } .div-fan .fc.up { box-shadow:0 0 12px var(--primary); border-width:2px; }
+        .div-tray { position:relative; height:176px; margin:10px 0 8px; border-radius:20px; overflow:hidden; background:radial-gradient(ellipse at center, #3f7a58 0%, #2c5a40 75%, #234a35 100%); box-shadow:inset 0 0 0 5px #6b4a2f, inset 0 0 14px 8px rgba(0,0,0,.45); touch-action:none; } .gd { position:absolute; left:0; top:0; width:62px; height:62px; will-change:transform; filter:drop-shadow(2px 4px 3px rgba(0,0,0,.45)); transform:translate(-100px,0); } .gd .gs { position:absolute; left:50%; top:50%; transform:translate(-50%,-52%); font-size:21px; font-weight:bold; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.7); } .gd.land { animation:divLand .5s ease-out; }
+        .div-caps { display:flex; gap:8px; margin-bottom:12px; } .div-caps > div { flex:1; text-align:center; border:1px solid var(--border); border-radius:12px; background:var(--panel); padding:8px 4px; } .div-caps span { display:block; font-size:11px; color:var(--text-sub); } .div-caps b { display:block; font-size:15px; margin:3px 0; color:var(--text-main); } .div-caps i { display:block; font-size:11px; color:var(--text-sub); font-style:normal; min-height:28px; line-height:1.3; }
+        .mh-steps { margin:8px 0; } .mh-line { white-space:pre-wrap; font-size:13px; line-height:1.7; color:var(--text-main); border-left:3px solid var(--primary); background:var(--panel); border-radius:0 10px 10px 0; padding:6px 10px; margin-bottom:6px; animation:divIn .4s both; }
+        .hf { fill:#eec9ad !important; stroke:#b88a6a !important; } .hc { fill:none; stroke:#c49878; stroke-width:1.6; stroke-linecap:round; } .hn { font-size:10px; fill:var(--text-sub); }
         .div-stickbox { position:relative; height:230px; margin:6px auto 0; width:200px; } .tube { position:absolute; left:50%; bottom:10px; margin-left:-48px; width:96px; height:120px; border-radius:10px 10px 18px 18px; background:linear-gradient(90deg, var(--text-sub), var(--primary), var(--text-sub)); transform-origin:50% 100%; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:30px; z-index:2; } .tube i { position:absolute; bottom:100%; width:5px; background:var(--text-main); opacity:.75; border-radius:3px 3px 0 0; margin-left:-2px; } .tube.shake { animation:divTube .22s linear infinite; } @keyframes divTube { 0% { transform:rotate(-12deg) translateY(0); } 50% { transform:rotate(12deg) translateY(-8px); } 100% { transform:rotate(-12deg) translateY(0); } }
         .stick { position:absolute; left:50%; bottom:100px; margin-left:-9px; width:18px; height:96px; background:var(--text-main); border-radius:5px; opacity:0; z-index:1; transition:transform 1.1s cubic-bezier(.2,.8,.3,1), opacity .2s; display:flex; align-items:center; justify-content:center; } .stick b { writing-mode:vertical-rl; font-size:11px; color:var(--bg); } .stick.out { opacity:1; transform:translateY(-26px) translateX(34px) rotate(14deg); }
         .div-tabs { display:flex; gap:6px; padding:8px 14px; overflow-x:auto; flex-shrink:0; } .div-tabs button { flex:0 0 auto; border:1px solid var(--border); background:var(--panel); color:var(--text-sub); border-radius:14px; padding:7px 14px; font-size:13px; } .div-tabs button.on { background:var(--primary); color:var(--bg); border-color:transparent; }
@@ -527,7 +535,7 @@
         .wg-wish { flex:1 1 0; } .wg-date { flex:0 0 auto; aspect-ratio:9/5; cursor:pointer; } .wg-pet { flex:1.45 1 0; background:#f2dcd2; }
         .wish-bar { position:absolute; left:12px; right:12px; bottom:12px; z-index:2; display:flex; align-items:center; gap:6px; height:38px; padding:0 4px 0 15px; border-radius:19px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-sizing:border-box; }
         .wish-bar input { flex:1; min-width:0; background:transparent; border:none; outline:none; color:#fff; font-size:16px; padding:0; } .wish-bar input::placeholder { color:rgba(255,255,255,.62); font-size:14px; }
-        .wish-bar button { width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,255,255,.55); background:radial-gradient(circle at 35% 30%, #ffffff, #cfdcff 70%, #a9bcf0); color:#3b4a8a; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 12px rgba(190,210,255,.65); transition:transform .12s, box-shadow .12s; } .wish-bar button:active { transform:scale(.9); }
+        .wish-bar button { width:32px; height:32px; border-radius:50%; border:1px solid rgba(170,190,245,.45); background:radial-gradient(circle at 35% 30%, rgba(150,172,232,.55), rgba(96,116,190,.5) 75%); color:#dfe7ff; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 8px rgba(130,155,235,.35); transition:transform .12s, box-shadow .12s; } .wish-bar button:active { transform:scale(.9); }
         .pet-mini { position:absolute; right:8px; top:7px; text-shadow:0 0 3px #fff, 0 0 3px #fff; display:flex; flex-direction:column; gap:5px; pointer-events:none; } .pet-mini div { display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:10px; line-height:10px; color:#7a6a64; } .pet-mini i { display:block; width:40px; height:5px; border-radius:3px; background:rgba(255,255,255,.7); box-shadow:0 0 0 1px rgba(120,90,80,.25); overflow:hidden; } .pet-mini b { display:block; height:100%; border-radius:3px; }
         .pet-ctl { position:absolute; left:10px; right:10px; bottom:9px; display:flex; gap:6px; justify-content:center; z-index:3; }
         .pet-ctl button { flex:1; max-width:52px; height:36px; border-radius:12px; border:1px solid #e9bfb3; background:#fff1ea; font-size:17px; line-height:1; padding:0; color:#6a5a54; transition:transform .08s, background .08s; }
@@ -2018,8 +2026,8 @@
               ctx.save(); ctx.globalCompositeOperation = "lighter";
               const glow = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(0.55, `rgba(${c},${a * 0.35})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
               const br = 0.85 + 0.15 * Math.sin(t / 2600), R = Math.max(W, H);
-              glow(0, 0, R * 0.62, "120,150,230", 0.26 * br); glow(W, H, R * 0.66, "150,130,225", 0.24 * br); glow(W, 0, R * 0.5, "110,170,230", 0.18 * br); glow(0, H, R * 0.5, "180,190,240", 0.2 * br);
-              glow(W * 0.5, 0, R * 0.45, "170,190,240", 0.12); glow(W * 0.5, H, R * 0.45, "160,170,235", 0.14);
+              glow(0, 0, R * 0.7, "120,150,240", 0.5 * br); glow(W, H, R * 0.74, "160,130,235", 0.46 * br); glow(W, 0, R * 0.58, "110,175,240", 0.36 * br); glow(0, H, R * 0.58, "190,200,250", 0.4 * br);
+              glow(W * 0.5, 0, R * 0.5, "170,190,245", 0.26); glow(W * 0.5, H, R * 0.5, "160,170,240", 0.3); glow(0, H * 0.5, R * 0.4, "140,170,240", 0.24); glow(W, H * 0.5, R * 0.4, "170,150,240", 0.24);
               ctx.restore(); }
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
@@ -2047,14 +2055,14 @@
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
                 if (w.arrive && nowMs < w.arrive) return; const [x, y] = pos(w.r, w.a + omega(w.r) * t); const tw = 0.7 + 0.3 * Math.sin(t / 380 + w.ts % 9);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 5); g.addColorStop(0, `rgba(255,255,255,${0.8 * tw})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 5, y - 5, 10, 10);
-                ctx.fillStyle = "#fff"; ctx.globalAlpha = tw; ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4); ctx.fillRect(x - 2.2 * tw, y - 0.3, 4.4 * tw, 0.6); ctx.fillRect(x - 0.3, y - 2.2 * tw, 0.6, 4.4 * tw); ctx.globalAlpha = 1;
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 5); g.addColorStop(0, `rgba(190,208,255,${0.7 * tw})`); g.addColorStop(1, "rgba(190,208,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 5, y - 5, 10, 10);
+                ctx.fillStyle = "#dbe4ff"; ctx.globalAlpha = tw; ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4); ctx.fillRect(x - 2.2 * tw, y - 0.3, 4.4 * tw, 0.6); ctx.fillRect(x - 0.3, y - 2.2 * tw, 0.6, 4.4 * tw); ctx.globalAlpha = 1;
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + k * 16, 0, 6.283); ctx.stroke(); }
             });
             // 一颗星星从下方飞进去
             if (galFly) {
                 const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const [tx, ty] = pos(w.r, w.a + omega(w.r) * t);
-                if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#fffbe8"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
+                if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(190,208,255,.9)"); g.addColorStop(1, "rgba(190,208,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#d6e0ff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
         }
@@ -2133,74 +2141,85 @@
                 if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8"); }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
-                // 家：开放式厨房+客厅，深灰/酒红/暖木色（参考图1）
-                const WALL = D("#dad5cf", "#3a3844"), DK = D("#3a3c43", "#1e2026"), DK2 = D("#5a5c64", "#34363e"), RED = D("#8e2f3f", "#5a2233"), RED2 = D("#a84456", "#74303f"), WD = D("#c4956b", "#5c4535"), WDL = D("#af8059", "#4a392c"), CR = D("#e0dbd4", "#9a96a6"), CR2 = D("#cbc6bf", "#827e8e");
+                // 家：开放式厨房+客厅，深灰/酒红/暖木色（参考图1）。沙发占画面大头
+                const WALL = D("#dad5cf", "#3a3844"), DK = D("#3a3c43", "#1e2026"), DK2 = D("#5a5c64", "#34363e"), RED = D("#8e2f3f", "#5a2233"), RED2 = D("#a84456", "#74303f"), WD = D("#c4956b", "#5c4535"), WDL = D("#af8059", "#4a392c"), CR = D("#e3ded6", "#9a96a6"), CR2 = D("#d2ccc3", "#847f90"), CR3 = D("#bdb7ae", "#6e6a7a"), FR = D("#f1eee9", "#6a6878"), GLO = D("#6a625c", "#e8d8a8");
                 R(0, 0, 90, 34, WALL); R(0, 32, 90, 2, D("#cfc8c0", "#34323e"));
-                // 厨房大窗 + 两盏球形吊灯
-                B(4, 3, 26, 19, D("#f1eee9", "#6a6878")); R(6, 5, 22, 15, D("#c4e2f6", "#16204a")); R(16, 5, 1, 15, D("#f1eee9", "#6a6878")); R(6, 12, 22, 1, D("#f1eee9", "#6a6878"));
-                if (!night) { E(11, 8, 3, 1, "#fff"); E(23, 9, 3, 1, "#fff"); } else { sp(10, 8, "#fff", 1); sp(24, 15, "#fff"); }
-                L(11, 0, 11, 8, D("#444", "#aaa")); E(11, 11, 3, 3, D("#6a625c", "#e8d8a8")); L(22, 0, 22, 6, D("#444", "#aaa")); E(22, 9, 3, 3, D("#6a625c", "#e8d8a8")); if (night) { sp(11, 11, "#ffd98a", 1); sp(22, 9, "#ffd98a", 1); }
-                // 波浪镜 + 边柜 + 球灯
-                E(44, 14, 3, 9, D("#a9a29c", "#53505e")); E(44, 14, 2, 8, D("#e6e8ee", "#6c7090")); L(43, 8, 43, 19, D("#fff", "#9a9ec0"));
-                B(36, 25, 17, 7, DK); R(38, 27, 13, 1, DK2); L(40, 31, 40, 36, DK); L(50, 31, 50, 36, DK); L(44, 25, 44, 22, DK2); E(44, 20, 3, 3, D("#fffdf4", "#ffe9a8")); if (night) sp(44, 20, "#fff3c0", 1);
-                // 右侧落地窗（白纱）
-                B(64, 2, 24, 22, D("#f4f2ee", "#6a6878")); R(66, 4, 20, 18, D("#eef3f8", "#1c2250")); for (let x = 68; x < 85; x += 3) R(x, 4, 1, 18, D("#d4dae2", "#2c3366"));
+                // 厨房大窗 + 两盏吊灯
+                B(2, 3, 25, 18, FR); R(4, 5, 21, 14, D("#c4e2f6", "#16204a")); R(14, 5, 1, 14, FR); R(4, 11, 21, 1, FR);
+                if (!night) { E(9, 8, 3, 1, "#fff"); E(20, 9, 3, 1, "#fff"); } else { sp(8, 8, "#fff", 1); sp(21, 15, "#fff"); }
+                L(10, 0, 10, 7, D("#444", "#aaa")); E(10, 10, 3, 3, GLO); L(20, 0, 20, 5, D("#444", "#aaa")); E(20, 8, 3, 3, GLO); if (night) { sp(10, 10, "#ffd98a", 1); sp(20, 8, "#ffd98a", 1); }
                 // 吧台
-                B(3, 24, 27, 3, WD); B(4, 27, 25, 8, DK); R(6, 29, 9, 4, DK2); R(17, 29, 9, 4, DK2); E(9, 22, 2, 2, D("#d9cdbf", "#8a8078")); E(22, 22, 1, 2, D("#d46a6a", "#7a3040"));
+                B(2, 24, 25, 3, WD); B(3, 27, 23, 8, DK); R(5, 29, 8, 4, DK2); R(15, 29, 8, 4, DK2);
+                // 波浪镜
+                E(34, 13, 3, 10, D("#9a948e", "#53505e")); E(34, 13, 2, 9, D("#e6e8ee", "#6c7090")); L(33, 7, 33, 18, D("#fff", "#9aa0c0"));
+                // 镜下边柜：蜡烛 + 插花
+                B(28, 26, 17, 5, DK); R(30, 28, 13, 1, DK2); L(30, 31, 30, 36, DK); L(43, 31, 43, 36, DK);
+                B(30, 21, 3, 5, D("#f6ead0", "#ffe2a0")); P(31, 20, D("#ffc860", "#ffe9a0")); if (night) sp(31, 20, "#ffd98a", 1);
+                B(38, 23, 4, 3, D("#8a7a78", "#4a4046")); L(40, 23, 38, 17, D("#5fa860", "#2f6a40")); L(40, 23, 42, 18, D("#5fa860", "#2f6a40")); L(40, 23, 40, 16, D("#5fa860", "#2f6a40"));
+                E(38, 16, 1, 1, "#f2a0b0"); E(42, 17, 1, 1, "#ffffff"); E(40, 15, 1, 1, "#f27a98"); E(41, 20, 1, 1, "#f2c0c0");
+                // 右侧落地窗 + 边桌球灯
+                B(62, 2, 27, 18, FR); R(64, 4, 23, 14, D("#eef3f8", "#1c2250")); for (let x = 66; x < 86; x += 3) R(x, 4, 1, 14, D("#d4dae2", "#2c3366"));
+                B(60, 21, 30, 3, DK); L(84, 21, 84, 18, DK2); E(84, 16, 3, 3, D("#fffdf4", "#ffe9a8")); if (night) sp(84, 16, "#fff3c0", 1);
                 // 木地板
                 R(0, 34, 90, 16, WD); for (let y = 37; y < 50; y += 4) R(0, y, 90, 1, WDL); for (let y = 37, i = 0; y < 50; y += 4, i++) for (let x = (i * 19) % 25; x < 90; x += 25) R(x, y - 3, 1, 3, WDL); R(0, 34, 90, 1, PX_OUT);
-                // 深色地毯
-                E(48, 46, 34, 4, D("#2a2c32", "#14161c")); E(48, 46, 30, 3, D("#34363e", "#1a1c22"));
+                // 深色地毯（带浅色斑）
+                E(50, 46, 40, 4, D("#2a2c32", "#14161c")); for (let i = 0; i < 14; i++) R(14 + (i * 13) % 70, 43 + (i * 5) % 7, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
                 // 酒红高脚凳
-                for (const bx of [9, 20]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
-                // 黑色南瓜凳
-                B(3, 41, 9, 6, DK); E(7, 41, 3, 1, DK2); R(4, 43, 7, 1, DK2);
-                // 沙发
-                B(56, 27, 33, 9, CR); B(54, 31, 35, 8, CR2); B(58, 34, 28, 5, CR); B(54, 38, 35, 2, CR2); B(55, 40, 3, 3, DK); B(85, 40, 3, 3, DK);
-                B(58, 25, 8, 9, RED); R(60, 28, 4, 1, RED2); R(60, 30, 4, 1, RED2); B(81, 25, 8, 9, RED); R(83, 28, 4, 1, RED2); R(83, 30, 4, 1, RED2);
-                E(73, 31, 4, 3, D("#6c6e6a", "#3c3e3c")); R(70, 31, 6, 1, D("#8a8c88", "#4a4c4a"));
-                // 玻璃圆茶几
-                E(38, 43, 11, 3, D("#6a6b73", "#3a3c46")); E(38, 42, 10, 2, D("#9a9ca4", "#4a4c56")); L(31, 44, 31, 48, DK); L(45, 44, 45, 48, DK); B(35, 39, 7, 2, DK); R(36, 39, 5, 1, DK2);
-                // 深色矮桌 + 郁金香
-                B(58, 44, 24, 3, DK); R(59, 45, 22, 1, DK2); L(61, 47, 61, 49, DK); L(79, 47, 79, 49, DK);
-                B(68, 40, 4, 4, D("#8a7a78", "#4a4046")); L(70, 40, 68, 33, D("#5fa860", "#2f6a40")); L(70, 40, 72, 33, D("#5fa860", "#2f6a40")); L(70, 40, 70, 32, D("#5fa860", "#2f6a40"));
-                E(68, 32, 1, 2, "#f27a98"); E(72, 32, 1, 2, "#f2a0b0"); E(70, 31, 1, 2, "#e8607a");
-                if (night) { sp(44, 20, "#fff3c0", 1); sp(11, 11, "#ffd98a", 1); } else { sp(40, 36, "#fff", 1); sp(62, 38, "#fff"); sp(15, 38, "#fff"); }
+                for (const bx of [9, 18]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
+                // 南瓜凳
+                B(2, 40, 10, 7, DK); R(3, 42, 8, 1, DK2); R(6, 40, 2, 1, DK2);
+                // 大沙发：左扶手高高卷起，靠背弧形
+                B(44, 24, 46, 10, CR); B(41, 20, 9, 22, CR); B(43, 19, 6, 2, CR); R(44, 24, 4, 1, CR2);
+                B(46, 31, 44, 10, CR2); R(68, 33, 1, 8, PX_OUT); B(44, 40, 46, 3, CR3); R(46, 43, 42, 1, DK); B(44, 43, 3, 3, DK); B(86, 43, 3, 3, DK);
+                B(42, 19, 9, 6, D("#b9bcc4", "#6a6c78")); R(44, 21, 5, 1, D("#dcdee4", "#8a8c98")); R(43, 23, 6, 1, D("#9a9ca6", "#565864")); // 左扶手银色毯子
+                B(52, 21, 11, 11, RED); R(54, 24, 7, 1, RED2); R(54, 27, 7, 1, RED2); R(54, 30, 7, 1, RED2); B(61, 24, 9, 9, D("#7a2636", "#4c1c2a")); R(63, 27, 5, 1, RED2); R(63, 30, 5, 1, RED2);
+                E(75, 31, 4, 4, D("#6c6e6a", "#3c3e3c")); R(72, 31, 7, 1, D("#8a8c88", "#4a4c4a")); R(75, 28, 1, 6, D("#8a8c88", "#4a4c4a"));
+                B(80, 22, 10, 9, D("#4a4c52", "#2a2c32")); // 右侧深灰靠垫
+                B(85, 27, 5, 18, RED); R(86, 31, 3, 1, RED2); R(86, 36, 3, 1, RED2); R(86, 41, 3, 1, RED2); // 垂下来的酒红毯子
+                // 沙发左边的深色圆桶
+                B(35, 35, 6, 8, D("#2e3036", "#1a1c20")); R(35, 35, 6, 1, DK2); R(36, 38, 4, 1, DK2);
+                // 异形玻璃茶几 + 蜡烛 + 杯子 + 书
+                E(26, 44, 13, 3, D("#5a5b63", "#30323c")); E(26, 43, 12, 2, D("#9a9ca4", "#4a4c56")); L(16, 45, 16, 49, DK); L(36, 45, 36, 49, DK);
+                B(20, 39, 3, 4, D("#f6ead0", "#ffe2a0")); R(21, 40, 1, 2, D("#fff6dc", "#fff2c0")); sp(21, 38, "#ffd98a", 1); B(31, 39, 2, 4, D("#cfe0ea", "#8aa0b4")); B(25, 41, 7, 1, DK); 
+                // 深色矮桌 + 铜托盘 + 花瓶郁金香（清晰可见）
+                B(52, 44, 31, 4, DK); R(53, 45, 29, 1, DK2); L(54, 48, 54, 50, DK); L(81, 48, 81, 50, DK);
+                B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
+                L(65, 37, 63, 31, D("#5fa860", "#2f6a40")); L(65, 37, 67, 31, D("#5fa860", "#2f6a40")); L(65, 37, 65, 30, D("#5fa860", "#2f6a40"));
+                B(61, 28, 4, 4, "#f27a98"); B(66, 28, 4, 4, "#f2a0b0"); B(63, 25, 4, 4, "#e8607a");
+                if (night) { sp(84, 16, "#fff3c0", 1); sp(10, 10, "#ffd98a", 1); } else { sp(26, 40, "#fff", 1); sp(75, 38, "#fff"); sp(14, 38, "#fff"); }
             } else if (kind === "small") {
                 // 小客厅：傍晚粉紫、城市夜景、落地灯、藤编摇椅（参考图2）
-                const FLR = D("#d49a64", "#8a5a3a"), FLRL = D("#c0864f", "#764c30"), PINK = D("#e9c8c8", "#8a6a78"), SOF = D("#cfc6d0", "#8a8296"), SOFL = D("#e0d8e2", "#a49cb0");
+                const FLR = D("#d49a64", "#8a5a3a"), FLRL = D("#c0864f", "#764c30"), SOF = D("#d6cdd6", "#8e869a"), SOFL = D("#e4dce4", "#a8a0b4"), WDC = D("#e0b280", "#9a7a54"), WDD = D("#c8935c", "#6a4a30");
                 R(0, 0, 90, 34, D("#f0dcd8", "#7a5a78")); R(0, 31, 90, 3, D("#e6cfcf", "#6e4e70"));
-                // 三扇大窗 + 夜景
-                for (let i = 0; i < 3; i++) { const wx = 44 + i * 16; B(wx, 2, 14, 22, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 12, 20, D("#a8cdee", "#101640")); }
-                if (night) { for (let i = 0; i < 60; i++) { const px = 45 + (i * 7) % 44, py = 6 + (i * 11) % 17; P(px, py, i % 3 === 0 ? "#ffd98a" : i % 3 === 1 ? "#fff3c0" : "#f2b870"); } R(44, 3, 46, 2, "#10143a"); } else { skyline(45, 89, 23, 2); E(52, 8, 4, 2, "#fff"); E(70, 10, 5, 2, "#fff"); }
-                R(58, 3, 2, 21, D("#f6eeee", "#9a8aa6")); R(74, 3, 2, 21, D("#f6eeee", "#9a8aa6"));
-                // 窗台上的书和小鹿
-                B(80, 16, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 17, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 19, 2, 5, D("#e89aa8", "#a86a78")); P(63, 18, D("#e89aa8", "#a86a78")); B(48, 18, 8, 6, D("#e8e0d8", "#9a90a0"));
+                // 三扇大窗 + 城市夜景
+                for (let i = 0; i < 3; i++) { const wx = 40 + i * 17; B(wx, 2, 16, 21, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 14, 19, D("#a8cdee", "#0e1238")); skyline(wx + 1, wx + 15, 22, 2 + i * 3); if (!night) E(wx + 6, 7, 3, 1, "#fff"); else for (let k = 0; k < 34; k++) { const lx = wx + 2 + (k * 5 + i * 3) % 13, ly = 8 + (k * 7 + i) % 13; P(lx, ly, k % 3 ? "#ffd98a" : "#fff3c0"); } }
+                R(40, 21, 50, 3, D("#e8dede", "#8a7a98")); // 窗台
+                // 窗台上的书和小鹿、绿植
+                B(80, 14, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 15, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 18, 2, 4, D("#e89aa8", "#a86a78")); P(63, 17, D("#e89aa8", "#a86a78")); E(52, 20, 3, 2, D("#5fae60", "#2f6a40")); E(72, 20, 2, 2, D("#5fae60", "#2f6a40"));
                 // 粉色窗帘
-                B(26, 0, 14, 28, D("#e8c4c4", "#8a5a6e")); for (let x = 28; x < 38; x += 3) R(x, 1, 1, 26, D("#d8aeb0", "#704a5e"));
+                B(27, 0, 12, 28, D("#e8c4c4", "#8a5a6e")); for (let x = 29; x < 37; x += 3) R(x, 1, 1, 26, D("#d8aeb0", "#704a5e"));
                 // 龟背竹
-                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 22, 7, 4, D("#3a8a52", "#225a3a")); E(4, 28, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828"));
-                B(2, 30, 8, 8, D("#5a4a52", "#2e2630")); leaf(7, 30, 0, -3, 3, D("#d8b8d8", "#8a6a8a")); P(5, 27, "#fff"); P(8, 26, "#fff"); P(10, 28, "#f0d8f0");
-                // 落地灯
-                B(19, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(24, 11, 2, 2, D("#e8e0d0", "#8a8090")); L(25, 13, 20, 30, D("#c8a070", "#7a5a3a")); L(25, 13, 30, 30, D("#c8a070", "#7a5a3a")); L(25, 13, 25, 30, D("#c8a070", "#7a5a3a")); if (night) sp(25, 7, "#ffe9b0", 1);
+                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 21, 7, 4, D("#3a8a52", "#225a3a")); E(4, 27, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828"));
+                // 落地灯（三脚架）
+                B(17, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(22, 11, 2, 2, D("#e8e0d0", "#8a8090")); L(23, 13, 18, 31, D("#c8a070", "#7a5a3a")); L(23, 13, 28, 31, D("#c8a070", "#7a5a3a")); L(23, 13, 23, 31, D("#c8a070", "#7a5a3a")); if (night) sp(23, 7, "#ffe9b0", 1);
                 // 木地板
                 R(0, 34, 90, 16, FLR); for (let y = 37; y < 50; y += 3) R(0, y, 90, 1, FLRL); for (let y = 37, i = 0; y < 50; y += 3, i++) for (let x = (i * 13) % 19; x < 90; x += 19) R(x, y - 2, 1, 2, FLRL); R(0, 34, 90, 1, PX_OUT);
-                // 沙发（窗下长沙发 + 靠垫）
-                B(26, 24, 60, 11, SOF); B(24, 28, 64, 9, SOFL); B(24, 36, 3, 3, "#c8935c"); B(85, 36, 3, 3, "#c8935c"); R(27, 30, 58, 1, D("#c4bccc", "#7a7288"));
-                B(32, 20, 9, 8, D("#f0eaec", "#a8a0b2")); B(46, 20, 10, 8, D("#e8e0ea", "#a09aae")); B(61, 21, 9, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 5; i++) { L(62 + i * 2, 22, 62 + i * 2, 27, D("#b8b0c4", "#7a7288")); } B(72, 22, 12, 6, D("#e8e4ee", "#a8a2b8")); B(52, 25, 8, 5, D("#a8b8d8", "#6a7498")); R(53, 26, 6, 1, D("#c8d4ec", "#8a94b8")); B(76, 28, 12, 7, D("#a8b0a0", "#5e6a5a")); R(77, 30, 10, 1, D("#c8d0c0", "#7a8a76")); R(77, 32, 10, 1, D("#8e9a8a", "#4a5446")); B(84, 25, 5, 4, D("#9a9eae", "#5a5e74"));
-                // 花瓶、花
-                B(34, 35, 3, 4, D("#e8d0c0", "#9a7a6a")); L(35, 34, 33, 29, D("#6a9a60", "#2f5a3a")); L(35, 34, 37, 29, D("#6a9a60", "#2f5a3a")); P(33, 28, "#fff"); P(37, 28, "#fff"); P(35, 27, "#fff"); P(32, 30, "#f6e0f6"); P(38, 30, "#f6e0f6");
-                // 地毯
-                E(48, 46, 25, 4, D("#d8d4d0", "#7a7682")); E(48, 46, 21, 3, D("#e8e4e0", "#8e8a96")); for (let x = 30; x < 68; x += 4) { P(x, 45, D("#6a6a70", "#4a4a56")); P(x + 2, 47, D("#6a6a70", "#4a4a56")); P(x + 1, 46, D("#6a6a70", "#4a4a56")); }
-                // 圆木茶几 + 杯子 + 杂志
-                E(46, 38, 11, 3, D("#e0b88a", "#9a7a56")); E(46, 37, 10, 2, D("#f0cfa0", "#b08e66")); L(38, 40, 36, 46, D("#c8935c", "#6a4a30")); L(54, 40, 56, 46, D("#c8935c", "#6a4a30")); L(46, 41, 46, 47, D("#c8935c", "#6a4a30"));
-                B(48, 34, 4, 3, "#fffdf4"); B(40, 34, 4, 3, D("#f0e0c8", "#b0a090")); R(42, 33, 2, 1, D("#c8d8e8", "#8a9ab0")); B(50, 36, 6, 1, D("#fff", "#d8d8e8")); if (night) sp(41, 33, "#ffd98a", 1);
+                // 地毯（灰白锯齿纹）
+                E(46, 45, 30, 5, D("#cfcac6", "#6e6a78")); E(46, 45, 28, 4, D("#e6e2de", "#8a8694")); for (let y = 42; y <= 48; y += 2) for (let x = 22 + (y % 4); x < 70; x += 4) { P(x, y, D("#6a6a70", "#4a4a56")); P(x + 1, y + 1, D("#6a6a70", "#4a4a56")); }
+                // 窗下长沙发（占大半宽度）+ 靠垫
+                B(22, 24, 64, 9, SOF); B(18, 25, 6, 15, SOFL); B(84, 25, 6, 15, SOFL); B(22, 31, 62, 8, SOFL); R(24, 33, 58, 1, D("#c4bccc", "#7a7288")); B(20, 39, 3, 3, WDD); B(85, 39, 3, 3, WDD); R(22, 38, 62, 1, D("#c8935c", "#6a4a30"));
+                B(26, 19, 10, 9, D("#f0eaec", "#a8a0b2")); B(38, 21, 11, 8, D("#e8e0ea", "#a09aae")); B(52, 19, 12, 9, D("#e4dcea", "#9890a8")); B(66, 22, 9, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 4; i++) L(67 + i * 2, 23, 67 + i * 2, 28, D("#b8b0c4", "#7a7288")); B(74, 20, 10, 8, D("#e8e4ee", "#a8a2b8"));
+                B(44, 28, 7, 4, D("#a8b8d8", "#6a7498")); R(45, 29, 5, 1, D("#c8d4ec", "#8a94b8")); B(76, 31, 10, 6, D("#a8b0a0", "#5e6a5a")); R(77, 33, 8, 1, D("#c8d0c0", "#7a8a76")); B(62, 30, 9, 3, D("#e8d8b8", "#a89870"));
+                // 圆木茶几 + 花瓶 + 杯子 + 杂志
+                E(46, 40, 11, 3, WDC); E(46, 39, 10, 2, D("#f0cfa0", "#b08e66")); L(38, 42, 36, 47, WDD); L(54, 42, 56, 47, WDD); L(46, 43, 46, 48, WDD);
+                B(44, 33, 3, 5, D("#f2e8e0", "#b0a090")); L(45, 33, 43, 29, D("#6a9a60", "#2f5a3a")); L(45, 33, 47, 29, D("#6a9a60", "#2f5a3a")); P(43, 28, "#fff"); P(47, 28, "#fff"); P(45, 27, "#fff"); P(42, 30, "#f6e0f6"); P(48, 30, "#f6e0f6");
+                B(50, 37, 4, 3, "#fffdf4"); B(38, 38, 6, 2, D("#fff", "#d8d8e8")); B(40, 37, 3, 1, "#e0627a");
                 // 左右藤编摇椅
-                L(12, 40, 12, 28, D("#d8a870", "#8a6a44")); B(10, 30, 9, 10, D("#e0b280", "#9a7a54")); R(11, 32, 7, 6, D("#c89868", "#7a5a38")); B(10, 38, 18, 4, D("#e8d8c0", "#a89a88")); L(8, 46, 26, 46, D("#d8a870", "#8a6a44")); L(10, 42, 9, 46, D("#d8a870", "#8a6a44")); L(26, 42, 27, 46, D("#d8a870", "#8a6a44"));
-                B(66, 33, 14, 14, D("#e0b280", "#9a7a54")); R(68, 35, 10, 9, D("#c89868", "#7a5a38")); for (let y = 36; y < 44; y += 2) R(68, y, 10, 1, D("#e0b280", "#9a7a54")); B(62, 44, 26, 3, D("#d8a870", "#8a6a44")); R(60, 48, 30, 1, D("#d8a870", "#8a6a44")); B(70, 38, 8, 6, D("#f0e8dc", "#b0a8b0"));
+                L(10, 41, 10, 30, WDC); B(8, 31, 10, 10, WDC); R(9, 33, 8, 7, D("#c89868", "#7a5a38")); for (let y = 34; y < 40; y += 2) R(9, y, 8, 1, WDC); B(8, 39, 18, 4, D("#e8d8c0", "#a89a88")); L(5, 47, 26, 47, WDC); L(8, 43, 7, 47, WDC); L(24, 43, 25, 47, WDC);
+                B(68, 33, 14, 14, WDC); R(70, 35, 10, 9, D("#c89868", "#7a5a38")); for (let y = 36; y < 44; y += 2) R(70, y, 10, 1, WDC); B(64, 44, 26, 3, WDC); R(62, 48, 30, 1, WDC); B(72, 38, 8, 6, D("#f0e8dc", "#b0a8b0"));
                 // 玩具小火车
-                B(26, 46, 5, 3, "#d94a3a"); B(32, 46, 5, 3, "#e8603a"); B(38, 45, 8, 4, "#2a2a30"); R(38, 44, 3, 1, "#2a2a30"); P(29, 49, "#222"); P(35, 49, "#222"); P(41, 49, "#222"); P(45, 49, "#222");
-                if (night) { sp(25, 7, "#ffe9b0", 1); sp(60, 8, "#fff", 1); sp(80, 6, "#fff"); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
+                B(28, 46, 4, 3, "#d94a3a"); B(33, 46, 4, 3, "#e8603a"); B(38, 45, 7, 4, "#2a2a30"); R(38, 44, 3, 1, "#2a2a30"); P(30, 49, "#222"); P(35, 49, "#222"); P(40, 49, "#222"); P(44, 49, "#222");
+                if (night) { sp(23, 7, "#ffe9b0", 1); sp(60, 8, "#fff", 1); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
             } else if (kind === "terrace") {
                 for (let y = 0; y < 34; y++) { const t = y / 34; c.fillStyle = night ? `rgb(${Math.round(12 + t * 26)},${Math.round(18 + t * 30)},${Math.round(58 + t * 50)})` : `rgb(${Math.round(176 + t * 50)},${Math.round(214 + t * 26)},248)`; c.fillRect(0, y, 90, 1); }
                 if (night) { for (let i = 0; i < 18; i++) sp((i * 41) % 90, 1 + (i * 13) % 18, "#fff", i % 3 === 0); } else { E(14, 8, 7, 2, "#fff"); E(20, 6, 5, 2, "#fff"); E(66, 16, 6, 2, "#f4faff"); }
@@ -3332,11 +3351,11 @@
 
         // ==================== 🌟 全新高阶清理维护系统 ====================
         function clearChatHistory() {
-            if (confirm("确定要清空全部本地聊天记录吗？字卡、信箱及朋友圈将不会受影响。")) {
-                db.chat = [];
+            if (confirm("确定要清空全部本地聊天记录和朋友圈记录吗？字卡、信箱不会受影响。")) {
+                db.chat = []; db.pyqPosts = []; db.replyQueue = [];
                 saveData();
-                renderChat();
-                alert("聊天记录已成功清空。");
+                renderChat(); renderPyqStream();
+                alert("聊天记录和朋友圈记录已清空。");
             }
         }
 
@@ -5389,6 +5408,10 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         // ==================== 🔮 占卜 ====================
         const TAROT = [["愚者", "新的开始、自由", "冒失、不切实际"], ["魔术师", "创造、行动力", "操纵、心不在焉"], ["女祭司", "直觉、静观", "隐瞒、压抑"], ["女皇", "丰盛、滋养", "依赖、过度付出"], ["皇帝", "秩序、稳固", "专断、僵硬"], ["教皇", "传统、指引", "拘泥、反叛"], ["恋人", "选择、契合", "失衡、犹豫"], ["战车", "前进、意志", "失控、方向不明"], ["力量", "勇气、温柔的掌控", "自我怀疑"], ["隐者", "内省、独处", "孤立、逃避"], ["命运之轮", "转机、循环", "停滞、时机未到"], ["正义", "公平、因果", "偏颇、逃避责任"], ["倒吊人", "换个角度、等待", "徒劳、无谓牺牲"], ["死神", "结束与重生", "抗拒改变"], ["节制", "调和、平衡", "失衡、过度"], ["恶魔", "欲望、束缚", "挣脱、觉醒"], ["高塔", "突变、打破旧局", "拖延崩塌、余震"], ["星辰", "希望、疗愈", "失落、信心不足"], ["月亮", "不安、潜意识", "迷雾渐散"], ["太阳", "喜悦、坦率", "暂时受挫"], ["审判", "觉醒、召唤", "自责、不愿放下"], ["世界", "圆满、完成", "未竟、差最后一步"]];
         const LENO = [["骑士", "消息到来"], ["三叶草", "小小的幸运"], ["船", "远行、距离"], ["房子", "家、稳定"], ["树", "健康、成长"], ["云", "困惑、不清晰"], ["蛇", "复杂、绕弯"], ["棺材", "结束、停顿"], ["花束", "礼物、善意"], ["镰刀", "突然的决断"], ["鞭子", "争执、重复"], ["鸟", "交谈、絮语"], ["孩子", "新生、纯真"], ["狐狸", "心机、谨慎"], ["熊", "力量、保护"], ["星辰", "指引、清晰"], ["鹳", "变化、迁移"], ["狗", "忠诚、朋友"], ["塔", "孤立、权威"], ["花园", "社交、公开场合"], ["山", "阻碍、需耐心"], ["岔路", "选择"], ["鼠", "损耗、焦虑"], ["心", "爱、心意"], ["戒指", "承诺、约定"], ["书", "秘密、未知"], ["信", "文字、通知"], ["男人", "他"], ["女人", "她"], ["百合", "平和、成熟"], ["太阳", "成功、温暖"], ["月亮", "情感、认可"], ["钥匙", "答案、解开"], ["鱼", "财富、丰足"], ["锚", "稳定、坚持"], ["十字架", "负担、使命"]];
+        const SUIT_NAMES = ["权杖", "圣杯", "宝剑", "钱币"], SUIT_THEME = ["行动与热情", "情感与关系", "思考与沟通", "物质与日常"];
+        const RANK_NAMES = ["王牌", "二", "三", "四", "五", "六", "七", "八", "九", "十", "侍从", "骑士", "王后", "国王"];
+        const RANK_KW = [["开端、契机", "错失、延迟"], ["抉择、平衡", "犹豫、失衡"], ["成长、合作", "受阻、分歧"], ["稳固、停歇", "停滞、倦怠"], ["冲突、变动", "化解、走出低谷"], ["顺遂、互助", "回望、失去连结"], ["坚持、评估", "动摇、分心"], ["行动、专注", "仓促、卡住"], ["接近完成、积累", "疲惫、过度担忧"], ["圆满、负担", "卸下、重负难支"], ["好奇、消息", "不成熟、拖延"], ["追求、行动", "冲动、莽撞"], ["滋养、洞察", "情绪化、依赖"], ["掌控、成熟", "专横、冷漠"]];
+        SUIT_NAMES.forEach((sn, si) => RANK_NAMES.forEach((rn, ri) => TAROT.push([sn + rn, SUIT_THEME[si] + "：" + RANK_KW[ri][0], SUIT_THEME[si] + "：" + RANK_KW[ri][1]])));
         const DPL = [["太阳", "自我与活力"], ["月亮", "情绪与安全感"], ["水星", "沟通与想法"], ["金星", "爱与喜好"], ["火星", "行动与冲动"], ["木星", "机遇与扩张"], ["土星", "考验与责任"], ["天王星", "突变与自由"], ["海王星", "幻想与直觉"], ["冥王星", "蜕变与深层力量"]];
         const DSG = [["白羊座", "直接、开拓"], ["金牛座", "稳定、享受"], ["双子座", "好奇、多变"], ["巨蟹座", "照顾、敏感"], ["狮子座", "热情、表达"], ["处女座", "细致、整理"], ["天秤座", "平衡、关系"], ["天蝎座", "深入、占有"], ["射手座", "探索、乐观"], ["摩羯座", "务实、长远"], ["水瓶座", "独立、新奇"], ["双鱼座", "柔软、想象"]];
         const DHS = ["自我与外在", "金钱与价值", "沟通与学习", "家与根基", "恋爱与创造", "日常与健康", "伴侣与合作", "亲密与共享", "远方与信念", "事业与目标", "朋友与愿景", "内心与潜意识"];
@@ -5398,7 +5421,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         const BR = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
         function divToast(t) { let e = document.getElementById("divToast"); if (!e) { e = document.createElement("div"); e.id = "divToast"; e.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:8px 16px;border-radius:16px;font-size:13px;z-index:3000;transition:opacity .25s;pointer-events:none"; document.body.appendChild(e); } e.textContent = t; e.style.opacity = 1; clearTimeout(e._t); e._t = setTimeout(() => e.style.opacity = 0, 1600); }
         let divTab = "tarot", divLast = null;
-        const DIV_TABS = [["tarot", "塔罗"], ["leno", "雷诺曼"], ["dice", "星骰"], ["mhyi", "梅花易数"], ["xlr", "小六壬"], ["stick", "抽签"], ["rec", "记录"]];
+        const DIV_TABS = [["tarot", "塔罗"], ["leno", "雷诺曼"], ["dice", "星骰"], ["mhyi", "梅花易数"], ["xlr", "小六壬"], ["rec", "记录"]];
         function openDivPage() { if (!db.divRecords) db.divRecords = []; divLast = null; renderDiv(); document.getElementById("divFullPage").classList.add("open"); }
         function closeDivPage() { document.getElementById("divFullPage").classList.remove("open"); }
         function divTabTo(t) { divTab = t; divLast = null; renderDiv(); }
@@ -5422,66 +5445,114 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             ]
         };
         const ROM = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"];
-        let divSpread = { tarot: "t3", leno: "l3" }, divS = null, divFoldOpen = true;
+        let divSpread = { tarot: "t3", leno: "l3" }, divS = null, divFoldOpen = false;
         function renderDiv() {
             document.getElementById("divTabs").innerHTML = DIV_TABS.map(([k, n]) => `<button class="${k === divTab ? "on" : ""}" onclick="divTabTo('${k}')">${n}</button>`).join("");
             const b = document.getElementById("divBody"); divS = null; if (divTab === "rec") { renderDivRec(b); return; }
             const q = '<input class="div-q" id="divQ" placeholder="心里想着问题（可不写）" maxlength="60">';
             if (divTab === "tarot" || divTab === "leno") {
                 const list = SPREADS[divTab];
-                const cur = list.find(x => x.id === divSpread[divTab]); b.innerHTML = q + `<button class="div-fold" onclick="divFold()">牌阵：${cur.n}（${cur.pos.length}张）<span id="divFoldArrow">${divFoldOpen ? "▴" : "▾"}</span></button><div class="div-row" id="divSpreadList" style="display:${divFoldOpen ? "flex" : "none"}">${list.map(sp => `<button class="${sp.id === divSpread[divTab] ? "main" : ""}" onclick="divPick('${sp.id}')">${sp.n}</button>`).join("")}</div><div id="divStage"></div><div id="divOut"></div>`;
+                const cur = list.find(x => x.id === divSpread[divTab]); b.innerHTML = q + `<div style="position:relative"><button class="div-fold" onclick="divFold()">牌阵：${cur.n}（${cur.pos.length}张）<span id="divFoldArrow">${divFoldOpen ? "▴" : "▾"}</span></button><div class="div-pop" id="divSpreadList" style="display:${divFoldOpen ? "flex" : "none"}">${list.map(sp => `<button class="${sp.id === divSpread[divTab] ? "main" : ""}" onclick="divPick('${sp.id}')">${sp.n}<small>${sp.pos.length}张</small></button>`).join("")}</div></div><div id="divStage"></div><div id="divOut"></div>`;
                 divStageInit();
-            } else if (divTab === "dice") b.innerHTML = q + `<div class="div-cupwrap"><div class="cup" id="divCup"><b>摇</b></div></div><div class="div-dice" id="divDiceBox">${["行星", "星座", "宫位"].map((n, i) => `<div class="die" id="die${i}"><div class="dn">${n}</div><div class="dv">?</div><div class="dk"></div></div>`).join("")}</div><div class="div-row"><button class="main" id="divRoll" onclick="divDice()">掷骰</button></div><div class="div-hint">行星骰 + 星座骰 + 宫位骰：谁在，以什么方式，发生在哪个领域</div><div id="divOut"></div>`;
-            else if (divTab === "mhyi") b.innerHTML = q + `<div class="div-hex" id="divHex"></div><div class="div-row"><button class="main" id="divGo" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint">按现在的农历年月日时起卦，得本卦与变卦</div><div id="divOut"></div>`;
-            else if (divTab === "xlr") b.innerHTML = q + `<div class="div-hand"><svg id="divHandSvg" viewBox="0 0 240 250" width="100%">
-              <rect x="150" y="150" width="30" height="78" rx="15" transform="rotate(-38 160 190)" class="hf"/><rect x="42" y="118" width="156" height="112" rx="34" class="hf"/>
-              <rect x="52" y="22" width="40" height="128" rx="20" class="hf"/><rect x="100" y="12" width="40" height="138" rx="20" class="hf"/><rect x="148" y="22" width="40" height="128" rx="20" class="hf"/>
-              ${HAND_PTS.map((h, i) => `<g class="hp" id="hp${i}"><circle cx="${h[0]}" cy="${h[1]}" r="15"/><text x="${h[0]}" y="${h[1] + 4}" text-anchor="middle">${XLR[i][0]}</text><text class="tag" id="hpt${i}" x="${h[0]}" y="${h[1] - 19}" text-anchor="middle"></text></g>`).join("")}
-              <circle id="handDot" cx="30" cy="196" r="9" class="hd"/></svg></div><div class="div-row"><button class="main" id="divGo" onclick="divXlr()">以此刻起课</button></div><div class="div-hint">用拇指在食指、中指、无名指的指节上依次点数：月 → 日 → 时</div><div id="divOut"></div>`;
-            else b.innerHTML = q + `<div class="div-stickbox"><div class="tube" id="divTube"><i style="left:22%;height:46px"></i><i style="left:36%;height:58px"></i><i style="left:50%;height:40px"></i><i style="left:64%;height:54px"></i><i style="left:78%;height:44px"></i><div class="tb">签</div></div><div class="stick" id="divStickEl"><b id="divStickNo"></b></div></div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divStick()">摇签</button></div><div class="div-hint" style="text-align:center">心里默念问题，摇动签筒，直到有一支签掉出来</div><div id="divOut"></div>`;
+            } else if (divTab === "dice") b.innerHTML = q + `<div class="div-tray" id="divTray"><div class="tray-edge"></div>${[0, 1, 2].map(i => `<div class="gd" id="gd${i}">${dieSvg(i)}<b class="gs" id="gs${i}">?</b></div>`).join("")}</div><div class="div-caps">${["行星", "星座", "宫位"].map((n, i) => `<div><span>${n}</span><b id="gcn${i}">—</b><i id="gck${i}"></i></div>`).join("")}</div><div class="div-row" style="justify-content:center"><button class="main" id="divRoll" onclick="divDice()">掷出星骰</button></div><div class="div-hint" style="text-align:center">三枚十二面骰：行星（谁）、星座（以什么方式）、宫位（在哪个领域）</div><div id="divOut"></div>`;
+            else if (divTab === "mhyi") b.innerHTML = q + `<div class="mh-steps" id="mhSteps"></div><div class="div-hex" id="divHex"></div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint" style="text-align:center">取农历年月日时，按年+月+日 ÷8 得上卦，再加时辰得下卦，÷6 得动爻</div><div id="divOut"></div>`;
+            else if (divTab === "xlr") b.innerHTML = q + handSvg() + `<div class="div-status" id="xlrSt" style="min-height:36px">用拇指在食指、中指、无名指的指节上依次点数：月 → 日 → 时</div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divXlr()">以此刻起课</button></div><div id="divOut"></div>`;
         }
         function divPick(id) { divSpread[divTab] = id; divFoldOpen = false; renderDiv(); }
         function divFold() { divFoldOpen = !divFoldOpen; document.getElementById("divSpreadList").style.display = divFoldOpen ? "flex" : "none"; document.getElementById("divFoldArrow").innerText = divFoldOpen ? "▴" : "▾"; }
         const wait = ms => new Promise(r => setTimeout(r, ms));
+        const rnd = (a, b) => a + Math.random() * (b - a);
         function divStageInit() {
             const sp = SPREADS[divTab].find(x => x.id === divSpread[divTab]), W = Math.min(document.getElementById("divBody").clientWidth - 32, 420);
             const maxX = Math.max(...sp.pos.map(p => p[0])) + 1, cw = Math.min(divTab === "tarot" ? 64 : 58, Math.floor(W / (maxX + 0.1))), ch = Math.round(cw * 1.4), maxY = Math.max(...sp.pos.map(p => p[1])), bh = Math.round(maxY * cw + ch + 6), bw = Math.round(maxX * cw);
-            divS = { sp, cw, ch, bw, bh, deck: divTab === "tarot" ? TAROT : LENO, order: [], shuffled: false, cut: false, drawn: 0, cards: [], busy: false, tab: divTab, total: sp.pos.length };
+            const deck = divTab === "tarot" ? TAROT : LENO, tw = divTab === "tarot" ? 24 : 30, th = Math.round(tw * 1.45), TH = 200;
+            divS = { sp, cw, ch, bw, bh, deck, order: [], stage: "idle", drawn: 0, cards: [], busy: false, tab: divTab, total: sp.pos.length, tw, th, TH, TW: W, tp: [], piles: [], sel: [], left: [], fanEls: {}, hover: -1 };
             const slots = sp.pos.map((p, i) => `<div class="slot" style="left:${Math.round(p[0] * cw)}px;top:${Math.round(p[1] * cw)}px;width:${cw}px;height:${ch}px;${sp.rot && sp.rot.includes(i) ? "transform:rotate(90deg);" : ""}"><span>${sp.total === 36 ? "" : p[2]}</span></div>`).join("");
             document.getElementById("divStage").innerHTML = `<div class="div-board" id="divBoard" style="width:${bw}px;height:${bh}px">${slots}</div>
-              <div class="div-deckwrap"><div class="div-deck" id="divDeck" style="width:${cw}px;height:${ch}px">${[0, 1, 2, 3, 4].map(i => `<div class="dk" style="transform:translate(${i * 0.8}px,${-i * 0.8}px)"></div>`).join("")}</div></div>
-              <div class="div-fan" id="divFan" style="display:none"></div><div class="div-status" id="divStatus">先「洗牌」，再「切牌」，然后从牌扇里一张张挑</div>
+              <div class="div-table" id="divTable" style="height:${TH}px"><div class="tcs" id="divTc">${deck.map((_, i) => `<div class="tc" id="tc${i}" style="width:${tw}px;height:${th}px;margin-left:-${tw / 2}px;margin-top:-${th / 2}px"></div>`).join("")}</div></div>
+              <div class="div-fan" id="divFan" style="display:none"></div><div class="div-status" id="divStatus">点「洗牌」，把牌在桌上搓开；洗好后切成三摞，再从牌扇里凭感觉抽</div>
               <div class="div-row" style="justify-content:center"><button id="bShuf" class="main" onclick="divShuffle()">洗牌</button><button id="bCut" disabled onclick="divCut()">切牌</button><button id="bDraw" disabled onclick="divDraw()">随手抽一张</button><button id="bAuto" disabled onclick="divAuto()">全部抽出</button></div>`;
+            const tb = document.getElementById("divTable"); tb.onpointermove = divRub;
+            for (let i = 0; i < deck.length; i++) tcPose(i, (i % 3) * 0.3 - 0.3, -i * 0.12, 0, true);
         }
-        function divBtns() { const s = divS; if (!s) return; const d = (id, v) => { const e = document.getElementById(id); if (e) e.disabled = v; }; d("bShuf", s.busy || s.drawn > 0); d("bCut", s.busy || !s.shuffled || s.cut || s.drawn > 0); d("bDraw", s.busy || !s.cut || s.drawn >= s.total); d("bAuto", s.busy || !s.cut || s.drawn >= s.total); }
+        function tcPose(i, x, y, r, now, delay) { const s = divS, e = document.getElementById("tc" + i); if (!e) return; s.tp[i] = [x, y, r]; e.style.transition = now ? "none" : `transform ${0.34}s ease-out ${delay || 0}ms`; e.style.transform = `translate(${x}px,${y}px) rotate(${r}deg)`; }
+        function divRub(ev) {
+            const s = divS; if (!s || s.stage !== "shuffled" || s.busy) return; const tb = document.getElementById("divTable"), r = tb.getBoundingClientRect(), px = ev.clientX - r.left - r.width / 2, py = ev.clientY - r.top - r.height / 2, hw = r.width / 2 - s.tw, hh = r.height / 2 - s.th / 2;
+            for (let i = 0; i < s.deck.length; i++) { const t = s.tp[i]; if (Math.hypot(t[0] - px, t[1] - py) < 46) tcPose(i, Math.max(-hw, Math.min(hw, t[0] + rnd(-38, 38))), Math.max(-hh, Math.min(hh, t[1] + rnd(-30, 30))), t[2] + rnd(-70, 70)); }
+        }
+        function divBtns() { const s = divS; if (!s) return; const d = (id, v) => { const e = document.getElementById(id); if (e) e.disabled = v; }; const fan = s.stage === "fan"; d("bShuf", s.busy || s.stage === "piles" || fan || s.drawn > 0); d("bCut", s.busy || s.stage !== "shuffled"); d("bDraw", s.busy || !fan || s.drawn >= s.total); d("bAuto", s.busy || !fan || s.drawn >= s.total); }
         const divSt = t => { const e = document.getElementById("divStatus"); if (e) e.innerText = t; };
+        function tcGather(delayStep) { const s = divS; for (let i = 0; i < s.deck.length; i++) tcPose(i, (i % 3) * 0.3 - 0.3, -i * 0.12, rnd(-2, 2), false, delayStep ? (i % 12) * 8 : 0); }
         async function divShuffle() {
-            const s = divS; if (!s || s.busy) return; s.busy = true; divBtns(); divSt("洗牌中…");
-            const dk = document.getElementById("divDeck"); dk.classList.add("shuf"); s.order = pickN(s.deck, s.deck.length);
-            await wait(1700); dk.classList.remove("shuf"); s.shuffled = true; s.cut = false; s.busy = false; divSt("洗好了，点「切牌」"); divBtns();
+            const s = divS; if (!s || s.busy) return; s.busy = true; s.stage = "idle"; divBtns(); divSt("洗牌中……牌被搓开，在桌上互相穿插");
+            const n = s.deck.length, hw = s.TW / 2 - s.tw - 4, hh = s.TH / 2 - s.th / 2 - 2;
+            for (let k = 0; k < 8; k++) {
+                for (let i = 0; i < n; i++) {
+                    if (k < 6) { const a = rnd(0, 6.283), rr = Math.sqrt(Math.random()); tcPose(i, Math.cos(a) * hw * rr, Math.sin(a) * hh * rr, rnd(-180, 180), false, Math.random() * 90); }
+                    else tcPose(i, rnd(-hw * 0.35, hw * 0.35), rnd(-hh * 0.3, hh * 0.3), rnd(-40, 40), false, Math.random() * 60);
+                }
+                await wait(k < 6 ? 420 : 380); if (divS !== s) return;
+            }
+            divSt("把牌拢到一起……"); tcGather(true); await wait(700); if (divS !== s) return;
+            s.order = pickN(s.deck, s.deck.length); s.stage = "shuffled"; s.busy = false;
+            divSt("洗好了。可以再洗，也可以用手指在桌上继续搓，满意了点「切牌」"); divBtns();
+            // 洗好后把牌再摊开一点方便手指搓
+            for (let i = 0; i < n; i++) tcPose(i, rnd(-hw * 0.6, hw * 0.6), rnd(-hh * 0.5, hh * 0.5), rnd(-90, 90), false, Math.random() * 80);
         }
         async function divCut() {
-            const s = divS; if (!s || s.busy || !s.shuffled) return; s.busy = true; divBtns(); divSt("切牌中…");
-            const dk = document.getElementById("divDeck"); dk.classList.add("cut"); const k = 8 + Math.floor(Math.random() * (s.order.length - 16)); s.order = s.order.slice(k).concat(s.order.slice(0, k));
-            await wait(1300); dk.classList.remove("cut"); s.cut = true; s.used = new Set(); await divFanOut(); s.busy = false; divSt(`在牌扇里凭感觉挑一张（共 ${s.total} 张，左右可滑动）`); divBtns();
+            const s = divS; if (!s || s.busy || s.stage !== "shuffled") return; s.busy = true; divBtns(); divSt("把牌拢好，分成三摞……");
+            const n = s.deck.length; tcGather(true); await wait(650); if (divS !== s) return;
+            const minP = Math.max(4, Math.floor(n * 0.2)), a = minP + Math.floor(Math.random() * (Math.floor(n * 0.45) - minP + 1)), b = minP + Math.floor(Math.random() * (n - a - 2 * minP + 1)), c = n - a - b;
+            s.piles = [s.order.slice(0, a), s.order.slice(a, a + b), s.order.slice(a + b)]; s.pileEl = []; s.sel = [];
+            const px = [-1, 0, 1].map(v => v * Math.min(s.TW * 0.3, 112)); let idx = 0;
+            s.piles.forEach((p, pi) => { s.pileEl.push([]); for (let j = 0; j < p.length; j++, idx++) { s.pileEl[pi].push(idx); tcPose(idx, px[pi] + (j % 3) * 0.4, 14 - j * 0.45, rnd(-1.5, 1.5), false, j * 6); } });
+            await wait(700); if (divS !== s) return;
+            const tb = document.getElementById("divTable"); tb.querySelectorAll(".pile").forEach(e => e.remove());
+            s.piles.forEach((p, pi) => { const d = document.createElement("div"); d.className = "pile"; d.dataset.i = pi; d.style.cssText = `left:calc(50% + ${px[pi]}px);width:${s.tw + 22}px`; d.innerHTML = `<b></b><span>${p.length}张</span>`; d.onclick = () => divPile(pi); tb.appendChild(d); });
+            s.stage = "piles"; s.busy = false; divSt("依次点这三摞：点的顺序就是叠回去的顺序（先点的放最上面）"); divBtns();
         }
+        async function divPile(pi) {
+            const s = divS; if (!s || s.stage !== "piles" || s.busy || s.sel.includes(pi)) return; s.sel.push(pi);
+            const e = document.querySelector(`#divTable .pile[data-i="${pi}"]`); e.classList.add("on"); e.querySelector("b").innerText = s.sel.length;
+            s.pileEl[pi].forEach((ci, j) => tcPose(ci, s.tp[ci][0], s.tp[ci][1] - 12, s.tp[ci][2], false, 0));
+            if (s.sel.length < 3) { divSt(`第 ${s.sel.length} 摞放好了，再点下一摞`); return; }
+            s.busy = true; divSt("三摞叠回一副……"); await wait(300);
+            s.order = s.sel.flatMap(i => s.piles[i]); let z = 0;
+            s.sel.forEach(pi2 => s.pileEl[pi2].forEach(ci => { tcPose(ci, (z % 3) * 0.3 - 0.3, 14 - z * 0.12, rnd(-1.5, 1.5), false, z * 4); z++; }));
+            document.querySelectorAll("#divTable .pile").forEach(e => e.remove()); await wait(900); if (divS !== s) return;
+            s.stage = "fan"; await divFanOut(); s.busy = false; divBtns();
+        }
+        const FAN_SPAN = { tarot: 42, leno: 34 };
         async function divFanOut() {
-            const s = divS, fan = document.getElementById("divFan"), dkw = document.querySelector(".div-deckwrap"); dkw.style.display = "none"; fan.style.display = "flex";
-            fan.innerHTML = s.order.map((v, pos) => `<div class="fc" data-pos="${pos}" style="width:${Math.round(s.cw * 0.62)}px;height:${s.ch}px;margin-right:-${Math.round(s.cw * 0.3)}px;animation-delay:${Math.min(pos * 25, 600)}ms" onclick="divDraw(false,${pos})"></div>`).join("");
-            await wait(Math.min(s.order.length * 25, 600) + 350); fan.scrollLeft = 0;
+            const s = divS, fan = document.getElementById("divFan"), tb = document.getElementById("divTable"); tb.style.display = "none"; fan.style.display = "block";
+            const n = s.order.length, fw = Math.round(s.cw * (s.tab === "tarot" ? 0.52 : 0.62)), fch = Math.round(fw * 1.5), span = FAN_SPAN[s.tab], sinS = Math.sin(span * Math.PI / 180), R = Math.max(90, Math.round((s.TW / 2 - fw / 2 - 6) / sinS - fch));
+            Object.assign(s, { fw, fch, R, span, top: 26, left: s.order.map((v, k) => k) }); fan.style.height = (26 + R * (1 - Math.cos(span * Math.PI / 180)) + fch + 14) + "px"; fan.style.transition = "none";
+            fan.innerHTML = s.order.map((v, k) => `<div class="fc" data-pos="${k}" style="width:${fw}px;height:${fch}px;left:calc(50% - ${fw / 2}px);top:26px;transform-origin:50% ${R}px;transform:rotate(0deg)"></div>`).join("");
+            s.fanEls = {}; fan.querySelectorAll(".fc").forEach(e => s.fanEls[+e.dataset.pos] = e); fan.getBoundingClientRect();
+            fan.onpointerdown = e => { if (s.busy || s.stage !== "fan") return; try { fan.setPointerCapture(e.pointerId); } catch (x) { } divHover(e); }; fan.onpointermove = e => { if (e.buttons || e.pointerType === "touch" || e.pointerType === "pen") divHover(e); else divHover(e); };
+            fan.onpointerup = e => { const k = s.hover; divHoverSet(-1); if (k >= 0 && !s.busy && s.stage === "fan") divDraw(false, s.left[k]); }; fan.onpointercancel = () => divHoverSet(-1); fan.style.touchAction = "none";
+            divSt(`牌铺成扇形了。手指在牌扇上滑动，牌会抬起，松手就抽这一张（共 ${s.total} 张）`); fanLayout(true); await wait(600);
+        }
+        function fanLayout(stagger) { const s = divS, n = s.left.length; s.left.forEach((pos, k) => { const e = s.fanEls[pos], a = n > 1 ? -s.span + 2 * s.span * k / (n - 1) : 0; e.dataset.a = a; e.style.zIndex = k; e.style.transition = `transform .45s cubic-bezier(.2,.8,.3,1) ${stagger ? Math.min(k * 8, 400) : 0}ms`; e.style.transform = `rotate(${a}deg)${s.hover === k ? " translateY(-26px)" : ""}`; }); }
+        function divHoverSet(k) { const s = divS; if (!s || s.hover === k) return; const old = s.hover; s.hover = k; [old, k].forEach(j => { if (j < 0 || j >= s.left.length) return; const e = s.fanEls[s.left[j]]; if (!e) return; e.style.transition = "transform .12s"; e.style.transform = `rotate(${e.dataset.a}deg)${j === k ? " translateY(-26px)" : ""}`; e.classList.toggle("up", j === k); }); }
+        function divHover(ev) {
+            const s = divS; if (!s || s.stage !== "fan" || s.busy || !s.left.length) return; const fan = document.getElementById("divFan"), r = fan.getBoundingClientRect(), px = r.left + r.width / 2, py = r.top + s.top + s.R, dx = ev.clientX - px, dy = py - ev.clientY, ang = Math.atan2(dx, dy) * 180 / Math.PI, rad = Math.hypot(dx, dy), n = s.left.length;
+            if (Math.abs(ang) > s.span + 3 || rad < s.R - s.fch - 30 || rad > s.R + 70) { divHoverSet(-1); return; }
+            let k = Math.round((ang + s.span) / (2 * s.span) * (n - 1)); k = Math.max(0, Math.min(n - 1, k)); divHoverSet(k);
         }
         async function divDraw(fast, posArg) {
-            const s = divS; if (!s || s.busy || !s.cut || s.drawn >= s.total) return; s.busy = true; divBtns();
-            let pos = posArg; if (pos === undefined || s.used.has(pos)) { const left = s.order.map((v, k) => k).filter(k => !s.used.has(k)); pos = left[Math.floor(Math.random() * left.length)]; }
-            s.used.add(pos); const srcEl = document.querySelector(`#divFan .fc[data-pos="${pos}"]`);
-            const i = s.drawn, p = s.sp.pos[i], idx = s.order[pos], rev = s.tab === "tarot" && Math.random() < 0.4, board = document.getElementById("divBoard"), dk = document.getElementById("divDeck");
-            const br = board.getBoundingClientRect(), dr = (srcEl || dk).getBoundingClientRect(), tx = Math.round(p[0] * s.cw), ty = Math.round(p[1] * s.cw);
+            const s = divS; if (!s || s.busy || s.stage !== "fan" || s.drawn >= s.total) return; s.busy = true; divBtns();
+            let pos = posArg; if (pos === undefined || !s.left.includes(pos)) pos = s.left[Math.floor(Math.random() * s.left.length)];
+            const srcEl = s.fanEls[pos]; const i = s.drawn, p = s.sp.pos[i], idx = s.order[pos], rev = s.tab === "tarot" && Math.random() < 0.4, board = document.getElementById("divBoard");
+            const br = board.getBoundingClientRect(), dr = srcEl.getBoundingClientRect(), tx = Math.round(p[0] * s.cw), ty = Math.round(p[1] * s.cw);
             const data = s.tab === "tarot" ? TAROT[idx] : LENO[idx], el = document.createElement("div"); el.className = "cardx" + (s.tab === "leno" ? " sm" : "");
             el.style.cssText = `left:${tx}px;top:${ty}px;width:${s.cw}px;height:${s.ch}px;`;
-            const nm = data[0], sub = s.tab === "tarot" ? ROM[idx] : String(idx + 1);
+            let sub, nm = data[0]; if (s.tab === "tarot") { if (idx < 22) sub = ROM[idx]; else { const si = Math.floor((idx - 22) / 14); sub = SUIT_NAMES[si]; nm = RANK_NAMES[(idx - 22) % 14]; } } else sub = String(idx + 1);
             el.innerHTML = `<div class="cin"><div class="cb"></div><div class="cf${rev ? " rv" : ""}"><div class="cn">${sub}</div><div class="cm">${nm}</div>${rev ? '<div class="cr">逆</div>' : ""}</div></div>`;
             const rot = s.sp.rot && s.sp.rot.includes(i) ? 90 : 0; el.dataset.rot = rot;
-            if (srcEl) { srcEl.style.visibility = "hidden"; } el.style.transform = `translate(${Math.round(dr.left - br.left - tx)}px,${Math.round(dr.top - br.top - ty)}px) scale(.96)`; el.style.transition = "none"; board.appendChild(el); el.getBoundingClientRect();
+            const sx = Math.round(dr.left + dr.width / 2 - (br.left + tx + s.cw / 2)), sy = Math.round(dr.top + dr.height / 2 - (br.top + ty + s.ch / 2)), a0 = parseFloat(srcEl.dataset.a || 0);
+            srcEl.style.visibility = "hidden"; s.left = s.left.filter(v => v !== pos); s.hover = -1; fanLayout(false);
+            el.style.transform = `translate(${sx}px,${sy}px) rotate(${a0}deg) scale(${(s.fw / s.cw).toFixed(2)})`; el.style.transition = "none"; board.appendChild(el); el.getBoundingClientRect();
             const sf = s.total > 10; el.style.transition = `transform ${sf ? 0.2 : fast ? 0.35 : 0.7}s cubic-bezier(.2,.8,.3,1)`; el.style.transform = `rotate(${rot}deg)`; await wait(sf ? 200 : fast ? 330 : 700);
             el.classList.add("flip"); s.cards.push({ i, idx, rev, label: p[2], data }); s.drawn++; await wait(sf ? 40 : fast ? 160 : 560);
             s.busy = false; if (divS !== s) return; if (s.drawn >= s.total) { document.getElementById("divFan").style.display = "none"; divSt("牌都摆好了"); divReadSpread(); } else divSt(`已抽 ${s.drawn}/${s.total}${p[2] ? "（" + p[2] + "）" : ""}，再挑一张`); divBtns();
@@ -5503,42 +5574,92 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             divLast = { type: title.split(" ")[0], text: full };
             document.getElementById("divOut").innerHTML = `<div class="div-res">${full.replace(/</g, "&lt;")}</div><div class="div-act"><button onclick="divSave()">存入记录</button><button onclick="divSend()">发给他</button></div>`; divSave(true);
         }
+        const SYM8 = ["☰", "☱", "☲", "☳", "☴", "☵", "☶", "☷"], PLG = ["☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "♇"], SGG = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
+        function dieSvg(i) {
+            const cols = [["#e9cd7a", "#c9a24a", "#9a7a2c"], ["#8fb0ee", "#6a8fd0", "#46689f"], ["#82d0a6", "#58b083", "#3b855f"]][i], cx = 50, cy = 50, pt = (r, a) => { const t = a * Math.PI / 180; return [(cx + r * Math.cos(t)).toFixed(1), (cy + r * Math.sin(t)).toFixed(1)]; };
+            const P = [], Q = [], M = []; for (let k = 0; k < 5; k++) { const a = -90 + 72 * k; P.push(pt(21, a)); Q.push(pt(45, a)); M.push(pt(45, a + 36)); }
+            const poly = (arr, f, sh) => `<polygon points="${arr.map(p => p.join(",")).join(" ")}" fill="${f}" stroke="${sh}" stroke-width="1.6" stroke-linejoin="round"/>`;
+            let s = `<svg viewBox="0 0 100 100" width="100%" height="100%">`;
+            for (let k = 0; k < 5; k++) s += poly([P[k], Q[k], M[k], Q[(k + 1) % 5], P[(k + 1) % 5]], k % 2 ? cols[1] : cols[2], "#2a2230");
+            s += poly(P, cols[0], "#2a2230") + `</svg>`; return s;
+        }
         async function divDice() {
             const btn = document.getElementById("divRoll"); if (btn.disabled) return; btn.disabled = true; document.getElementById("divOut").innerHTML = "";
-            const cup = document.getElementById("divCup"); [0, 1, 2].forEach(i => { const e = document.getElementById("die" + i); e.classList.remove("land"); e.querySelector(".dv").innerText = "?"; e.querySelector(".dk").innerText = ""; }); cup.classList.remove("lift"); cup.classList.add("shake"); await wait(1500); cup.classList.remove("shake"); cup.classList.add("lift"); await wait(450);
-            const pools = [DPL.map(x => x[0]), DSG.map(x => x[0]), DHS.map((x, i) => "第" + (i + 1) + "宫")], res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)], stop = [900, 1400, 1900], t0 = Date.now(), done = [0, 0, 0];
-            const els = [0, 1, 2].map(i => document.getElementById("die" + i)); els.forEach(e => { e.classList.remove("land"); e.classList.add("roll"); e.querySelector(".dk").innerText = ""; });
-            await new Promise(r => { const iv = setInterval(() => { const el = Date.now() - t0; els.forEach((e, i) => { if (done[i]) return; if (el >= stop[i]) { done[i] = 1; e.classList.remove("roll"); e.classList.add("land"); e.querySelector(".dv").innerText = pools[i][res[i]]; e.querySelector(".dk").innerText = i === 0 ? DPL[res[i]][1] : i === 1 ? DSG[res[i]][1] : DHS[res[i]]; } else e.querySelector(".dv").innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; }); if (done.every(Boolean)) { clearInterval(iv); r(); } }, 80); });
+            [0, 1, 2].forEach(i => { document.getElementById("gcn" + i).innerText = "—"; document.getElementById("gck" + i).innerText = ""; });
+            const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 62, pools = [PLG, SGG, DHS.map((x, i) => String(i + 1))];
+            const res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
+            const ds = [0, 1, 2].map(i => ({ el: document.getElementById("gd" + i), gs: document.getElementById("gs" + i), x: W + 10 + i * 30, y: 20 + i * 36 + rnd(-6, 6), vx: -rnd(11, 15), vy: rnd(-4, 4), a: rnd(0, 360), w: -rnd(16, 26), stop: 1700 + i * 450, done: false, fl: 0 }));
+            ds.forEach(d => { d.el.style.transition = "none"; d.el.classList.remove("land"); });
+            const t0 = performance.now(); let last = t0;
+            await new Promise(res2 => { const frame = now => {
+                const t = now - t0, k = Math.min(2, (now - last) / 16.7); last = now; let all = true;
+                ds.forEach((d, i) => {
+                    if (d.done) return; all = false;
+                    d.x += d.vx * k; d.y += d.vy * k; d.a += d.w * k;
+                    if (d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.72; d.w = -d.w * 0.8; } if (d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.72; }
+                    if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.72; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.72; }
+                    const fr = t > d.stop ? 0.86 : t > 500 ? 0.985 : 1; d.vx *= fr; d.vy *= fr; d.w *= (t > d.stop ? 0.84 : 0.992);
+                    if (now - d.fl > 70 && Math.hypot(d.vx, d.vy) > 0.5) { d.fl = now; d.gs.innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; }
+                    d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${d.a.toFixed(1)}deg)`;
+                    if (t > d.stop && Math.hypot(d.vx, d.vy) < 0.25 && Math.abs(d.w) < 0.8) {
+                        d.done = true; d.gs.innerText = pools[i][res[i]]; d.el.style.transition = "transform .35s ease-out"; d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${rnd(-9, 9).toFixed(1)}deg)`; d.el.classList.add("land");
+                        document.getElementById("gcn" + i).innerText = i === 0 ? DPL[res[0]][0] : i === 1 ? DSG[res[1]][0] : "第" + (res[2] + 1) + "宫"; document.getElementById("gck" + i).innerText = i === 0 ? DPL[res[0]][1] : i === 1 ? DSG[res[1]][1] : DHS[res[2]];
+                    }
+                });
+                if (all || t > 6000) { ds.forEach((d, i) => { if (!d.done) { d.done = true; d.gs.innerText = pools[i][res[i]]; d.el.style.transform = `translate(${d.x}px,${d.y}px)`; } }); res2(); return; } requestAnimationFrame(frame); }; requestAnimationFrame(frame); });
+            await wait(300);
             const [p, s2, h] = [DPL[res[0]], DSG[res[1]], res[2]];
             divResult("星骰", `${p[0]}（${p[1]}）落在${s2[0]}（${s2[1]}），在第${h + 1}宫：${DHS[h]}。`); btn.disabled = false;
         }
         function hexDraw(bits, mv, id) { return `<div class="hx" id="${id}">${bits.map((b, i) => `<div class="hl${b ? "" : " yin"}${mv === i + 1 ? " mv" : ""}" data-i="${i}"><i></i><i></i></div>`).reverse().join("")}</div>`; }
         async function divMhyi() {
             const btn = document.getElementById("divGo"); btn.disabled = true; document.getElementById("divOut").innerHTML = "";
-            const L = divLunar(), s3 = L.y + L.m + L.d, up = (s3 % 8) || 8, lo = ((s3 + L.h) % 8) || 8, mv = ((s3 + L.h) % 6) || 6;
+            const L = divLunar(), nd = new Date(), s3 = L.y + L.m + L.d, up = (s3 % 8) || 8, s4 = s3 + L.h, lo = (s4 % 8) || 8, mv = (s4 % 6) || 6;
             const bits = [...TRI_BITS[lo - 1], ...TRI_BITS[up - 1]], nb = bits.slice(); nb[mv - 1] ^= 1;
             const find = a => TRI_BITS.findIndex(t => t[0] === a[0] && t[1] === a[1] && t[2] === a[2]) + 1, nlo = find(nb.slice(0, 3)), nup = find(nb.slice(3));
             const nm = (u, l) => HEX[u - 1][l - 1] + (u === l ? "为" + ["天", "泽", "火", "雷", "风", "水", "山", "地"][u - 1] : ""), ben = nm(up, lo), bian = nm(nup, nlo);
+            const rem = (n, k) => (n % k === 0 ? `整除，取 ${k}` : `余 ${n % k}`), pad = v => String(v).padStart(2, "0");
+            const steps = [
+                `① 取时间　公历 ${nd.getFullYear()}-${pad(nd.getMonth() + 1)}-${pad(nd.getDate())} ${pad(nd.getHours())}:${pad(nd.getMinutes())}\n　　　　→ 农历 ${L.m} 月 ${L.d} 日，${BR[L.h - 1]}时`,
+                `② 取数　年支${BR[L.y - 1]}＝${L.y}　月＝${L.m}　日＝${L.d}　时支${BR[L.h - 1]}＝${L.h}`,
+                `③ 上卦　${L.y}＋${L.m}＋${L.d} ＝ ${s3}，${s3} ÷ 8，${rem(s3, 8)}\n　　　→ ${TRI[up - 1]} ${SYM8[up - 1]}（${TRI_IMG[up - 1]}）`,
+                `④ 下卦　${s3}＋${L.h} ＝ ${s4}，${s4} ÷ 8，${rem(s4, 8)}\n　　　→ ${TRI[lo - 1]} ${SYM8[lo - 1]}（${TRI_IMG[lo - 1]}）`,
+                `⑤ 动爻　${s4} ÷ 6，${rem(s4, 6)}　→ 第 ${mv} 爻动`,
+                `⑥ 成卦　上${TRI[up - 1]}下${TRI[lo - 1]} → 本卦「${ben}」；第 ${mv} 爻阴阳互变 → 变卦「${bian}」`];
+            const st = document.getElementById("mhSteps"); st.innerHTML = ""; document.getElementById("divHex").innerHTML = "";
+            for (const t of steps.slice(0, 5)) { const d = document.createElement("div"); d.className = "mh-line"; d.innerText = t; st.appendChild(d); await wait(950); }
             const box = document.getElementById("divHex"); box.innerHTML = `<div class="hxs"><div class="hxc"><div class="hxt">本卦</div>${hexDraw(bits, mv, "hx1")}<div class="hxn" id="hxn1"></div></div><div class="hxc" style="opacity:0" id="hxw2"><div class="hxt">变卦</div>${hexDraw(nb, 0, "hx2")}<div class="hxn" id="hxn2"></div></div></div>`;
             const lines = [...document.querySelectorAll("#hx1 .hl")].reverse(); lines.forEach(l => l.style.opacity = 0);
             for (let i = 0; i < 6; i++) { await wait(380); lines[i].style.opacity = 1; lines[i].classList.add("pop"); }
             await wait(300); document.getElementById("hxn1").innerText = ben; await wait(500); lines[mv - 1].classList.add("blink"); await wait(900);
             const w2 = document.getElementById("hxw2"); w2.style.transition = "opacity .6s"; w2.style.opacity = 1; await wait(650); document.getElementById("hxn2").innerText = bian;
+            const d6 = document.createElement("div"); d6.className = "mh-line"; d6.innerText = steps[5]; st.appendChild(d6);
             const tiTri = mv <= 3 ? up : lo, yongTri = mv <= 3 ? lo : up;
-            divResult("梅花易数", `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n动爻：第${mv}爻\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}：本卦看当下，变卦看走向。`); btn.disabled = false;
+            divResult("梅花易数", `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n上卦：${s3} ÷ 8 ${rem(s3, 8)} → ${TRI[up - 1]}${SYM8[up - 1]}\n下卦：${s4} ÷ 8 ${rem(s4, 8)} → ${TRI[lo - 1]}${SYM8[lo - 1]}\n动爻：${s4} ÷ 6 ${rem(s4, 6)} → 第${mv}爻\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}：本卦看当下，变卦看走向。`); btn.disabled = false;
         }
-        const HAND_PTS = [[72, 120], [120, 120], [168, 120], [168, 52], [120, 42], [72, 52]];
+        // 左手掌心朝向自己：拇指在右，食指最靠近拇指。大安/留连/速喜在食/中/无名指根节，赤口/小吉/空亡在无名指/中指/食指尖节
+        const HAND_PTS = [[186, 131], [148, 129], [110, 131], [110, 57], [148, 47], [186, 57]];
+        function handSvg() {
+            const fing = [[72, 88, "小指"], [110, 112, "无名指"], [148, 124, "中指"], [186, 112, "食指"]];
+            let s = `<div class="div-hand"><svg id="divHandSvg" viewBox="0 0 290 330" width="100%"><g transform="translate(0,28)">`;
+            s += `<rect x="196" y="176" width="36" height="104" rx="18" transform="rotate(34 214 266)" class="hf"/><path d="M226 224 q14 -6 26 -2" class="hc"/>`;
+            fing.forEach(([cx, len, nm]) => { const yt = 150 - len; s += `<rect x="${cx - 18}" y="${yt}" width="36" height="${len + 24}" rx="18" class="hf"/><line x1="${cx - 12}" y1="${yt + len / 3}" x2="${cx + 12}" y2="${yt + len / 3}" class="hc"/><line x1="${cx - 12}" y1="${yt + 2 * len / 3}" x2="${cx + 12}" y2="${yt + 2 * len / 3}" class="hc"/><text x="${cx}" y="${yt - 7}" text-anchor="middle" class="hn">${nm}</text>`; });
+            s += `<rect x="52" y="138" width="158" height="140" rx="38" class="hf"/><path d="M70 196 Q112 232 196 206" class="hc"/><path d="M72 226 Q120 252 176 240" class="hc"/><path d="M96 168 Q98 208 124 250" class="hc"/><text x="256" y="168" class="hn" text-anchor="middle">拇指</text>`;
+            s += HAND_PTS.map((h, i) => `<g class="hp" id="hp${i}"><circle cx="${h[0]}" cy="${h[1]}" r="14"/><text x="${h[0]}" y="${h[1] + 4}" text-anchor="middle">${XLR[i][0]}</text><text class="tag" id="hpt${i}" x="${h[0]}" y="${h[1] - 18}" text-anchor="middle"></text></g>`).join("");
+            return s + `<circle id="handDot" cx="262" cy="210" r="8" class="hd"/></g></svg></div>`;
+        }
         async function divXlr() {
             const btn = document.getElementById("divGo"); btn.disabled = true; document.getElementById("divOut").innerHTML = "";
-            const L = divLunar(), a = (L.m - 1) % 6, b = (a + L.d - 1) % 6, c = (b + L.h - 1) % 6, dot = document.getElementById("handDot");
+            const L = divLunar(), a = (L.m - 1) % 6, b = (a + L.d - 1) % 6, c = (b + L.h - 1) % 6, dot = document.getElementById("handDot"), st = t => { const e = document.getElementById("xlrSt"); if (e) e.innerText = t; };
             for (let i = 0; i < 6; i++) { document.getElementById("hp" + i).setAttribute("class", "hp"); document.getElementById("hpt" + i).textContent = ""; }
-            const hop = async (i, ms) => { const pt = HAND_PTS[i]; dot.setAttribute("cx", pt[0] + 14); dot.setAttribute("cy", pt[1] + 10); document.querySelectorAll("#divHandSvg .hp").forEach(g => g.classList.remove("on")); document.getElementById("hp" + i).classList.add("on"); await wait(ms); };
+            const hop = async (i, ms) => { const pt = HAND_PTS[i]; dot.setAttribute("cx", pt[0] + 12); dot.setAttribute("cy", pt[1] + 11); document.querySelectorAll("#divHandSvg .hp").forEach(g => g.classList.remove("on")); document.getElementById("hp" + i).classList.add("on"); await wait(ms); };
             const tag = (i, t) => { const e = document.getElementById("hpt" + i); e.textContent = e.textContent + t; document.getElementById("hp" + i).classList.add("fix"); };
-            dot.style.opacity = 1; await hop(0, 500);
-            for (let k = 1; k <= a; k++) await hop(k % 6, 350); tag(a, "月"); await wait(600);
-            const sd = (L.d - 1); for (let k = 1; k <= sd; k++) await hop((a + k) % 6, 260); tag(b, "日"); await wait(600);
-            const sh = (L.h - 1); for (let k = 1; k <= sh; k++) await hop((b + k) % 6, 300); tag(c, "时"); await hop(c, 400);
-            document.getElementById("hp" + c).classList.add("last");
+            dot.setAttribute("cx", 262); dot.setAttribute("cy", 210); dot.style.opacity = 1; await wait(500);
+            st(`数月：农历 ${L.m} 月，从大安起 1`); await hop(0, 600);
+            for (let k = 1; k <= a; k++) { await hop(k % 6, 380); } tag(a, "月"); st(`月落在「${XLR[a][0]}」。再数日：${L.d} 日，从「${XLR[a][0]}」起 1`); await wait(800);
+            for (let k = 1; k <= L.d - 1; k++) await hop((a + k) % 6, 240); await hop(b, 200); tag(b, "日"); st(`日落在「${XLR[b][0]}」。再数时：${BR[L.h - 1]}时 = 第 ${L.h} 位，从「${XLR[b][0]}」起 1`); await wait(800);
+            for (let k = 1; k <= L.h - 1; k++) await hop((b + k) % 6, 320); await hop(c, 400); tag(c, "时");
+            document.getElementById("hp" + c).classList.add("last"); st(`时落在「${XLR[c][0]}」`);
             divResult("小六壬", `农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n月：${XLR[a][0]}　日：${XLR[b][0]}　时：${XLR[c][0]}\n结果：${XLR[c][0]}——${XLR[c][1]}`); btn.disabled = false;
         }
         const STICKS = [["上上", "云开见月，春暖花开", "久盼之事有了着落，放心向前。"], ["上上", "鱼跃龙门，顺水行舟", "时机成熟，主动一步会有回应。"], ["上吉", "柳暗花明又一村", "眼前的卡点会自己松开，别急。"], ["上吉", "清风送信，喜事近", "好消息在路上，保持联络。"], ["上吉", "积水成渊，稳步登高", "慢慢来反而更快，坚持当下的做法。"], ["中吉", "灯下读信，字字有意", "对方的心意比你想的更近，认真听。"], ["中吉", "雨后初晴，可以出门", "情绪低谷将过，适合重新开始。"], ["中吉", "桥上相逢，不言自明", "不必多解释，见面比文字更有用。"], ["中吉", "新茶初沏，香在后头", "好处需要一点时间才显出来。"], ["中平", "月有圆缺，事有进退", "半进半退之时，不必强求结果。"], ["中平", "舟行江心，风向未定", "先观察，再决定，别在今天下判断。"], ["中平", "门前两路，各有风景", "两个选择都能走，选心更安的那条。"], ["中平", "旧物在柜，等人开启", "有件被搁置的事值得重新翻出来。"], ["小吉", "细雨润物，无声有益", "小事上的体贴会累积成大的信任。"], ["小吉", "一盏小灯，足够照路", "资源不多但够用，别和别人比。"], ["小吉", "纸鸢线在手，高低自知", "放得开也要收得住，分寸最要紧。"], ["小吉", "檐下躲雨，等一等便晴", "暂时搁置，不算输。"], ["小凶", "雾锁长堤，不宜疾行", "看不清时放慢脚步，少做大决定。"], ["小凶", "琴弦过紧，易断", "对自己或对方放松一点。"], ["小凶", "窗未关严，风声扰人", "留意口舌，说话留三分。"], ["平", "白纸一张，由你落笔", "没有定数，全看接下来怎么写。"], ["平", "池水无波，鱼在深处", "表面平静，内里有变化在酝酿。"], ["上吉", "归鸟入林，各得其所", "分开或靠近都会找到合适的位置。"], ["中吉", "星灯点点，路自分明", "凭直觉走，比反复推算更准。"]];
@@ -6374,7 +6495,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 later(() => {
                     const opts = allRemovable(); if (!opts.length) { busy = false; finish(); return; }
                     const missP = { easy: 0.35, normal: 0.12, hard: 0 }[gameDiff];
-                    if (Math.random() < missP) { const blocked = paths.filter(p => p.alive && !removable(p)); if (blocked.length) { const bp = blocked[Math.floor(Math.random() * blocked.length)]; bp.el.classList.add("his-try"); gameSfx("his"); later(() => { bp.el.classList.remove("his-try"); shake(bp); gameSfx("miss"); }, 420); later(hisTurn2, 1000); return; } }
+                    if (Math.random() < missP) { const blocked = paths.filter(p => p.alive && !removable(p)); if (blocked.length) { const bp = blocked[Math.floor(Math.random() * blocked.length)]; bp.el.classList.add("his-try"); gameSfx("his"); later(() => { bp.el.classList.remove("his-try"); shake(bp); gameSfx("miss"); }, 420); later(() => { busy = false; gameResultBar(hisName() + "点错了，轮到你"); }, 1000); return; } }
                     hisTurn2();
                 }, 650 + Math.random() * 400);
             }
@@ -6383,7 +6504,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             svg.addEventListener("click", e => {
                 if (over || busy) return; const gEl = e.target.closest(".arp"); if (!gEl) return; const p = paths[+gEl.dataset.i]; if (!p || !p.alive) return;
                 if (removable(p)) { busy = true; remove(p, 1, () => { if (my + his >= total) { finish(); return; } hisTurn(); }); }
-                else { gameSfx("miss"); shake(p); const b = paths[rayBlocker(p)]; if (b) { b.el.classList.add("blk"); setTimeout(() => b.el.classList.remove("blk"), 700); } if (gameDiff === "easy") gameResultBar("前面有线挡着，先消掉挡路的"); else { busy = true; gameResultBar("点到被挡住的线了，轮到" + hisName()); later(() => { busy = false; if (!over) hisTurn(); }, 900); } }
+                else { gameSfx("miss"); shake(p); const b = paths[rayBlocker(p)]; if (b) { b.el.classList.add("blk"); setTimeout(() => b.el.classList.remove("blk"), 700); } { busy = true; gameResultBar("点到被挡住的线了，轮到" + hisName()); later(() => { busy = false; if (!over) hisTurn(); }, 900); } }
             });
             score();
             gameCleanup = () => timers.forEach(clearTimeout);
