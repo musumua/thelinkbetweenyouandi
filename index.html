@@ -1335,7 +1335,7 @@
                     <div class="flex-row-between"><span>回复前等待</span><div><input id="cfg_reply_min" type="number"> 至 <input id="cfg_reply_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>随机打招呼频率</span><div><input id="cfg_rand_min" type="number"> 至 <input id="cfg_rand_max" type="number"> 分钟</div></div>
                                         <div class="flex-row-between"><span>朋友圈发布间隔</span><div><input id="cfg_pyq_min" type="number"> 至 <input id="cfg_pyq_max" type="number"> 小时</div></div>
-                    <div class="flex-row-between"><span>朋友圈回复条数</span><div><input id="cfg_pyq_card_min" type="number"> 至 <input id="cfg_pyq_card_max" type="number"> 条</div></div>
+                    <div class="flex-row-between"><span>朋友圈发送条数</span><div><input id="cfg_pyq_card_min" type="number"> 至 <input id="cfg_pyq_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>朋友圈回复间隔</span><div><input id="cfg_pyq_reply_min" type="number"> 至 <input id="cfg_pyq_reply_max" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>日记回复条数</span><div><input id="cfg_letter_num_min" type="number"> 至 <input id="cfg_letter_num_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>日记回复间隔</span><div><input id="cfg_letter_min" type="number"> 至 <input id="cfg_letter_max" type="number"> 小时</div></div>
@@ -2000,7 +2000,7 @@
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
-            const halo = []; for (let i = 0; i < 9; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
+            const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
             gal = { parts, bg, dust, pink, halo, shoot: null, nextShoot: 3000 };
         }
         function galStarColor(r) { if (r < 0.2) return "255,238,196"; if (r < 0.5) return "238,228,208"; if (r < 0.8) return "180,198,228"; return "146,170,210"; }
@@ -2014,12 +2014,19 @@
             const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
             const bgG = ctx.createLinearGradient(0, 0, W, H); bgG.addColorStop(0, "#161923"); bgG.addColorStop(1, "#0b0d15"); ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
             gal.bg.forEach(s => { ctx.globalAlpha = (0.4 + 0.6 * Math.abs(Math.sin(t / 1100 + s.p))) * 0.9; ctx.fillStyle = `rgb(${s.c})`; ctx.fillRect(s.x * W, s.y * H, s.s, s.s); }); ctx.globalAlpha = 1;
+            { // 四周的泛光：不是光点，而是从边缘向内晕开的大片柔光
+              ctx.save(); ctx.globalCompositeOperation = "lighter";
+              const glow = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(0.55, `rgba(${c},${a * 0.35})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
+              const br = 0.85 + 0.15 * Math.sin(t / 2600), R = Math.max(W, H);
+              glow(0, 0, R * 0.62, "120,150,230", 0.26 * br); glow(W, H, R * 0.66, "150,130,225", 0.24 * br); glow(W, 0, R * 0.5, "110,170,230", 0.18 * br); glow(0, H, R * 0.5, "180,190,240", 0.2 * br);
+              glow(W * 0.5, 0, R * 0.45, "170,190,240", 0.12); glow(W * 0.5, H, R * 0.45, "160,170,235", 0.14);
+              ctx.restore(); }
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
             const pos = (r, th) => { const x = r * Rx * Math.cos(th), y = r * Ry * Math.sin(th); return [cx + x * cph - y * sph, cy + x * sph + y * cph]; };
             const omega = r => 0.000026 / (0.22 + r);
             // 伴星系（左上亮点、右下椭圆光斑）
-            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; blob(W * 0.22, H * 0.34, 7, 7, 0.8, "236,242,255"); blob(W * 0.8, H * 0.82, 15, 8, 0.45, "214,228,255"); }
+            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（奶白偏灰蓝的盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(225,208,176,.5)"); g.addColorStop(0.4, "rgba(160,172,204,.26)"); g.addColorStop(0.75, "rgba(120,138,184,.1)"); g.addColorStop(1, "rgba(110,130,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
@@ -2092,13 +2099,13 @@
         function sprURL(key, scale) { const s = sprGet(key), cv = document.createElement("canvas"); cv.width = s.width * scale; cv.height = s.height * scale; const c = cv.getContext("2d"); c.imageSmoothingEnabled = false; c.drawImage(s, 0, 0, cv.width, cv.height); return cv.toDataURL(); }
 
         // ---------- 约会像素场景（客厅 / 露台 / 房间，白天夜晚，90x50） ----------
-        const SCENE_RE = [["living", /客厅|living/i], ["terrace", /露台|阳台|terrace/i], ["bedroom", /房间|卧室|bedroom/i], ["study", /书房|study/i], ["flower", /花店|philo|花房/i]];
+        const SCENE_RE = [["home", /^\s*(我的?)?家(里)?\s*$|^home$/i], ["small", /小客厅/], ["living", /客厅|living/i], ["terrace", /露台|阳台|terrace/i], ["bedroom", /房间|卧室|bedroom/i], ["study", /书房|study/i], ["flower", /花店|philo|花房/i]];
         function sceneOfName(n) { for (const s of SCENE_RE) if (s[1].test(n || "")) return s[0]; return null; }
         const isNightNow = () => { const h = new Date().getHours(); return h < 6 || h >= 18; };
         let dateScene = null, dateSceneKey = "";
         function dateStripPick() {
-            const o = db.dateOngoing; if (o) { let sc = sceneOfName(o.placeName); if (!sc) { let h = 0; for (const ch of o.placeName) h = (h * 31 + ch.charCodeAt(0)) >>> 0; sc = ["living", "terrace", "bedroom", "study", "flower"][h % 5]; } return { scene: sc, name: o.placeName, ongoing: true }; }
-            return { scene: "living", name: "客厅", ongoing: false };
+            const o = db.dateOngoing; if (o) { let sc = sceneOfName(o.placeName); if (!sc) { let h = 0; for (const ch of o.placeName) h = (h * 31 + ch.charCodeAt(0)) >>> 0; sc = ["home", "small", "living", "terrace", "bedroom", "study", "flower"][h % 7]; } return { scene: sc, name: o.placeName, ongoing: true }; }
+            return { scene: "home", name: "家", ongoing: false };
         }
         function pixScene(kind, night) {
             const cv = document.createElement("canvas"); cv.width = 90; cv.height = 50; const c = cv.getContext("2d"); const K = pxKit(c); const { R, B, E, L, P, sp, leaf } = K;
@@ -2125,6 +2132,75 @@
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
                 if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8"); }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
+            } else if (kind === "home") {
+                // 家：开放式厨房+客厅，深灰/酒红/暖木色（参考图1）
+                const WALL = D("#dad5cf", "#3a3844"), DK = D("#3a3c43", "#1e2026"), DK2 = D("#5a5c64", "#34363e"), RED = D("#8e2f3f", "#5a2233"), RED2 = D("#a84456", "#74303f"), WD = D("#c4956b", "#5c4535"), WDL = D("#af8059", "#4a392c"), CR = D("#e0dbd4", "#9a96a6"), CR2 = D("#cbc6bf", "#827e8e");
+                R(0, 0, 90, 34, WALL); R(0, 32, 90, 2, D("#cfc8c0", "#34323e"));
+                // 厨房大窗 + 两盏球形吊灯
+                B(4, 3, 26, 19, D("#f1eee9", "#6a6878")); R(6, 5, 22, 15, D("#c4e2f6", "#16204a")); R(16, 5, 1, 15, D("#f1eee9", "#6a6878")); R(6, 12, 22, 1, D("#f1eee9", "#6a6878"));
+                if (!night) { E(11, 8, 3, 1, "#fff"); E(23, 9, 3, 1, "#fff"); } else { sp(10, 8, "#fff", 1); sp(24, 15, "#fff"); }
+                L(11, 0, 11, 8, D("#444", "#aaa")); E(11, 11, 3, 3, D("#6a625c", "#e8d8a8")); L(22, 0, 22, 6, D("#444", "#aaa")); E(22, 9, 3, 3, D("#6a625c", "#e8d8a8")); if (night) { sp(11, 11, "#ffd98a", 1); sp(22, 9, "#ffd98a", 1); }
+                // 波浪镜 + 边柜 + 球灯
+                E(44, 14, 3, 9, D("#a9a29c", "#53505e")); E(44, 14, 2, 8, D("#e6e8ee", "#6c7090")); L(43, 8, 43, 19, D("#fff", "#9a9ec0"));
+                B(36, 25, 17, 7, DK); R(38, 27, 13, 1, DK2); L(40, 31, 40, 36, DK); L(50, 31, 50, 36, DK); L(44, 25, 44, 22, DK2); E(44, 20, 3, 3, D("#fffdf4", "#ffe9a8")); if (night) sp(44, 20, "#fff3c0", 1);
+                // 右侧落地窗（白纱）
+                B(64, 2, 24, 22, D("#f4f2ee", "#6a6878")); R(66, 4, 20, 18, D("#eef3f8", "#1c2250")); for (let x = 68; x < 85; x += 3) R(x, 4, 1, 18, D("#d4dae2", "#2c3366"));
+                // 吧台
+                B(3, 24, 27, 3, WD); B(4, 27, 25, 8, DK); R(6, 29, 9, 4, DK2); R(17, 29, 9, 4, DK2); E(9, 22, 2, 2, D("#d9cdbf", "#8a8078")); E(22, 22, 1, 2, D("#d46a6a", "#7a3040"));
+                // 木地板
+                R(0, 34, 90, 16, WD); for (let y = 37; y < 50; y += 4) R(0, y, 90, 1, WDL); for (let y = 37, i = 0; y < 50; y += 4, i++) for (let x = (i * 19) % 25; x < 90; x += 25) R(x, y - 3, 1, 3, WDL); R(0, 34, 90, 1, PX_OUT);
+                // 深色地毯
+                E(48, 46, 34, 4, D("#2a2c32", "#14161c")); E(48, 46, 30, 3, D("#34363e", "#1a1c22"));
+                // 酒红高脚凳
+                for (const bx of [9, 20]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
+                // 黑色南瓜凳
+                B(3, 41, 9, 6, DK); E(7, 41, 3, 1, DK2); R(4, 43, 7, 1, DK2);
+                // 沙发
+                B(56, 27, 33, 9, CR); B(54, 31, 35, 8, CR2); B(58, 34, 28, 5, CR); B(54, 38, 35, 2, CR2); B(55, 40, 3, 3, DK); B(85, 40, 3, 3, DK);
+                B(58, 25, 8, 9, RED); R(60, 28, 4, 1, RED2); R(60, 30, 4, 1, RED2); B(81, 25, 8, 9, RED); R(83, 28, 4, 1, RED2); R(83, 30, 4, 1, RED2);
+                E(73, 31, 4, 3, D("#6c6e6a", "#3c3e3c")); R(70, 31, 6, 1, D("#8a8c88", "#4a4c4a"));
+                // 玻璃圆茶几
+                E(38, 43, 11, 3, D("#6a6b73", "#3a3c46")); E(38, 42, 10, 2, D("#9a9ca4", "#4a4c56")); L(31, 44, 31, 48, DK); L(45, 44, 45, 48, DK); B(35, 39, 7, 2, DK); R(36, 39, 5, 1, DK2);
+                // 深色矮桌 + 郁金香
+                B(58, 44, 24, 3, DK); R(59, 45, 22, 1, DK2); L(61, 47, 61, 49, DK); L(79, 47, 79, 49, DK);
+                B(68, 40, 4, 4, D("#8a7a78", "#4a4046")); L(70, 40, 68, 33, D("#5fa860", "#2f6a40")); L(70, 40, 72, 33, D("#5fa860", "#2f6a40")); L(70, 40, 70, 32, D("#5fa860", "#2f6a40"));
+                E(68, 32, 1, 2, "#f27a98"); E(72, 32, 1, 2, "#f2a0b0"); E(70, 31, 1, 2, "#e8607a");
+                if (night) { sp(44, 20, "#fff3c0", 1); sp(11, 11, "#ffd98a", 1); } else { sp(40, 36, "#fff", 1); sp(62, 38, "#fff"); sp(15, 38, "#fff"); }
+            } else if (kind === "small") {
+                // 小客厅：傍晚粉紫、城市夜景、落地灯、藤编摇椅（参考图2）
+                const FLR = D("#d49a64", "#8a5a3a"), FLRL = D("#c0864f", "#764c30"), PINK = D("#e9c8c8", "#8a6a78"), SOF = D("#cfc6d0", "#8a8296"), SOFL = D("#e0d8e2", "#a49cb0");
+                R(0, 0, 90, 34, D("#f0dcd8", "#7a5a78")); R(0, 31, 90, 3, D("#e6cfcf", "#6e4e70"));
+                // 三扇大窗 + 夜景
+                for (let i = 0; i < 3; i++) { const wx = 44 + i * 16; B(wx, 2, 14, 22, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 12, 20, D("#a8cdee", "#101640")); }
+                if (night) { for (let i = 0; i < 60; i++) { const px = 45 + (i * 7) % 44, py = 6 + (i * 11) % 17; P(px, py, i % 3 === 0 ? "#ffd98a" : i % 3 === 1 ? "#fff3c0" : "#f2b870"); } R(44, 3, 46, 2, "#10143a"); } else { skyline(45, 89, 23, 2); E(52, 8, 4, 2, "#fff"); E(70, 10, 5, 2, "#fff"); }
+                R(58, 3, 2, 21, D("#f6eeee", "#9a8aa6")); R(74, 3, 2, 21, D("#f6eeee", "#9a8aa6"));
+                // 窗台上的书和小鹿
+                B(80, 16, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 17, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 19, 2, 5, D("#e89aa8", "#a86a78")); P(63, 18, D("#e89aa8", "#a86a78")); B(48, 18, 8, 6, D("#e8e0d8", "#9a90a0"));
+                // 粉色窗帘
+                B(26, 0, 14, 28, D("#e8c4c4", "#8a5a6e")); for (let x = 28; x < 38; x += 3) R(x, 1, 1, 26, D("#d8aeb0", "#704a5e"));
+                // 龟背竹
+                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 22, 7, 4, D("#3a8a52", "#225a3a")); E(4, 28, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828"));
+                B(2, 30, 8, 8, D("#5a4a52", "#2e2630")); leaf(7, 30, 0, -3, 3, D("#d8b8d8", "#8a6a8a")); P(5, 27, "#fff"); P(8, 26, "#fff"); P(10, 28, "#f0d8f0");
+                // 落地灯
+                B(19, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(24, 11, 2, 2, D("#e8e0d0", "#8a8090")); L(25, 13, 20, 30, D("#c8a070", "#7a5a3a")); L(25, 13, 30, 30, D("#c8a070", "#7a5a3a")); L(25, 13, 25, 30, D("#c8a070", "#7a5a3a")); if (night) sp(25, 7, "#ffe9b0", 1);
+                // 木地板
+                R(0, 34, 90, 16, FLR); for (let y = 37; y < 50; y += 3) R(0, y, 90, 1, FLRL); for (let y = 37, i = 0; y < 50; y += 3, i++) for (let x = (i * 13) % 19; x < 90; x += 19) R(x, y - 2, 1, 2, FLRL); R(0, 34, 90, 1, PX_OUT);
+                // 沙发（窗下长沙发 + 靠垫）
+                B(26, 24, 60, 11, SOF); B(24, 28, 64, 9, SOFL); B(24, 36, 3, 3, "#c8935c"); B(85, 36, 3, 3, "#c8935c"); R(27, 30, 58, 1, D("#c4bccc", "#7a7288"));
+                B(32, 20, 9, 8, D("#f0eaec", "#a8a0b2")); B(46, 20, 10, 8, D("#e8e0ea", "#a09aae")); B(61, 21, 9, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 5; i++) { L(62 + i * 2, 22, 62 + i * 2, 27, D("#b8b0c4", "#7a7288")); } B(72, 22, 12, 6, D("#e8e4ee", "#a8a2b8")); B(52, 25, 8, 5, D("#a8b8d8", "#6a7498")); R(53, 26, 6, 1, D("#c8d4ec", "#8a94b8")); B(76, 28, 12, 7, D("#a8b0a0", "#5e6a5a")); R(77, 30, 10, 1, D("#c8d0c0", "#7a8a76")); R(77, 32, 10, 1, D("#8e9a8a", "#4a5446")); B(84, 25, 5, 4, D("#9a9eae", "#5a5e74"));
+                // 花瓶、花
+                B(34, 35, 3, 4, D("#e8d0c0", "#9a7a6a")); L(35, 34, 33, 29, D("#6a9a60", "#2f5a3a")); L(35, 34, 37, 29, D("#6a9a60", "#2f5a3a")); P(33, 28, "#fff"); P(37, 28, "#fff"); P(35, 27, "#fff"); P(32, 30, "#f6e0f6"); P(38, 30, "#f6e0f6");
+                // 地毯
+                E(48, 46, 25, 4, D("#d8d4d0", "#7a7682")); E(48, 46, 21, 3, D("#e8e4e0", "#8e8a96")); for (let x = 30; x < 68; x += 4) { P(x, 45, D("#6a6a70", "#4a4a56")); P(x + 2, 47, D("#6a6a70", "#4a4a56")); P(x + 1, 46, D("#6a6a70", "#4a4a56")); }
+                // 圆木茶几 + 杯子 + 杂志
+                E(46, 38, 11, 3, D("#e0b88a", "#9a7a56")); E(46, 37, 10, 2, D("#f0cfa0", "#b08e66")); L(38, 40, 36, 46, D("#c8935c", "#6a4a30")); L(54, 40, 56, 46, D("#c8935c", "#6a4a30")); L(46, 41, 46, 47, D("#c8935c", "#6a4a30"));
+                B(48, 34, 4, 3, "#fffdf4"); B(40, 34, 4, 3, D("#f0e0c8", "#b0a090")); R(42, 33, 2, 1, D("#c8d8e8", "#8a9ab0")); B(50, 36, 6, 1, D("#fff", "#d8d8e8")); if (night) sp(41, 33, "#ffd98a", 1);
+                // 左右藤编摇椅
+                L(12, 40, 12, 28, D("#d8a870", "#8a6a44")); B(10, 30, 9, 10, D("#e0b280", "#9a7a54")); R(11, 32, 7, 6, D("#c89868", "#7a5a38")); B(10, 38, 18, 4, D("#e8d8c0", "#a89a88")); L(8, 46, 26, 46, D("#d8a870", "#8a6a44")); L(10, 42, 9, 46, D("#d8a870", "#8a6a44")); L(26, 42, 27, 46, D("#d8a870", "#8a6a44"));
+                B(66, 33, 14, 14, D("#e0b280", "#9a7a54")); R(68, 35, 10, 9, D("#c89868", "#7a5a38")); for (let y = 36; y < 44; y += 2) R(68, y, 10, 1, D("#e0b280", "#9a7a54")); B(62, 44, 26, 3, D("#d8a870", "#8a6a44")); R(60, 48, 30, 1, D("#d8a870", "#8a6a44")); B(70, 38, 8, 6, D("#f0e8dc", "#b0a8b0"));
+                // 玩具小火车
+                B(26, 46, 5, 3, "#d94a3a"); B(32, 46, 5, 3, "#e8603a"); B(38, 45, 8, 4, "#2a2a30"); R(38, 44, 3, 1, "#2a2a30"); P(29, 49, "#222"); P(35, 49, "#222"); P(41, 49, "#222"); P(45, 49, "#222");
+                if (night) { sp(25, 7, "#ffe9b0", 1); sp(60, 8, "#fff", 1); sp(80, 6, "#fff"); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
             } else if (kind === "terrace") {
                 for (let y = 0; y < 34; y++) { const t = y / 34; c.fillStyle = night ? `rgb(${Math.round(12 + t * 26)},${Math.round(18 + t * 30)},${Math.round(58 + t * 50)})` : `rgb(${Math.round(176 + t * 50)},${Math.round(214 + t * 26)},248)`; c.fillRect(0, y, 90, 1); }
                 if (night) { for (let i = 0; i < 18; i++) sp((i * 41) % 90, 1 + (i * 13) % 18, "#fff", i % 3 === 0); } else { E(14, 8, 7, 2, "#fff"); E(20, 6, 5, 2, "#fff"); E(66, 16, 6, 2, "#f4faff"); }
@@ -2244,7 +2320,7 @@
             ctx.imageSmoothingEnabled = false; const sc = Math.max(W / 90, H / 50), dw = 90 * sc, dh = 50 * sc, ox = (W - dw) / 2, oy = (H - dh) / 2; ctx.drawImage(dateScene.cv, ox, oy, dw, dh);
             dateScene.sparks.forEach(s => { const a = 0.25 + 0.75 * Math.max(0, Math.sin(t / (380 + s.ph * 60) + s.ph)); const x = ox + s.x * sc, y = oy + s.y * sc; if (s.big) { const g = ctx.createRadialGradient(x + sc / 2, y + sc / 2, 0, x + sc / 2, y + sc / 2, sc * 4); g.addColorStop(0, s.col); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.globalAlpha = a * 0.5; ctx.fillStyle = g; ctx.fillRect(x - sc * 4, y - sc * 4, sc * 9, sc * 9); ctx.globalAlpha = a; ctx.fillStyle = s.col; ctx.fillRect(x, y, sc, sc); ctx.fillRect(x - sc, y, sc, sc); ctx.fillRect(x + sc, y, sc, sc); ctx.fillRect(x, y - sc, sc, sc); ctx.fillRect(x, y + sc, sc, sc); } else { ctx.globalAlpha = a; ctx.fillStyle = s.col; ctx.fillRect(x, y, sc, sc); } });
             ctx.globalAlpha = 1;
-            const lab = document.getElementById("dateStripLab"); if (lab) { const o = db.dateOngoing; lab.innerText = o ? "约会中 · " + o.placeName + dateRemainText() : "约会 · 客厅"; }
+            const lab = document.getElementById("dateStripLab"); if (lab) { const o = db.dateOngoing; lab.innerText = o ? "约会中 · " + o.placeName + dateRemainText() : "约会 · 家"; }
         }
         function dateRemainText() { const o = db.dateOngoing; if (!o) return ""; const left = Math.ceil((o.startTs + DATE_MIN * 60000 - Date.now()) / 60000); return left > 0 ? "（剩 " + left + " 分）" : "（可以写轨迹了）"; }
         function dateQuickAdd(n) { dateInit(); if (!db.datePlaces.some(p => p.name === n)) { db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 5), name: n }); saveData(); } renderDating(); }
@@ -2722,14 +2798,16 @@
             let gn = 0; const pushGuard = () => { try { history.pushState({ guard: 1 }, "", "#g" + (++gn)); } catch (e) { } };
             history.replaceState({ base: 1 }, ""); pushGuard();
             // 浏览器会忽略“没有用户操作就加入的历史记录”，所以在用户第一次触摸时、以及每次抬手时都确保有一层守卫
-            let touched = false, gAct = false; const ensureGuard = () => { touched = true; if (!gAct) { pushGuard(); gAct = true; } }; // 之前的判断“当前已经是守卫就不再加”会让没有用户操作时加的那层被浏览器跳过后永远不补，所以改成：每轮第一次触摸必定补一层
-            window.addEventListener("beforeunload", e => { if (touched) { e.preventDefault(); e.returnValue = ""; } });
-            ["pointerdown", "touchstart", "click"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
+            let exiting = false, touched = false, depth = 1; const TARGET = 3; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层，边缘滑动一次只消耗一层
+            const ensureGuard = () => { touched = true; while (depth < TARGET) { pushGuard(); depth++; } };
+            window.addEventListener("beforeunload", e => { if (touched && !exiting) { e.preventDefault(); e.returnValue = ""; } });
+            ["pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
             window.addEventListener("popstate", () => {
-                gAct = false;
-                if (handleBack()) { pushGuard(); return; }
-                if (Date.now() - lastBack < 2000) { history.back(); return; }
-                lastBack = Date.now(); toast("再划一次退出网页"); pushGuard();
+                depth = Math.max(0, depth - 1);
+                const refill = () => { pushGuard(); depth++; };
+                if (handleBack()) { refill(); return; }
+                if (Date.now() - lastBack < 2000) { exiting = true; history.go(-Math.max(1, depth + 1)); return; }
+                lastBack = Date.now(); toast("再划一次退出网页"); refill();
             });
         })();
 
@@ -3064,6 +3142,8 @@
             if(!db.books) db.books = [];
             if(!db.gameStats) db.gameStats = {};
             if(!db.datePlaces) db.datePlaces = [];
+            db.datePlaces.forEach(p => { if (p.name === "房间") p.name = "卧室"; });
+            if(!db.datePlacesSeeded) { db.datePlacesSeeded = true; ["家", "小客厅", "卧室", "露台"].forEach(n => { if (!db.datePlaces.some(p => p.name === n)) db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 6), name: n }); }); }
             if(!db.dateRecords) db.dateRecords = [];
             if(!db.dateGroups || !db.dateGroups.length) db.dateGroups = [{ id: "g1", name: "物品", items: [] }, { id: "g2", name: "事件", items: [] }];
             ["homeIconOrder", "homeIconOrderPage2"].forEach(k => { if (Array.isArray(db[k])) db[k] = db[k].map(id => id === "wheel" ? "games" : id); });
@@ -3869,20 +3949,21 @@
         // 回复队列：每发一句就排一次回复，按顺序一条条回；定时器和心跳都会驱动
         function queueReply(ms) {
             if (!db.replyQueue) db.replyQueue = []; if (replyBusy || db.replyQueue.length) return;
-            const pct = db.freq.readNoReplyPct === undefined ? 0 : db.freq.readNoReplyPct;
-            db.replyQueue.push({ due: Date.now() + ms, rnr: Math.random() * 100 < pct }); saveData(); setTimeout(pumpReplies, ms + 20);
+            const f = db.freq, rMin = Math.max(0, parseFloat(f.replyMin) || 1) * 1000, rMax = Math.max(rMin + 500, (parseFloat(f.replyMax) || 5) * 1000);
+            const total = pickBubbleCount(), offs = []; for (let k = 0; k < total; k++) offs.push(rMin + Math.random() * (rMax - rMin)); offs.sort((a, b) => a - b);
+            for (let k = 1; k < offs.length; k++) if (offs[k] - offs[k - 1] < 700) offs[k] = offs[k - 1] + 700; // 同一轮里相邻两条至少隔 0.7 秒
+            const pct = f.readNoReplyPct === undefined ? 0 : f.readNoReplyPct, first = Math.max(50, offs[0]);
+            db.replyQueue.push({ due: Date.now() + first, rnr: Math.random() * 100 < pct, total, gaps: offs.map(v => v - offs[0]) }); saveData();
+            setTimeout(pumpReplies, first + 20);
+            setTimeout(() => { const t = document.getElementById("typing"); if (t && db.replyQueue.length && !replyBusy) t.style.display = "flex"; }, Math.max(0, first - 1300));
         }
         function pumpReplies() {
             const q = db.replyQueue; if (!q || !q.length) return; const now = Date.now();
             if (replyBusy && now - replyBusySince > 120000) replyBusy = false;
             if (replyBusy || q[0].due > now) return;
             const ent = q.shift(); replyBusy = true; replyBusySince = now; saveData();
-            if (ent.rnr) { db.chat.forEach(m => { if (m.me) m.readReceipt = true; }); hisBubbleNow({ text: "（已读不回）", readNoReply: true }); replyBusy = false; return; }
-            const typing = document.getElementById("typing"); if (typing) typing.style.display = "flex";
-            setTimeout(() => {
-                if (typing) typing.style.display = "none";
-                try { sendBurst(pickBubbleCount(), false, () => { replyBusy = false; setTimeout(pumpReplies, 600); }); } catch (e) { replyBusy = false; console.error("reply failed", e); }
-            }, 1500);
+            if (ent.rnr) { db.chat.forEach(m => { if (m.me) m.readReceipt = true; }); const t0 = document.getElementById("typing"); if (t0) t0.style.display = "none"; hisBubbleNow({ text: "（已读不回）", readNoReply: true }); replyBusy = false; return; }
+            try { sendBurst(ent.total || pickBubbleCount(), false, () => { replyBusy = false; setTimeout(pumpReplies, 600); }, ent.gaps); } catch (e) { replyBusy = false; console.error("reply failed", e); }
         }
         function hisBubbleNow(extra) {
             const n = new Date();
@@ -3890,7 +3971,14 @@
             saveData(); renderChat();
         }
         // 他连发 total 个气泡。pro=true 是他主动发的（每个气泡都带 ★），false 是回复（不带）
-        function sendBurst(total, pro, done) {
+        function makeBurstGaps(total) {
+            const f = db.freq, rMin = Math.max(0, parseFloat(f.replyMin) || 1) * 1000, rMax = Math.max(rMin + 500, (parseFloat(f.replyMax) || 5) * 1000);
+            const offs = []; for (let k = 0; k < total; k++) offs.push(rMin + Math.random() * (rMax - rMin)); offs.sort((x, y) => x - y);
+            for (let k = 1; k < offs.length; k++) if (offs[k] - offs[k - 1] < 700) offs[k] = offs[k - 1] + 700;
+            return offs.map(v => v - offs[0]);
+        }
+        function sendBurst(total, pro, done, gaps) {
+            if (!gaps) gaps = makeBurstGaps(total);
             let i = 0; const typing = document.getElementById("typing");
             const step = () => {
                 if (typing) typing.style.display = "none";
@@ -3902,8 +3990,9 @@
                 i++;
                 if (i >= total) { if (done) done(); return; }
                 const f = db.freq, rMin = parseFloat(f.replyMin) || 1, rMax = parseFloat(f.replyMax) || 5;
-                if (typing) typing.style.display = "flex";
-                setTimeout(step, 1700 + Math.random() * 2600);
+                const gap = gaps && gaps[i] !== undefined ? Math.max(500, gaps[i] - gaps[i - 1]) : 1700 + Math.random() * 2600;
+                if (typing) { typing.style.display = "none"; setTimeout(() => { if (typing) typing.style.display = "flex"; }, Math.max(0, gap - 1200)); }
+                setTimeout(step, gap);
             };
             step();
         }
@@ -5675,7 +5764,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const st = db.gameStats || {};
             const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard", "expert", "hell"].map(k => `<button class="${gameLv === k ? "on" : ""}" onclick="gameLv='${k}';gameDiff=('${k}'==='expert'||'${k}'==='hell')?'hard':'${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
+            body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
         }
         function startGame(k, fresh) {
@@ -5689,7 +5778,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             }
             if (st) gameDropStash(k);
             const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
-            document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[k === "arrow" ? gameLv : gameDiff];
+            document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
             ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
@@ -6207,7 +6296,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         // ---------- 箭头消除（轮流消除：箭头指向的前方没有别的箭头挡着才能消掉） ----------
         function gameArrow() {
-            const cfg = { easy: [14, 14, 20], normal: [22, 22, 42], hard: [28, 28, 80], expert: [34, 34, 130], hell: [40, 40, 220] }[gameLv], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
+            const cfg = { easy: [14, 14, 8], normal: [22, 22, 14], hard: [30, 30, 26] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
             const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // 0上 1右 2下 3左
             const cs = Math.max(9, Math.floor(Math.min(body.clientWidth - 24, 400) / C)), SZ = cs * C;
             body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点一条前方没被挡住的线</div><div class="mine-score" id="arScore"></div><svg id="arSvg" class="ar-svg" width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}"></svg><div class="game-btns"><button class="btn btn-outline" id="arHint">提示</button></div><div id="gameEnd"></div>`;
@@ -6215,23 +6304,36 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const inb = (x, y) => x >= 0 && y >= 0 && x < C && y < R;
             const rayBlocker = (p) => { const d = DIRS[p.dir]; let x = p.cells[p.cells.length - 1][0] + d[0], y = p.cells[p.cells.length - 1][1] + d[1]; while (inb(x, y)) { if (occ[y][x] >= 0) return occ[y][x]; x += d[0]; y += d[1]; } return -1; };
             // 生成：每条线是一段拐直角的折线，箭头在末端；后放置的线，前方不能有更早放置的线 → 保证一定有解（倒序消除）
+            // 生成：随机折线铺满整个棋盘。每条线的“前方射线”可以穿过别的线，只要整体的“谁挡着谁”关系没有绕圈就一定有解
+            const rayKeys = (cells, hd) => { const b = cells[cells.length - 1], a = []; let x = b[0] + DIRS[hd][0], y = b[1] + DIRS[hd][1]; while (inb(x, y)) { a.push(x + "," + y); x += DIRS[hd][0]; y += DIRS[hd][1]; } return a; };
             const free = []; for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) free.push([x, y]);
-            free.sort(() => Math.random() - 0.5);
-            for (let tries = 0; tries < R * C * 40; tries++) {
-                const st = free[Math.floor(Math.random() * free.length)]; if (!st || occ[st[1]][st[0]] >= 0) continue;
-                const len = 2 + Math.floor(Math.pow(Math.random(), 0.7) * (MAXL - 1)), cells = [st], seen = new Set([st.join()]); let dir = Math.floor(Math.random() * 4), ok = true;
+            const shuffle = a => { for (let i2 = a.length - 1; i2 > 0; i2--) { const j2 = Math.floor(Math.random() * (i2 + 1)); [a[i2], a[j2]] = [a[j2], a[i2]]; } return a; };
+            const dep = []; // dep[id] = 这条线前方被哪些线挡着（Set）
+            const straight = gameDiff === "easy" ? 0.55 : 0.25;
+            function walk(st, len) {
+                const cells = [st], seen = new Set([st.join()]); let dir = Math.floor(Math.random() * 4);
                 for (let k = 1; k < len; k++) {
-                    const order = (gameLv !== "easy" && gameLv !== "normal" ? [dir, (dir + 1) % 4, (dir + 3) % 4] : [dir, dir, (dir + 1) % 4, (dir + 3) % 4]).sort(() => Math.random() - 0.5); let moved = false; const last = cells[cells.length - 1];
+                    const last = cells[cells.length - 1], order = Math.random() < straight ? [dir, (dir + 1) % 4, (dir + 3) % 4] : shuffle([0, 1, 2, 3]); let moved = false;
                     for (const dd of order) { const nx = last[0] + DIRS[dd][0], ny = last[1] + DIRS[dd][1]; if (inb(nx, ny) && occ[ny][nx] < 0 && !seen.has(nx + "," + ny)) { cells.push([nx, ny]); seen.add(nx + "," + ny); dir = dd; moved = true; break; } }
                     if (!moved) break;
                 }
-                if (cells.length < 2) continue;
-                const a = cells[cells.length - 2], b = cells[cells.length - 1], hd = DIRS.findIndex(d => d[0] === b[0] - a[0] && d[1] === b[1] - a[1]);
-                const p = { cells, dir: hd, id: paths.length, alive: true };
-                // 前方不能有已有的线，也不能撞到自己的身子
-                let x = b[0] + DIRS[hd][0], y = b[1] + DIRS[hd][1], clear = true; while (inb(x, y)) { if (occ[y][x] >= 0 || seen.has(x + "," + y)) { clear = false; break; } x += DIRS[hd][0]; y += DIRS[hd][1]; }
-                if (!clear) continue;
-                cells.forEach(c => { occ[c[1]][c[0]] = p.id; }); paths.push(p);
+                return cells.length >= 2 ? cells : null;
+            }
+            function tryAdd(cells) {
+                const b = cells[cells.length - 1], a2 = cells[cells.length - 2], hd = DIRS.findIndex(d => d[0] === b[0] - a2[0] && d[1] === b[1] - a2[1]);
+                const own = new Set(cells.map(c => c.join(","))), ray = rayKeys(cells, hd);
+                if (ray.some(k => own.has(k))) return false;
+                const id = paths.length, myDep = new Set(); ray.forEach(k => { const [x, y] = k.split(",").map(Number); if (occ[y][x] >= 0) myDep.add(occ[y][x]); });
+                const hitBy = []; paths.forEach(q => { if (q.rayKeys.some(k => own.has(k))) hitBy.push(q.id); });
+                if (hitBy.length) { // 从新线出发沿“被谁挡着”走，如果走回挡着它的线，就成环了
+                    const target = new Set(hitBy), stack = [...myDep], vis = new Set();
+                    while (stack.length) { const u = stack.pop(); if (target.has(u)) return false; if (vis.has(u)) continue; vis.add(u); dep[u].forEach(v => stack.push(v)); }
+                }
+                const pth = { cells, dir: hd, id, alive: true, rayKeys: ray }; paths.push(pth); dep[id] = myDep; hitBy.forEach(q => dep[q].add(id));
+                cells.forEach(c => { occ[c[1]][c[0]] = id; }); return true;
+            }
+            for (let pass = 0; pass < 4; pass++) {
+                shuffle(free).forEach(st => { if (occ[st[1]][st[0]] >= 0) return; const maxL = pass === 0 ? MAXL : pass === 1 ? Math.ceil(MAXL / 2) : pass === 2 ? 4 : 2; for (let t2 = 0; t2 < 8; t2++) { const len = 2 + Math.floor(Math.pow(Math.random(), 0.8) * (maxL - 1)), cells = walk(st, len); if (cells && tryAdd(cells)) break; } });
             }
             let my = 0, his = 0, over = false, busy = false, timers = [], total = paths.length;
             const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
@@ -6271,7 +6373,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 if (my + his >= total) { finish(); return; } busy = true; gameResultBar(hisName() + "在找…");
                 later(() => {
                     const opts = allRemovable(); if (!opts.length) { busy = false; finish(); return; }
-                    const missP = { easy: 0.35, normal: 0.12, hard: 0, expert: 0, hell: 0 }[gameLv];
+                    const missP = { easy: 0.35, normal: 0.12, hard: 0 }[gameDiff];
                     if (Math.random() < missP) { const blocked = paths.filter(p => p.alive && !removable(p)); if (blocked.length) { const bp = blocked[Math.floor(Math.random() * blocked.length)]; bp.el.classList.add("his-try"); gameSfx("his"); later(() => { bp.el.classList.remove("his-try"); shake(bp); gameSfx("miss"); }, 420); later(hisTurn2, 1000); return; } }
                     hisTurn2();
                 }, 650 + Math.random() * 400);
@@ -6281,7 +6383,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             svg.addEventListener("click", e => {
                 if (over || busy) return; const gEl = e.target.closest(".arp"); if (!gEl) return; const p = paths[+gEl.dataset.i]; if (!p || !p.alive) return;
                 if (removable(p)) { busy = true; remove(p, 1, () => { if (my + his >= total) { finish(); return; } hisTurn(); }); }
-                else { gameSfx("miss"); shake(p); const b = paths[rayBlocker(p)]; if (b) { b.el.classList.add("blk"); setTimeout(() => b.el.classList.remove("blk"), 700); } if (gameLv === "easy") gameResultBar("前面有线挡着，先消掉挡路的"); else { busy = true; gameResultBar("点到被挡住的线了，轮到" + hisName()); later(() => { busy = false; if (!over) hisTurn(); }, 900); } }
+                else { gameSfx("miss"); shake(p); const b = paths[rayBlocker(p)]; if (b) { b.el.classList.add("blk"); setTimeout(() => b.el.classList.remove("blk"), 700); } if (gameDiff === "easy") gameResultBar("前面有线挡着，先消掉挡路的"); else { busy = true; gameResultBar("点到被挡住的线了，轮到" + hisName()); later(() => { busy = false; if (!over) hisTurn(); }, 900); } }
             });
             score();
             gameCleanup = () => timers.forEach(clearTimeout);
@@ -6302,21 +6404,21 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             document.querySelectorAll("#dateTabs button").forEach((b, i) => b.classList.toggle("on", i === dateTab));
             const body = document.getElementById("dateBody");
             if (dateTab === 0) body.innerHTML = renderDatePrepare();
-            else if (dateTab === 1) { body.innerHTML = renderDatePool(); dateBindItemPress(); }
+            else if (dateTab === 1) { body.innerHTML = renderDatePool(); }
             else body.innerHTML = renderDateTrack();
         }
         // ---- 准备约会 ----
         function renderDatePrepare() {
-            let h = `<div class="lib-bar" style="padding:4px 0 8px;"><button class="btn btn-outline" onclick="dateToggleSelect()">${dateSelectMode ? "取消" : "多选"}</button><div style="flex:1"></div><button class="btn" onclick="dateOpenPlaceModal()">添加地点</button><button class="btn btn-outline" onclick="dateDeletePlaces()">删除</button></div>`;
+            let h = `<div class="lib-bar" style="padding:4px 0 8px;"><div style="flex:1"></div><button class="btn" onclick="dateOpenPlaceModal()">添加地点</button></div>`;
             if (db.dateOngoing) { const pl = db.datePlaces.find(x => x.id === db.dateOngoing.placeId); h += `<div class="date-ongoing" onclick="dateOpenStart('${db.dateOngoing.placeId}')">进行中的约会：${escapeHtml(pl ? pl.name : db.dateOngoing.placeName)}　继续 →</div>`; }
             if (!db.datePlaces.length) return h + `<div class="lib-empty">还没有地点，点「添加地点」开始吧</div>`;
-            h += db.datePlaces.map(p => `<div class="date-row ${dateSelected.has(p.id) ? "sel" : ""} ${dateSelectMode ? "lib-select-mode" : ""}">
-                <div class="lib-check"></div>
-                <div class="date-row-main" onclick="dateRowTap('${p.id}')"><div class="t">${escapeHtml(p.name)}</div></div>
-                <button class="date-go" onclick="dateOpenStart('${p.id}')">→</button></div>`).join("");
+            h += db.datePlaces.map(p => `<div class="date-row">
+                <div class="date-row-main"><div class="t">${escapeHtml(p.name)}</div></div>
+                <button class="date-go" onclick="dateOpenStart('${p.id}')">→</button><button class="simple-del-btn" onclick="dateDeletePlace('${p.id}')">×</button></div>`).join("");
             return h;
         }
         function dateToggleSelect() { dateSelectMode = !dateSelectMode; dateSelected.clear(); renderDating(); }
+        function dateDeletePlace(id) { const p = db.datePlaces.find(x => x.id === id); if (!p || !confirm("删除地点「" + p.name + "」吗？")) return; db.datePlaces = db.datePlaces.filter(x => x.id !== id); saveData(); renderDating(); }
         function dateRowTap(id) { if (dateSelectMode) { dateSelected.has(id) ? dateSelected.delete(id) : dateSelected.add(id); renderDating(); } else dateOpenPlaceModal(id); }
         function dateDeletePlaces() {
             if (!dateSelectMode) { dateToggleSelect(); return; }
@@ -6340,21 +6442,13 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         // ---- 随机物品 / 事件 ----
         function renderDatePool() {
-            let h = `<div class="lib-bar" style="padding:4px 0 8px;"><button class="btn" onclick="dateAddGroup()">新建分组</button><div style="flex:1"></div><button class="btn btn-outline" onclick="dateOpenBatch()">批量添加</button></div>`;
-            h += db.dateGroups.map(g => `<div class="date-group"><div class="date-group-head"><span class="t" onclick="dateRenameGroup('${g.id}')">${escapeHtml(g.name)}</span><span class="s">${g.items.length} 条</span><button class="btn btn-outline" style="padding:3px 10px;font-size:12px;margin-left:auto;" onclick="dateAddItem('${g.id}')">＋添加</button><button class="simple-del-btn" onclick="dateDeleteGroup('${g.id}')">✕</button></div>
-                ${g.items.length ? g.items.map((it, i) => `<div class="date-item" data-g="${g.id}" data-i="${i}"><span onclick="dateEditItem('${g.id}',${i})">${escapeHtml(it)}</span></div>`).join("") : `<div class="lib-empty" style="padding:12px 0;">这个分组还没有内容</div>`}</div>`).join("") + `<div style="font-size:11.5px;color:var(--text-sub);padding:6px 2px;">点一下编辑，长按删除</div>`;
-            return h;
+            return db.dateGroups.map(g => `<div class="date-group"><div class="date-group-head"><span class="t">${escapeHtml(g.name)}</span><span class="s">${g.items.length} 条</span><button class="btn btn-outline" style="padding:3px 10px;font-size:12px;margin-left:auto;" onclick="dateAddItem('${g.id}')">＋添加</button><button class="btn btn-outline" style="padding:3px 10px;font-size:12px;" onclick="dateOpenBatch('${g.id}')">批量添加</button></div>
+                ${g.items.length ? g.items.map((it, i) => `<div class="date-item"><span>${escapeHtml(it)}</span><button class="simple-del-btn" onclick="dateDeleteItem('${g.id}',${i})">×</button></div>`).join("") : `<div class="lib-empty" style="padding:12px 0;">这里还没有内容</div>`}</div>`).join("");
         }
         function dateAddItem(gid) { const g = db.dateGroups.find(x => x.id === gid); openSimpleEditModal('添加到「' + g.name + '」', '', v => { v = (v || '').trim(); if (!v) return; if (!g.items.includes(v)) g.items.push(v); saveData(); renderDating(); }); }
-        function dateBindItemPress() { document.querySelectorAll('#dateBody .date-item').forEach(el => attachLongPressDelete(el, () => dateDeleteItem(el.dataset.g, +el.dataset.i))); }
-        function dateAddGroup() { openSimpleEditModal("新建分组", "", n => { db.dateGroups.push({ id: "g" + Date.now(), name: n, items: [] }); saveData(); renderDating(); }); }
-        function dateRenameGroup(id) { const g = db.dateGroups.find(x => x.id === id); openSimpleEditModal("重命名分组", g.name, n => { g.name = n; saveData(); renderDating(); }); }
-        function dateDeleteGroup(id) { const g = db.dateGroups.find(x => x.id === id); if (!confirm("删除分组「" + g.name + "」及其中 " + g.items.length + " 条内容吗？")) return; db.dateGroups = db.dateGroups.filter(x => x.id !== id); saveData(); renderDating(); }
-        function dateEditItem(gid, i) { const g = db.dateGroups.find(x => x.id === gid); openSimpleEditModal("编辑", g.items[i], v => { g.items[i] = v; saveData(); renderDating(); }); }
-        function dateDeleteItem(gid, i) { const g = db.dateGroups.find(x => x.id === gid); if (!confirm("删除「" + g.items[i] + "」吗？")) return; g.items.splice(i, 1); saveData(); renderDating(); }
-        function dateOpenBatch() {
-            if (!db.dateGroups.length) { alert("请先新建分组"); return; }
-            document.getElementById("dateBatchGroup").innerHTML = db.dateGroups.map(g => `<option value="${g.id}">${escapeHtml(g.name)}</option>`).join("");
+        function dateDeleteItem(gid, i) { const g = db.dateGroups.find(x => x.id === gid); g.items.splice(i, 1); saveData(); renderDating(); }
+        function dateOpenBatch(gid) {
+            const sel = document.getElementById("dateBatchGroup"); sel.innerHTML = db.dateGroups.map(g => `<option value="${g.id}">${escapeHtml(g.name)}</option>`).join(""); sel.value = gid; sel.style.display = "none";
             document.getElementById("dateBatchText").value = ""; openModalBox("dateBatchModal");
         }
         function dateSubmitBatch() {
@@ -6530,21 +6624,15 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
 
         (function () { let H0 = window.innerHeight; const set = () => document.documentElement.style.setProperty("--home-h", H0 + "px"); set(); window.addEventListener("resize", () => { const h = window.innerHeight, ae = document.activeElement, typing = ae && (ae.tagName === "TEXTAREA" || ae.tagName === "INPUT"); if (!typing || h > H0) { H0 = h; set(); } }); })();
-        window.onload = () => {
+        const appBoot = () => {
             loadData().then(() => { checkScheduleReminders(); checkLetterReply(); });
             setInterval(checkLetterReply, 30000);
             renderHomeScreen();
             updateHomeClock();
             setInterval(updateHomeClock, 15000);
-            // 异步注入手写体字体，失败或超时也完全不影响正常使用（会自动回退到系统自带的手写风格字体）
-            try {
-                const fontLink = document.createElement("link");
-                fontLink.rel = "stylesheet";
-                fontLink.href = "https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&family=Long+Cang&family=Baloo+2:wght@600&display=swap";
-                document.head.appendChild(fontLink);
-                const fs2 = document.createElement("link"); fs2.rel = "stylesheet"; fs2.href = "https://cdn.jsdelivr.net/npm/@fontsource/long-cang@5.0.8/index.css"; document.head.appendChild(fs2);
-            } catch (e) {}
+            // 不再从 Google Fonts / jsDelivr 加载字体：这两个域名在国内常常很慢或不通，会让浏览器一直转圈、看起来像一直在加载
         };
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", appBoot); else appBoot();
     </script>
 </body>
 </html>
