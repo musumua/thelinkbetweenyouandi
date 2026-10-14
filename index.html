@@ -1985,7 +1985,7 @@
         let p2Raf = 0, p2Last = 0;
         function p2Init() {
             if (!db.wishStars) db.wishStars = [];
-            db.wishStars = db.wishStars.filter(w => w).map(w => (w.a === undefined ? { a: Math.random() * 6.283, r: 0.2 + Math.random() * 0.75, hue: 40 + Math.random() * 200, ts: w.ts || Date.now() } : w));
+            db.wishStars = db.wishStars.filter(w => w).map(w => (w.a === undefined ? { a: Math.random() * 6.283, r: 0.2 + Math.random() * 0.75, ts: w.ts || Date.now() } : w));
             galInit(); petInit();
             if (!p2Raf) p2Raf = requestAnimationFrame(p2Frame);
         }
@@ -2002,21 +2002,21 @@
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
             // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
-            for (let i = 0; i < 900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.14 + Math.random() * 0.3 }); }
-            for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.06 + Math.random() * 0.2 }); }
-            for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.22 + Math.random() * 0.3 }); }
+            for (let i = 0; i < 900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.12 + Math.random() * 0.26 }); }
+            for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
+            for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
             gal = { parts, bg, dust, pink, halo, shoot: null, nextShoot: 3000 };
         }
-        // 星系星点用暖橙→玫瑰→蓝紫的色，不用纯白（纯白留给许愿星）
-        function galStarColor(r) { if (r < 0.2) return "255,208,150"; if (r < 0.5) return "222,170,150"; if (r < 0.8) return "128,142,226"; return "96,116,206"; }
+        // 星点一律纯白，用透明度区分远近明暗
+        function galStarColor(r) { return "255,255,255"; }
         function starMakeWish() {
             const inp = document.getElementById("wishInput"); if (!inp) return; const v = (inp.value || "").trim(); if (!v) { inp.focus(); return; }
             inp.value = ""; inp.blur(); if (!db.wishStars) db.wishStars = [];
-            const w = { a: Math.random() * 6.283, r: 0.25 + Math.random() * 0.7, hue: [45, 200, 320, 160, 270][Math.floor(Math.random() * 5)], ts: Date.now() };
+            const w = { a: Math.random() * 6.283, r: 0.25 + Math.random() * 0.7, ts: Date.now() };
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         function galDraw(t) {
@@ -2044,7 +2044,7 @@
             gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(34,22,18,.42)"); g.addColorStop(1, "rgba(34,22,18,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
             ctx.globalCompositeOperation = "lighter";
             // 粉色发光区
-            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(130,150,255,.5)"); g.addColorStop(0.4, "rgba(100,120,235,.14)"); g.addColorStop(1, "rgba(100,120,235,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
+            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(255,255,255,.3)"); g.addColorStop(0.4, "rgba(255,255,255,.08)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
             // 明亮的核心
             { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,244,222,.95)"); g.addColorStop(0.12, "rgba(255,222,170,.7)"); g.addColorStop(0.45, "rgba(224,176,120,.2)"); g.addColorStop(1, "rgba(210,160,110,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
             ctx.globalCompositeOperation = "source-over";
@@ -2825,21 +2825,25 @@
                 if (currentHomePage !== 1) { goToHomePage(1); return true; }
                 return false;
             }
-            // 守卫记录用同一个网址（不带 #g1 这类后缀），并把层号存在 state 里：
-            // 刷新页面时沿用已有的守卫层，不再往浏览器历史里追加记录，所以历史里这个网站只会有一条
-            let gn = 0, depth0 = 1; const pushGuard = () => { try { history.pushState({ guard: 1, i: ++gn }, ""); } catch (e) { } };
+            // 守卫记录用同一个网址（不带 #g1 这类后缀），层号 i 存在 state 里：
+            // 刷新/页面被系统回收重载（比如选完相册图片回来）时，沿用已有的守卫层，不再往历史里追加记录。
+            // 层数 depth 一律以当前所在记录的 state.i 为准，不自己累加：浏览器跳过了没有用户操作时塞进去的记录，也能自动校正。
+            let depth = 0; const TARGET = 3; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
+            const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, ""); depth++; } catch (e) { } };
             { const hs = history.state;
-              if (hs && hs.guard) { gn = hs.i || 1; depth0 = gn; }
-              else if (hs && hs.base) { pushGuard(); }
-              else { try { history.replaceState({ base: 1 }, ""); } catch (e) { } pushGuard(); } }
-            // 浏览器会忽略“没有用户操作就加入的历史记录”，所以在用户第一次触摸时、以及每次抬手时都确保有一层守卫
-            let exiting = false, touched = false, depth = depth0; const TARGET = 3; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层，边缘滑动一次只消耗一层
-            const ensureGuard = () => { touched = true; while (depth < TARGET) { pushGuard(); depth++; } };
+              if (hs && hs.guard) depth = hs.i || 1;
+              else if (hs && hs.base) { depth = 0; pushGuard(); }
+              else { try { history.replaceState({ base: 1 }, ""); } catch (e) { } depth = 0; pushGuard(); } }
+            const hasActivation = () => !navigator.userActivation || navigator.userActivation.hasBeenActive;
+            // 浏览器会忽略“没有用户操作就加入的历史记录”，所以在用户触摸时、以及每次抬手时都把守卫补满
+            let exiting = false, touched = false;
+            const ensureGuard = () => { touched = true; while (depth < TARGET) pushGuard(); };
             window.addEventListener("beforeunload", e => { if (touched && !exiting) { e.preventDefault(); e.returnValue = ""; } });
             ["pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
-            window.addEventListener("popstate", () => {
-                depth = Math.max(0, depth - 1);
-                const refill = () => { pushGuard(); depth++; };
+            window.addEventListener("popstate", (e) => {
+                const st = e.state; depth = st && st.guard ? (st.i || 1) : 0;
+                // 补守卫：有过用户操作时补满；还没有时只补一层（连塞多层会被浏览器当成“无操作记录”一次跳过）
+                const refill = () => { if (hasActivation()) { while (depth < TARGET) pushGuard(); } else pushGuard(); };
                 if (handleBack()) { refill(); return; }
                 if (Date.now() - lastBack < 2000) { exiting = true; history.go(-Math.max(1, depth + 1)); return; }
                 lastBack = Date.now(); toast("再划一次退出网页"); refill();
@@ -5533,15 +5537,13 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 { id: "t2", n: "二选一", pos: [[1.15, 0, "现状"], [0, 1.55, "选择A"], [2.3, 1.55, "选择B"], [0, 3.1, "A的结果"], [2.3, 3.1, "B的结果"]] },
                 { id: "t6", n: "六芒星", pos: [[1.15, 0, "目标"], [0, 1.5, "过去"], [2.3, 1.5, "未来"], [1.15, 2.3, "现在"], [0, 3.1, "障碍"], [2.3, 3.1, "助力"], [1.15, 4.6, "结果"]] },
                 { id: "t7", n: "马蹄七张", pos: [[0, 0, "过去"], [0.35, 1.6, "现在"], [1.2, 3.0, "隐藏影响"], [2.4, 3.4, "自己"], [3.6, 3.0, "他人"], [4.45, 1.6, "建议"], [4.8, 0, "结果"]] },
-                { id: "t10", n: "凯尔特十字", rot: [1], pos: [[1.3, 1.55, "现状"], [1.3, 1.55, "阻碍"], [1.3, 3.1, "根基"], [0, 1.55, "过去"], [1.3, 0, "目标"], [2.6, 1.55, "近期"], [4, 4.65, "自己"], [4, 3.1, "环境"], [4, 1.55, "希望与恐惧"], [4, 0, "结果"]] },
-                { id: "t_find", n: "寻物", pos: [[1.15, 0, "遗失经过"], [0, 1.55, "物品现状"], [1.15, 1.55, "所在环境"], [2.3, 1.55, "阻碍"], [1.15, 3.1, "能否找回"]] }
+                { id: "t10", n: "凯尔特十字", rot: [1], pos: [[1.3, 1.55, "现状"], [1.3, 1.55, "阻碍"], [1.3, 3.1, "根基"], [0, 1.55, "过去"], [1.3, 0, "目标"], [2.6, 1.55, "近期"], [4, 4.65, "自己"], [4, 3.1, "环境"], [4, 1.55, "希望与恐惧"], [4, 0, "结果"]] }
             ],
             leno: [
                 { id: "l3", n: "三张", pos: [[0, 0, "过去"], [1.15, 0, "现在"], [2.3, 0, "未来"]] },
                 { id: "l5", n: "五张", pos: [[0, 0, "背景"], [1.15, 0, "过去"], [2.3, 0, "现在"], [3.45, 0, "未来"], [4.6, 0, "结果"]] },
                 { id: "l9", n: "九宫格", pos: Array.from({ length: 9 }, (_, i) => [(i % 3) * 1.15, Math.floor(i / 3) * 1.55, ["左上", "上", "右上", "左", "中心", "右", "左下", "下", "右下"][i]]) },
-                { id: "l36", n: "大牌阵", pos: Array.from({ length: 36 }, (_, i) => [(i % 9) * 1.1, Math.floor(i / 9) * 1.5, ""]) },
-                { id: "l_find", n: "寻物", pos: [[0, 0, "去向"], [1.15, 0, "所在位置"], [2.3, 0, "能否找回"]] }
+                { id: "l36", n: "大牌阵", pos: Array.from({ length: 36 }, (_, i) => [(i % 9) * 1.1, Math.floor(i / 9) * 1.5, ""]) }
             ]
         };
         const ROM = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"];
@@ -5657,17 +5659,17 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         async function divAuto() { const s = divS; if (!s || s.busy) return; const fast = s.total > 10; while (divS === s && s.drawn < s.total) { await divDraw(true); await wait(fast ? 5 : 120); } }
         function divReadSpread() {
-            const s = divS, name = (s.tab === "tarot" ? "塔罗 " : "雷诺曼 ") + s.sp.n, find = s.sp.id === "t_find" || s.sp.id === "l_find"; let txt = "";
+            const s = divS, name = (s.tab === "tarot" ? "塔罗 " : "雷诺曼 ") + s.sp.n, find = /找|丢|寻|失|不见|遗失|落在|放哪|在哪/.test((document.getElementById("divQ") || {}).value || ""); let txt = "";
             if (s.tab === "tarot") {
-                txt = s.cards.map(c => `【${c.label || "这张牌"}】${c.data[0]}（${c.rev ? "逆位" : "正位"}）\n关键词：${c.rev ? c.data[2] : c.data[1]}\n解读：${tarotDetail(c.idx, c.rev)}` + (find ? `\n位置线索：${tarotLoc(c.idx)}` : "")).join("\n\n");
-                const sm = find ? tarotFindSummary(s.cards) : (s.cards.length > 1 ? tarotSummary(s.cards) : ""); if (sm) txt += "\n\n" + sm;
+                txt = s.cards.map(c => `【${c.label || "这张牌"}】${c.data[0]}（${c.rev ? "逆位" : "正位"}）\n关键词：${c.rev ? c.data[2] : c.data[1]}\n解读：${tarotDetail(c.idx, c.rev)}` + `\n寻物：${tarotLoc(c.idx)}（${c.rev ? "逆位：东西较难找回，或已不在原处" : "正位：东西多半还在，按线索去找"}）`).join("\n\n");
+                const sm = s.cards.length > 1 ? tarotSummary(s.cards) : ""; if (sm) txt += "\n\n" + sm; if (find) txt += "\n\n" + tarotFindSummary(s.cards);
             } else if (s.sp.id === "l36") {
                 const rows = [0, 1, 2, 3].map(r => s.cards.slice(r * 9, r * 9 + 9).map(c => c.data[0]).join(" ")); txt = rows.join("\n");
                 const near = (nm) => { const k = s.cards.findIndex(c => c.data[0] === nm); if (k < 0) return ""; const x = k % 9, y = Math.floor(k / 9), o = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { if (!dx && !dy) continue; const xx = x + dx, yy = y + dy; if (xx >= 0 && xx < 9 && yy >= 0 && yy < 4) { const c2 = s.cards[yy * 9 + xx]; o.push(`${c2.data[0]}（${c2.data[1]}）`); } } return `${nm}（第${y + 1}行第${x + 1}列）周围：\n　${o.join("\n　")}`; };
                 txt += "\n\n" + near("男人") + "\n\n" + near("女人") + "\n\n读法：先看「男人」「女人」这两张牌，离他们最近的牌影响最直接；同一行、同一列的牌再作为背景补充。";
             } else if (s.sp.id === "l9") {
-                txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n\n中心牌：${s.cards[4].data[0]} — ${LENO_DT[s.cards[4].idx]}\n\n各位置解读：\n` + s.cards.map(c => `【${c.label}】${c.data[0]}：${LENO_DT[c.idx]}`).join("\n");
-            } else txt = s.cards.map(c => `【${c.label}】${c.data[0]}（${c.data[1]}）\n解读：${LENO_DT[c.idx]}` + (find ? `\n位置线索：${LENO_LOC[c.idx]}` : "")).join("\n\n") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
+                txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n\n中心牌：${s.cards[4].data[0]} — ${LENO_DT[s.cards[4].idx]}\n\n各位置解读：\n` + s.cards.map(c => `【${c.label}】${c.data[0]}：${LENO_DT[c.idx]}\n　寻物：${LENO_LOC[c.idx]}`).join("\n") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
+            } else txt = s.cards.map(c => `【${c.label}】${c.data[0]}（${c.data[1]}）\n解读：${LENO_DT[c.idx]}` + `\n寻物：${LENO_LOC[c.idx]}`).join("\n\n") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
             divResult(name, txt);
         }
         function divResult(title, text) {
@@ -5689,25 +5691,42 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             [0, 1, 2].forEach(i => { document.getElementById("gcn" + i).innerText = "—"; document.getElementById("gck" + i).innerText = ""; });
             const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 62, pools = [PLG, SGG, DHS.map((x, i) => String(i + 1))];
             const res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
-            const ds = [0, 1, 2].map(i => ({ el: document.getElementById("gd" + i), gs: document.getElementById("gs" + i), x: W + 10 + i * 30, y: 20 + i * 36 + rnd(-6, 6), vx: -rnd(11, 15), vy: rnd(-4, 4), a: rnd(0, 360), w: -rnd(16, 26), stop: 1700 + i * 450, done: false, fl: 0 }));
-            ds.forEach(d => { d.el.style.transition = "none"; d.el.classList.remove("land"); });
+            // 物理：三枚骰子从右边抛入，互相碰撞、撞墙反弹，各自摩擦减速；停下后互不重叠
+            const MIND = S * 0.94; // 两枚骰子中心的最小距离（小于它就算叠在一起）
+            const ys = [rnd(6, 28), rnd(H / 2 - S / 2 - 10, H / 2 - S / 2 + 10), rnd(H - S - 28, H - S - 6)].sort(() => Math.random() - 0.5);
+            const ds = [0, 1, 2].map(i => ({ el: document.getElementById("gd" + i), gs: document.getElementById("gs" + i), x: W + 6 + i * (S + 14), y: ys[i], vx: -rnd(11, 16), vy: rnd(-3.5, 3.5), a: rnd(0, 360), w: -rnd(16, 26), stop: 1700 + i * 450, done: false, fl: 0, inn: false }));
+            window.divLastDice = ds; ds.forEach(d => { d.el.style.transition = "none"; d.el.classList.remove("land"); });
+            const land = (d, i) => { if (d.done) return; d.done = true; d.vx = d.vy = d.w = 0; d.gs.innerText = pools[i][res[i]]; d.el.style.transition = "transform .35s ease-out"; d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${rnd(-9, 9).toFixed(1)}deg)`; d.el.classList.add("land");
+                document.getElementById("gcn" + i).innerText = i === 0 ? DPL[res[0]][0] : i === 1 ? DSG[res[1]][0] : "第" + (res[2] + 1) + "宫"; document.getElementById("gck" + i).innerText = i === 0 ? DPL[res[0]][1] : i === 1 ? DSG[res[1]][1] : DHS[res[2]]; };
+            const clampD = d => { if (d.inn) d.x = Math.max(0, Math.min(W - S, d.x)); d.y = Math.max(0, Math.min(H - S, d.y)); };
+            const collide = () => { for (let a = 0; a < 3; a++) for (let c = a + 1; c < 3; c++) {
+                const A = ds[a], B = ds[c]; if (A.done && B.done) continue;
+                const dx = B.x - A.x, dy = B.y - A.y, dist = Math.hypot(dx, dy) || 0.01; if (dist >= MIND) continue;
+                const nx = dx / dist, ny = dy / dist, over = MIND - dist, wa = A.done ? 0 : 1, wb = B.done ? 0 : 1, wt = wa + wb;
+                A.x -= nx * over * wa / wt; A.y -= ny * over * wa / wt; B.x += nx * over * wb / wt; B.y += ny * over * wb / wt;
+                const rel = (B.vx - A.vx) * nx + (B.vy - A.vy) * ny;
+                if (rel < 0) { const j = -(1 + 0.8) * rel / wt; A.vx -= nx * j * wa; A.vy -= ny * j * wa; B.vx += nx * j * wb; B.vy += ny * j * wb; if (wa) A.w += rnd(-9, 9); if (wb) B.w += rnd(-9, 9); }
+                clampD(A); clampD(B); } };
             const t0 = performance.now(); let last = t0;
             await new Promise(res2 => { const frame = now => {
-                const t = now - t0, k = Math.min(2, (now - last) / 16.7); last = now; let all = true;
-                ds.forEach((d, i) => {
-                    if (d.done) return; all = false;
+                const t = now - t0, k = Math.min(2, (now - last) / 16.7); last = now;
+                ds.forEach(d => {
+                    if (d.done) return;
                     d.x += d.vx * k; d.y += d.vy * k; d.a += d.w * k;
-                    if (d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.72; d.w = -d.w * 0.8; } if (d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.72; }
-                    if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.72; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.72; }
+                    if (!d.inn && d.x <= W - S) d.inn = true;
+                    if (d.inn && d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.75; d.w = -d.w * 0.8; } if (d.inn && d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.75; }
+                    if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.75; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.75; }
                     const fr = t > d.stop ? 0.86 : t > 500 ? 0.985 : 1; d.vx *= fr; d.vy *= fr; d.w *= (t > d.stop ? 0.84 : 0.992);
+                });
+                collide();
+                ds.forEach((d, i) => {
+                    if (d.done) return;
                     if (now - d.fl > 70 && Math.hypot(d.vx, d.vy) > 0.5) { d.fl = now; d.gs.innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; }
                     d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${d.a.toFixed(1)}deg)`;
-                    if (t > d.stop && Math.hypot(d.vx, d.vy) < 0.25 && Math.abs(d.w) < 0.8) {
-                        d.done = true; d.gs.innerText = pools[i][res[i]]; d.el.style.transition = "transform .35s ease-out"; d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${rnd(-9, 9).toFixed(1)}deg)`; d.el.classList.add("land");
-                        document.getElementById("gcn" + i).innerText = i === 0 ? DPL[res[0]][0] : i === 1 ? DSG[res[1]][0] : "第" + (res[2] + 1) + "宫"; document.getElementById("gck" + i).innerText = i === 0 ? DPL[res[0]][1] : i === 1 ? DSG[res[1]][1] : DHS[res[2]];
-                    }
+                    if (t > d.stop && Math.hypot(d.vx, d.vy) < 0.25 && Math.abs(d.w) < 0.8) land(d, i);
                 });
-                if (all || t > 6000) { ds.forEach((d, i) => { if (!d.done) { d.done = true; d.gs.innerText = pools[i][res[i]]; d.el.style.transform = `translate(${d.x}px,${d.y}px)`; } }); res2(); return; } requestAnimationFrame(frame); }; requestAnimationFrame(frame); });
+                if (t > 6000) { for (let it = 0; it < 30; it++) { collide(); ds.forEach(d => { d.inn = true; clampD(d); }); } ds.forEach((d, i) => land(d, i)); }
+                if (ds.every(d => d.done)) { res2(); return; } requestAnimationFrame(frame); }; requestAnimationFrame(frame); });
             await wait(300);
             const [p, s2, h] = [DPL[res[0]], DSG[res[1]], res[2]];
             divResult("星骰", `行星：${p[0]}（${p[1]}）\n　${DPL_DT[res[0]]}\n\n星座：${s2[0]}（${s2[1]}）\n　${DSG_DT[res[1]]}\n\n宫位：第${h + 1}宫（${DHS[h]}）\n　${DHS_DT[h]}\n\n合起来读：在「${DHS[h]}」这个领域里，${p[0]}所代表的「${p[1]}」，会以「${s2[1]}」的方式展开。\n建议：${DPL_ADV[res[0]]}。`); btn.disabled = false;
