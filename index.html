@@ -194,12 +194,12 @@
         .div-fold { width:100%; display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:10px 14px; font-size:13.5px; margin-bottom:8px; }
         .div-fan { display:flex; overflow-x:auto; padding:8px 14px 12px; margin:6px 0; -webkit-overflow-scrolling:touch; } .div-fan .fc { flex:0 0 auto; border-radius:8px; background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); box-sizing:border-box; cursor:pointer; animation:divIn .4s both; box-shadow:-3px 0 0 0 var(--bg), -3px 0 8px rgba(0,0,0,.35); transition:transform .12s; } .div-fan .fc:active { transform:translateY(-10px); }
         .div-cupwrap { height:92px; position:relative; margin-top:6px; } .cup { position:absolute; left:50%; top:10px; margin-left:-44px; width:88px; height:78px; background:linear-gradient(160deg, var(--primary), var(--text-sub)); clip-path:polygon(14% 0, 86% 0, 100% 100%, 0 100%); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:16px; transform-origin:50% 100%; transition:transform .45s, opacity .45s; } .cup.shake { animation:divCup .18s linear infinite; } .cup.lift { transform:translateY(-12px) rotate(-38deg) translateX(-34px); opacity:.25; } @keyframes divCup { 0% { transform:translate(-5px,0) rotate(-5deg); } 50% { transform:translate(5px,-9px) rotate(5deg); } 100% { transform:translate(-5px,0) rotate(-5deg); } }
-        .div-hand { max-width:300px; margin:6px auto 4px; } .hpaper { fill:#eadfc6; stroke:#b9a57f; stroke-width:2; } .hframe { fill:none; stroke:#c2b08c; stroke-width:1.5; } .hcloud ellipse { fill:#cfc2a4; opacity:.75; } .hring circle, .hring line { fill:none; stroke:#c6b690; stroke-width:1.2; } .hstar { fill:#b0503a; opacity:.8; } .hf { fill:#f4ead4; stroke:#6b5640; stroke-width:4; stroke-linejoin:round; } .hc { fill:none; stroke:#8a7458; stroke-width:2.6; stroke-linecap:round; } .hj { fill:#b0503a; opacity:.85; } .hn { font-size:22px; fill:#8a7458; letter-spacing:2px; } .hp circle { fill:#f6edd8; stroke:#8a7458; stroke-width:2; transition:all .15s; } .hp text { font-size:25px; fill:#4a3b2c; } .hp text.tag { font-size:23px; fill:#b0503a; font-weight:bold; } .hp.on circle { fill:#b0503a; stroke:#b0503a; } .hp.on text { fill:#fbf3e2; } .hp.fix circle { stroke:#b0503a; stroke-width:4; } .hp.last circle { fill:#b0503a; } .hp.last text:not(.tag) { fill:#fbf3e2; } .hp.on text.tag, .hp.last text.tag { fill:#b0503a; } .hseal rect { fill:#b0503a; opacity:.9; } .hseal text { font-size:18px; fill:#f6e8d0; } .hd { fill:#4a3b2c; opacity:0; transition:cx .28s ease, cy .28s ease; }
+        .div-hand { max-width:300px; margin:6px auto 4px; } .hpaper { fill:#e6d6b4; stroke:#8f7c56; stroke-width:2; } .hframe { fill:none; stroke:#c2b08c; stroke-width:1.5; } .hcloud ellipse { fill:#cfc2a4; opacity:.75; } .hring circle, .hring line { fill:none; stroke:#c6b690; stroke-width:1.2; } .hstar { fill:none; } .hf { fill:#f1e4c6; stroke:#3b2f22; stroke-width:3; stroke-linejoin:round; } .hc { fill:none; stroke:#8a7458; stroke-width:2.6; stroke-linecap:round; } .hj { display:none; } .hwash { fill:url(#hwg); stroke:none; } .hbrush { fill:none; stroke:#3b2f22; stroke-width:7; stroke-linejoin:round; opacity:.18; } .hxy { fill:none; stroke:#9c8a66; stroke-width:2; stroke-linecap:round; opacity:.7; } .hsh { fill:none; stroke:#6e6048; stroke-width:2.2; stroke-linecap:round; opacity:.55; } .hn { font-size:22px; fill:#6a5a40; letter-spacing:4px; font-family:'STKaiti','KaiTi','Kaiti SC','Songti SC','Noto Serif CJK SC',serif; } .hp circle { fill:#f6edd8; stroke:#8a7458; stroke-width:2; transition:all .15s; } .hp text { font-size:25px; fill:#3b2f22; font-family:'STKaiti','KaiTi','Kaiti SC','Songti SC','Noto Serif CJK SC',serif; font-weight:bold; } .hp text.tag { font-size:23px; fill:#6a5a40; font-weight:bold; } .hp.on circle { fill:#3b2f22; stroke:#3b2f22; } .hp.on text { fill:#fbf3e2; } .hp.fix circle { stroke:#3b2f22; stroke-width:4; } .hp.last circle { fill:#3b2f22; } .hp.last text:not(.tag) { fill:#fbf3e2; } .hp.on text.tag, .hp.last text.tag { fill:#6a5a40; } .hseal rect { fill:#b0503a; opacity:.9; } .hseal text { font-size:18px; fill:#f6e8d0; } .hd { fill:#4a3b2c; opacity:0; transition:cx .28s ease, cy .28s ease; }
         .div-pop { position:absolute; left:0; right:0; top:calc(100% - 4px); z-index:30; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:10px; flex-wrap:wrap; gap:8px; box-shadow:0 10px 28px rgba(0,0,0,.4); } .div-pop button { border:1px solid var(--border); background:var(--bg); color:var(--text-main); border-radius:12px; padding:8px 12px; font-size:13px; display:flex; flex-direction:column; align-items:center; line-height:1.25; } .div-pop button small { font-size:10px; color:var(--text-sub); } .div-pop button.main { background:var(--primary); color:var(--bg); border-color:transparent; } .div-pop button.main small { color:inherit; opacity:.75; }
         .div-table { position:relative; margin:8px 0 6px; overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 1px 1px rgba(0,0,0,.12); will-change:transform; }
         .div-table .pile { position:absolute; top:6px; bottom:6px; transform:translateX(-50%); border:1.5px dashed transparent; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; cursor:pointer; padding-bottom:2px; } .div-table .pile span { font-size:11px; color:var(--text-sub); } .div-table .pile b { position:absolute; top:4px; width:22px; height:22px; border-radius:50%; background:var(--primary); color:var(--bg); font-size:13px; display:none; align-items:center; justify-content:center; } .div-table .pile.on b { display:flex; } .div-table .pile:not(.on) { border-color:var(--primary); animation:divPulse 1.4s infinite; }
         .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 0 1px rgba(0,0,0,.2); cursor:pointer; } .div-fan .fc.up { box-shadow:0 2px 6px rgba(0,0,0,.18); border-width:2px; }
-        .div-tray { position:relative; height:176px; margin:10px 0 8px; border-radius:20px; overflow:hidden; background:radial-gradient(ellipse at center, #5b4a8c 0%, #46386f 72%, #382d5c 100%); box-shadow:inset 0 0 0 4px #8a77c2, inset 0 0 16px 8px rgba(24,12,58,.42); touch-action:none; } .gd { position:absolute; left:0; top:0; width:62px; height:62px; will-change:transform; filter:drop-shadow(1px 3px 3px rgba(20,8,50,.4)); transform:translate(-100px,0); } .gd .gs { position:absolute; left:50%; top:50%; transform:translate(-50%,-52%); font-size:21px; font-weight:bold; color:#fff; text-shadow:0 0 6px rgba(120,80,220,.9), 0 1px 2px rgba(40,20,90,.7); } .gd.land { animation:divLand .5s ease-out; }
+        .div-tray { position:relative; height:104px; margin:10px 0 8px; border-radius:16px; overflow:hidden; background:none; border:1px dashed rgba(120,110,150,.35); touch-action:none; } .gd { position:absolute; left:0; top:0; width:31px; height:31px; will-change:transform; filter:drop-shadow(0 1px 1px rgba(40,20,90,.3)); transform:translate(-100px,0); } .gd .gs { position:absolute; left:50%; top:50%; transform:translate(-50%,-52%); font-size:12px; font-weight:bold; color:#fff; text-shadow:0 1px 1px rgba(40,20,90,.8); } .gd.land { animation:divLand .5s ease-out; }
         .div-caps { display:flex; gap:8px; margin-bottom:12px; } .div-caps > div { flex:1; text-align:center; border:1px solid var(--border); border-radius:12px; background:var(--panel); padding:8px 4px; } .div-caps span { display:block; font-size:11px; color:var(--text-sub); } .div-caps b { display:block; font-size:15px; margin:3px 0; color:var(--text-main); } .div-caps i { display:block; font-size:11px; color:var(--text-sub); font-style:normal; min-height:28px; line-height:1.3; }
         .mh-steps { margin:8px 0; } .mh-line { white-space:pre-wrap; font-size:13px; line-height:1.7; color:var(--text-main); border-left:3px solid var(--primary); background:var(--panel); border-radius:0 10px 10px 0; padding:6px 10px; margin-bottom:6px; animation:divIn .4s both; }
         .div-stickbox { position:relative; height:230px; margin:6px auto 0; width:200px; } .tube { position:absolute; left:50%; bottom:10px; margin-left:-48px; width:96px; height:120px; border-radius:10px 10px 18px 18px; background:linear-gradient(90deg, var(--text-sub), var(--primary), var(--text-sub)); transform-origin:50% 100%; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:30px; z-index:2; } .tube i { position:absolute; bottom:100%; width:5px; background:var(--text-main); opacity:.75; border-radius:3px 3px 0 0; margin-left:-2px; } .tube.shake { animation:divTube .22s linear infinite; } @keyframes divTube { 0% { transform:rotate(-12deg) translateY(0); } 50% { transform:rotate(12deg) translateY(-8px); } 100% { transform:rotate(-12deg) translateY(0); } }
@@ -210,7 +210,7 @@
         .div-cards { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 12px; } .div-card { flex:1 1 28%; min-width:92px; border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:12px 8px; text-align:center; color:var(--text-main); animation:divIn .45s both; } .div-card .pos { font-size:11px; color:var(--text-sub); } .div-card .nm { font-size:16px; font-weight:bold; margin:6px 0 2px; } .div-card .rv { font-size:11px; color:var(--primary); } .div-card .kw { font-size:12px; color:var(--text-sub); margin-top:4px; line-height:1.5; } .div-card.rev .nm { transform:rotate(180deg); }
         @keyframes divIn { from { opacity:0; transform:translateY(8px) scale(.96); } to { opacity:1; transform:none; } }
         .div-res { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:12px 14px; font-size:13.5px; line-height:1.7; color:var(--text-main); white-space:pre-wrap; margin-bottom:10px; } .div-act { display:flex; gap:8px; margin-bottom:12px; }
-        .div-rec { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:10px 12px; margin-bottom:10px; } .div-rec .h { display:flex; justify-content:space-between; font-size:12px; color:var(--text-sub); margin-bottom:6px; } .div-rec .t { font-size:13px; color:var(--text-main); white-space:pre-wrap; line-height:1.6; } .div-hint { font-size:12px; color:var(--text-sub); margin:4px 2px 10px; }
+        .div-rec { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:10px 12px; margin-bottom:10px; } .div-rec .h { display:flex; justify-content:space-between; font-size:12px; color:var(--text-sub); margin-bottom:6px; } .div-rec { cursor:pointer; } .div-rec .pv { font-size:13px; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .div-rec .h { margin-bottom:4px !important; } .div-rec .t { display:none; margin-top:6px; } .div-rec.open .t { display:block; } .div-rec.open .pv { display:none; } .div-rec .t { font-size:13px; color:var(--text-main); white-space:pre-wrap; line-height:1.6; } .div-hint { font-size:12px; color:var(--text-sub); margin:4px 2px 10px; }
         .stats-page-body { padding: 16px 16px 40px 16px; display: flex; flex-direction: column; gap: 20px; }
         .stats-summary-row { display: flex; gap: 12px; }
         .stats-summary-card { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 8px; text-align: center; box-shadow: var(--shadow-sm); }
@@ -665,7 +665,7 @@
         .app-icon-glyph { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); transition: transform 0.12s ease; position: relative; }
         .app-icon-badge { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: rgba(255,255,255,0.92); color: #4A3D5A; font-size: 10.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(0,0,0,0.35); border: 1px solid rgba(0,0,0,0.06); z-index: 2; }
         [data-theme="dark-green"] .app-icon-badge, [data-theme="light-green"] .app-icon-badge { color: #24402D; }
-        .in-app-notif-banner { position: fixed; top: -120px; left: 12px; right: 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 12px 16px; box-shadow: var(--shadow-lg); z-index: 5000; transition: top 0.35s cubic-bezier(.34,1.3,.64,1); cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .in-app-notif-banner { position: fixed; top: -120px; left: 12px; right: 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 12px 16px; box-shadow: var(--shadow-lg); z-index: 5000; transition: top 0.35s cubic-bezier(.34,1.3,.64,1); cursor: pointer; display: flex; align-items: center; gap: 10px; touch-action: none; }
         .in-app-notif-banner.show { top: calc(10px + env(safe-area-inset-top)); }
         .in-app-notif-avatar { width: 34px; height: 34px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
         .in-app-notif-text { flex: 1; min-width: 0; }
@@ -2009,7 +2009,8 @@
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
-            gal = { parts, bg, dust, pink, halo, shoot: null, nextShoot: 3000 };
+            const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.07 + Math.random() * 0.12, a: 0.03 + Math.random() * 0.04, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
+            gal = { parts, bg, dust, pink, halo, cloud, shoot: null, nextShoot: 3000 };
         }
         // 星点一律纯白，用透明度区分远近明暗
         function galStarColor(r) { return "255,255,255"; }
@@ -2032,12 +2033,13 @@
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
             const pos = (r, th) => { const x = r * Rx * Math.cos(th), y = r * Ry * Math.sin(th); return [cx + x * cph - y * sph, cy + x * sph + y * cph]; };
-            const omega = r => 0.000026 / (0.22 + r);
+            const omega = r => 0.00009 / (0.22 + r);
             // 伴星系（左上亮点、右下椭圆光斑）
             { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.17)"); g.addColorStop(0.75, "rgba(70,82,170,.07)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.17)"); g.addColorStop(0.75, "rgba(70,82,170,.09)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
+            gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${q.a})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
             gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * (1.05 - p.r * 0.75)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
             // 深色尘埃带
@@ -2152,12 +2154,12 @@
                 if (!night) { E(9, 8, 3, 1, "#fff"); E(20, 9, 3, 1, "#fff"); } else { sp(8, 8, "#fff", 1); sp(21, 15, "#fff"); }
                 L(10, 0, 10, 7, D("#444", "#aaa")); E(10, 10, 3, 3, GLO); L(20, 0, 20, 5, D("#444", "#aaa")); E(20, 8, 3, 3, GLO); if (night) { sp(10, 10, "#ffd98a", 1); sp(20, 8, "#ffd98a", 1); }
                 // 吧台
-                B(2, 24, 25, 3, WD); B(3, 27, 23, 8, DK); R(5, 29, 8, 4, DK2); R(15, 29, 8, 4, DK2); candle(21, 24, 5); candle(8, 24, 3);
+                B(2, 24, 25, 3, WD); B(3, 27, 23, 8, DK); R(5, 29, 8, 4, DK2); R(15, 29, 8, 4, DK2);
                 // 波浪镜
                 E(34, 13, 3, 10, D("#9a948e", "#53505e")); E(34, 13, 2, 9, D("#e6e8ee", "#6c7090")); L(33, 7, 33, 18, D("#fff", "#9aa0c0"));
                 // 镜下边柜：蜡烛 + 插花
                 B(28, 26, 17, 5, DK); R(30, 28, 13, 1, DK2); L(30, 31, 30, 36, DK); L(43, 31, 43, 36, DK);
-                candle(30, 26, 5); candle(34, 26, 3);
+                candle(30, 26, 5);
                 B(38, 23, 4, 3, D("#8a7a78", "#4a4046")); L(40, 23, 38, 17, D("#5fa860", "#2f6a40")); L(40, 23, 42, 18, D("#5fa860", "#2f6a40")); L(40, 23, 40, 16, D("#5fa860", "#2f6a40"));
                 E(38, 16, 1, 1, "#f2a0b0"); E(42, 17, 1, 1, "#ffffff"); E(40, 15, 1, 1, "#f27a98"); E(41, 20, 1, 1, "#f2c0c0");
                 // 右侧落地窗 + 边桌球灯
@@ -2183,10 +2185,10 @@
                 B(35, 35, 6, 8, D("#2e3036", "#1a1c20")); R(35, 35, 6, 1, DK2); R(36, 38, 4, 1, DK2);
                 // 异形玻璃茶几 + 蜡烛 + 杯子 + 书
                 E(34, 44, 13, 3, D("#5a5b63", "#30323c")); E(34, 43, 12, 2, D("#9a9ca4", "#4a4c56")); L(24, 45, 24, 49, DK); L(44, 45, 44, 49, DK);
-                candle(28, 42, 5); candle(41, 43, 3); B(36, 38, 2, 4, D("#cfe0ea", "#8aa0b4")); B(32, 41, 6, 1, DK); 
+                B(36, 38, 2, 4, D("#cfe0ea", "#8aa0b4")); B(32, 41, 6, 1, DK); 
                 // 深色矮桌 + 铜托盘 + 花瓶郁金香（清晰可见）
                 B(52, 44, 31, 4, DK); R(53, 45, 29, 1, DK2); L(54, 48, 54, 50, DK); L(81, 48, 81, 50, DK);
-                B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); candle(74, 44, 5); candle(79, 44, 3); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
+                B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
                 L(65, 37, 63, 31, D("#5fa860", "#2f6a40")); L(65, 37, 67, 31, D("#5fa860", "#2f6a40")); L(65, 37, 65, 30, D("#5fa860", "#2f6a40"));
                 B(61, 28, 4, 4, "#f27a98"); B(66, 28, 4, 4, "#f2a0b0"); B(63, 25, 4, 4, "#e8607a");
                 if (night) {
@@ -2964,9 +2966,14 @@
                 banner.id = "inAppNotifBanner";
                 banner.className = "in-app-notif-banner";
                 document.body.appendChild(banner);
+                let y0 = null, dy = 0, moved = false;
+                banner.addEventListener("pointerdown", e => { y0 = e.clientY; dy = 0; moved = false; clearTimeout(banner._hideTimer); try { banner.setPointerCapture(e.pointerId); } catch (x) { } });
+                banner.addEventListener("pointermove", e => { if (y0 === null) return; dy = Math.min(0, e.clientY - y0); if (Math.abs(e.clientY - y0) > 6) moved = true; banner.style.transition = "none"; banner.style.transform = `translateY(${dy}px)`; });
+                const end = () => { if (y0 === null) return; y0 = null; banner.style.transition = ""; banner.style.transform = ""; if (dy < -20) { banner._swiped = true; hideInAppBanner(); } else { banner._hideTimer = setTimeout(() => hideInAppBanner(), 2500); } setTimeout(() => { banner._swiped = false; }, 50); banner._moved = moved; setTimeout(() => { banner._moved = false; }, 50); };
+                banner.addEventListener("pointerup", end); banner.addEventListener("pointercancel", end);
             }
             banner.innerHTML = `<img class="in-app-notif-avatar" src="${db.other.avatar || DEFAULT_SVG_AVATAR}"><div class="in-app-notif-text"><div class="in-app-notif-title">${title}</div><div class="in-app-notif-body">${body}</div></div>`;
-            banner.onclick = () => { hideInAppBanner(); goToChatFromNotification(); };
+            banner.onclick = () => { if (banner._moved || banner._swiped) return; hideInAppBanner(); goToChatFromNotification(); };
             banner.classList.add("show");
             clearTimeout(banner._hideTimer);
             banner._hideTimer = setTimeout(() => hideInAppBanner(), 3500);
@@ -5521,6 +5528,14 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             if (cards.some(c => c.idx === 22)) out.push("牌里有「鼠」，东西可能已经被损耗、弄丢，或被动过。"); if (cards.some(c => c.idx === 7)) out.push("牌里有「棺材」，东西可能已经报废，或被收进封闭的地方。"); if (cards.some(c => c.idx === 32)) out.push("牌里有「钥匙」，答案就在眼前，换个角度再看一遍。");
             return "能否找回：" + out.join("");
         }
+        function lenoSummary(cards, id) {
+            const good = [0, 1, 3, 8, 15, 23, 30, 32, 34], bad = [5, 6, 7, 9, 20, 22, 35], n = cards.length, g = cards.filter(c => good.includes(c.idx)).length, b = cards.filter(c => bad.includes(c.idx)).length, out = [];
+            out.push("整体基调：" + (g > b ? `牌面偏明朗（吉象 ${g} 张、阻碍 ${b} 张），整体气氛向上，事情有推进的空间。` : b > g ? `牌面偏沉重（吉象 ${g} 张、阻碍 ${b} 张），有一些阻碍或消耗，需要多一点耐心与小心。` : `吉象与阻碍各占一半（${g}:${b}），好坏交织，要看相邻牌怎么互相影响。`));
+            if (id === "l9") { const k = (c) => `「${c.data[0]}」`, m = cards[4], rows = [[0, 1, 2], [3, 4, 5], [6, 7, 8]].map(r => r.map(i => cards[i].data[0]).join("、")); out.push(`主轴：中心牌${k(m)}是整件事的核心——${m.data[1]}。上排（${rows[0]}）是意识层面、正在发生的事与想法；中排（${rows[1]}）是眼前的核心处境；下排（${rows[2]}）是潜在的根基与结果的走向。`); out.push(`十字线：上下的「${cards[1].data[0]}」与「${cards[7].data[0]}」描述从想法到落地的路径，左右的「${cards[3].data[0]}」与「${cards[5].data[0]}」描述过去到未来的变化。`); out.push(`四角：${k(cards[0])}、${k(cards[2])}、${k(cards[6])}、${k(cards[8])}是外围的背景与暗线，作为补充参考。`); }
+            else { const p = []; for (let i = 0; i < n - 1; i++) p.push(`「${cards[i].data[0]}」遇上「${cards[i + 1].data[0]}」：${cards[i].data[1]}之后接着${cards[i + 1].data[1]}，${good.includes(cards[i + 1].idx) ? "后面的牌让气氛转亮，" : bad.includes(cards[i + 1].idx) ? "后面的牌带来阻碍，需要留心，" : "两者互相影响，"}${i === n - 2 ? "这是最终落点。" : "事情继续往下发展。"}`); if (p.length) out.push("牌与牌的关系：\n　" + p.join("\n　")); const last = cards[n - 1]; out.push(`走向：最后落在「${last.data[0]}」（${last.data[1]}），${LENO_DT[last.idx]}`); }
+            out.push("建议：" + (g > b ? "顺着牌面的方向去做，把握机会，但别忽略阻碍牌给的提醒。" : b > g ? "先稳住节奏，处理好牌面里的阻碍，再往前推进，不必急着下结论。" : "不要一次定论，先观察一阵子，再根据后续变化调整。"));
+            return "【整体解析】\n" + out.join("\n");
+        }
         function divToast(t) { let e = document.getElementById("divToast"); if (!e) { e = document.createElement("div"); e.id = "divToast"; e.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:8px 16px;border-radius:16px;font-size:13px;z-index:3000;transition:opacity .25s;pointer-events:none"; document.body.appendChild(e); } e.textContent = t; e.style.opacity = 1; clearTimeout(e._t); e._t = setTimeout(() => e.style.opacity = 0, 1600); }
         let divTab = "tarot", divLast = null;
         const DIV_TABS = [["tarot", "塔罗"], ["leno", "雷诺曼"], ["dice", "星骰"], ["mhyi", "梅花易数"], ["xlr", "小六壬"], ["rec", "记录"]];
@@ -5637,8 +5652,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function divHoverSet(k) { const s = divS; if (!s || s.hover === k) return; const old = s.hover; s.hover = k; [old, k].forEach(j => { if (j < 0 || j >= s.left.length) return; const e = s.fanEls[s.left[j]]; if (!e) return; e.style.transition = "transform .12s"; e.style.transform = `rotate(${e.dataset.a}deg)${j === k ? " translateY(-26px)" : ""}`; e.classList.toggle("up", j === k); }); }
         function divHover(ev) {
             const s = divS; if (!s || s.stage !== "fan" || s.busy || !s.left.length) return; const fan = document.getElementById("divFan"), r = fan.getBoundingClientRect(), px = r.left + r.width / 2, py = r.top + s.top + s.R, dx = ev.clientX - px, dy = py - ev.clientY, ang = Math.atan2(dx, dy) * 180 / Math.PI, rad = Math.hypot(dx, dy), n = s.left.length;
-            if (Math.abs(ang) > s.span + 3 || rad < s.R - s.fch - 30 || rad > s.R + 70) { divHoverSet(-1); return; }
-            let k = Math.round((ang + s.span) / (2 * s.span) * (n - 1)); k = Math.max(0, Math.min(n - 1, k)); divHoverSet(k);
+            const half = Math.atan((s.fw / 2) / s.R) * 180 / Math.PI + 6;
+            if (Math.abs(ang) > s.span + half + 8 || rad < s.R - s.fch - 40 || rad > s.R + 90) { divHoverSet(-1); return; }
+            let k = Math.round((Math.max(-s.span, Math.min(s.span, ang)) + s.span) / (2 * s.span) * (n - 1)); k = Math.max(0, Math.min(n - 1, k)); divHoverSet(k);
         }
         async function divDraw(fast, posArg) {
             const s = divS; if (!s || s.busy || s.stage !== "fan" || s.drawn >= s.total) return; s.busy = true; divBtns();
@@ -5667,9 +5683,11 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const rows = [0, 1, 2, 3].map(r => s.cards.slice(r * 9, r * 9 + 9).map(c => c.data[0]).join(" ")); txt = rows.join("\n");
                 const near = (nm) => { const k = s.cards.findIndex(c => c.data[0] === nm); if (k < 0) return ""; const x = k % 9, y = Math.floor(k / 9), o = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { if (!dx && !dy) continue; const xx = x + dx, yy = y + dy; if (xx >= 0 && xx < 9 && yy >= 0 && yy < 4) { const c2 = s.cards[yy * 9 + xx]; o.push(`${c2.data[0]}（${c2.data[1]}）`); } } return `${nm}（第${y + 1}行第${x + 1}列）周围：\n　${o.join("\n　")}`; };
                 txt += "\n\n" + near("男人") + "\n\n" + near("女人") + "\n\n读法：先看「男人」「女人」这两张牌，离他们最近的牌影响最直接；同一行、同一列的牌再作为背景补充。";
+                { const good = [0, 1, 3, 8, 15, 23, 30, 32, 34], bad = [5, 6, 7, 9, 20, 22, 35], rr = [0, 1, 2, 3].map(r => { const row = s.cards.slice(r * 9, r * 9 + 9); return [row.filter(c => good.includes(c.idx)).length, row.filter(c => bad.includes(c.idx)).length]; }), tg = rr.reduce((a, x) => a + x[0], 0), tb = rr.reduce((a, x) => a + x[1], 0);
+                  txt += `\n\n【整体解析】\n整体基调：吉象 ${tg} 张、阻碍 ${tb} 张，${tg > tb ? "大局偏明朗，事情有推进的空间。" : tb > tg ? "大局有些沉重，要多留意阻碍与消耗。" : "好坏交织，需要看关键牌周围的组合。"}\n四行分布：` + rr.map((x, i) => `第${i + 1}行 吉${x[0]}/阻${x[1]}`).join("，") + "。第一行偏近期与表层，第四行偏深层与远期；吉象多的那一行是顺的地方，阻碍多的那一行是要处理的地方。"; }
             } else if (s.sp.id === "l9") {
-                txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n\n中心牌：${s.cards[4].data[0]} — ${LENO_DT[s.cards[4].idx]}\n\n各位置解读：\n` + s.cards.map(c => `【${c.label}】${c.data[0]}：${LENO_DT[c.idx]}\n　寻物：${LENO_LOC[c.idx]}`).join("\n") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
-            } else txt = s.cards.map(c => `【${c.label}】${c.data[0]}（${c.data[1]}）\n解读：${LENO_DT[c.idx]}` + `\n寻物：${LENO_LOC[c.idx]}`).join("\n\n") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
+                txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n\n中心牌：${s.cards[4].data[0]} — ${LENO_DT[s.cards[4].idx]}\n\n各位置解读：\n` + s.cards.map(c => `【${c.label}】${c.data[0]}：${LENO_DT[c.idx]}\n　寻物：${LENO_LOC[c.idx]}`).join("\n") + "\n\n" + lenoSummary(s.cards, "l9") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
+            } else txt = s.cards.map(c => `【${c.label}】${c.data[0]}（${c.data[1]}）\n解读：${LENO_DT[c.idx]}` + `\n寻物：${LENO_LOC[c.idx]}`).join("\n\n") + "\n\n" + lenoSummary(s.cards, s.sp.id) + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
             divResult(name, txt);
         }
         function divResult(title, text) {
@@ -5677,7 +5695,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             divLast = { type: title.split(" ")[0], text: full };
             document.getElementById("divOut").innerHTML = `<div class="div-res">${full.replace(/</g, "&lt;")}</div><div class="div-act"><button onclick="divSave()">存入记录</button><button onclick="divSend()">发给他</button></div>`; divSave(true);
         }
-        const SYM8 = ["☰", "☱", "☲", "☳", "☴", "☵", "☶", "☷"], PLG = ["☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "♇"], SGG = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
+        const SYM8 = ["☰", "☱", "☲", "☳", "☴", "☵", "☶", "☷"], PLG = ["☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "♇"], SGG = ["羊", "牛", "双", "蟹", "狮", "女", "秤", "蝎", "射", "摩", "瓶", "鱼"], PLG_T = ["日", "月", "水", "金", "火", "木", "土", "天", "海", "冥"];
         function dieSvg(i) {
             const cols = [["#eadfff", "#b99cf2", "#8b69d6"], ["#e0dbff", "#a99ff2", "#7b6cd2"], ["#f2ddff", "#c89eed", "#9e6fca"]][i], cx = 50, cy = 50, pt = (r, a) => { const t = a * Math.PI / 180; return [(cx + r * Math.cos(t)).toFixed(1), (cy + r * Math.sin(t)).toFixed(1)]; };
             const P = [], Q = [], M = []; for (let k = 0; k < 5; k++) { const a = -90 + 72 * k; P.push(pt(21, a)); Q.push(pt(45, a)); M.push(pt(45, a + 36)); }
@@ -5689,14 +5707,14 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         async function divDice() {
             const btn = document.getElementById("divRoll"); if (btn.disabled) return; btn.disabled = true; document.getElementById("divOut").innerHTML = "";
             [0, 1, 2].forEach(i => { document.getElementById("gcn" + i).innerText = "—"; document.getElementById("gck" + i).innerText = ""; });
-            const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 62, pools = [PLG, SGG, DHS.map((x, i) => String(i + 1))];
+            const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 31, pools = [PLG_T, SGG, DHS.map((x, i) => String(i + 1))];
             const res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
             // 物理：三枚骰子从右边抛入，互相碰撞、撞墙反弹，各自摩擦减速；停下后互不重叠
             const MIND = S * 0.94; // 两枚骰子中心的最小距离（小于它就算叠在一起）
-            const ys = [rnd(6, 28), rnd(H / 2 - S / 2 - 10, H / 2 - S / 2 + 10), rnd(H - S - 28, H - S - 6)].sort(() => Math.random() - 0.5);
-            const ds = [0, 1, 2].map(i => ({ el: document.getElementById("gd" + i), gs: document.getElementById("gs" + i), x: W + 6 + i * (S + 14), y: ys[i], vx: -rnd(11, 16), vy: rnd(-3.5, 3.5), a: rnd(0, 360), w: -rnd(16, 26), stop: 1700 + i * 450, done: false, fl: 0, inn: false }));
-            window.divLastDice = ds; ds.forEach(d => { d.el.style.transition = "none"; d.el.classList.remove("land"); });
-            const land = (d, i) => { if (d.done) return; d.done = true; d.vx = d.vy = d.w = 0; d.gs.innerText = pools[i][res[i]]; d.el.style.transition = "transform .35s ease-out"; d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${rnd(-9, 9).toFixed(1)}deg)`; d.el.classList.add("land");
+            const ys = [rnd(4, 18), rnd(H / 2 - S / 2 - 6, H / 2 - S / 2 + 6), rnd(H - S - 18, H - S - 4)].sort(() => Math.random() - 0.5);
+            const ds = [0, 1, 2].map(i => ({ el: document.getElementById("gd" + i), gs: document.getElementById("gs" + i), x: W + 6 + i * (S + 14), y: ys[i], vx: -rnd(7, 10), vy: rnd(-2, 2), a: rnd(-12, 12), w: rnd(-0.6, 0.6), stop: 1500 + i * 400, done: false, fl: 0, inn: false }));
+            window.divLastDice = ds; ds.forEach((d, i) => { d.el.style.transition = "none"; d.el.classList.remove("land"); d.gs.innerText = pools[i][res[i]]; });
+            const land = (d, i) => { if (d.done) return; d.done = true; d.vx = d.vy = d.w = 0; d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${d.a.toFixed(1)}deg)`;
                 document.getElementById("gcn" + i).innerText = i === 0 ? DPL[res[0]][0] : i === 1 ? DSG[res[1]][0] : "第" + (res[2] + 1) + "宫"; document.getElementById("gck" + i).innerText = i === 0 ? DPL[res[0]][1] : i === 1 ? DSG[res[1]][1] : DHS[res[2]]; };
             const clampD = d => { if (d.inn) d.x = Math.max(0, Math.min(W - S, d.x)); d.y = Math.max(0, Math.min(H - S, d.y)); };
             const collide = () => { for (let a = 0; a < 3; a++) for (let c = a + 1; c < 3; c++) {
@@ -5705,7 +5723,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const nx = dx / dist, ny = dy / dist, over = MIND - dist, wa = A.done ? 0 : 1, wb = B.done ? 0 : 1, wt = wa + wb;
                 A.x -= nx * over * wa / wt; A.y -= ny * over * wa / wt; B.x += nx * over * wb / wt; B.y += ny * over * wb / wt;
                 const rel = (B.vx - A.vx) * nx + (B.vy - A.vy) * ny;
-                if (rel < 0) { const j = -(1 + 0.8) * rel / wt; A.vx -= nx * j * wa; A.vy -= ny * j * wa; B.vx += nx * j * wb; B.vy += ny * j * wb; if (wa) A.w += rnd(-9, 9); if (wb) B.w += rnd(-9, 9); }
+                if (rel < 0) { const j = -(1 + 0.8) * rel / wt; A.vx -= nx * j * wa; A.vy -= ny * j * wa; B.vx += nx * j * wb; B.vy += ny * j * wb; if (wa) A.w += rnd(-0.5, 0.5); if (wb) B.w += rnd(-0.5, 0.5); }
                 clampD(A); clampD(B); } };
             const t0 = performance.now(); let last = t0;
             await new Promise(res2 => { const frame = now => {
@@ -5714,15 +5732,14 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     if (d.done) return;
                     d.x += d.vx * k; d.y += d.vy * k; d.a += d.w * k;
                     if (!d.inn && d.x <= W - S) d.inn = true;
-                    if (d.inn && d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.75; d.w = -d.w * 0.8; } if (d.inn && d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.75; }
+                    if (d.inn && d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.75; d.w = -d.w * 0.6; } if (d.inn && d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.75; }
                     if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.75; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.75; }
-                    const fr = t > d.stop ? 0.86 : t > 500 ? 0.985 : 1; d.vx *= fr; d.vy *= fr; d.w *= (t > d.stop ? 0.84 : 0.992);
+                    const fr = t > d.stop ? 0.86 : t > 500 ? 0.985 : 1; d.vx *= fr; d.vy *= fr; d.w *= (t > d.stop ? 0.8 : 0.97);
                 });
                 collide();
                 ds.forEach((d, i) => {
                     if (d.done) return;
-                    if (now - d.fl > 70 && Math.hypot(d.vx, d.vy) > 0.5) { d.fl = now; d.gs.innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; }
-                    d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${d.a.toFixed(1)}deg)`;
+                                        d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) rotate(${d.a.toFixed(1)}deg)`;
                     if (t > d.stop && Math.hypot(d.vx, d.vy) < 0.25 && Math.abs(d.w) < 0.8) land(d, i);
                 });
                 if (t > 6000) { for (let it = 0; it < 30; it++) { collide(); ds.forEach(d => { d.inn = true; clampD(d); }); } ds.forEach((d, i) => land(d, i)); }
@@ -5762,24 +5779,23 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function handSvg() {
             const lens = (x, y, w) => `<path d="M${x - w} ${y} Q${x} ${y - 9} ${x + w} ${y} Q${x} ${y + 9} ${x - w} ${y}Z" class="hc"/>`;
             const dot = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" class="hj"/>`;
-            let s = `<div class="div-hand"><svg id="divHandSvg" viewBox="250 90 500 760" width="100%"><defs><filter id="hw"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="hclip"><rect x="268" y="108" width="464" height="724"/></clipPath></defs>`;
+            let s = `<div class="div-hand"><svg id="divHandSvg" viewBox="250 90 500 760" width="100%"><defs><radialGradient id="hwg" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#f6ebd0"/><stop offset="1" stop-color="#dcc79c"/></radialGradient><radialGradient id="hvg" cx="50%" cy="50%" r="72%"><stop offset=".55" stop-color="#8a6f3e" stop-opacity="0"/><stop offset="1" stop-color="#6b5128" stop-opacity=".45"/></radialGradient><filter id="hw"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="hclip"><rect x="268" y="108" width="464" height="724"/></clipPath></defs>`;
             // 绢本底色 + 双线画框
-            s += `<rect x="256" y="96" width="488" height="748" rx="6" class="hpaper"/><rect x="268" y="108" width="464" height="724" rx="3" class="hframe"/>`;
+            s += `<rect x="256" y="96" width="488" height="748" rx="6" class="hpaper"/><rect x="268" y="108" width="464" height="724" rx="3" class="hframe"/><rect x="256" y="96" width="488" height="748" rx="6" fill="url(#hvg)"/>`;
             // 淡墨云（晕染）
             s += `<g clip-path="url(#hclip)"><g class="hcloud" filter="url(#hw)"><ellipse cx="318" cy="470" rx="62" ry="22"/><ellipse cx="290" cy="500" rx="48" ry="18"/><ellipse cx="350" cy="515" rx="60" ry="20"/><ellipse cx="690" cy="610" rx="64" ry="22"/><ellipse cx="720" cy="640" rx="50" ry="18"/><ellipse cx="662" cy="650" rx="56" ry="19"/></g></g>`;
             // 细圆与放射线（星盘意象，浅墨）
             s += `<g clip-path="url(#hclip)"><g class="hring"><circle cx="500" cy="470" r="336"/><circle cx="500" cy="470" r="268" stroke-dasharray="3 7"/><circle cx="500" cy="470" r="396"/>${[0, 30, 60, 90, 120, 150].map(a => { const t = a * Math.PI / 180; return `<line x1="${(500 - 396 * Math.cos(t)).toFixed(1)}" y1="${(470 - 396 * Math.sin(t)).toFixed(1)}" x2="${(500 + 396 * Math.cos(t)).toFixed(1)}" y2="${(470 + 396 * Math.sin(t)).toFixed(1)}"/>`; }).join("")}</g></g>`;
-            // 朱砂小星
-            s += [[330, 170], [690, 190], [310, 700], [705, 330], [420, 130]].map(q => `<path d="M${q[0]} ${q[1] - 11} L${q[0] + 3} ${q[1] - 3} L${q[0] + 11} ${q[1]} L${q[0] + 3} ${q[1] + 3} L${q[0]} ${q[1] + 11} L${q[0] - 3} ${q[1] + 3} L${q[0] - 11} ${q[1]} L${q[0] - 3} ${q[1] - 3}Z" class="hstar"/>`).join("");
+            // 祥云纹（墨线）与远山
+            { const cl = (x, y, k) => `<path class="hxy" transform="translate(${x} ${y}) scale(${k})" d="M0 0 C-14 -2 -18 -16 -6 -18 C-2 -30 18 -28 18 -16 C32 -16 32 2 18 2 Z M-6 -8 C-2 -12 4 -10 4 -6"/>`; s += cl(300, 190, 1.4) + cl(660, 160, 1.1) + cl(300, 690, 1.2) + cl(690, 330, 1.3) + cl(520, 128, 0.9);
+              s += `<path class="hsh" d="M268 820 L320 790 L352 806 L392 770 L430 812 L470 800"/><path class="hsh" d="M540 824 L586 796 L630 816 L676 780 L732 822"/>`; }
             // 手：外轮廓
-            s += `<path class="hf" d="M440 800 C420 735 392 690 370 640 C345 585 325 520 312 458 C305 424 308 404 326 398 C346 393 360 412 374 442 C388 472 408 498 426 512 C424 470 424 430 426 392 C428 320 426 262 430 228 C434 190 452 176 464 178 C484 180 492 208 492 244 C494 310 494 370 496 424 C498 340 502 240 508 188 C512 148 540 140 554 162 C562 186 562 300 566 424 C574 340 580 250 590 204 C598 172 626 168 634 192 C642 232 642 350 644 446 C650 390 656 330 664 296 C670 266 692 252 700 278 C708 306 702 410 696 524 C690 626 674 710 662 796 C600 806 500 806 440 800Z"/>`;
+            const HD = "M440 800 C420 735 392 690 370 640 C345 585 325 520 312 458 C305 424 308 404 326 398 C346 393 360 412 374 442 C388 472 408 498 426 512 C424 470 424 430 426 392 C428 320 426 262 430 228 C434 190 452 176 464 178 C484 180 492 208 492 244 C494 310 494 370 496 424 C498 340 502 240 508 188 C512 148 540 140 554 162 C562 186 562 300 566 424 C574 340 580 250 590 204 C598 172 626 168 634 192 C642 232 642 350 644 446 C650 390 656 330 664 296 C670 266 692 252 700 278 C708 306 702 410 696 524 C690 626 674 710 662 796 C600 806 500 806 440 800Z"; s += `<path class="hbrush" transform="translate(3 4)" d="${HD}"/><path class="hf" d="${HD}"/><path class="hwash" d="${HD}"/>`;
             // 指节纹（指节处的小弧）
             s += [[458, 278], [458, 336], [458, 440], [532, 262], [532, 322], [532, 438], [612, 288], [612, 340], [612, 444], [680, 340], [680, 408], [680, 472]].map(q => lens(q[0], q[1], 17)).join("");
             s += lens(340, 438, 17) + lens(366, 500, 17);
             // 掌纹：感情线 / 智慧线 / 生命线 / 拇指丘
             s += `<path class="hc" d="M428 482 C500 480 580 508 650 562"/><path class="hc" d="M426 506 C500 520 580 570 628 640"/><path class="hc" d="M420 520 C398 580 410 660 452 716"/><path class="hc" d="M372 560 C396 598 400 640 394 690"/><path class="hc" d="M452 770 C500 764 600 770 650 776"/><path class="hc" d="M456 790 C500 784 600 788 648 794"/>`;
-            // 关节与掌心的朱砂点
-            s += [[458, 308], [532, 292], [612, 314], [680, 374], [340, 468], [530, 500], [592, 520], [640, 548], [540, 590], [508, 650], [612, 620]].map(q => dot(q[0], q[1], 6)).join("") + dot(534, 500, 9);
             // 指名
             s += [[458, 160, "食指"], [532, 124, "中指"], [612, 152, "无名指"], [680, 238, "小指"], [330, 372, "拇指"]].map(q => `<text x="${q[0]}" y="${q[1]}" text-anchor="middle" class="hn">${q[2]}</text>`).join("");
             // 六个宫位
@@ -5794,7 +5810,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             for (let i = 0; i < 6; i++) { document.getElementById("hp" + i).setAttribute("class", "hp"); document.getElementById("hpt" + i).textContent = ""; }
             const hop = async (i, ms) => { const pt = HAND_PTS[i]; dot.setAttribute("cx", pt[0] + 24); dot.setAttribute("cy", pt[1] + 22); document.querySelectorAll("#divHandSvg .hp").forEach(g => g.classList.remove("on")); document.getElementById("hp" + i).classList.add("on"); await wait(ms); };
             const tag = (i, t) => { const e = document.getElementById("hpt" + i); e.textContent = e.textContent + t; document.getElementById("hp" + i).classList.add("fix"); };
-            dot.setAttribute("cx", 340); dot.setAttribute("cy", 470); dot.style.opacity = 1; await wait(500);
+            dot.setAttribute("cx", 340); dot.setAttribute("cy", 470); dot.style.opacity = 0; await wait(500);
             st(`数月：农历 ${L.m} 月，从大安起 1`); await hop(0, 600);
             for (let k = 1; k <= a; k++) { await hop(k % 6, 380); } tag(a, "月"); st(`月落在「${XLR[a][0]}」。再数日：${L.d} 日，从「${XLR[a][0]}」起 1`); await wait(800);
             for (let k = 1; k <= L.d - 1; k++) await hop((a + k) % 6, 240); await hop(b, 200); tag(b, "日"); st(`日落在「${XLR[b][0]}」。再数时：${BR[L.h - 1]}时 = 第 ${L.h} 位，从「${XLR[b][0]}」起 1`); await wait(800);
@@ -5825,7 +5841,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function divSend() { if (!divLast) return; const i = document.getElementById("msg"); if (!i) return; i.value = "🔮 " + divLast.text; send(); divToast("已发给他"); }
         function renderDivRec(b) {
             const r = db.divRecords || [];
-            b.innerHTML = r.length ? r.map(x => { const d = new Date(x.ts); return `<div class="div-rec"><div class="h"><span>${x.type} · ${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}</span><span><a onclick="divRecSend(${x.id})">发给他</a>　<a onclick="divRecDel(${x.id})">删除</a></span></div><div class="t">${x.text.replace(/</g, "&lt;")}</div></div>`; }).join("") : '<div class="div-hint" style="text-align:center;margin-top:40px">还没有记录，抽过的牌会自动存在这里</div>';
+            b.innerHTML = r.length ? r.map(x => { const d = new Date(x.ts); return `<div class="div-rec" onclick="this.classList.toggle('open')"><div class="h"><span>${x.type} · ${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}</span><span><a onclick="event.stopPropagation();divRecSend(${x.id})">发给他</a>　<a onclick="event.stopPropagation();divRecDel(${x.id})">删除</a></span></div><div class="pv">${x.text.split("\n").filter(Boolean).slice(0, 2).join(" ").replace(/</g, "&lt;")}</div><div class="t">${x.text.replace(/</g, "&lt;")}</div></div>`; }).join("") : '<div class="div-hint" style="text-align:center;margin-top:40px">还没有记录，抽过的牌会自动存在这里</div>';
         }
         function divRecDel(id) { db.divRecords = db.divRecords.filter(x => x.id !== id); saveData(); renderDiv(); }
         function divRecSend(id) { const x = db.divRecords.find(v => v.id === id); if (!x) return; document.getElementById("msg").value = "🔮 " + x.text; send(); divToast("已发给他"); }
