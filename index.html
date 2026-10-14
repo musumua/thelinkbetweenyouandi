@@ -179,9 +179,9 @@
         /* ==================== 📊 数据统计页 ==================== */
         .div-board { position:relative; margin:6px auto 8px; } .div-board .slot { position:absolute; border:1px dashed var(--border); border-radius:8px; box-sizing:border-box; display:flex; align-items:flex-end; justify-content:center; } .div-board .slot span { font-size:9px; color:var(--text-sub); padding-bottom:2px; text-align:center; line-height:1.1; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
-        .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
-        .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); }
-        .cardx .cf { transform:rotateY(180deg); background:var(--panel); border:1.5px solid var(--primary); display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-main); text-align:center; padding:2px; } .cf .cn { font-size:9px; color:var(--text-sub); } .cf .cm { font-size:14px; font-weight:bold; line-height:1.15; } .cardx.sm .cm { font-size:11px; } .cf .cr { font-size:9px; color:var(--primary); } .cf.rv .cm, .cf.rv .cn { transform:rotate(180deg); }
+        .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
+        .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
+        .cardx .cf { transform:rotateY(180deg); background:var(--bg); border:1.5px solid var(--primary); display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-main); text-align:center; padding:2px; } .cf .cn { font-size:9px; color:var(--text-sub); } .cf .cm { font-size:14px; font-weight:bold; line-height:1.15; } .cardx.sm .cm { font-size:11px; } .cf .cr { font-size:9px; color:var(--primary); } .cf.rv .cm, .cf.rv .cn { transform:rotate(180deg); }
         .div-deckwrap { display:flex; justify-content:center; margin:10px 0 6px; } .div-deck { position:relative; cursor:pointer; } .div-deck .dk { position:absolute; inset:0; } .div-deck.ready { animation:divPulse 1.4s infinite; } @keyframes divPulse { 50% { filter:drop-shadow(0 0 6px var(--primary)); } }
         .div-deck.shuf .dk { animation:divShuf .42s ease-in-out 4; } .div-deck.shuf .dk:nth-child(odd) { animation-name:divShufL; } @keyframes divShuf { 0%,100% { transform:translate(0,0) rotate(0); } 50% { transform:translate(34px,-6px) rotate(10deg); } } @keyframes divShufL { 0%,100% { transform:translate(0,0) rotate(0); } 50% { transform:translate(-34px,4px) rotate(-10deg); } }
         .div-deck.cut .dk:nth-child(n+3) { animation:divCut 1.2s ease-in-out; } @keyframes divCut { 0% { transform:translate(0,0); } 40% { transform:translate(60px,-14px); } 70% { transform:translate(60px,8px); } 100% { transform:translate(0,0); } }
@@ -194,15 +194,14 @@
         .div-fold { width:100%; display:flex; justify-content:space-between; align-items:center; border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:10px 14px; font-size:13.5px; margin-bottom:8px; }
         .div-fan { display:flex; overflow-x:auto; padding:8px 14px 12px; margin:6px 0; -webkit-overflow-scrolling:touch; } .div-fan .fc { flex:0 0 auto; border-radius:8px; background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--panel); border:2px solid var(--primary); box-sizing:border-box; cursor:pointer; animation:divIn .4s both; box-shadow:-3px 0 0 0 var(--bg), -3px 0 8px rgba(0,0,0,.35); transition:transform .12s; } .div-fan .fc:active { transform:translateY(-10px); }
         .div-cupwrap { height:92px; position:relative; margin-top:6px; } .cup { position:absolute; left:50%; top:10px; margin-left:-44px; width:88px; height:78px; background:linear-gradient(160deg, var(--primary), var(--text-sub)); clip-path:polygon(14% 0, 86% 0, 100% 100%, 0 100%); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:16px; transform-origin:50% 100%; transition:transform .45s, opacity .45s; } .cup.shake { animation:divCup .18s linear infinite; } .cup.lift { transform:translateY(-12px) rotate(-38deg) translateX(-34px); opacity:.25; } @keyframes divCup { 0% { transform:translate(-5px,0) rotate(-5deg); } 50% { transform:translate(5px,-9px) rotate(5deg); } 100% { transform:translate(-5px,0) rotate(-5deg); } }
-        .div-hand { max-width:290px; margin:6px auto 4px; } .hf { fill:var(--panel); stroke:var(--border); stroke-width:2; } .hp circle { fill:var(--bg); stroke:var(--text-sub); stroke-width:1.5; transition:all .15s; } .hp text { font-size:12px; fill:var(--text-main); } .hp text.tag { font-size:11px; fill:var(--primary); font-weight:bold; } .hp.on circle { fill:var(--primary); stroke:var(--primary); } .hp.on text { fill:var(--bg); } .hp.fix circle { stroke:var(--primary); stroke-width:2.5; } .hp.last circle { fill:var(--primary); } .hp.last text:not(.tag) { fill:var(--bg); } .hd { fill:var(--text-main); opacity:0; transition:cx .28s ease, cy .28s ease; }
+        .div-hand { max-width:300px; margin:6px auto 4px; } .hpaper { fill:#eadfc6; stroke:#b9a57f; stroke-width:2; } .hframe { fill:none; stroke:#c2b08c; stroke-width:1.5; } .hcloud ellipse { fill:#cfc2a4; opacity:.75; } .hring circle, .hring line { fill:none; stroke:#c6b690; stroke-width:1.2; } .hstar { fill:#b0503a; opacity:.8; } .hf { fill:#f4ead4; stroke:#6b5640; stroke-width:4; stroke-linejoin:round; } .hc { fill:none; stroke:#8a7458; stroke-width:2.6; stroke-linecap:round; } .hj { fill:#b0503a; opacity:.85; } .hn { font-size:22px; fill:#8a7458; letter-spacing:2px; } .hp circle { fill:#f6edd8; stroke:#8a7458; stroke-width:2; transition:all .15s; } .hp text { font-size:25px; fill:#4a3b2c; } .hp text.tag { font-size:23px; fill:#b0503a; font-weight:bold; } .hp.on circle { fill:#b0503a; stroke:#b0503a; } .hp.on text { fill:#fbf3e2; } .hp.fix circle { stroke:#b0503a; stroke-width:4; } .hp.last circle { fill:#b0503a; } .hp.last text:not(.tag) { fill:#fbf3e2; } .hp.on text.tag, .hp.last text.tag { fill:#b0503a; } .hseal rect { fill:#b0503a; opacity:.9; } .hseal text { font-size:18px; fill:#f6e8d0; } .hd { fill:#4a3b2c; opacity:0; transition:cx .28s ease, cy .28s ease; }
         .div-pop { position:absolute; left:0; right:0; top:calc(100% - 4px); z-index:30; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:10px; flex-wrap:wrap; gap:8px; box-shadow:0 10px 28px rgba(0,0,0,.4); } .div-pop button { border:1px solid var(--border); background:var(--bg); color:var(--text-main); border-radius:12px; padding:8px 12px; font-size:13px; display:flex; flex-direction:column; align-items:center; line-height:1.25; } .div-pop button small { font-size:10px; color:var(--text-sub); } .div-pop button.main { background:var(--primary); color:var(--bg); border-color:transparent; } .div-pop button.main small { color:inherit; opacity:.75; }
-        .div-table { position:relative; margin:8px 0 6px; border-radius:18px; background:radial-gradient(ellipse at center, rgba(80,120,90,.35), rgba(40,60,50,.25) 70%), var(--panel); border:1px solid var(--border); overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--panel); box-shadow:0 1px 3px rgba(0,0,0,.45); will-change:transform; }
+        .div-table { position:relative; margin:8px 0 6px; overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 1px 1px rgba(0,0,0,.12); will-change:transform; }
         .div-table .pile { position:absolute; top:6px; bottom:6px; transform:translateX(-50%); border:1.5px dashed transparent; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; cursor:pointer; padding-bottom:2px; } .div-table .pile span { font-size:11px; color:var(--text-sub); } .div-table .pile b { position:absolute; top:4px; width:22px; height:22px; border-radius:50%; background:var(--primary); color:var(--bg); font-size:13px; display:none; align-items:center; justify-content:center; } .div-table .pile.on b { display:flex; } .div-table .pile:not(.on) { border-color:var(--primary); animation:divPulse 1.4s infinite; }
-        .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--panel); box-shadow:0 0 3px rgba(0,0,0,.5); cursor:pointer; } .div-fan .fc.up { box-shadow:0 0 12px var(--primary); border-width:2px; }
-        .div-tray { position:relative; height:176px; margin:10px 0 8px; border-radius:20px; overflow:hidden; background:radial-gradient(ellipse at center, #3f7a58 0%, #2c5a40 75%, #234a35 100%); box-shadow:inset 0 0 0 5px #6b4a2f, inset 0 0 14px 8px rgba(0,0,0,.45); touch-action:none; } .gd { position:absolute; left:0; top:0; width:62px; height:62px; will-change:transform; filter:drop-shadow(2px 4px 3px rgba(0,0,0,.45)); transform:translate(-100px,0); } .gd .gs { position:absolute; left:50%; top:50%; transform:translate(-50%,-52%); font-size:21px; font-weight:bold; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.7); } .gd.land { animation:divLand .5s ease-out; }
+        .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 0 1px rgba(0,0,0,.2); cursor:pointer; } .div-fan .fc.up { box-shadow:0 2px 6px rgba(0,0,0,.18); border-width:2px; }
+        .div-tray { position:relative; height:176px; margin:10px 0 8px; border-radius:20px; overflow:hidden; background:radial-gradient(ellipse at center, #5b4a8c 0%, #46386f 72%, #382d5c 100%); box-shadow:inset 0 0 0 4px #8a77c2, inset 0 0 16px 8px rgba(24,12,58,.42); touch-action:none; } .gd { position:absolute; left:0; top:0; width:62px; height:62px; will-change:transform; filter:drop-shadow(1px 3px 3px rgba(20,8,50,.4)); transform:translate(-100px,0); } .gd .gs { position:absolute; left:50%; top:50%; transform:translate(-50%,-52%); font-size:21px; font-weight:bold; color:#fff; text-shadow:0 0 6px rgba(120,80,220,.9), 0 1px 2px rgba(40,20,90,.7); } .gd.land { animation:divLand .5s ease-out; }
         .div-caps { display:flex; gap:8px; margin-bottom:12px; } .div-caps > div { flex:1; text-align:center; border:1px solid var(--border); border-radius:12px; background:var(--panel); padding:8px 4px; } .div-caps span { display:block; font-size:11px; color:var(--text-sub); } .div-caps b { display:block; font-size:15px; margin:3px 0; color:var(--text-main); } .div-caps i { display:block; font-size:11px; color:var(--text-sub); font-style:normal; min-height:28px; line-height:1.3; }
         .mh-steps { margin:8px 0; } .mh-line { white-space:pre-wrap; font-size:13px; line-height:1.7; color:var(--text-main); border-left:3px solid var(--primary); background:var(--panel); border-radius:0 10px 10px 0; padding:6px 10px; margin-bottom:6px; animation:divIn .4s both; }
-        .hf { fill:#eec9ad !important; stroke:#b88a6a !important; } .hc { fill:none; stroke:#c49878; stroke-width:1.6; stroke-linecap:round; } .hn { font-size:10px; fill:var(--text-sub); }
         .div-stickbox { position:relative; height:230px; margin:6px auto 0; width:200px; } .tube { position:absolute; left:50%; bottom:10px; margin-left:-48px; width:96px; height:120px; border-radius:10px 10px 18px 18px; background:linear-gradient(90deg, var(--text-sub), var(--primary), var(--text-sub)); transform-origin:50% 100%; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:30px; z-index:2; } .tube i { position:absolute; bottom:100%; width:5px; background:var(--text-main); opacity:.75; border-radius:3px 3px 0 0; margin-left:-2px; } .tube.shake { animation:divTube .22s linear infinite; } @keyframes divTube { 0% { transform:rotate(-12deg) translateY(0); } 50% { transform:rotate(12deg) translateY(-8px); } 100% { transform:rotate(-12deg) translateY(0); } }
         .stick { position:absolute; left:50%; bottom:100px; margin-left:-9px; width:18px; height:96px; background:var(--text-main); border-radius:5px; opacity:0; z-index:1; transition:transform 1.1s cubic-bezier(.2,.8,.3,1), opacity .2s; display:flex; align-items:center; justify-content:center; } .stick b { writing-mode:vertical-rl; font-size:11px; color:var(--bg); } .stick.out { opacity:1; transform:translateY(-26px) translateX(34px) rotate(14deg); }
         .div-tabs { display:flex; gap:6px; padding:8px 14px; overflow-x:auto; flex-shrink:0; } .div-tabs button { flex:0 0 auto; border:1px solid var(--border); background:var(--panel); color:var(--text-sub); border-radius:14px; padding:7px 14px; font-size:13px; } .div-tabs button.on { background:var(--primary); color:var(--bg); border-color:transparent; }
@@ -2002,16 +2001,18 @@
         function galG() { return (Math.random() + Math.random() + Math.random() - 1.5) / 1.5; }
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
-            for (let i = 0; i < 2300; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: Math.random() < 0.06 ? 1.7 : 1, a: 0.25 + Math.random() * 0.55 }); }
-            for (let i = 0; i < 2600; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.1 + Math.random() * 0.34 }); }
-            for (let i = 0; i < 700; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.4 + Math.random() * 0.5 }); }
+            // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
+            for (let i = 0; i < 900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.14 + Math.random() * 0.3 }); }
+            for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.06 + Math.random() * 0.2 }); }
+            for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.22 + Math.random() * 0.3 }); }
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
             gal = { parts, bg, dust, pink, halo, shoot: null, nextShoot: 3000 };
         }
-        function galStarColor(r) { if (r < 0.2) return "255,238,196"; if (r < 0.5) return "238,228,208"; if (r < 0.8) return "180,198,228"; return "146,170,210"; }
+        // 星系星点用暖橙→玫瑰→蓝紫的色，不用纯白（纯白留给许愿星）
+        function galStarColor(r) { if (r < 0.2) return "255,208,150"; if (r < 0.5) return "222,170,150"; if (r < 0.8) return "128,142,226"; return "96,116,206"; }
         function starMakeWish() {
             const inp = document.getElementById("wishInput"); if (!inp) return; const v = (inp.value || "").trim(); if (!v) { inp.focus(); return; }
             inp.value = ""; inp.blur(); if (!db.wishStars) db.wishStars = [];
@@ -2020,14 +2021,13 @@
         }
         function galDraw(t) {
             const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
-            const bgG = ctx.createLinearGradient(0, 0, W, H); bgG.addColorStop(0, "#161923"); bgG.addColorStop(1, "#0b0d15"); ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
+            const bgG = ctx.createLinearGradient(0, 0, W, H); bgG.addColorStop(0, "#0b1022"); bgG.addColorStop(1, "#04060e"); ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
             gal.bg.forEach(s => { ctx.globalAlpha = (0.4 + 0.6 * Math.abs(Math.sin(t / 1100 + s.p))) * 0.9; ctx.fillStyle = `rgb(${s.c})`; ctx.fillRect(s.x * W, s.y * H, s.s, s.s); }); ctx.globalAlpha = 1;
-            { // 四周的泛光：不是光点，而是从边缘向内晕开的大片柔光
-              ctx.save(); ctx.globalCompositeOperation = "lighter";
-              const glow = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(0.55, `rgba(${c},${a * 0.35})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
-              const br = 0.85 + 0.15 * Math.sin(t / 2600), R = Math.max(W, H);
-              glow(0, 0, R * 0.7, "120,150,240", 0.5 * br); glow(W, H, R * 0.74, "160,130,235", 0.46 * br); glow(W, 0, R * 0.58, "110,175,240", 0.36 * br); glow(0, H, R * 0.58, "190,200,250", 0.4 * br);
-              glow(W * 0.5, 0, R * 0.5, "170,190,245", 0.26); glow(W * 0.5, H, R * 0.5, "160,170,240", 0.3); glow(0, H * 0.5, R * 0.4, "140,170,240", 0.24); glow(W, H * 0.5, R * 0.4, "170,150,240", 0.24);
+            { // 星系周围一层很淡的深蓝雾（普通混合，不叠加，不会把整张图染白）
+              ctx.save();
+              const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
+              const mist = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
+              mist(W * 0.5, H * 0.5, R * 0.62, "34,52,118", 0.22 * br); mist(W * 0.2, H * 0.15, R * 0.4, "40,48,110", 0.12); mist(W * 0.85, H * 0.9, R * 0.45, "56,40,112", 0.14);
               ctx.restore(); }
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
@@ -2036,17 +2036,17 @@
             // 伴星系（左上亮点、右下椭圆光斑）
             { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
-            // 整体柔光（奶白偏灰蓝的盘面）
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(225,208,176,.5)"); g.addColorStop(0.4, "rgba(160,172,204,.26)"); g.addColorStop(0.75, "rgba(120,138,184,.1)"); g.addColorStop(1, "rgba(110,130,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
+            // 整体柔光（暖核 + 蓝紫盘面）
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.17)"); g.addColorStop(0.75, "rgba(70,82,170,.07)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
             gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * (1.05 - p.r * 0.75)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
             // 深色尘埃带
             gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(34,22,18,.42)"); g.addColorStop(1, "rgba(34,22,18,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
             ctx.globalCompositeOperation = "lighter";
             // 粉色发光区
-            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(190,225,255,.9)"); g.addColorStop(0.4, "rgba(150,200,255,.26)"); g.addColorStop(1, "rgba(150,200,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
+            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(130,150,255,.5)"); g.addColorStop(0.4, "rgba(100,120,235,.14)"); g.addColorStop(1, "rgba(100,120,235,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
             // 明亮的核心
-            { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,252,240,1)"); g.addColorStop(0.12, "rgba(255,236,190,.85)"); g.addColorStop(0.45, "rgba(236,200,140,.3)"); g.addColorStop(1, "rgba(220,180,120,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
+            { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,244,222,.95)"); g.addColorStop(0.12, "rgba(255,222,170,.7)"); g.addColorStop(0.45, "rgba(224,176,120,.2)"); g.addColorStop(1, "rgba(210,160,110,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
             ctx.globalCompositeOperation = "source-over";
             // 流星
             if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
@@ -2054,15 +2054,15 @@
             // 愿望星
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const [x, y] = pos(w.r, w.a + omega(w.r) * t); const tw = 0.7 + 0.3 * Math.sin(t / 380 + w.ts % 9);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 5); g.addColorStop(0, `rgba(190,208,255,${0.7 * tw})`); g.addColorStop(1, "rgba(190,208,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 5, y - 5, 10, 10);
-                ctx.fillStyle = "#dbe4ff"; ctx.globalAlpha = tw; ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4); ctx.fillRect(x - 2.2 * tw, y - 0.3, 4.4 * tw, 0.6); ctx.fillRect(x - 0.3, y - 2.2 * tw, 0.6, 4.4 * tw); ctx.globalAlpha = 1;
+                if (w.arrive && nowMs < w.arrive) return; const [x, y] = pos(w.r, w.a + omega(w.r) * t); const tw = 0.82 + 0.18 * Math.sin(t / 520 + w.ts % 9);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 4); g.addColorStop(0, `rgba(255,255,255,${0.55 * tw})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 4, y - 4, 8, 8);
+                ctx.fillStyle = "#ffffff"; ctx.globalAlpha = tw; ctx.beginPath(); ctx.arc(x, y, 1.15, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + k * 16, 0, 6.283); ctx.stroke(); }
             });
             // 一颗星星从下方飞进去
             if (galFly) {
                 const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const [tx, ty] = pos(w.r, w.a + omega(w.r) * t);
-                if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(190,208,255,.9)"); g.addColorStop(1, "rgba(190,208,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#d6e0ff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
+                if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,.85)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
         }
@@ -2142,19 +2142,22 @@
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
                 // 家：开放式厨房+客厅，深灰/酒红/暖木色（参考图1）。沙发占画面大头
-                const WALL = D("#dad5cf", "#3a3844"), DK = D("#3a3c43", "#1e2026"), DK2 = D("#5a5c64", "#34363e"), RED = D("#8e2f3f", "#5a2233"), RED2 = D("#a84456", "#74303f"), WD = D("#c4956b", "#5c4535"), WDL = D("#af8059", "#4a392c"), CR = D("#e3ded6", "#9a96a6"), CR2 = D("#d2ccc3", "#847f90"), CR3 = D("#bdb7ae", "#6e6a7a"), FR = D("#f1eee9", "#6a6878"), GLO = D("#6a625c", "#e8d8a8");
+                const cands = [];
+                const candle = (x, yb, h) => { B(x, yb - h, 3, h, D("#f6ead0", "#ffe2a0")); R(x + 1, yb - h + 1, 1, Math.max(1, h - 3), D("#fff6dc", "#fff2c0")); P(x + 1, yb - h - 1, "#ffb040"); P(x + 1, yb - h - 2, "#fff0a8"); sp(x + 1, yb - h - 2, "#ffd98a", true); cands.push([x + 1, yb - h - 1]); };
+                const glowD = (x, y, r, rgb, a) => { c.save(); for (let k = 4; k >= 1; k--) { c.globalAlpha = a; c.fillStyle = `rgb(${rgb})`; const rr = r * k / 4; for (let yy = -rr; yy <= rr; yy++) for (let xx = -rr; xx <= rr; xx++) if (xx * xx + yy * yy <= rr * rr) c.fillRect(Math.round(x + xx), Math.round(y + yy), 1, 1); } c.restore(); };
+                const WALL = D("#dad5cf", "#3a3844"), DK = D("#3a3c43", "#1e2026"), DK2 = D("#5a5c64", "#34363e"), RED = D("#8e2f3f", "#5a2233"), RED2 = D("#a84456", "#74303f"), WD = D("#cdb08a", "#6a5645"), WDL = D("#b99c78", "#54453a"), CR = D("#e3ded6", "#9a96a6"), CR2 = D("#d2ccc3", "#847f90"), CR3 = D("#bdb7ae", "#6e6a7a"), FR = D("#f1eee9", "#6a6878"), GLO = D("#6a625c", "#fff3c0");
                 R(0, 0, 90, 34, WALL); R(0, 32, 90, 2, D("#cfc8c0", "#34323e"));
                 // 厨房大窗 + 两盏吊灯
                 B(2, 3, 25, 18, FR); R(4, 5, 21, 14, D("#c4e2f6", "#16204a")); R(14, 5, 1, 14, FR); R(4, 11, 21, 1, FR);
                 if (!night) { E(9, 8, 3, 1, "#fff"); E(20, 9, 3, 1, "#fff"); } else { sp(8, 8, "#fff", 1); sp(21, 15, "#fff"); }
                 L(10, 0, 10, 7, D("#444", "#aaa")); E(10, 10, 3, 3, GLO); L(20, 0, 20, 5, D("#444", "#aaa")); E(20, 8, 3, 3, GLO); if (night) { sp(10, 10, "#ffd98a", 1); sp(20, 8, "#ffd98a", 1); }
                 // 吧台
-                B(2, 24, 25, 3, WD); B(3, 27, 23, 8, DK); R(5, 29, 8, 4, DK2); R(15, 29, 8, 4, DK2);
+                B(2, 24, 25, 3, WD); B(3, 27, 23, 8, DK); R(5, 29, 8, 4, DK2); R(15, 29, 8, 4, DK2); candle(21, 24, 5); candle(8, 24, 3);
                 // 波浪镜
                 E(34, 13, 3, 10, D("#9a948e", "#53505e")); E(34, 13, 2, 9, D("#e6e8ee", "#6c7090")); L(33, 7, 33, 18, D("#fff", "#9aa0c0"));
                 // 镜下边柜：蜡烛 + 插花
                 B(28, 26, 17, 5, DK); R(30, 28, 13, 1, DK2); L(30, 31, 30, 36, DK); L(43, 31, 43, 36, DK);
-                B(30, 21, 3, 5, D("#f6ead0", "#ffe2a0")); P(31, 20, D("#ffc860", "#ffe9a0")); if (night) sp(31, 20, "#ffd98a", 1);
+                candle(30, 26, 5); candle(34, 26, 3);
                 B(38, 23, 4, 3, D("#8a7a78", "#4a4046")); L(40, 23, 38, 17, D("#5fa860", "#2f6a40")); L(40, 23, 42, 18, D("#5fa860", "#2f6a40")); L(40, 23, 40, 16, D("#5fa860", "#2f6a40"));
                 E(38, 16, 1, 1, "#f2a0b0"); E(42, 17, 1, 1, "#ffffff"); E(40, 15, 1, 1, "#f27a98"); E(41, 20, 1, 1, "#f2c0c0");
                 // 右侧落地窗 + 边桌球灯
@@ -2163,7 +2166,7 @@
                 // 木地板
                 R(0, 34, 90, 16, WD); for (let y = 37; y < 50; y += 4) R(0, y, 90, 1, WDL); for (let y = 37, i = 0; y < 50; y += 4, i++) for (let x = (i * 19) % 25; x < 90; x += 25) R(x, y - 3, 1, 3, WDL); R(0, 34, 90, 1, PX_OUT);
                 // 深色地毯（带浅色斑）
-                E(50, 46, 40, 4, D("#2a2c32", "#14161c")); for (let i = 0; i < 14; i++) R(14 + (i * 13) % 70, 43 + (i * 5) % 7, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
+                B(20, 41, 70, 9, D("#2a2c32", "#14161c")); for (let i = 0; i < 22; i++) R(22 + (i * 13) % 64, 43 + (i * 5) % 6, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
                 // 酒红高脚凳
                 for (const bx of [9, 18]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
                 // 南瓜凳
@@ -2179,14 +2182,22 @@
                 // 沙发左边的深色圆桶
                 B(35, 35, 6, 8, D("#2e3036", "#1a1c20")); R(35, 35, 6, 1, DK2); R(36, 38, 4, 1, DK2);
                 // 异形玻璃茶几 + 蜡烛 + 杯子 + 书
-                E(26, 44, 13, 3, D("#5a5b63", "#30323c")); E(26, 43, 12, 2, D("#9a9ca4", "#4a4c56")); L(16, 45, 16, 49, DK); L(36, 45, 36, 49, DK);
-                B(20, 39, 3, 4, D("#f6ead0", "#ffe2a0")); R(21, 40, 1, 2, D("#fff6dc", "#fff2c0")); sp(21, 38, "#ffd98a", 1); B(31, 39, 2, 4, D("#cfe0ea", "#8aa0b4")); B(25, 41, 7, 1, DK); 
+                E(34, 44, 13, 3, D("#5a5b63", "#30323c")); E(34, 43, 12, 2, D("#9a9ca4", "#4a4c56")); L(24, 45, 24, 49, DK); L(44, 45, 44, 49, DK);
+                candle(28, 42, 5); candle(41, 43, 3); B(36, 38, 2, 4, D("#cfe0ea", "#8aa0b4")); B(32, 41, 6, 1, DK); 
                 // 深色矮桌 + 铜托盘 + 花瓶郁金香（清晰可见）
                 B(52, 44, 31, 4, DK); R(53, 45, 29, 1, DK2); L(54, 48, 54, 50, DK); L(81, 48, 81, 50, DK);
-                B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
+                B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); candle(74, 44, 5); candle(79, 44, 3); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
                 L(65, 37, 63, 31, D("#5fa860", "#2f6a40")); L(65, 37, 67, 31, D("#5fa860", "#2f6a40")); L(65, 37, 65, 30, D("#5fa860", "#2f6a40"));
                 B(61, 28, 4, 4, "#f27a98"); B(66, 28, 4, 4, "#f2a0b0"); B(63, 25, 4, 4, "#e8607a");
-                if (night) { sp(84, 16, "#fff3c0", 1); sp(10, 10, "#ffd98a", 1); } else { sp(26, 40, "#fff", 1); sp(75, 38, "#fff"); sp(14, 38, "#fff"); }
+                if (night) {
+                    // 两盏吊灯：向下的光锥 + 灯晕
+                    for (const [lx, ly] of [[10, 10], [20, 8]]) { for (let y = ly + 3; y < 33; y++) { const half = 3 + (y - ly) * 0.5; R(lx - half, y, half * 2, 1, "rgba(255,226,150,.08)"); } glowD(lx, ly, 10, "255,214,120", 0.11); }
+                    // 右边球灯
+                    glowD(84, 16, 9, "255,232,170", 0.1);
+                    // 所有蜡烛
+                    cands.forEach(q => glowD(q[0], q[1], 5, "255,190,90", 0.09));
+                    sp(84, 16, "#fff3c0", 1); sp(10, 10, "#ffd98a", 1); sp(20, 8, "#ffd98a", 1);
+                } else { sp(26, 40, "#fff", 1); sp(75, 38, "#fff"); sp(14, 38, "#fff"); }
             } else if (kind === "small") {
                 // 小客厅：傍晚粉紫、城市夜景、落地灯、藤编摇椅（参考图2）
                 const FLR = D("#d49a64", "#8a5a3a"), FLRL = D("#c0864f", "#764c30"), SOF = D("#d6cdd6", "#8e869a"), SOFL = D("#e4dce4", "#a8a0b4"), WDC = D("#e0b280", "#9a7a54"), WDD = D("#c8935c", "#6a4a30");
@@ -2195,11 +2206,11 @@
                 for (let i = 0; i < 3; i++) { const wx = 40 + i * 17; B(wx, 2, 16, 21, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 14, 19, D("#a8cdee", "#0e1238")); skyline(wx + 1, wx + 15, 22, 2 + i * 3); if (!night) E(wx + 6, 7, 3, 1, "#fff"); else for (let k = 0; k < 34; k++) { const lx = wx + 2 + (k * 5 + i * 3) % 13, ly = 8 + (k * 7 + i) % 13; P(lx, ly, k % 3 ? "#ffd98a" : "#fff3c0"); } }
                 R(40, 21, 50, 3, D("#e8dede", "#8a7a98")); // 窗台
                 // 窗台上的书和小鹿、绿植
-                B(80, 14, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 15, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 18, 2, 4, D("#e89aa8", "#a86a78")); P(63, 17, D("#e89aa8", "#a86a78")); E(52, 20, 3, 2, D("#5fae60", "#2f6a40")); E(72, 20, 2, 2, D("#5fae60", "#2f6a40"));
+                B(80, 14, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 15, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 18, 2, 4, D("#e89aa8", "#a86a78")); P(63, 17, D("#e89aa8", "#a86a78")); E(52, 20, 3, 2, D("#5fae60", "#2f6a40")); E(72, 20, 2, 2, D("#5fae60", "#2f6a40")); E(45, 20, 2, 2, D("#5fae60", "#2f6a40"));
                 // 粉色窗帘
                 B(27, 0, 12, 28, D("#e8c4c4", "#8a5a6e")); for (let x = 29; x < 37; x += 3) R(x, 1, 1, 26, D("#d8aeb0", "#704a5e"));
                 // 龟背竹
-                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 21, 7, 4, D("#3a8a52", "#225a3a")); E(4, 27, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828"));
+                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 21, 7, 4, D("#3a8a52", "#225a3a")); E(4, 27, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828")); E(3, 20, 4, 3, D("#3a8a52", "#225a3a")); E(12, 17, 4, 3, D("#2a6a42", "#18402c")); E(15, 25, 4, 3, D("#3a8a52", "#225a3a")); E(2, 34, 4, 3, D("#2f7a4a", "#1c4a34")); /* 落地盆栽 */ B(3, 37, 9, 7, D("#d8c6ae", "#8a7a68")); R(4, 39, 7, 1, D("#c4b098", "#76685a")); leaf(7, 36, -2, -2, 4, D("#58a85a", "#2f5a3a")); leaf(7, 36, 2, -2, 4, D("#6fbf6a", "#38704a")); leaf(7, 36, 0, -3, 5, D("#4a9a52", "#2a5a38")); /* 花瓶白花（靠窗帘前） */ B(31, 33, 4, 7, D("#f2e8e0", "#b0a090")); L(33, 33, 29, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 35, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 32, 26, D("#6a9a60", "#2f5a3a")); L(33, 33, 34, 25, D("#6a9a60", "#2f5a3a")); for (const q of [[29, 26], [35, 26], [32, 25], [34, 24], [30, 28], [36, 28]]) { P(q[0], q[1], "#fff"); P(q[0] + 1, q[1], D("#f6e0f6", "#e8d0e8")); }
                 // 落地灯（三脚架）
                 B(17, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(22, 11, 2, 2, D("#e8e0d0", "#8a8090")); L(23, 13, 18, 31, D("#c8a070", "#7a5a3a")); L(23, 13, 28, 31, D("#c8a070", "#7a5a3a")); L(23, 13, 23, 31, D("#c8a070", "#7a5a3a")); if (night) sp(23, 7, "#ffe9b0", 1);
                 // 木地板
@@ -2207,9 +2218,9 @@
                 // 地毯（灰白锯齿纹）
                 E(46, 45, 30, 5, D("#cfcac6", "#6e6a78")); E(46, 45, 28, 4, D("#e6e2de", "#8a8694")); for (let y = 42; y <= 48; y += 2) for (let x = 22 + (y % 4); x < 70; x += 4) { P(x, y, D("#6a6a70", "#4a4a56")); P(x + 1, y + 1, D("#6a6a70", "#4a4a56")); }
                 // 窗下长沙发（占大半宽度）+ 靠垫
-                B(22, 24, 64, 9, SOF); B(18, 25, 6, 15, SOFL); B(84, 25, 6, 15, SOFL); B(22, 31, 62, 8, SOFL); R(24, 33, 58, 1, D("#c4bccc", "#7a7288")); B(20, 39, 3, 3, WDD); B(85, 39, 3, 3, WDD); R(22, 38, 62, 1, D("#c8935c", "#6a4a30"));
-                B(26, 19, 10, 9, D("#f0eaec", "#a8a0b2")); B(38, 21, 11, 8, D("#e8e0ea", "#a09aae")); B(52, 19, 12, 9, D("#e4dcea", "#9890a8")); B(66, 22, 9, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 4; i++) L(67 + i * 2, 23, 67 + i * 2, 28, D("#b8b0c4", "#7a7288")); B(74, 20, 10, 8, D("#e8e4ee", "#a8a2b8"));
-                B(44, 28, 7, 4, D("#a8b8d8", "#6a7498")); R(45, 29, 5, 1, D("#c8d4ec", "#8a94b8")); B(76, 31, 10, 6, D("#a8b0a0", "#5e6a5a")); R(77, 33, 8, 1, D("#c8d0c0", "#7a8a76")); B(62, 30, 9, 3, D("#e8d8b8", "#a89870"));
+                B(40, 24, 46, 9, SOF); B(36, 25, 6, 15, SOFL); B(84, 25, 6, 15, SOFL); B(40, 31, 44, 8, SOFL); R(42, 33, 40, 1, D("#c4bccc", "#7a7288")); B(38, 39, 3, 3, WDD); B(85, 39, 3, 3, WDD); R(40, 38, 44, 1, D("#c8935c", "#6a4a30"));
+                B(43, 19, 10, 9, D("#f0eaec", "#a8a0b2")); B(54, 21, 10, 8, D("#e8e0ea", "#a09aae")); B(65, 19, 10, 9, D("#e4dcea", "#9890a8")); B(75, 22, 8, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 3; i++) L(76 + i * 2, 23, 76 + i * 2, 28, D("#b8b0c4", "#7a7288"));
+                B(46, 28, 7, 4, D("#a8b8d8", "#6a7498")); R(47, 29, 5, 1, D("#c8d4ec", "#8a94b8")); B(76, 31, 10, 6, D("#a8b0a0", "#5e6a5a")); R(77, 33, 8, 1, D("#c8d0c0", "#7a8a76")); B(60, 30, 9, 3, D("#e8d8b8", "#a89870"));
                 // 圆木茶几 + 花瓶 + 杯子 + 杂志
                 E(46, 40, 11, 3, WDC); E(46, 39, 10, 2, D("#f0cfa0", "#b08e66")); L(38, 42, 36, 47, WDD); L(54, 42, 56, 47, WDD); L(46, 43, 46, 48, WDD);
                 B(44, 33, 3, 5, D("#f2e8e0", "#b0a090")); L(45, 33, 43, 29, D("#6a9a60", "#2f5a3a")); L(45, 33, 47, 29, D("#6a9a60", "#2f5a3a")); P(43, 28, "#fff"); P(47, 28, "#fff"); P(45, 27, "#fff"); P(42, 30, "#f6e0f6"); P(48, 30, "#f6e0f6");
@@ -2773,7 +2784,7 @@
             { const o = db.dateOngoing; if (o && !o.endNotified && Date.now() - o.startTs >= DATE_MIN * 60000) { o.endNotified = true; changed = true; const nm = db.other.name || "他"; sendRealNotification(nm, "约会结束啦，来写写今天的轨迹吧"); if (!isMainChatViewOpen()) showInAppBanner(nm, "约会结束啦，来写写今天的轨迹吧"); if (document.visibilityState === "visible" && !isMainChatViewOpen() && document.getElementById("homeScreen").style.display !== "none") setTimeout(dateOpenWrite, 300); } }
             // 他主动约会：每天一次，随机挑一个约会地点（需要至少有一个地点，且没有进行中的约会）
             { const ymd = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(), hr = now.getHours();
-              if (!db.dateOngoing && (db.datePlaces || []).length && hr >= 10 && hr < 21 && db.dateAutoDay !== ymd && !replyBusy && Math.random() < 0.0001 * (db.freq.dateAutoMul || 1)) {
+              if (!db.dateOngoing && (db.datePlaces || []).length && hr >= 10 && hr < 21 && db.dateAutoDay !== ymd && !replyRunning && !db.replyDue && Math.random() < 0.0001 * (db.freq.dateAutoMul || 1)) {
                   db.dateAutoDay = ymd; const pl = db.datePlaces[Math.floor(Math.random() * db.datePlaces.length)], nm = db.other.name || "他";
                   db.dateOngoing = { placeId: pl.id, placeName: pl.name, weather: "", items: [], startTs: Date.now(), sentence: "", by: "him" };
                   db.chat.push({ type: "date-invite", text: pl.name, sub: nm + "带你去约会啦", time: now.getHours().toString().padStart(2, "0") + ":" + now.getMinutes().toString().padStart(2, "0") }); changed = true;
@@ -2814,10 +2825,15 @@
                 if (currentHomePage !== 1) { goToHomePage(1); return true; }
                 return false;
             }
-            let gn = 0; const pushGuard = () => { try { history.pushState({ guard: 1 }, "", "#g" + (++gn)); } catch (e) { } };
-            history.replaceState({ base: 1 }, ""); pushGuard();
+            // 守卫记录用同一个网址（不带 #g1 这类后缀），并把层号存在 state 里：
+            // 刷新页面时沿用已有的守卫层，不再往浏览器历史里追加记录，所以历史里这个网站只会有一条
+            let gn = 0, depth0 = 1; const pushGuard = () => { try { history.pushState({ guard: 1, i: ++gn }, ""); } catch (e) { } };
+            { const hs = history.state;
+              if (hs && hs.guard) { gn = hs.i || 1; depth0 = gn; }
+              else if (hs && hs.base) { pushGuard(); }
+              else { try { history.replaceState({ base: 1 }, ""); } catch (e) { } pushGuard(); } }
             // 浏览器会忽略“没有用户操作就加入的历史记录”，所以在用户第一次触摸时、以及每次抬手时都确保有一层守卫
-            let exiting = false, touched = false, depth = 1; const TARGET = 3; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层，边缘滑动一次只消耗一层
+            let exiting = false, touched = false, depth = depth0; const TARGET = 3; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层，边缘滑动一次只消耗一层
             const ensureGuard = () => { touched = true; while (depth < TARGET) { pushGuard(); depth++; } };
             window.addEventListener("beforeunload", e => { if (touched && !exiting) { e.preventDefault(); e.returnValue = ""; } });
             ["pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
@@ -2928,7 +2944,8 @@
         }
         function sendRealNotification(title, body) {
             if (!("Notification" in window) || Notification.permission !== "granted") return;
-            try { const nt = new Notification(title, { body }); nt.onclick = () => { try { window.focus(); } catch (e) {} goToChatFromNotification(); nt.close(); }; } catch (e) {}
+            try { const nt = new Notification(title, { body, tag: "star-chat" }); nt.onclick = () => { try { window.focus(); } catch (e) {} goToChatFromNotification(); nt.close(); }; }
+            catch (e) { try { navigator.serviceWorker && navigator.serviceWorker.getRegistration().then(r => r && r.showNotification(title, { body, tag: "star-chat" })); } catch (e2) {} }
         }
         // 点通知：关掉所有打开的页面/弹窗，回到聊天窗
         function goToChatFromNotification() {
@@ -2964,15 +2981,18 @@
             else if (!open) showInAppBanner(db.other.name || "他", previewText, null);
         }
         // 收到一条来自"他"的新消息时统一调用：更新未读数 + 应用内横幅 + （切到后台时）真实系统通知
+        // 聊天窗被别的页面/弹窗盖住时，用户也看不到新消息，同样要提醒
+        function chatIsCovered() { return !!document.querySelector(".pyq-full-page.open, .universal-modal.open"); }
         function notifyIncomingOtherMessage(previewText) {
-            if (!isMainChatViewOpen()) {
+            const inChat = isMainChatViewOpen(), nm = db.other.name || "他";
+            if (!inChat) {
                 db.unreadCount = (db.unreadCount || 0) + 1;
                 saveData(); renderHomeScreen();
             }
             if (document.hidden) {
-                sendRealNotification(db.other.name || "他", previewText);
-            } else if (!isMainChatViewOpen()) {
-                showInAppBanner(db.other.name || "他", previewText, () => openMainChatView());
+                sendRealNotification(nm, previewText);
+            } else if (!inChat || chatIsCovered()) {
+                showInAppBanner(nm, previewText, () => openMainChatView());
             }
         }
 
@@ -3352,7 +3372,7 @@
         // ==================== 🌟 全新高阶清理维护系统 ====================
         function clearChatHistory() {
             if (confirm("确定要清空全部本地聊天记录和朋友圈记录吗？字卡、信箱不会受影响。")) {
-                db.chat = []; db.pyqPosts = []; db.replyQueue = [];
+                db.chat = []; db.pyqPosts = []; db.replyDue = 0;
                 saveData();
                 renderChat(); renderPyqStream();
                 alert("聊天记录和朋友圈记录已清空。");
@@ -3394,7 +3414,7 @@
                 const now = new Date();
                 db.chat.push({ me: true, img: data, time: now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0'), timeLabel: `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日` });
                 saveData(); renderChat();
-                queueReply(1200);
+                scheduleReply();
             });
             e.target.value = "";
         };
@@ -3598,7 +3618,7 @@
             return words.join(" ");
         }
         function hasFreeWords() { return Object.values(db.freeWords || {}).reduce((n, a) => n + a.length, 0) >= 2; }
-        let recentCardTexts = [], replyBusy = false, replyBusySince = 0;
+        let recentCardTexts = [], replyRunning = false;
         function triggerRandomStarAction() {
             initAudio();
             if (Math.random() * 100 < (db.freq.callPct === undefined ? 3 : db.freq.callPct)) { triggerIncomingCallMock(); return; }
@@ -3938,7 +3958,6 @@
             bar.innerHTML = `<div style="flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;"><b style="color:var(--primary);">回复 ${authorName}：</b><span style="color:var(--text-sub);">${preview}</span></div><button class="rp-close" onclick="cancelReply()">✕</button>`;
         }
 
-        let replyPendingUntil = 0;
         function send() {
             const input = document.getElementById("msg"); const text = input.value.trim(); if (!text) return;
             initAudio(); playSound('send');
@@ -3956,33 +3975,28 @@
             pendingReplyIndex = null; renderReplyPreview();
             input.value = ""; saveData(); forceChatBottom = true; renderChat(); setTimeout(() => { forceChatBottom = false; }, 200);
 
-            // 已读不回：开启后只标记已读，不再触发自动回复
-            const f = db.freq;
-            const rMin = parseFloat(f.replyMin) || 1; const rMax = parseFloat(f.replyMax) || 5;
-            const replyBaseDelay = (rMin + Math.random() * (rMax - rMin)) * 1000;
-            replyPendingUntil = Date.now() + 120000; if (db.next) delete db.next.auto;
-            // 我连发的几条算一组：他还没回完之前再发的，都并进这一组，不会多回一轮
-            if (replyBusy || (db.replyQueue && db.replyQueue.length)) return;
-            queueReply(Math.max(50, replyBaseDelay));
+            scheduleReply();
         }
-        // 回复队列：每发一句就排一次回复，按顺序一条条回；定时器和心跳都会驱动
-        function queueReply(ms) {
-            if (!db.replyQueue) db.replyQueue = []; if (replyBusy || db.replyQueue.length) return;
-            const f = db.freq, rMin = Math.max(0, parseFloat(f.replyMin) || 1) * 1000, rMax = Math.max(rMin + 500, (parseFloat(f.replyMax) || 5) * 1000);
-            const total = pickBubbleCount(), offs = []; for (let k = 0; k < total; k++) offs.push(rMin + Math.random() * (rMax - rMin)); offs.sort((a, b) => a - b);
-            for (let k = 1; k < offs.length; k++) if (offs[k] - offs[k - 1] < 700) offs[k] = offs[k - 1] + 700; // 同一轮里相邻两条至少隔 0.7 秒
-            const pct = f.readNoReplyPct === undefined ? 0 : f.readNoReplyPct, first = Math.max(50, offs[0]);
-            db.replyQueue.push({ due: Date.now() + first, rnr: Math.random() * 100 < pct, total, gaps: offs.map(v => v - offs[0]) }); saveData();
-            setTimeout(pumpReplies, first + 20);
-            setTimeout(() => { const t = document.getElementById("typing"); if (t && db.replyQueue.length && !replyBusy) t.style.display = "flex"; }, Math.max(0, first - 1300));
+        // 回复：我发消息后，等「回复前等待」秒，他回「气泡数」条。我连发的都算同一轮，不会多回。
+        function scheduleReply() {
+            if (db.replyDue) return; // 这一轮已经排上了，新发的并进来
+            const f = db.freq, a = Math.max(0, parseFloat(f.replyMin) || 1), b = Math.max(a, parseFloat(f.replyMax) || 5);
+            const wait = (a + Math.random() * (b - a)) * 1000;
+            db.replyDue = Date.now() + wait; if (db.next) delete db.next.auto; saveData();
+            setTimeout(runReply, wait + 30);
+            setTimeout(() => { const t = document.getElementById("typing"); if (t && db.replyDue && !replyRunning) t.style.display = "flex"; }, Math.max(0, wait - 1300));
         }
-        function pumpReplies() {
-            const q = db.replyQueue; if (!q || !q.length) return; const now = Date.now();
-            if (replyBusy && now - replyBusySince > 120000) replyBusy = false;
-            if (replyBusy || q[0].due > now) return;
-            const ent = q.shift(); replyBusy = true; replyBusySince = now; saveData();
-            if (ent.rnr) { db.chat.forEach(m => { if (m.me) m.readReceipt = true; }); const t0 = document.getElementById("typing"); if (t0) t0.style.display = "none"; hisBubbleNow({ text: "（已读不回）", readNoReply: true }); replyBusy = false; return; }
-            try { sendBurst(ent.total || pickBubbleCount(), false, () => { replyBusy = false; setTimeout(pumpReplies, 600); }, ent.gaps); } catch (e) { replyBusy = false; console.error("reply failed", e); }
+        function runReply() {
+            if (!db.replyDue || replyRunning || Date.now() < db.replyDue) return;
+            db.replyDue = 0; replyRunning = true; saveData();
+            const finish = () => { replyRunning = false; };
+            const pct = db.freq.readNoReplyPct === undefined ? 0 : db.freq.readNoReplyPct;
+            if (Math.random() * 100 < pct) {
+                db.chat.forEach(m => { if (m.me) m.readReceipt = true; });
+                const t0 = document.getElementById("typing"); if (t0) t0.style.display = "none";
+                hisBubbleNow({ text: "（已读不回）", readNoReply: true }); finish(); return;
+            }
+            try { sendBurst(pickBubbleCount(), false, finish); } catch (e) { finish(); console.error("reply failed", e); }
         }
         function hisBubbleNow(extra) {
             const n = new Date();
@@ -3990,14 +4004,7 @@
             saveData(); renderChat();
         }
         // 他连发 total 个气泡。pro=true 是他主动发的（每个气泡都带 ★），false 是回复（不带）
-        function makeBurstGaps(total) {
-            const f = db.freq, rMin = Math.max(0, parseFloat(f.replyMin) || 1) * 1000, rMax = Math.max(rMin + 500, (parseFloat(f.replyMax) || 5) * 1000);
-            const offs = []; for (let k = 0; k < total; k++) offs.push(rMin + Math.random() * (rMax - rMin)); offs.sort((x, y) => x - y);
-            for (let k = 1; k < offs.length; k++) if (offs[k] - offs[k - 1] < 700) offs[k] = offs[k - 1] + 700;
-            return offs.map(v => v - offs[0]);
-        }
-        function sendBurst(total, pro, done, gaps) {
-            if (!gaps) gaps = makeBurstGaps(total);
+        function sendBurst(total, pro, done) {
             let i = 0; const typing = document.getElementById("typing");
             const step = () => {
                 if (typing) typing.style.display = "none";
@@ -4005,11 +4012,10 @@
                 if (i === 0 && !pro && hasFreeWords() && Math.random() < fp) b = { text: makeFreeSentence() };
                 else if (i === 0 && !pro && db.otherEmojis.length && Math.random() < ep) b = { img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)] };
                 else { const cards = getSignalCards(); if (cards.length) b = { text: pickMergedTexts(cards).join("\n") }; }
-                if (b) { if (pro) b.proactive = true; hisBubbleNow(b); if (pro && i === 0) notifyIncomingOtherMessage(b.text ? b.text.split("\n")[0] : "[表情]"); }
+                if (b) { if (pro) b.proactive = true; hisBubbleNow(b); notifyIncomingOtherMessage(b.text ? b.text.split("\n")[0] : "[表情]"); }
                 i++;
                 if (i >= total) { if (done) done(); return; }
-                const f = db.freq, rMin = parseFloat(f.replyMin) || 1, rMax = parseFloat(f.replyMax) || 5;
-                const gap = gaps && gaps[i] !== undefined ? Math.max(500, gaps[i] - gaps[i - 1]) : 1700 + Math.random() * 2600;
+                const gap = 1200 + Math.random() * 1800; // 同一轮里两条气泡间隔 1.2–3 秒
                 if (typing) { typing.style.display = "none"; setTimeout(() => { if (typing) typing.style.display = "flex"; }, Math.max(0, gap - 1200)); }
                 setTimeout(step, gap);
             };
@@ -4061,8 +4067,8 @@
                 if (now >= db.next[key]) { db.next[key] = now + delayFn(); return true; }
                 return false;
             };
-            pumpReplies();
-            if (db.autoMessageEnabled && now > replyPendingUntil && !replyBusy && !(db.replyQueue && db.replyQueue.length) && due("auto", () => rnd(f.randMin || 15, f.randMax || 45) * 60000)) triggerRandomStarAction();
+            runReply();
+            if (db.autoMessageEnabled && !replyRunning && !db.replyDue && due("auto", () => rnd(f.randMin || 15, f.randMax || 45) * 60000)) triggerRandomStarAction();
             if (due("pyq", () => rnd(f.pyqMin || 2, f.pyqMax || 6) * 3600000)) postHisPyq();
             if (due("status", () => (parseFloat(f.statusEvery) || 10) * 60000)) rollOtherStatus();
             if (due("missing", () => (parseFloat(f.missingEvery) || 10) * 60000)) cycleMissingQuote(false);
@@ -4532,7 +4538,7 @@
                 const img = document.createElement("img"); img.src = imgData;
                 img.onclick = () => {
                     const now = new Date(); db.chat.push({ me: true, img: imgData, time: now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0'), timeLabel: `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日` });
-                    closeBottomEmojiModal(); saveData(); renderChat(); queueReply(1200);
+                    closeBottomEmojiModal(); saveData(); renderChat(); scheduleReply();
                 };
                 eBox.appendChild(img);
                 attachLongPressDelete(img, () => {
@@ -5419,6 +5425,98 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         const HEX = [["乾", "履", "同人", "无妄", "姤", "讼", "遁", "否"], ["夬", "兑", "革", "随", "大过", "困", "咸", "萃"], ["大有", "睽", "离", "噬嗑", "鼎", "未济", "旅", "晋"], ["大壮", "归妹", "丰", "震", "恒", "解", "小过", "豫"], ["小畜", "中孚", "家人", "益", "巽", "涣", "渐", "观"], ["需", "节", "既济", "屯", "井", "坎", "蹇", "比"], ["大畜", "损", "贲", "颐", "蛊", "蒙", "艮", "剥"], ["泰", "临", "明夷", "复", "升", "师", "谦", "坤"]];
         const XLR = [["大安", "安稳、静待，事情平顺"], ["留连", "拖延、纠缠，慢一点会好"], ["速喜", "好消息很快，宜主动"], ["赤口", "口舌是非，说话留余地"], ["小吉", "小有收获，贵人相助"], ["空亡", "落空、不确定，先放一放"]];
         const BR = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+        // ---------- 占卜释义（详细版）：卡面仍显示短关键词，结果里给出详细解读 ----------
+        const MAJOR_DT = [
+            ["新旅程的起点，带着纯粹的好奇与信任迈出第一步。不必等准备万全，轻装上路反而是你的优势。", "冲动、不顾后果，或因恐惧而迟迟不敢开始。先看清脚下的路，再决定要不要跳。"],
+            ["你手里已经有需要的资源与才能，现在是把想法变成行动的时候，主动出手会有成效。", "能力没有用在正处：可能言行不一、心思分散，或有人在耍手段。先把目标说清楚，别急着炫技。"],
+            ["答案藏在直觉与沉静里，暂时不必追问。多观察、多倾听内心的声音，有些信息还没有浮出水面。", "压抑感受、隐瞒真话或忽视直觉；也可能是对方有所保留。别靠猜测下结论。"],
+            ["丰盛、被爱与被滋养，感情与生活都有温柔的成长。适合照顾自己，也享受创造的乐趣。", "付出过度或过分依赖，创造力停滞。学会先照顾好自己，再去给予别人。"],
+            ["需要规则、结构与稳定的掌控，用理性和责任把事情做扎实。是可靠的力量，也代表权威与秩序。", "过于强硬、控制欲强，或秩序被打乱。放下僵硬的姿态，才能听见别人的声音。"],
+            ["遵循传统与经验，向可信赖的人或体系请教。承诺、仪式与共同的价值观会带来安稳。", "墨守成规，或被条条框框困住。是时候按自己的价值观重新做选择了。"],
+            ["关系中的契合与真心的选择，价值观一致带来深层连结；也提示重要的抉择要对得起自己的心。", "关系失衡、犹豫不决或言行不一。先面对自己真正想要什么，再谈选择。"],
+            ["凭意志与专注向目标推进，内在的矛盾被统一，胜利靠自律取得。", "失去方向、用力过猛，或被情绪牵着走。停一下，把缰绳重新握稳。"],
+            ["用耐心与温柔化解野性，真正的勇气是柔韧而不是蛮力。你有足够的内在力量面对眼前的困难。", "自我怀疑、情绪失控或精力透支。先安抚好自己，再谈克服。"],
+            ["适合独处、内省与寻找内心的光。沉淀之后会有清晰的指引，也可能遇到智者的点拨。", "把独处变成了逃避，或长期孤立自己。试着走出来，让别人靠近一点。"],
+            ["局势出现转机，周期转到有利的一面。顺势而为，抓住变化带来的机会。", "时机未到、运势低迷，或在重复旧的模式。接受起落，别硬逆着潮流走。"],
+            ["公平、诚实与因果。做出理性的判断，事情会得到应有的结果，也提醒你为自己的选择负责。", "偏见、不公或逃避责任。重新审视事实，别只听一面之词。"],
+            ["暂停并换个角度看，通过放下与等待获得新的领悟。短期的牺牲，换来长远的清明。", "徒劳的拖延与无谓的牺牲。如果一直卡住，该决定要不要改变做法了。"],
+            ["旧阶段的结束与新生。放下不再属于你的东西，才能腾出位置给新的开始，这个变化是必要的。", "抗拒结束、抓着过去不放，让转变变得更痛苦。接受它，才能真正翻页。"],
+            ["调和、节奏与耐心，在两个极端之间找到平衡。慢慢融合不同的部分，疗愈正在发生。", "失衡、过度或急于求成。回到适度，别一下子把自己推到极限。"],
+            ["欲望、依赖与执念的束缚，提示你正被某种习惯或关系绑住。看清它，才有出路。", "开始挣脱、觉醒，意识到锁链其实可以自己解开。恢复自由需要一点勇气。"],
+            ["突如其来的变故打破旧有的结构，虽然震荡，却把虚假的东西清除掉。废墟之上才能重建。", "灾变被拖延、余震不断，也可能是你在抗拒一件必须发生的改变。"],
+            ["希望、疗愈与信心重新回来。保持开放与真诚，会有温柔的指引。", "失落、对未来缺乏信心。记得微光仍在，先照顾好自己的状态。"],
+            ["不安、迷雾与潜意识的浮动。事情还看不清，情绪容易把它放大，先别急着下结论。", "迷雾渐渐散开，真相与恐惧得以被面对，情绪趋于稳定。"],
+            ["喜悦、坦率与成功，一切明朗起来。适合直接表达，享受被温暖照亮的状态。", "快乐被暂时遮住，或过于乐观。好事仍在，只是需要多一点耐心。"],
+            ["觉醒与召唤。回顾过去之后做出重要的决定，给自己一个新的开始，也意味着宽恕与重生。", "自责、犹豫，或不愿放下过去。听见内心的召唤，才能继续往前走。"],
+            ["圆满、完成与整合，一个周期顺利收尾。你得到了应得的成果，也准备好迈向更大的舞台。", "差最后一步、迟迟没有完成，或舍不得结束。把遗漏的环节补上，就能收官。"]
+        ];
+        const RANK_DT = [
+            ["{d}方面出现新的开端与契机，像一颗种子递到你手里，趁早行动。", "{d}上的机会被错过或延迟，也可能是自己还没准备好接住。先整理心态再出发。"],
+            ["{d}上面临选择，或需要在两件事之间保持平衡。想兼顾两边，就要有取舍。", "{d}上犹豫不决、失衡，拖得越久越消耗。试着先定一个小的决定。"],
+            ["{d}上开始成长与合作，初步成果显现，与人配合会更顺利。", "{d}上进展受阻或意见分歧。先把分工与彼此的期待沟通清楚。"],
+            ["{d}上进入稳固与暂歇的阶段，适合巩固已有的成果，好好休整。", "{d}上停滞、倦怠，安稳变成了僵住。稍微动一动，换换环境。"],
+            ["{d}上出现冲突与变动，竞争和摩擦让人不适，但也在逼你看清自己的立场。", "{d}上的冲突趋于缓和，开始走出低谷。放下对抗，会轻松很多。"],
+            ["{d}上顺遂与互助，得到帮助或回到和谐，适合分享与感恩。", "{d}上沉湎过去、关系失衡，或帮助变成了负担。看看现在真正需要的是什么。"],
+            ["{d}上需要坚持与评估，守住自己的立场，也要判断下一步值不值得。", "{d}上动摇、分心，或想逃避。先分清哪些才是真正重要的。"],
+            ["{d}上专注行动，进度加快，用心打磨细节会有成效。", "{d}上仓促或卡住，忙乱却没有方向。放慢一点，先理顺步骤。"],
+            ["{d}上接近完成，已经有不少积累，再坚持一下就能收获，也要保护好成果。", "{d}上疲惫、过度担忧或防备过头。给自己留一点放松的空间。"],
+            ["{d}上走到一个周期的圆满，成果很多，同时背负的责任也不轻。", "{d}上终于卸下重担，或负担重到难以支撑。该放手的放手，也可以找人分担。"],
+            ["{d}上有好奇与新消息，适合学习、尝试，带着开放的心去看一看。", "{d}上不够成熟、拖延，或消息迟迟不来。别光想，先迈出一小步。"],
+            ["{d}上积极追求与行动，热情推进，方向明确时会很有冲劲。", "{d}上冲动、莽撞，或三分钟热度。先看清目标再冲。"],
+            ["{d}上以成熟的温柔去滋养与洞察，懂得倾听，也守得住自己的边界。", "{d}上情绪化、依赖或敏感过度。先把自己的心安顿好。"],
+            ["{d}上有掌控力与成熟的判断，能担起责任，值得信赖，适合做稳妥的决定。", "{d}上专横、冷漠或过度控制。放松掌控，才能换来信任。"]
+        ];
+        const SUIT_DOM = ["行动、事业与热情", "感情、关系与内心感受", "想法、沟通与决定", "金钱、工作与日常生活"];
+        function tarotDetail(idx, rev) { if (idx < 22) return MAJOR_DT[idx][rev ? 1 : 0]; const k = idx - 22, si = Math.floor(k / 14), ri = k % 14; return RANK_DT[ri][rev ? 1 : 0].replace(/\{d\}/g, SUIT_DOM[si]); }
+        // 寻物：牌面对应的“位置线索”
+        const MAJOR_LOC = ["外出途中、户外，或随身带着出门的包里", "工作台、桌面上，摆着一堆工具的地方", "书本、抽屉深处等隐蔽、不容易被看到的地方", "卧室、有花草或柔软织物（床、沙发、靠垫）附近", "办公桌、硬质的柜子或需要钥匙才能打开的地方", "书房、书架或摆放正式文件的位置", "在另一个人那里，或和另一件东西放在一起", "车里、交通工具上，或在路上被带走了", "宠物或孩子常活动的区域，被压在下面或被叼走", "角落、阁楼、储物间等安静偏僻的地方", "圆形的物品旁，或经常被转动、挪动的地方", "文件堆、桌面，整整齐齐放着的地方", "被倒着放、挂着，或放在高处悬着的位置", "已经被丢弃、清理掉，或在垃圾桶、废旧物品中", "水杯、饮料、液体旁边，或混在其他东西里", "被藏起来，或被别人占着不还", "高处，被碰落、摔坏，或掉到了低处", "窗边、户外，夜里光线下容易看见的地方", "暗处、夜里常去的地方，或水边，看不清楚", "光线充足的窗台、明亮处，一眼就能看到", "被翻出来的旧物堆里，或之前整理过的地方", "已经整理好、归位，或在离家较远的地方"];
+        const SUIT_LOC = ["靠近热源、灯具、电器、厨房，或朝南的地方", "水边、厨房水槽、浴室，或杯盘、容器附近", "高处、窗边、书桌、文件堆，或朝东的位置", "地面、包里、抽屉、储物柜，或朝北的位置"];
+        function tarotLoc(idx) { if (idx < 22) return MAJOR_LOC[idx]; const k = idx - 22, ri = k % 14; return SUIT_LOC[Math.floor(k / 14)] + (ri >= 10 ? "；牌面是人物，东西可能在某个人手里，或被人动过" : ""); }
+        function tarotSummary(cards) {
+            const n = cards.length, rv = cards.filter(c => c.rev).length, maj = cards.filter(c => c.idx < 22).length, cnt = [0, 0, 0, 0]; cards.forEach(c => { if (c.idx >= 22) cnt[Math.floor((c.idx - 22) / 14)]++; });
+            const out = []; if (maj * 2 >= n && n > 2) out.push("大牌占了一半以上，说明这件事牵动的是比较深的人生课题，而不只是眼前的小事。"); else if (maj === 0 && n > 2) out.push("没有大牌，说明整件事偏日常、可以靠自己的努力去调整。");
+            const top = cnt.indexOf(Math.max(...cnt)); if (cnt[top] >= 2 && cnt[top] * 2 >= n - maj) out.push(`${SUIT_NAMES[top]}偏多，重心落在「${SUIT_DOM[top]}」上。`);
+            if (rv === 0) out.push("牌面全部是正位，能量比较通畅，可以按照牌义顺势而为。"); else if (rv * 2 > n) out.push("逆位偏多，说明有些阻滞或心里的疙瘩，先调整节奏与心态，再往前走。"); else out.push(`有 ${rv} 张逆位，对应的位置是需要多留意、慢一点处理的地方。`);
+            return "整体来看：" + out.join("");
+        }
+        function tarotFindSummary(cards) {
+            const n = cards.length, rv = cards.filter(c => c.rev).length, bad = cards.some(c => c.idx === 13 || c.idx === 16), out = [];
+            if (rv * 3 <= n) out.push("多数牌是正位，东西多半还在，按上面的位置线索去找，找回的把握比较高。"); else if (rv * 3 <= n * 2) out.push("正逆位参半，有机会找到，但要花多一点时间，或者换个角度再找一遍。"); else out.push("逆位偏多，东西较难找回，或已经不在原来的位置。建议先放下，过一阵子再找，也可以考虑替换。");
+            if (bad) out.push("牌里出现了「死神」或「高塔」，要考虑东西已经损坏、被丢弃的可能。");
+            return "能否找回：" + out.join("");
+        }
+        const LENO_DT = ["有消息或访客正在靠近，事情有了动作。速度很快，多半是好消息，也可能指一位行动力强的年轻人。", "小小的、短暂的幸运与机会，轻松愉快。把握眼前的好运，不必想得太大。", "远行、距离与变动，也指贸易与进口。事情在移动中，或你正在向远方寻找什么。", "家、家庭与稳定的基础，关乎居所、家人或内心的安全感。", "健康、长寿与缓慢的成长。需要耐心扎根，一切都要时间，也指身体状态与根基。", "困惑、不清晰，事情被暂时遮住。先别急着决定，等雾散去再看，也可能是情绪低落。", "复杂、绕弯与诱惑，指心机或一位让人看不透的人。小心曲折，同时也代表智慧与欲望。", "结束、停顿与告别，也指疾病或低谷。一个阶段落幕，是为新的开始腾出位置。", "礼物、善意与赞美，关系愉快、被人喜欢。适合社交，惊喜与好意正在到来。", "突然的决断与切割，快而干脆。可能是意外，也可能是收获；需要小心，也适合果断做决定。", "争执、重复与摩擦，也指运动或激烈的互动。留意那些不断重复的冲突模式。", "交谈、闲聊与焦虑的小声音，通常成双出现。多沟通，但别被碎语扰乱，也指两个人的对话。", "新生、纯真与小的开端，也指一个孩子或幼稚的举动。用单纯的心态去面对。", "机灵、心机与谨慎，需要保护自己；也指工作中的算计。凡事多留个心眼。", "强大的力量、保护与权威，也指长辈或掌控欲强的人。有靠山，也要防止被压住。", "指引、清晰与希望，愿望有望实现。方向正确，保持信念，也和创意、灵感有关。", "变化、迁移与更新，生活出现好的改变：搬家、换工作或进入新阶段。顺势而动。", "忠诚、友谊与可信赖的人，是可以依靠的朋友。关系稳定，也指值得信任的伙伴。", "孤立、权威与制度，也指大机构、高处不胜寒。需要独处，同时提醒你保持边界。", "社交、公开场合与聚会，被人看见。适合与人往来，也指公共的活动或人际网络。", "阻碍、延迟与困难，需要耐心和力气去翻越。暂时的停滞，不要硬碰。", "选择与分岔，两条路各有取舍。需要决定方向，也可能出现新的可能性。", "损耗、焦虑与暗中的消耗，小问题逐渐啃噬你。检查漏洞，别让担忧吞掉精力。", "爱、心意与情感的核心，真诚而温暖。关系里的深情，也提醒你听从内心。", "承诺、约定与契约，关系或合作被正式确定；也指循环与重复。要信守诺言。", "秘密、学习与未知，有尚未公开的信息。适合研究，答案要靠挖掘而不是猜。", "文字、信息与通知，邮件、文件或讯息即将到来。重要的内容会以书面形式出现。", "代表问事的男方或一位具体的男性，看他周围的牌来判断他的状态。", "代表问事的女方或一位具体的女性，看她周围的牌来判断她的状态。", "平和、成熟与内在的安宁，也指长辈或高尚的情感。适合放慢，关系偏平淡而稳。", "成功、温暖与活力，一切明朗向上。有能量、有好结果，值得放心前进。", "情感、认可与直觉，被人看见与赞赏；也指情绪起伏与夜晚的灵感。", "答案、解开与重要的机会，门终于能打开。问题有解，也指值得珍视的关键。", "财富、丰足与流动，金钱和事业上有收益；也指独立的人。资源正在流进来。", "稳定、坚持与安全的港湾，事业或感情中的长久。可靠，也可能意味着停留、难以前行。", "负担、使命与考验，沉重但有意义。需要承担，也指信仰与命运的转折。"];
+        const LENO_LOC = ["门口、刚被带出去的东西里，或在外出的路上", "偶然出现在不起眼的小地方，翻翻口袋或小格子", "离家较远、被带出门，或在运输、行李里", "就在家里，没有走远", "植物旁边，或木质的家具附近", "被遮挡住、盖在别的东西下面，看不清", "弯弯曲曲的角落、线缆旁或缠在一起的东西里", "盒子、封闭的容器里，或已经被当作废品", "花瓶、餐桌或收到的礼物附近", "锋利的工具旁，或被割断、切开的物品附近", "工具间、运动用品或杂物堆里", "高处、窗边，问问身边的人就会有线索", "孩子的物品旁，或混在小件物品中", "被人藏起来了，或在工作环境里", "大件家具、厨房食物附近，或长辈那里", "窗边、高处，夜里光线下看得到", "被搬动过，位置换了，不在原处", "朋友那里、门口，或宠物活动的区域", "高处、公共大楼，或孤立的位置", "户外、公共场所，或有很多人经过的地方", "被重物压在下面，或在不容易够到的地方", "两个地方之间，要分别找两处", "杂乱处，已经被啃噬、损耗", "和心爱的东西、爱人的物品放在一起", "圆形物品旁、成对的物品中，或抽屉里", "书堆、抽屉里，被盖住了", "文件堆、信箱或包里", "在一位男性家人手里，或他的房间", "在一位女性手里，或她的房间", "干净整洁的地方，或长辈那里", "光线充足的窗台和明亮处", "卧室，或夜里常去的地方", "抽屉的锁旁、钥匙串旁，已经找到的可能性很大", "水边，或钱包、贵重物品附近", "固定不动的地方，也就是原位没动过", "角落或沉重的物品下面，被遗忘了很久"];
+        const DPL_DT = ["代表你自己与核心的活力，事情围绕「你想成为什么样的人」展开。", "代表情绪、安全感与内心的需要，关注感受与家的氛围。", "代表沟通、想法与信息，关于说话、学习与消息往来。", "代表爱、喜好与价值，关于关系、审美与享受。", "代表行动、冲劲与竞争，需要出手，或者会有摩擦。", "代表机遇、扩张与好运，事情有成长的空间。", "代表考验、责任与界限，需要耐心与自律，慢慢来。", "代表突变、自由与意外，计划可能被打乱，换个方式反而新鲜。", "代表幻想、直觉与模糊，容易理想化，要核实现实。", "代表蜕变、深层的力量与彻底的转变，涉及放下与重生。"];
+        const DPL_ADV = ["做真实的自己，主动表达想法", "先照顾好自己的情绪，再做决定", "把话说清楚，多问多查证", "顺着心意去靠近喜欢的人与事", "有想做的就行动，但注意别冲动", "放大胆子试一试，机会正在打开", "稳住节奏，把基础打牢，别急", "保持弹性，接受计划被打乱", "多相信直觉，但要核实细节", "舍得放下旧的，才能迎来新的"];
+        const DSG_DT = ["以直接、主动、先行动的方式展开，带点急躁与勇敢。", "以稳定、踏实、重视感官与安全的方式，节奏偏慢但持久。", "以好奇、多变、善于沟通的方式，信息很多，注意力容易分散。", "以照顾、敏感、重视情感连结的方式，容易受情绪影响。", "以热情、自信、需要被看见的方式，慷慨但在意面子。", "以细致、务实、追求把事情做好的方式，注意细节与整理。", "以平衡、协调、重视关系与公平的方式，容易权衡不决。", "以深入、专注、不轻易示人的方式，感情浓烈，洞察力强。", "以乐观、探索、追求自由与意义的方式，视野开阔但不耐束缚。", "以务实、自律、着眼长远的方式，稳重，目标明确。", "以独立、理性、有点另类的方式，重视自由与新想法。", "以柔软、想象、共情的方式，感受细腻，界线容易模糊。"];
+        const DHS_DT = ["自我与外在形象，你如何面对世界、开始一件事。", "金钱、资源与价值观，关于你拥有什么、看重什么。", "沟通、学习与身边的人，日常交流、短途往来与兄弟朋友。", "家、家人与情感的根基，关于住所与内心的安全感。", "恋爱、创造与娱乐，关于快乐、热情与孩子。", "日常工作与健康，关于例行事务、身体与服务。", "伴侣与合作，一对一的关系、合伙与公开的对手。", "亲密、共享的资源与深层转变，涉及信任、金钱纠葛与放下。", "远方、学习与信念，旅行、深造与人生观的拓展。", "事业、目标与社会地位，你想被看见的成就。", "朋友、社群与愿景，关于团体与对未来的期待。", "内心、潜意识与隐藏的事，独处、疗愈与不易察觉的影响。"];
+        const HEXD = { "乾": "刚健自强，事业有开创之势。宜主动进取，但要防过刚易折，谦和守正。", "坤": "柔顺承载，厚德载物。宜配合、耐心、顺势而为，不宜强出头。", "屯": "万事开头难，初始艰辛、方向未明。宜积蓄力量，寻找帮手，不急于求成。", "蒙": "蒙昧待启，需要学习与请教。虚心求教就会渐渐明朗，不可固执己见。", "需": "等待时机，先蓄力再行动。耐心守候，时机成熟自然水到渠成。", "讼": "争执口舌、是非纠缠。宜克制、求和，不宜硬争，可借助公正的第三方。", "师": "众人聚合、有组织地行动。需要领袖与纪律，行动要师出有名、稳妥。", "比": "亲近依附、团结互助。择善而从、诚心交往，关系有靠，但要选对人。", "小畜": "小有积蓄、阻力尚存。事情有进展却未畅通，需耐心积累，等待云成雨。", "履": "如履薄冰，谨慎行事。有风险，但守礼守分可化险为夷，注意言行得体。", "泰": "天地交泰，通达顺利。上下沟通、内外和谐，是好时机，但盛极需防变。", "否": "闭塞不通、沟通不畅。是暂时的低谷，宜守正收敛，等待转机，不宜冒进。", "同人": "志同道合、和同于人。适合合作与结盟，公开坦诚，胸怀宽广。", "大有": "丰盛大有、成果显著。有所收获，要谦逊分享，守住福气。", "谦": "谦虚受益、内敛有德。放低姿态反而得助，先难后易，诸事吉。", "豫": "愉悦安乐、顺势而动。适合筹备与行动，但勿沉迷享乐，居安思危。", "随": "随顺时势、随和得人。跟随合适的人与机会，调整自己去配合，随缘而不盲从。", "蛊": "积弊已久、需要整治。面对旧问题，革故鼎新，整顿之后才有新生。", "临": "居高临下、迎接发展。事态上升，要有责任心，亲近身边的人，也留意盛极后的变化。", "观": "观察审视、以身作则。先看清局势，不急于出手，也提醒你正被人注视。", "噬嗑": "咬合障碍、需要决断。有阻隔就清除，依规则果断处理，赏罚分明可以化解。", "贲": "修饰文采、重外在形式。外表美好，但要内外相称；小事宜，大事不能只靠包装。", "剥": "剥落衰退、小人得势。时局不利，宜静守、不妄动，保存实力等待回升。", "复": "一阳来复、转机出现。低谷过后重新开始，循序渐进，不必急，回归正道。", "无妄": "不妄为、顺其自然。真诚无欺则吉，若心存侥幸、妄动，反而遭遇意外。", "大畜": "大有积蓄、厚积薄发。培养自身、积累实力，时机到时可以大有作为。", "颐": "颐养、自求口实。注意饮食与言语，养身也养德，想想你在滋养什么。", "大过": "负荷过重、栋梁将折。事情超出常规，压力极大，需果断应对，借助外力支撑。", "坎": "重重险陷、连续的困难。保持诚信与镇定，一步步稳住，险中有路。", "离": "光明附丽、依附而明。有所依附才有光彩，宜柔顺、持中，积极但要有分寸。", "咸": "感应相通、心有灵犀。人与人之间的感应与吸引，真诚相待，适合缔结关系。", "恒": "恒久坚持、持之以恒。守住长久的原则，不轻易改弦易辙，在稳定中前行。", "遁": "退避隐遁、保存实力。形势不利时宜退，避开锋芒，以退为进。", "大壮": "阳刚强盛、气势正旺。力量充沛，但要守礼守正，不可恃强妄进。", "晋": "旭日东升、进展上升。得到认可与提拔，积极表现，光明前进。", "明夷": "光明受伤、才华受抑。处境艰难时要韬光养晦，内心保持光明，不急于出头。", "家人": "家庭和睦、各守其位。重视内部秩序与关系，从家与身边做起，言行有章。", "睽": "背离乖违、意见不合。小事可成，大事难协；求同存异，从小事沟通开始。", "蹇": "艰难险阻、行路难。前有险，不宜硬闯，宜退守反省，寻求有德之人相助。", "解": "缓解舒展、困难消解。险难解除，宜尽快处理善后，宽恕与放下，轻装前行。", "损": "减损自己以成全，先损后益。适度付出、节制开支，真诚才是关键，不必铺张。", "益": "增益受益、得到帮助。有外力相助，宜把握机会、积极行动，有利于开展新事。", "夬": "决断果敢、刚决柔。需要下决心清除障碍，公开表明，但要谨慎温和地处理。", "姤": "不期而遇、意外的邂逅。突然出现的人或事，要审慎对待，防止被暗中影响。", "萃": "聚集汇合、人才云集。适合聚会、集结力量，有共同目标，也要预防人多事杂。", "升": "逐步上升、积小成大。顺势而上，循序渐进，有贵人相助，稳扎稳打会有进展。", "困": "困顿受阻、言不见信。处境窘迫，宜守正安命、少言，咬牙熬过，别轻信他人。", "井": "井养不穷、滋养他人。持续供给价值，同时要保养好根基，别让它荒废。", "革": "变革更新、顺应时机。旧的难以维持，需要改变，取得信任后再行动才能成功。", "鼎": "鼎新取新、成就稳固。除旧布新，聚合贤才，事业有成，格局转向稳健。", "震": "震动惊雷、先惊后安。突发事件令人惊惧，保持镇定、反省自身，之后自然平稳。", "艮": "止而不动、适可而止。需要克制、停一停，守住当下的位置，不妄动。", "渐": "循序渐进、徐徐而行。事情要慢慢来，像鸿雁稳步前进，尤其适合缘分与婚姻。", "归妹": "少女出嫁、位不当。关系与结果有不合常规之处，需要谨慎，不可操之过急。", "丰": "丰盛盛大、日中则昃。运势旺盛，但盈满易亏，要及时守成，不可恃盛而骄。", "旅": "羁旅在外、暂居不定。处境漂泊，宜谨慎低调，守住分寸，小事可成。", "巽": "顺入渗透、谦逊申命。以柔克刚，委婉沟通，反复渗透比一次性强推更有效。", "兑": "喜悦沟通、和悦相待。亲切愉快的交流，适合谈判，但要避免只说好听的话。", "涣": "涣散离散、化解凝滞。人心分散或阻碍消散，宜重新凝聚，借助共同的目标。", "节": "节制有度、适可而止。规矩有利，但过苦的节制不可持久，要拿捏分寸。", "中孚": "诚信感通、心意相应。以诚相待，内心真诚就能打动人，也适合承诺与信任。", "小过": "小有过越、宜小不宜大。小事可为，大事不宜；谦卑谨慎，低调处理细节。", "既济": "已经成功、功成之后。事情完成了，但要警惕终而生乱，保持戒心，防止松懈。", "未济": "尚未完成、事在途中。还差最后一步，谨慎收尾，别急于庆祝，保持耐心。" };
+        const TRI_WX = ["金", "金", "火", "木", "木", "水", "土", "土"], WX_ORDER = ["木", "火", "土", "金", "水"];
+        const YAO_DT = ["初爻：事情刚起、还在萌芽，变化出现在最底层，宜谨慎起步", "二爻：处在内部的中位，宜守中而行，靠身边的人和稳妥的做法", "三爻：处于过渡与分岔处，容易反复，要小心进退", "四爻：靠近决策层、即将走向外部，要谨慎权衡，宜顺势而为", "五爻：最尊贵的位置，主导与成事的关键，变化影响最大", "上爻：走到了尽头、事将转变，宜见好就收，不宜再硬撑"];
+        function tiyongRead(ti, yong) {
+            const a = WX_ORDER.indexOf(TRI_WX[ti - 1]), b = WX_ORDER.indexOf(TRI_WX[yong - 1]), tw = TRI_WX[ti - 1], yw = TRI_WX[yong - 1];
+            if (a === b) return `体卦${TRI[ti - 1]}（${tw}）与用卦${TRI[yong - 1]}（${yw}）五行相同，称「比和」：双方同气相求，事情比较顺利，彼此配合得上。`;
+            if ((b + 1) % 5 === a) return `用卦${yw}生体卦${tw}，称「用生体」：外界的人事物在帮你、供养你，是比较吉的格局，事情容易得到助力。`;
+            if ((a + 1) % 5 === b) return `体卦${tw}生用卦${yw}，称「体生用」：你在付出、消耗，事情能做成，但比较费力，容易泄气，要量力而行。`;
+            if ((a + 2) % 5 === b) return `体卦${tw}克用卦${yw}，称「体克用」：你能掌控局面，事情可成，只是要花力气去推动，不要太强势。`;
+            return `用卦${yw}克体卦${tw}，称「用克体」：外界的压力或阻碍比较大，容易受制，宜守不宜攻，先避其锋芒。`;
+        }
+        const XLR_DT = [
+            { 总: "吉。安稳平顺、万事安定，不急不躁，按原有的节奏进行就好。", 感情: "关系稳定，彼此踏实安心；单身的话缘分平稳，宜顺其自然。", 事业: "稳中求进，守成为宜；财运平稳，不适合冒险投机。", 出行: "出行平安顺利；所寻的人平安无事，多半就在附近，自己会出现。", 寻物: "东西没有走远，多半还在家里或原来放的地方，方位偏东，木质或绿色的东西附近。静下心来找就会找到。", 健康: "身体平稳，保持规律作息即可。" },
+            { 总: "中平偏滞。事情纠缠、进展缓慢，需要多花时间，别催，慢一点反而成。", 感情: "关系在拉扯，迟迟没有结论；双方要把话说清楚，别暧昧地拖着。", 事业: "进度被拖延，文书、审批、回款都要等；耐心跟进，不宜仓促签约。", 出行: "出行容易延误、有阻碍；所寻的人一时联系不上，要等一等。", 寻物: "东西被遮住、压在下面，或被别人收起来了，方位偏北，靠近水边或阴暗的角落。一时难找，别翻乱，慢慢找、问问身边的人，会迟一些才出现。", 健康: "小毛病拖着不好，宜早点处理，别硬扛。" },
+            { 总: "吉。好消息即将到来，事情进展很快，有喜讯；宜主动出手、尽快行动。", 感情: "感情有好消息，容易有回应、告白或见面；是甜蜜的阶段。", 事业: "机会来得快，合作、面试、谈判都比较顺利；财运有进账，把握当下。", 出行: "出行顺利，路上有喜；所寻的人很快会有消息，也许今天就联系上。", 寻物: "东西在南方、红色的物品或电器、灯光附近，很快就能找到，问问身边的人会有线索。", 健康: "精神饱满，但别因为太兴奋而熬夜。" },
+            { 总: "不顺。口舌是非、争执与误会，说话要留余地，避免硬碰硬，也防小人。", 感情: "容易吵架、说话伤人；先冷静下来再沟通，别在气头上做决定。", 事业: "合同、言语上容易起纠纷；谨慎签字，注意细节，避免立即做决断。", 出行: "出行小心争执与意外，注意交通；所寻的人有口舌纠纷，一时难缓和。", 寻物: "东西可能已经被别人拿走，或遗失在公共场所，方位偏西、金属物品旁边。想找回会有口舌，要礼貌地询问，不要质问。", 健康: "注意口腔、喉咙与情绪，避免上火。" },
+            { 总: "吉。小有收获，有贵人相助；事情进展顺利，宜合作，温和地推进。", 感情: "缘分慢慢升温，可能有人牵线或朋友介绍；关系友好温和。", 事业: "有小进账、小机会，借助别人的力量会更好；适合合伙、拜访。", 出行: "出行顺利，有人同行或相助；所寻的人在远方，会有消息传来。", 寻物: "东西多半在别人手里，或在西南方，有人帮你保管或看到了，开口问就能找回。", 健康: "恢复良好，有人照应，保持心情平和。" },
+            { 总: "不顺。落空、不确定、白忙一场，事情暂时没有结果；先放一放，避免投入过多。", 感情: "感情缺乏回应、容易落空，或彼此有误解；别强求，先看清自己真正想要什么。", 事业: "计划容易落空，财运不稳；不宜投资、冒进，守好现有的。", 出行: "出行容易有变数，甚至临时取消；所寻的人音讯不明，暂时找不到。", 寻物: "东西难以找回，可能早就不在原处，或被遗忘了很久。先放下，过一阵子再找；也可以当作已经失去。", 健康: "注意精神不济与失眠，多休息，早点检查。" }
+        ];
+        const XLR_ROLE = ["起因与大背景", "当前的过程", "最终的走向"], XLR_ELEM = ["东方·木", "北方·水", "南方·火", "西方·金", "西南·土", "中宫·土"];
+        function lenoFindSummary(cards) {
+            const good = [0, 1, 3, 8, 15, 23, 30, 32, 34], bad = [5, 6, 7, 9, 20, 22, 35]; const g = cards.filter(c => good.includes(c.idx)).length, b = cards.filter(c => bad.includes(c.idx)).length, out = [];
+            if (g > b) out.push("吉象的牌更多，东西多半还在，按线索去找，找回的机会比较大。"); else if (b > g) out.push("阻碍的牌更多，东西比较难找，或者位置被遮住了，要多一点耐心。"); else out.push("吉象与阻碍各占一半，有机会找到，但要换几个地方多找几遍。");
+            if (cards.some(c => c.idx === 22)) out.push("牌里有「鼠」，东西可能已经被损耗、弄丢，或被动过。"); if (cards.some(c => c.idx === 7)) out.push("牌里有「棺材」，东西可能已经报废，或被收进封闭的地方。"); if (cards.some(c => c.idx === 32)) out.push("牌里有「钥匙」，答案就在眼前，换个角度再看一遍。");
+            return "能否找回：" + out.join("");
+        }
         function divToast(t) { let e = document.getElementById("divToast"); if (!e) { e = document.createElement("div"); e.id = "divToast"; e.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:8px 16px;border-radius:16px;font-size:13px;z-index:3000;transition:opacity .25s;pointer-events:none"; document.body.appendChild(e); } e.textContent = t; e.style.opacity = 1; clearTimeout(e._t); e._t = setTimeout(() => e.style.opacity = 0, 1600); }
         let divTab = "tarot", divLast = null;
         const DIV_TABS = [["tarot", "塔罗"], ["leno", "雷诺曼"], ["dice", "星骰"], ["mhyi", "梅花易数"], ["xlr", "小六壬"], ["rec", "记录"]];
@@ -5435,13 +5533,15 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 { id: "t2", n: "二选一", pos: [[1.15, 0, "现状"], [0, 1.55, "选择A"], [2.3, 1.55, "选择B"], [0, 3.1, "A的结果"], [2.3, 3.1, "B的结果"]] },
                 { id: "t6", n: "六芒星", pos: [[1.15, 0, "目标"], [0, 1.5, "过去"], [2.3, 1.5, "未来"], [1.15, 2.3, "现在"], [0, 3.1, "障碍"], [2.3, 3.1, "助力"], [1.15, 4.6, "结果"]] },
                 { id: "t7", n: "马蹄七张", pos: [[0, 0, "过去"], [0.35, 1.6, "现在"], [1.2, 3.0, "隐藏影响"], [2.4, 3.4, "自己"], [3.6, 3.0, "他人"], [4.45, 1.6, "建议"], [4.8, 0, "结果"]] },
-                { id: "t10", n: "凯尔特十字", rot: [1], pos: [[1.3, 1.55, "现状"], [1.3, 1.55, "阻碍"], [1.3, 3.1, "根基"], [0, 1.55, "过去"], [1.3, 0, "目标"], [2.6, 1.55, "近期"], [4, 4.65, "自己"], [4, 3.1, "环境"], [4, 1.55, "希望与恐惧"], [4, 0, "结果"]] }
+                { id: "t10", n: "凯尔特十字", rot: [1], pos: [[1.3, 1.55, "现状"], [1.3, 1.55, "阻碍"], [1.3, 3.1, "根基"], [0, 1.55, "过去"], [1.3, 0, "目标"], [2.6, 1.55, "近期"], [4, 4.65, "自己"], [4, 3.1, "环境"], [4, 1.55, "希望与恐惧"], [4, 0, "结果"]] },
+                { id: "t_find", n: "寻物", pos: [[1.15, 0, "遗失经过"], [0, 1.55, "物品现状"], [1.15, 1.55, "所在环境"], [2.3, 1.55, "阻碍"], [1.15, 3.1, "能否找回"]] }
             ],
             leno: [
                 { id: "l3", n: "三张", pos: [[0, 0, "过去"], [1.15, 0, "现在"], [2.3, 0, "未来"]] },
                 { id: "l5", n: "五张", pos: [[0, 0, "背景"], [1.15, 0, "过去"], [2.3, 0, "现在"], [3.45, 0, "未来"], [4.6, 0, "结果"]] },
                 { id: "l9", n: "九宫格", pos: Array.from({ length: 9 }, (_, i) => [(i % 3) * 1.15, Math.floor(i / 3) * 1.55, ["左上", "上", "右上", "左", "中心", "右", "左下", "下", "右下"][i]]) },
-                { id: "l36", n: "大牌阵", pos: Array.from({ length: 36 }, (_, i) => [(i % 9) * 1.1, Math.floor(i / 9) * 1.5, ""]) }
+                { id: "l36", n: "大牌阵", pos: Array.from({ length: 36 }, (_, i) => [(i % 9) * 1.1, Math.floor(i / 9) * 1.5, ""]) },
+                { id: "l_find", n: "寻物", pos: [[0, 0, "去向"], [1.15, 0, "所在位置"], [2.3, 0, "能否找回"]] }
             ]
         };
         const ROM = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"];
@@ -5456,7 +5556,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 divStageInit();
             } else if (divTab === "dice") b.innerHTML = q + `<div class="div-tray" id="divTray"><div class="tray-edge"></div>${[0, 1, 2].map(i => `<div class="gd" id="gd${i}">${dieSvg(i)}<b class="gs" id="gs${i}">?</b></div>`).join("")}</div><div class="div-caps">${["行星", "星座", "宫位"].map((n, i) => `<div><span>${n}</span><b id="gcn${i}">—</b><i id="gck${i}"></i></div>`).join("")}</div><div class="div-row" style="justify-content:center"><button class="main" id="divRoll" onclick="divDice()">掷出星骰</button></div><div class="div-hint" style="text-align:center">三枚十二面骰：行星（谁）、星座（以什么方式）、宫位（在哪个领域）</div><div id="divOut"></div>`;
             else if (divTab === "mhyi") b.innerHTML = q + `<div class="mh-steps" id="mhSteps"></div><div class="div-hex" id="divHex"></div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint" style="text-align:center">取农历年月日时，按年+月+日 ÷8 得上卦，再加时辰得下卦，÷6 得动爻</div><div id="divOut"></div>`;
-            else if (divTab === "xlr") b.innerHTML = q + handSvg() + `<div class="div-status" id="xlrSt" style="min-height:36px">用拇指在食指、中指、无名指的指节上依次点数：月 → 日 → 时</div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divXlr()">以此刻起课</button></div><div id="divOut"></div>`;
+            else if (divTab === "xlr") b.innerHTML = q + handSvg() + `<div class="div-status" id="xlrSt" style="min-height:36px">用拇指在食指、中指、无名指的指节上依次点数：月 → 日 → 时</div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divXlr()">以此刻起课</button></div><div class="div-hint" style="text-align:center">想找东西？在上面写上「找」「丢」「不见」之类的字，结果会把寻物放在最前面</div><div id="divOut"></div>`;
         }
         function divPick(id) { divSpread[divTab] = id; divFoldOpen = false; renderDiv(); }
         function divFold() { divFoldOpen = !divFoldOpen; document.getElementById("divSpreadList").style.display = divFoldOpen ? "flex" : "none"; document.getElementById("divFoldArrow").innerText = divFoldOpen ? "▴" : "▾"; }
@@ -5495,9 +5595,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             }
             divSt("把牌拢到一起……"); tcGather(true); await wait(700); if (divS !== s) return;
             s.order = pickN(s.deck, s.deck.length); s.stage = "shuffled"; s.busy = false;
-            divSt("洗好了。可以再洗，也可以用手指在桌上继续搓，满意了点「切牌」"); divBtns();
-            // 洗好后把牌再摊开一点方便手指搓
-            for (let i = 0; i < n; i++) tcPose(i, rnd(-hw * 0.6, hw * 0.6), rnd(-hh * 0.5, hh * 0.5), rnd(-90, 90), false, Math.random() * 80);
+            divSt("洗好了，牌叠在桌上。可以再洗，也可以用手指在牌堆上搓开，满意了点「切牌」"); divBtns();
         }
         async function divCut() {
             const s = divS; if (!s || s.busy || s.stage !== "shuffled") return; s.busy = true; divBtns(); divSt("把牌拢好，分成三摞……");
@@ -5559,14 +5657,17 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         async function divAuto() { const s = divS; if (!s || s.busy) return; const fast = s.total > 10; while (divS === s && s.drawn < s.total) { await divDraw(true); await wait(fast ? 5 : 120); } }
         function divReadSpread() {
-            const s = divS, name = (s.tab === "tarot" ? "塔罗 " : "雷诺曼 ") + s.sp.n; let txt = "";
-            if (s.tab === "tarot") txt = s.cards.map(c => `${c.label ? c.label + "：" : ""}${c.data[0]}（${c.rev ? "逆位" : "正位"}）— ${c.rev ? c.data[2] : c.data[1]}`).join("\n");
-            else if (s.sp.id === "l36") {
+            const s = divS, name = (s.tab === "tarot" ? "塔罗 " : "雷诺曼 ") + s.sp.n, find = s.sp.id === "t_find" || s.sp.id === "l_find"; let txt = "";
+            if (s.tab === "tarot") {
+                txt = s.cards.map(c => `【${c.label || "这张牌"}】${c.data[0]}（${c.rev ? "逆位" : "正位"}）\n关键词：${c.rev ? c.data[2] : c.data[1]}\n解读：${tarotDetail(c.idx, c.rev)}` + (find ? `\n位置线索：${tarotLoc(c.idx)}` : "")).join("\n\n");
+                const sm = find ? tarotFindSummary(s.cards) : (s.cards.length > 1 ? tarotSummary(s.cards) : ""); if (sm) txt += "\n\n" + sm;
+            } else if (s.sp.id === "l36") {
                 const rows = [0, 1, 2, 3].map(r => s.cards.slice(r * 9, r * 9 + 9).map(c => c.data[0]).join(" ")); txt = rows.join("\n");
-                const near = (nm) => { const k = s.cards.findIndex(c => c.data[0] === nm); if (k < 0) return ""; const x = k % 9, y = Math.floor(k / 9), o = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { if (!dx && !dy) continue; const xx = x + dx, yy = y + dy; if (xx >= 0 && xx < 9 && yy >= 0 && yy < 4) o.push(s.cards[yy * 9 + xx].data[0]); } return `${nm}（第${y + 1}行第${x + 1}列）周围：${o.join("、")}`; };
-                txt += "\n\n" + near("男人") + "\n" + near("女人");
-            } else if (s.sp.id === "l9") txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n中心牌：${s.cards[4].data[0]} — ${s.cards[4].data[1]}`;
-            else txt = s.cards.map(c => `${c.label}：${c.data[0]} — ${c.data[1]}`).join("\n");
+                const near = (nm) => { const k = s.cards.findIndex(c => c.data[0] === nm); if (k < 0) return ""; const x = k % 9, y = Math.floor(k / 9), o = []; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { if (!dx && !dy) continue; const xx = x + dx, yy = y + dy; if (xx >= 0 && xx < 9 && yy >= 0 && yy < 4) { const c2 = s.cards[yy * 9 + xx]; o.push(`${c2.data[0]}（${c2.data[1]}）`); } } return `${nm}（第${y + 1}行第${x + 1}列）周围：\n　${o.join("\n　")}`; };
+                txt += "\n\n" + near("男人") + "\n\n" + near("女人") + "\n\n读法：先看「男人」「女人」这两张牌，离他们最近的牌影响最直接；同一行、同一列的牌再作为背景补充。";
+            } else if (s.sp.id === "l9") {
+                txt = [0, 1, 2].map(r => ["上排", "中排", "下排"][r] + "：" + [0, 1, 2].map(c => { const k = s.cards[r * 3 + c]; return `${k.data[0]}（${k.data[1]}）`; }).join(" · ")).join("\n") + `\n\n中心牌：${s.cards[4].data[0]} — ${LENO_DT[s.cards[4].idx]}\n\n各位置解读：\n` + s.cards.map(c => `【${c.label}】${c.data[0]}：${LENO_DT[c.idx]}`).join("\n");
+            } else txt = s.cards.map(c => `【${c.label}】${c.data[0]}（${c.data[1]}）\n解读：${LENO_DT[c.idx]}` + (find ? `\n位置线索：${LENO_LOC[c.idx]}` : "")).join("\n\n") + (find ? "\n\n" + lenoFindSummary(s.cards) : "");
             divResult(name, txt);
         }
         function divResult(title, text) {
@@ -5576,12 +5677,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         const SYM8 = ["☰", "☱", "☲", "☳", "☴", "☵", "☶", "☷"], PLG = ["☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "♇"], SGG = ["♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓"];
         function dieSvg(i) {
-            const cols = [["#e9cd7a", "#c9a24a", "#9a7a2c"], ["#8fb0ee", "#6a8fd0", "#46689f"], ["#82d0a6", "#58b083", "#3b855f"]][i], cx = 50, cy = 50, pt = (r, a) => { const t = a * Math.PI / 180; return [(cx + r * Math.cos(t)).toFixed(1), (cy + r * Math.sin(t)).toFixed(1)]; };
+            const cols = [["#eadfff", "#b99cf2", "#8b69d6"], ["#e0dbff", "#a99ff2", "#7b6cd2"], ["#f2ddff", "#c89eed", "#9e6fca"]][i], cx = 50, cy = 50, pt = (r, a) => { const t = a * Math.PI / 180; return [(cx + r * Math.cos(t)).toFixed(1), (cy + r * Math.sin(t)).toFixed(1)]; };
             const P = [], Q = [], M = []; for (let k = 0; k < 5; k++) { const a = -90 + 72 * k; P.push(pt(21, a)); Q.push(pt(45, a)); M.push(pt(45, a + 36)); }
             const poly = (arr, f, sh) => `<polygon points="${arr.map(p => p.join(",")).join(" ")}" fill="${f}" stroke="${sh}" stroke-width="1.6" stroke-linejoin="round"/>`;
             let s = `<svg viewBox="0 0 100 100" width="100%" height="100%">`;
-            for (let k = 0; k < 5; k++) s += poly([P[k], Q[k], M[k], Q[(k + 1) % 5], P[(k + 1) % 5]], k % 2 ? cols[1] : cols[2], "#2a2230");
-            s += poly(P, cols[0], "#2a2230") + `</svg>`; return s;
+            for (let k = 0; k < 5; k++) s += poly([P[k], Q[k], M[k], Q[(k + 1) % 5], P[(k + 1) % 5]], k % 2 ? cols[1] : cols[2], "#4a3a86");
+            s += poly(P, cols[0], "#4a3a86") + `<polygon points="${P[0].join(",")} ${P[1].join(",")} ${cx},${cy}" fill="rgba(255,255,255,.38)"/><polygon points="${P[3].join(",")} ${P[4].join(",")} ${cx},${cy}" fill="rgba(70,40,140,.16)"/></svg>`; return s;
         }
         async function divDice() {
             const btn = document.getElementById("divRoll"); if (btn.disabled) return; btn.disabled = true; document.getElementById("divOut").innerHTML = "";
@@ -5609,7 +5710,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 if (all || t > 6000) { ds.forEach((d, i) => { if (!d.done) { d.done = true; d.gs.innerText = pools[i][res[i]]; d.el.style.transform = `translate(${d.x}px,${d.y}px)`; } }); res2(); return; } requestAnimationFrame(frame); }; requestAnimationFrame(frame); });
             await wait(300);
             const [p, s2, h] = [DPL[res[0]], DSG[res[1]], res[2]];
-            divResult("星骰", `${p[0]}（${p[1]}）落在${s2[0]}（${s2[1]}），在第${h + 1}宫：${DHS[h]}。`); btn.disabled = false;
+            divResult("星骰", `行星：${p[0]}（${p[1]}）\n　${DPL_DT[res[0]]}\n\n星座：${s2[0]}（${s2[1]}）\n　${DSG_DT[res[1]]}\n\n宫位：第${h + 1}宫（${DHS[h]}）\n　${DHS_DT[h]}\n\n合起来读：在「${DHS[h]}」这个领域里，${p[0]}所代表的「${p[1]}」，会以「${s2[1]}」的方式展开。\n建议：${DPL_ADV[res[0]]}。`); btn.disabled = false;
         }
         function hexDraw(bits, mv, id) { return `<div class="hx" id="${id}">${bits.map((b, i) => `<div class="hl${b ? "" : " yin"}${mv === i + 1 ? " mv" : ""}" data-i="${i}"><i></i><i></i></div>`).reverse().join("")}</div>`; }
         async function divMhyi() {
@@ -5635,32 +5736,54 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const w2 = document.getElementById("hxw2"); w2.style.transition = "opacity .6s"; w2.style.opacity = 1; await wait(650); document.getElementById("hxn2").innerText = bian;
             const d6 = document.createElement("div"); d6.className = "mh-line"; d6.innerText = steps[5]; st.appendChild(d6);
             const tiTri = mv <= 3 ? up : lo, yongTri = mv <= 3 ? lo : up;
-            divResult("梅花易数", `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n上卦：${s3} ÷ 8 ${rem(s3, 8)} → ${TRI[up - 1]}${SYM8[up - 1]}\n下卦：${s4} ÷ 8 ${rem(s4, 8)} → ${TRI[lo - 1]}${SYM8[lo - 1]}\n动爻：${s4} ÷ 6 ${rem(s4, 6)} → 第${mv}爻\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}：本卦看当下，变卦看走向。`); btn.disabled = false;
+            divResult("梅花易数", `起卦时间：农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n上卦：${s3} ÷ 8 ${rem(s3, 8)} → ${TRI[up - 1]}${SYM8[up - 1]}\n下卦：${s4} ÷ 8 ${rem(s4, 8)} → ${TRI[lo - 1]}${SYM8[lo - 1]}\n动爻：${s4} ÷ 6 ${rem(s4, 6)} → 第${mv}爻\n本卦：${ben}（上${TRI[up - 1]}${TRI_IMG[up - 1]}，下${TRI[lo - 1]}${TRI_IMG[lo - 1]}）\n变卦：${bian}\n体卦${TRI[tiTri - 1]}，用卦${TRI[yongTri - 1]}。\n\n【本卦】${ben}：${HEXD[HEX[up - 1][lo - 1]]}\n【动爻】${YAO_DT[mv - 1]}\n【变卦】${bian}：${HEXD[HEX[nup - 1][nlo - 1]]}\n【体用】${tiyongRead(tiTri, yongTri)}\n\n读法：本卦看事情当下的状态，变卦看接下来的走向；动爻指出变化出现在哪个环节，体用的五行生克则说明你与外界是互相助力还是互相牵制。`); btn.disabled = false;
         }
-        // 左手掌心朝向自己：拇指在右，食指最靠近拇指。大安/留连/速喜在食/中/无名指根节，赤口/小吉/空亡在无名指/中指/食指尖节
-        const HAND_PTS = [[186, 131], [148, 129], [110, 131], [110, 57], [148, 47], [186, 57]];
+        // 掌心朝向自己、拇指在左（参考图）。食/中/无名指根节：大安、留连、速喜；无名指/中指/食指尖节：赤口、小吉、空亡
+        const HAND_PTS = [[458, 392], [532, 380], [612, 395], [612, 232], [532, 205], [458, 232]];
         function handSvg() {
-            const fing = [[72, 88, "小指"], [110, 112, "无名指"], [148, 124, "中指"], [186, 112, "食指"]];
-            let s = `<div class="div-hand"><svg id="divHandSvg" viewBox="0 0 290 330" width="100%"><g transform="translate(0,28)">`;
-            s += `<rect x="196" y="176" width="36" height="104" rx="18" transform="rotate(34 214 266)" class="hf"/><path d="M226 224 q14 -6 26 -2" class="hc"/>`;
-            fing.forEach(([cx, len, nm]) => { const yt = 150 - len; s += `<rect x="${cx - 18}" y="${yt}" width="36" height="${len + 24}" rx="18" class="hf"/><line x1="${cx - 12}" y1="${yt + len / 3}" x2="${cx + 12}" y2="${yt + len / 3}" class="hc"/><line x1="${cx - 12}" y1="${yt + 2 * len / 3}" x2="${cx + 12}" y2="${yt + 2 * len / 3}" class="hc"/><text x="${cx}" y="${yt - 7}" text-anchor="middle" class="hn">${nm}</text>`; });
-            s += `<rect x="52" y="138" width="158" height="140" rx="38" class="hf"/><path d="M70 196 Q112 232 196 206" class="hc"/><path d="M72 226 Q120 252 176 240" class="hc"/><path d="M96 168 Q98 208 124 250" class="hc"/><text x="256" y="168" class="hn" text-anchor="middle">拇指</text>`;
-            s += HAND_PTS.map((h, i) => `<g class="hp" id="hp${i}"><circle cx="${h[0]}" cy="${h[1]}" r="14"/><text x="${h[0]}" y="${h[1] + 4}" text-anchor="middle">${XLR[i][0]}</text><text class="tag" id="hpt${i}" x="${h[0]}" y="${h[1] - 18}" text-anchor="middle"></text></g>`).join("");
-            return s + `<circle id="handDot" cx="262" cy="210" r="8" class="hd"/></g></svg></div>`;
+            const lens = (x, y, w) => `<path d="M${x - w} ${y} Q${x} ${y - 9} ${x + w} ${y} Q${x} ${y + 9} ${x - w} ${y}Z" class="hc"/>`;
+            const dot = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" class="hj"/>`;
+            let s = `<div class="div-hand"><svg id="divHandSvg" viewBox="250 90 500 760" width="100%"><defs><filter id="hw"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="hclip"><rect x="268" y="108" width="464" height="724"/></clipPath></defs>`;
+            // 绢本底色 + 双线画框
+            s += `<rect x="256" y="96" width="488" height="748" rx="6" class="hpaper"/><rect x="268" y="108" width="464" height="724" rx="3" class="hframe"/>`;
+            // 淡墨云（晕染）
+            s += `<g clip-path="url(#hclip)"><g class="hcloud" filter="url(#hw)"><ellipse cx="318" cy="470" rx="62" ry="22"/><ellipse cx="290" cy="500" rx="48" ry="18"/><ellipse cx="350" cy="515" rx="60" ry="20"/><ellipse cx="690" cy="610" rx="64" ry="22"/><ellipse cx="720" cy="640" rx="50" ry="18"/><ellipse cx="662" cy="650" rx="56" ry="19"/></g></g>`;
+            // 细圆与放射线（星盘意象，浅墨）
+            s += `<g clip-path="url(#hclip)"><g class="hring"><circle cx="500" cy="470" r="336"/><circle cx="500" cy="470" r="268" stroke-dasharray="3 7"/><circle cx="500" cy="470" r="396"/>${[0, 30, 60, 90, 120, 150].map(a => { const t = a * Math.PI / 180; return `<line x1="${(500 - 396 * Math.cos(t)).toFixed(1)}" y1="${(470 - 396 * Math.sin(t)).toFixed(1)}" x2="${(500 + 396 * Math.cos(t)).toFixed(1)}" y2="${(470 + 396 * Math.sin(t)).toFixed(1)}"/>`; }).join("")}</g></g>`;
+            // 朱砂小星
+            s += [[330, 170], [690, 190], [310, 700], [705, 330], [420, 130]].map(q => `<path d="M${q[0]} ${q[1] - 11} L${q[0] + 3} ${q[1] - 3} L${q[0] + 11} ${q[1]} L${q[0] + 3} ${q[1] + 3} L${q[0]} ${q[1] + 11} L${q[0] - 3} ${q[1] + 3} L${q[0] - 11} ${q[1]} L${q[0] - 3} ${q[1] - 3}Z" class="hstar"/>`).join("");
+            // 手：外轮廓
+            s += `<path class="hf" d="M440 800 C420 735 392 690 370 640 C345 585 325 520 312 458 C305 424 308 404 326 398 C346 393 360 412 374 442 C388 472 408 498 426 512 C424 470 424 430 426 392 C428 320 426 262 430 228 C434 190 452 176 464 178 C484 180 492 208 492 244 C494 310 494 370 496 424 C498 340 502 240 508 188 C512 148 540 140 554 162 C562 186 562 300 566 424 C574 340 580 250 590 204 C598 172 626 168 634 192 C642 232 642 350 644 446 C650 390 656 330 664 296 C670 266 692 252 700 278 C708 306 702 410 696 524 C690 626 674 710 662 796 C600 806 500 806 440 800Z"/>`;
+            // 指节纹（指节处的小弧）
+            s += [[458, 278], [458, 336], [458, 440], [532, 262], [532, 322], [532, 438], [612, 288], [612, 340], [612, 444], [680, 340], [680, 408], [680, 472]].map(q => lens(q[0], q[1], 17)).join("");
+            s += lens(340, 438, 17) + lens(366, 500, 17);
+            // 掌纹：感情线 / 智慧线 / 生命线 / 拇指丘
+            s += `<path class="hc" d="M428 482 C500 480 580 508 650 562"/><path class="hc" d="M426 506 C500 520 580 570 628 640"/><path class="hc" d="M420 520 C398 580 410 660 452 716"/><path class="hc" d="M372 560 C396 598 400 640 394 690"/><path class="hc" d="M452 770 C500 764 600 770 650 776"/><path class="hc" d="M456 790 C500 784 600 788 648 794"/>`;
+            // 关节与掌心的朱砂点
+            s += [[458, 308], [532, 292], [612, 314], [680, 374], [340, 468], [530, 500], [592, 520], [640, 548], [540, 590], [508, 650], [612, 620]].map(q => dot(q[0], q[1], 6)).join("") + dot(534, 500, 9);
+            // 指名
+            s += [[458, 160, "食指"], [532, 124, "中指"], [612, 152, "无名指"], [680, 238, "小指"], [330, 372, "拇指"]].map(q => `<text x="${q[0]}" y="${q[1]}" text-anchor="middle" class="hn">${q[2]}</text>`).join("");
+            // 六个宫位
+            s += HAND_PTS.map((h, i) => `<g class="hp" id="hp${i}"><circle cx="${h[0]}" cy="${h[1]}" r="28"/><text x="${h[0]}" y="${h[1] + 9}" text-anchor="middle">${XLR[i][0]}</text><text class="tag" id="hpt${i}" x="${h[0]}" y="${h[1] - 36}" text-anchor="middle"></text></g>`).join("");
+            // 印章
+            s += `<g class="hseal"><rect x="660" y="760" width="46" height="46" rx="3"/><text x="683" y="793" text-anchor="middle">六壬</text></g>`;
+            return s + `<circle id="handDot" cx="340" cy="470" r="12" class="hd"/></svg></div>`;
         }
         async function divXlr() {
             const btn = document.getElementById("divGo"); btn.disabled = true; document.getElementById("divOut").innerHTML = "";
             const L = divLunar(), a = (L.m - 1) % 6, b = (a + L.d - 1) % 6, c = (b + L.h - 1) % 6, dot = document.getElementById("handDot"), st = t => { const e = document.getElementById("xlrSt"); if (e) e.innerText = t; };
             for (let i = 0; i < 6; i++) { document.getElementById("hp" + i).setAttribute("class", "hp"); document.getElementById("hpt" + i).textContent = ""; }
-            const hop = async (i, ms) => { const pt = HAND_PTS[i]; dot.setAttribute("cx", pt[0] + 12); dot.setAttribute("cy", pt[1] + 11); document.querySelectorAll("#divHandSvg .hp").forEach(g => g.classList.remove("on")); document.getElementById("hp" + i).classList.add("on"); await wait(ms); };
+            const hop = async (i, ms) => { const pt = HAND_PTS[i]; dot.setAttribute("cx", pt[0] + 24); dot.setAttribute("cy", pt[1] + 22); document.querySelectorAll("#divHandSvg .hp").forEach(g => g.classList.remove("on")); document.getElementById("hp" + i).classList.add("on"); await wait(ms); };
             const tag = (i, t) => { const e = document.getElementById("hpt" + i); e.textContent = e.textContent + t; document.getElementById("hp" + i).classList.add("fix"); };
-            dot.setAttribute("cx", 262); dot.setAttribute("cy", 210); dot.style.opacity = 1; await wait(500);
+            dot.setAttribute("cx", 340); dot.setAttribute("cy", 470); dot.style.opacity = 1; await wait(500);
             st(`数月：农历 ${L.m} 月，从大安起 1`); await hop(0, 600);
             for (let k = 1; k <= a; k++) { await hop(k % 6, 380); } tag(a, "月"); st(`月落在「${XLR[a][0]}」。再数日：${L.d} 日，从「${XLR[a][0]}」起 1`); await wait(800);
             for (let k = 1; k <= L.d - 1; k++) await hop((a + k) % 6, 240); await hop(b, 200); tag(b, "日"); st(`日落在「${XLR[b][0]}」。再数时：${BR[L.h - 1]}时 = 第 ${L.h} 位，从「${XLR[b][0]}」起 1`); await wait(800);
             for (let k = 1; k <= L.h - 1; k++) await hop((b + k) % 6, 320); await hop(c, 400); tag(c, "时");
             document.getElementById("hp" + c).classList.add("last"); st(`时落在「${XLR[c][0]}」`);
-            divResult("小六壬", `农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n月：${XLR[a][0]}　日：${XLR[b][0]}　时：${XLR[c][0]}\n结果：${XLR[c][0]}——${XLR[c][1]}`); btn.disabled = false;
+            { const q = ((document.getElementById("divQ") || {}).value || ""), lost = /找|丢|寻|失|不见|遗失|落在|放哪|在哪/.test(q), r = XLR_DT[c], lab = { 总: "总断", 感情: "感情", 事业: "事业财运", 出行: "出行寻人", 寻物: "寻物", 健康: "健康" };
+                const keys = lost ? ["寻物", "总", "感情", "事业", "出行", "健康"] : ["总", "感情", "事业", "出行", "寻物", "健康"];
+                divResult("小六壬", `农历${L.m}月${L.d}日 ${BR[L.h - 1]}时\n` + [a, b, c].map((x, i) => `${["月", "日", "时"][i]}落「${XLR[x][0]}」（${XLR_ROLE[i]}）：${XLR[x][1]}`).join("\n") + `\n\n结果「${XLR[c][0]}」（${XLR_ELEM[c]}）\n` + keys.map(k => `【${lab[k]}】${r[k]}`).join("\n") + `\n\n三宫连读：月宫「${XLR[a][0]}」是起因，日宫「${XLR[b][0]}」是过程，时宫「${XLR[c][0]}」是结果；以时宫为主断，月、日宫作为背景参考。`); } btn.disabled = false;
         }
         const STICKS = [["上上", "云开见月，春暖花开", "久盼之事有了着落，放心向前。"], ["上上", "鱼跃龙门，顺水行舟", "时机成熟，主动一步会有回应。"], ["上吉", "柳暗花明又一村", "眼前的卡点会自己松开，别急。"], ["上吉", "清风送信，喜事近", "好消息在路上，保持联络。"], ["上吉", "积水成渊，稳步登高", "慢慢来反而更快，坚持当下的做法。"], ["中吉", "灯下读信，字字有意", "对方的心意比你想的更近，认真听。"], ["中吉", "雨后初晴，可以出门", "情绪低谷将过，适合重新开始。"], ["中吉", "桥上相逢，不言自明", "不必多解释，见面比文字更有用。"], ["中吉", "新茶初沏，香在后头", "好处需要一点时间才显出来。"], ["中平", "月有圆缺，事有进退", "半进半退之时，不必强求结果。"], ["中平", "舟行江心，风向未定", "先观察，再决定，别在今天下判断。"], ["中平", "门前两路，各有风景", "两个选择都能走，选心更安的那条。"], ["中平", "旧物在柜，等人开启", "有件被搁置的事值得重新翻出来。"], ["小吉", "细雨润物，无声有益", "小事上的体贴会累积成大的信任。"], ["小吉", "一盏小灯，足够照路", "资源不多但够用，别和别人比。"], ["小吉", "纸鸢线在手，高低自知", "放得开也要收得住，分寸最要紧。"], ["小吉", "檐下躲雨，等一等便晴", "暂时搁置，不算输。"], ["小凶", "雾锁长堤，不宜疾行", "看不清时放慢脚步，少做大决定。"], ["小凶", "琴弦过紧，易断", "对自己或对方放松一点。"], ["小凶", "窗未关严，风声扰人", "留意口舌，说话留三分。"], ["平", "白纸一张，由你落笔", "没有定数，全看接下来怎么写。"], ["平", "池水无波，鱼在深处", "表面平静，内里有变化在酝酿。"], ["上吉", "归鸟入林，各得其所", "分开或靠近都会找到合适的位置。"], ["中吉", "星灯点点，路自分明", "凭直觉走，比反复推算更准。"]];
         async function divStick() {
