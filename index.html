@@ -2005,7 +2005,7 @@
             for (let i = 0; i < 900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.12 + Math.random() * 0.26 }); }
             for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
-            for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
+            for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             for (let i = 0; i < 520; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.06 ? 1.8 : (Math.random() < 0.4 ? 1.2 : 0.8), p: Math.random() * 6.283, a: 0.25 + Math.random() * 0.5, c: ["255,255,255", "235,242,255", "215,225,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
@@ -2047,7 +2047,7 @@
             gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * (1.05 - p.r * 0.75)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
             // 深色尘埃带
-            gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(34,22,18,.42)"); g.addColorStop(1, "rgba(34,22,18,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
+            gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(14,14,30,.16)"); g.addColorStop(1, "rgba(14,14,30,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
             ctx.globalCompositeOperation = "lighter";
             // 粉色发光区
             gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); g.addColorStop(0, "rgba(255,255,255,.3)"); g.addColorStop(0.4, "rgba(255,255,255,.08)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
@@ -2177,14 +2177,14 @@
                 // 酒红高脚凳
                 for (const bx of [9, 18]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
                 // 大沙发：左扶手高高卷起，靠背弧形
-                for (let x = 50; x < 90; x++) { const ty = 18 + Math.round(4 * Math.sin((x - 50) / 39 * Math.PI)); R(x, ty - 1, 1, 1, PX_OUT); R(x, ty, 1, 34 - ty, CR); R(x, ty + 1, 1, 2, CR2); } R(89, 26, 1, 9, PX_OUT); E(47, 31, 6, 12, CR); R(43, 26, 1, 10, CR2); R(44, 22, 2, 1, CR2); R(44, 27, 1, 8, CR2);
+                for (let x = 50; x < 90; x++) { const ty = 27 - Math.round(8 * Math.sin((x - 50) / 39 * Math.PI / 2)); R(x, ty - 1, 1, 1, PX_OUT); R(x, ty, 1, 34 - ty, CR); R(x, ty + 1, 1, 2, CR2); } R(89, 26, 1, 9, PX_OUT); E(47, 33, 6, 9, CR); R(43, 29, 1, 8, CR2); R(44, 27, 1, 8, CR2);
                 B(48, 31, 15, 10, CR2); B(62, 31, 15, 10, CR2); B(76, 31, 14, 10, CR2); R(50, 32, 11, 1, CR); R(64, 32, 11, 1, CR); R(78, 32, 10, 1, CR);  B(44, 40, 46, 3, CR3); R(46, 43, 42, 1, DK); B(44, 43, 3, 3, DK); B(86, 43, 3, 3, DK);
                 B(42, 19, 9, 6, D("#b9bcc4", "#6a6c78")); R(44, 21, 5, 1, D("#dcdee4", "#8a8c98")); R(43, 23, 6, 1, D("#9a9ca6", "#565864")); // 左扶手银色毯子
                 B(52, 21, 11, 11, RED); R(54, 24, 7, 1, RED2); R(54, 27, 7, 1, RED2); R(54, 30, 7, 1, RED2); B(61, 24, 9, 9, D("#7a2636", "#4c1c2a")); R(63, 27, 5, 1, RED2); R(63, 30, 5, 1, RED2);
                 B(80, 22, 10, 9, D("#4a4c52", "#2a2c32")); // 右侧深灰靠垫
                 B(85, 27, 5, 18, RED); R(86, 31, 3, 1, RED2); R(86, 36, 3, 1, RED2); R(86, 41, 3, 1, RED2); // 垂下来的酒红毯子
                 // 沙发左边的深色圆桶
-                B(35, 35, 6, 8, D("#2e3036", "#1a1c20")); R(35, 35, 6, 1, DK2); R(36, 38, 4, 1, DK2);
+                B(35, 35, 6, 8, D("#9a7048", "#5a4028")); R(35, 35, 6, 1, D("#c9a070", "#8a6a48")); R(36, 38, 4, 1, D("#7a5434", "#4a3220"));
                 // 深色矮桌 + 铜托盘 + 花瓶郁金香（清晰可见）
                 B(52, 44, 31, 4, DK); R(53, 45, 29, 1, DK2); L(54, 48, 54, 50, DK); L(81, 48, 81, 50, DK);
                 B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
@@ -5745,7 +5745,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 54, pools = GL_POOLS;
             const res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
             // 抛骰子：从高处落下（z 为离桌面的高度），落地弹几下，每次弹起都翻滚、换一面，互相碰撞，最后停在结果面
-            const MIND = S * 0.9, G = 0.36;
+            const MIND = S * 0.9, G = 0.8;
             const ds = [0, 1, 2].map(i => { const el = document.getElementById("gd" + i); return { el, sh: document.getElementById("gsh" + i), rot: el.firstElementChild, gs: el.querySelector(".gs"), x: W * (0.2 + 0.3 * i) - S / 2 + rnd(-14, 14), y: rnd(4, H * 0.3), z: rnd(150, 220) + i * 30, vx: rnd(-2.5, 2.5), vy: rnd(0.8, 3), vz: 0, a: rnd(0, 360), w: rnd(-14, 14), nb: 0, air: true, done: false }; });
             window.divLastDice = ds; ds.forEach((d, i) => { d.el.style.transition = "none"; d.sh.style.transition = "none"; d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; });
             const place = d => { const sc = 1 + d.z / 260; d.el.style.transform = `translate3d(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px,0) scale(${sc.toFixed(3)})`; d.rot.style.transform = `rotate(${d.a.toFixed(1)}deg)`; d.sh.style.transform = `translate3d(${(d.x + 5 + d.z * 0.16).toFixed(1)}px,${(d.y + S * 0.62 + d.z * 0.34).toFixed(1)}px,0) scale(${(1 - Math.min(0.4, d.z / 500)).toFixed(3)})`; d.sh.style.opacity = Math.max(0.25, 0.8 - d.z / 300).toFixed(2); };
@@ -5768,7 +5768,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     d.x += d.vx * k; d.y += d.vy * k; d.a += d.w * k;
                     d.vz -= G * k; d.z += d.vz * k;
                     if (d.z <= 0) { d.z = 0;
-                        if (d.vz < -2.4) { d.vz = -d.vz * 0.52; d.nb++; d.vx += rnd(-3.5, 3.5); d.vy += rnd(-2.5, 3.5); d.w += rnd(-18, 18); d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; } else { d.vz = 0; d.air = false; }
+                        if (d.vz < -2.4) { d.vz = -d.vz * 0.52; d.nb++; d.vx += rnd(-3.5, 3.5); d.vy += rnd(-2.5, 3.5); d.w += rnd(-5, 5); d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; } else { d.vz = 0; d.air = false; }
                     }
                     if (d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.7; d.w = -d.w * 0.7; } if (d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.7; d.w = -d.w * 0.7; }
                     if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.7; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.7; }
