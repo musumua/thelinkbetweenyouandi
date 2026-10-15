@@ -199,7 +199,7 @@
         .div-table { position:relative; margin:8px 0 6px; overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 1px 1px rgba(0,0,0,.12); will-change:transform; }
         .div-table .pile { position:absolute; top:6px; bottom:6px; transform:translateX(-50%); border:1.5px dashed transparent; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; cursor:pointer; padding-bottom:2px; } .div-table .pile span { font-size:11px; color:var(--text-sub); } .div-table .pile b { position:absolute; top:4px; width:22px; height:22px; border-radius:50%; background:var(--primary); color:var(--bg); font-size:13px; display:none; align-items:center; justify-content:center; } .div-table .pile.on b { display:flex; } .div-table .pile:not(.on) { border-color:var(--primary); animation:divPulse 1.4s infinite; }
         .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 0 1px rgba(0,0,0,.2); cursor:pointer; } .div-fan .fc.up { box-shadow:0 2px 6px rgba(0,0,0,.18); border-width:2px; }
-        .div-tray { position:relative; height:156px; margin:10px 0 8px; border-radius:16px; overflow:hidden; background:none; border:1px dashed rgba(120,110,150,.35); touch-action:none; } .gd { position:absolute; left:0; top:0; width:54px; height:54px; will-change:transform; filter:drop-shadow(0 1px 1px rgba(40,20,90,.3)); transform:translate(-100px,0); } .gdr { position:absolute; inset:0; } .gd .gs { position:absolute; left:50%; top:56%; transform:translate(-50%,-50%); font-size:21px; font-weight:bold; color:#fff; text-shadow:0 1px 1px rgba(40,20,90,.8); } .gd.land { animation:divLand .5s ease-out; }
+        .div-tray { position:relative; height:156px; margin:10px 0 8px; border-radius:16px; overflow:hidden; background:none; border:1px dashed rgba(120,110,150,.35); touch-action:none; } .gd { position:absolute; left:0; top:0; width:54px; height:54px; will-change:transform; transform:translate3d(-100px,0,0); } .gsh { position:absolute; left:0; top:0; width:44px; height:14px; border-radius:50%; background:radial-gradient(ellipse, rgba(40,30,60,.45), rgba(40,30,60,0) 70%); will-change:transform,opacity; transform:translate3d(-100px,0,0); pointer-events:none; } .gdr { position:absolute; inset:0; will-change:transform; } .gd .gs { position:absolute; left:19%; top:25%; width:62%; height:62%; display:block; color:#4a3452; pointer-events:none; } .gd .gs svg { filter:drop-shadow(0 1px 0 rgba(255,255,255,.75)); } .gd.land { animation:divLand .5s ease-out; }
         .div-caps { display:flex; gap:8px; margin-bottom:12px; } .div-caps > div { flex:1; text-align:center; border:1px solid var(--border); border-radius:12px; background:var(--panel); padding:8px 4px; } .div-caps span { display:block; font-size:11px; color:var(--text-sub); } .div-caps b { display:block; font-size:15px; margin:3px 0; color:var(--text-main); } .div-caps i { display:block; font-size:11px; color:var(--text-sub); font-style:normal; min-height:28px; line-height:1.3; }
         .mh-steps { margin:8px 0; } .mh-line { white-space:pre-wrap; font-size:13px; line-height:1.7; color:var(--text-main); border-left:3px solid var(--primary); background:var(--panel); border-radius:0 10px 10px 0; padding:6px 10px; margin-bottom:6px; animation:divIn .4s both; }
         .div-stickbox { position:relative; height:230px; margin:6px auto 0; width:200px; } .tube { position:absolute; left:50%; bottom:10px; margin-left:-48px; width:96px; height:120px; border-radius:10px 10px 18px 18px; background:linear-gradient(90deg, var(--text-sub), var(--primary), var(--text-sub)); transform-origin:50% 100%; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:30px; z-index:2; } .tube i { position:absolute; bottom:100%; width:5px; background:var(--text-main); opacity:.75; border-radius:3px 3px 0 0; margin-left:-2px; } .tube.shake { animation:divTube .22s linear infinite; } @keyframes divTube { 0% { transform:rotate(-12deg) translateY(0); } 50% { transform:rotate(12deg) translateY(-8px); } 100% { transform:rotate(-12deg) translateY(0); } }
@@ -2009,7 +2009,7 @@
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
-            const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.16 + Math.random() * 0.22, a: 0.022 + Math.random() * 0.03, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
+            const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.16 + Math.random() * 0.22, a: 0.008 + Math.random() * 0.012, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
             gal = { parts, bg, dust, pink, halo, cloud, shoot: null, nextShoot: 3000 };
         }
         // 星点一律纯白，用透明度区分远近明暗
@@ -2042,7 +2042,7 @@
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.17)"); g.addColorStop(0.75, "rgba(70,82,170,.09)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx * 1.5); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.35); g.addColorStop(0, "rgba(90,110,200,0)"); g.addColorStop(0.45, "rgba(90,110,200,.05)"); g.addColorStop(0.72, "rgba(96,104,200,.12)"); g.addColorStop(1, "rgba(80,90,190,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.018)"); g.addColorStop(0.8, "rgba(96,108,190,.04)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${q.a})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
             gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * (1.05 - p.r * 0.75)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
@@ -2156,12 +2156,11 @@
                 L(10, 0, 10, 7, D("#444", "#aaa")); E(10, 10, 3, 3, GLO); L(20, 0, 20, 5, D("#444", "#aaa")); E(20, 8, 3, 3, GLO); if (night) { sp(10, 10, "#ffd98a", 1); sp(20, 8, "#ffd98a", 1); }
                 // 吧台
                 // 吃饭的木桌：薄桌面 + 四条细腿 + 碗碟
-                L(5, 29, 4, 43, DK); L(24, 29, 25, 43, DK); L(8, 29, 8, 40, DK2); L(21, 29, 21, 40, DK2); B(2, 26, 25, 3, WD); R(3, 27, 23, 1, WDL);
                 E(8, 25, 3, 1, D("#f4f0ea", "#b8b2c0")); B(14, 22, 5, 4, D("#e8dfd0", "#a89fb0")); R(15, 23, 3, 1, D("#c9744a", "#8a5a40")); B(21, 23, 3, 3, D("#f4f0ea", "#b8b2c0"));
                 // 波浪镜
                 E(34, 13, 3, 10, D("#9a948e", "#53505e")); E(34, 13, 2, 9, D("#e6e8ee", "#6c7090")); L(33, 7, 33, 18, D("#fff", "#9aa0c0"));
                 // 镜下边柜：蜡烛 + 插花
-                B(28, 26, 17, 5, DK); R(30, 28, 13, 1, DK2); L(30, 31, 30, 36, DK); L(43, 31, 43, 36, DK);
+                B(28, 26, 17, 5, DK); R(30, 28, 13, 1, DK2); 
                 candle(30, 26, 5);
                 B(38, 23, 4, 3, D("#8a7a78", "#4a4046")); L(40, 23, 38, 17, D("#5fa860", "#2f6a40")); L(40, 23, 42, 18, D("#5fa860", "#2f6a40")); L(40, 23, 40, 16, D("#5fa860", "#2f6a40"));
                 E(38, 16, 1, 1, "#f2a0b0"); E(42, 17, 1, 1, "#ffffff"); E(40, 15, 1, 1, "#f27a98"); E(41, 20, 1, 1, "#f2c0c0");
@@ -2170,25 +2169,24 @@
                 B(60, 21, 30, 3, DK); L(84, 21, 84, 18, DK2); E(84, 16, 3, 3, D("#fffdf4", "#ffe9a8")); if (night) sp(84, 16, "#fff3c0", 1);
                 // 木地板
                 R(0, 34, 90, 16, WD); for (let y = 37; y < 50; y += 4) R(0, y, 90, 1, WDL); for (let y = 37, i = 0; y < 50; y += 4, i++) for (let x = (i * 19) % 25; x < 90; x += 25) R(x, y - 3, 1, 3, WDL); R(0, 34, 90, 1, PX_OUT);
-                // 深色地毯（带浅色斑）
-                B(20, 41, 70, 9, D("#2a2c32", "#14161c")); for (let i = 0; i < 22; i++) R(22 + (i * 13) % 64, 43 + (i * 5) % 6, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
+                // 脚要落在地板上：桌脚、镜下边柜的柜脚（必须在地板之后画）
+                L(30, 31, 30, 40, DK); L(43, 31, 43, 40, DK); R(29, 40, 3, 1, DK); R(42, 40, 3, 1, DK);
+                L(5, 29, 4, 44, DK); L(24, 29, 25, 44, DK); L(9, 29, 9, 42, DK2); L(20, 29, 20, 42, DK2); R(3, 44, 3, 1, DK); R(24, 44, 3, 1, DK); R(2, 45, 26, 1, "rgba(60,40,30,.18)"); B(2, 26, 25, 3, WD); R(3, 27, 23, 1, WDL);
+                // 深色地毯（带浅色斑），铺在沙发前整片
+                B(12, 41, 78, 9, D("#2a2c32", "#14161c")); for (let i = 0; i < 26; i++) R(14 + (i * 13) % 72, 43 + (i * 5) % 6, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
                 // 酒红高脚凳
                 for (const bx of [9, 18]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
                 // 南瓜凳
                 B(2, 40, 10, 7, DK); R(3, 42, 8, 1, DK2); R(6, 40, 2, 1, DK2);
                 // 大沙发：左扶手高高卷起，靠背弧形
-                B(44, 24, 46, 10, CR); B(41, 20, 9, 22, CR); B(43, 19, 6, 2, CR); R(44, 24, 4, 1, CR2);
-                B(46, 31, 44, 10, CR2); R(68, 33, 1, 8, PX_OUT); B(44, 40, 46, 3, CR3); R(46, 43, 42, 1, DK); B(44, 43, 3, 3, DK); B(86, 43, 3, 3, DK);
-                B(42, 19, 9, 6, D("#b9bcc4", "#6a6c78")); R(44, 21, 5, 1, D("#dcdee4", "#8a8c98")); R(43, 23, 6, 1, D("#9a9ca6", "#565864")); // 左扶手银色毯子
+                B(46, 25, 44, 9, CR); B(66, 24, 24, 3, CR); B(42, 23, 10, 19, CR); E(47, 23, 4, 2, CR); R(44, 27, 1, 8, CR2);
+                B(48, 31, 42, 10, CR2); R(61, 33, 1, 8, PX_OUT); R(75, 33, 1, 8, PX_OUT); R(86, 34, 3, 1, CR);  B(44, 40, 46, 3, CR3); R(46, 43, 42, 1, DK); B(44, 43, 3, 3, DK); B(86, 43, 3, 3, DK);
+                B(42, 20, 9, 6, D("#b9bcc4", "#6a6c78")); R(44, 22, 5, 1, D("#dcdee4", "#8a8c98")); R(43, 24, 6, 1, D("#9a9ca6", "#565864")); // 左扶手银色毯子
                 B(52, 21, 11, 11, RED); R(54, 24, 7, 1, RED2); R(54, 27, 7, 1, RED2); R(54, 30, 7, 1, RED2); B(61, 24, 9, 9, D("#7a2636", "#4c1c2a")); R(63, 27, 5, 1, RED2); R(63, 30, 5, 1, RED2);
-                E(75, 31, 4, 4, D("#6c6e6a", "#3c3e3c")); R(72, 31, 7, 1, D("#8a8c88", "#4a4c4a")); R(75, 28, 1, 6, D("#8a8c88", "#4a4c4a"));
                 B(80, 22, 10, 9, D("#4a4c52", "#2a2c32")); // 右侧深灰靠垫
                 B(85, 27, 5, 18, RED); R(86, 31, 3, 1, RED2); R(86, 36, 3, 1, RED2); R(86, 41, 3, 1, RED2); // 垂下来的酒红毯子
                 // 沙发左边的深色圆桶
                 B(35, 35, 6, 8, D("#2e3036", "#1a1c20")); R(35, 35, 6, 1, DK2); R(36, 38, 4, 1, DK2);
-                // 异形玻璃茶几 + 蜡烛 + 杯子 + 书
-                E(34, 44, 13, 3, D("#5a5b63", "#30323c")); E(34, 43, 12, 2, D("#9a9ca4", "#4a4c56")); L(24, 45, 24, 49, DK); L(44, 45, 44, 49, DK);
-                B(36, 38, 2, 4, D("#cfe0ea", "#8aa0b4")); B(32, 41, 6, 1, DK); 
                 // 深色矮桌 + 铜托盘 + 花瓶郁金香（清晰可见）
                 B(52, 44, 31, 4, DK); R(53, 45, 29, 1, DK2); L(54, 48, 54, 50, DK); L(81, 48, 81, 50, DK);
                 B(60, 43, 11, 1, D("#c9a24a", "#8a7030")); B(63, 37, 4, 6, D("#8a7a78", "#4a4046")); R(64, 38, 2, 4, D("#b0a09e", "#6a5a60"));
@@ -5574,7 +5572,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const list = SPREADS[divTab];
                 const cur = list.find(x => x.id === divSpread[divTab]); b.innerHTML = q + `<div style="position:relative"><button class="div-fold" onclick="divFold()">牌阵：${cur.n}（${cur.pos.length}张）<span id="divFoldArrow">${divFoldOpen ? "▴" : "▾"}</span></button><div class="div-pop" id="divSpreadList" style="display:${divFoldOpen ? "flex" : "none"}">${list.map(sp => `<button class="${sp.id === divSpread[divTab] ? "main" : ""}" onclick="divPick('${sp.id}')">${sp.n}<small>${sp.pos.length}张</small></button>`).join("")}</div></div><div id="divStage"></div><div id="divOut"></div>`;
                 divStageInit();
-            } else if (divTab === "dice") b.innerHTML = q + `<div class="div-tray" id="divTray"><div class="tray-edge"></div>${[0, 1, 2].map(i => `<div class="gd" id="gd${i}"><div class="gdr">${dieSvg(i)}</div><b class="gs" id="gs${i}">?</b></div>`).join("")}</div><div class="div-caps">${["行星", "星座", "宫位"].map((n, i) => `<div><span>${n}</span><b id="gcn${i}">—</b><i id="gck${i}"></i></div>`).join("")}</div><div class="div-row" style="justify-content:center"><button class="main" id="divRoll" onclick="divDice()">掷出星骰</button></div><div class="div-hint" style="text-align:center">三枚十二面骰：行星（谁）、星座（以什么方式）、宫位（在哪个领域）</div><div id="divOut"></div>`;
+            } else if (divTab === "dice") b.innerHTML = q + `<div class="div-tray" id="divTray"><div class="tray-edge"></div>${[0, 1, 2].map(i => `<i class="gsh" id="gsh${i}"></i><div class="gd" id="gd${i}"><div class="gdr">${dieSvg(i)}</div><b class="gs" id="gs${i}"></b></div>`).join("")}</div><div class="div-caps">${["行星", "星座", "宫位"].map((n, i) => `<div><span>${n}</span><b id="gcn${i}">—</b><i id="gck${i}"></i></div>`).join("")}</div><div class="div-row" style="justify-content:center"><button class="main" id="divRoll" onclick="divDice()">掷出星骰</button></div><div class="div-hint" style="text-align:center">三枚十二面骰：行星（谁）、星座（以什么方式）、宫位（在哪个领域）</div><div id="divOut"></div>`;
             else if (divTab === "mhyi") b.innerHTML = q + `<div class="mh-steps" id="mhSteps"></div><div class="div-hex" id="divHex"></div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divMhyi()">以此刻起卦</button></div><div class="div-hint" style="text-align:center">取农历年月日时，按年+月+日 ÷8 得上卦，再加时辰得下卦，÷6 得动爻</div><div id="divOut"></div>`;
             else if (divTab === "xlr") b.innerHTML = q + handSvg() + `<div class="div-status" id="xlrSt" style="min-height:36px">用拇指在食指、中指、无名指的指节上依次点数：月 → 日 → 时</div><div class="div-row" style="justify-content:center"><button class="main" id="divGo" onclick="divXlr()">以此刻起课</button></div><div class="div-hint" style="text-align:center">想找东西？在上面写上「找」「丢」「不见」之类的字，结果会把寻物放在最前面</div><div id="divOut"></div>`;
         }
@@ -5699,26 +5697,58 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             document.getElementById("divOut").innerHTML = `<div class="div-res">${full.replace(/</g, "&lt;")}</div><div class="div-act"><button onclick="divSave()">存入记录</button><button onclick="divSend()">发给他</button></div>`; divSave(true);
         }
         const SYM8 = ["☰", "☱", "☲", "☳", "☴", "☵", "☶", "☷"], PLG = ["☉", "☽", "☿", "♀", "♂", "♃", "♄", "♅", "♆", "♇"], SGG = ["羊", "牛", "双", "蟹", "狮", "女", "秤", "蝎", "射", "摩", "瓶", "鱼"], PLG_T = ["日", "月", "水", "金", "火", "木", "土", "天", "海", "冥"];
+        // 标准占星符号，全部用矢量线条画（不依赖字体，也不会变成彩色 emoji）
+        const GL = p => `<svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+        const PL_SVG = [
+            `<circle cx="50" cy="50" r="26"/><circle cx="50" cy="50" r="3" fill="currentColor"/>`,
+            `<path d="M62 20 C40 24 30 40 34 58 C38 76 58 84 74 74 C54 72 46 56 50 42 C52 32 56 26 62 20Z"/>`,
+            `<circle cx="50" cy="52" r="13"/><path d="M36 26 C42 36 58 36 64 26"/><path d="M50 65 V86 M40 76 H60"/>`,
+            `<circle cx="50" cy="38" r="17"/><path d="M50 55 V86 M37 72 H63"/>`,
+            `<circle cx="42" cy="60" r="17"/><path d="M54 48 L76 26 M58 26 H76 V44"/>`,
+            `<path d="M28 34 C38 16 62 22 56 42 C52 54 40 56 26 58 H76 M62 30 V84"/>`,
+            `<path d="M36 22 H62 M49 14 V54 M49 44 C62 32 76 46 66 60 C60 68 58 74 68 84"/>`,
+            `<path d="M32 22 V62 M68 22 V62 M32 42 H68 M50 42 V66"/><circle cx="50" cy="76" r="8"/>`,
+            `<path d="M26 24 C26 54 74 54 74 24 M50 20 V88 M38 74 H62"/>`,
+            `<circle cx="50" cy="30" r="9"/><path d="M30 26 C30 54 70 54 70 26 M50 50 V86 M38 72 H62"/>`];
+        const SG_SVG = [
+            `<path d="M50 80 V38 M50 38 C50 18 24 16 26 36 M50 38 C50 18 76 16 74 36"/>`,
+            `<circle cx="50" cy="62" r="17"/><path d="M26 24 C28 46 72 46 74 24"/>`,
+            `<path d="M36 28 V74 M64 28 V74 M24 22 C38 32 62 32 76 22 M24 80 C38 70 62 70 76 80"/>`,
+            `<circle cx="32" cy="42" r="8"/><path d="M40 42 C44 28 66 24 78 36"/><circle cx="68" cy="62" r="8"/><path d="M60 62 C56 76 34 80 22 68"/>`,
+            `<circle cx="34" cy="62" r="10"/><path d="M44 62 C44 34 62 22 72 32 C82 44 62 52 62 70 C62 80 72 82 78 76"/>`,
+            `<path d="M24 28 V72 M24 40 C24 26 44 26 44 40 V72 M44 40 C44 26 62 26 62 40 V66 C62 82 80 80 76 64 C74 56 62 60 66 72"/>`,
+            `<path d="M22 72 H78 M22 58 H38 C32 46 38 30 50 30 C62 30 68 46 62 58 H78"/>`,
+            `<path d="M24 28 V72 M24 40 C24 26 44 26 44 40 V72 M44 40 C44 26 62 26 62 40 V74 C62 80 70 82 78 74 M68 74 H78 V64"/>`,
+            `<path d="M24 78 L76 26 M52 26 H76 V50 M34 52 L50 68"/>`,
+            `<path d="M22 30 L34 68 C36 78 48 52 54 40 C60 28 76 34 72 50 C68 62 56 68 60 78 C62 84 72 84 76 76"/>`,
+            `<path d="M20 42 L32 32 L44 42 L56 32 L68 42 L80 32 M20 66 L32 56 L44 66 L56 56 L68 66 L80 56"/>`,
+            `<path d="M30 22 C54 40 54 60 30 78 M70 22 C46 40 46 60 70 78 M24 50 H76"/>`];
+        const HS_SVG = Array.from({ length: 12 }, (_, k) => `<svg viewBox="0 0 100 100" width="100%" height="100%"><text x="50" y="68" text-anchor="middle" font-size="${k > 8 ? 46 : 60}" font-weight="700" font-family="Georgia,'Times New Roman',serif" fill="currentColor">${k + 1}</text></svg>`);
+        const GL_POOLS = [PL_SVG.map(GL), SG_SVG.map(GL), HS_SVG];
+        // 玻璃树脂质感的多面骰：没有黑描边，边角圆润，有高光和内部光
         function dieSvg(i) {
-            const C = [["#efe6ff", "#cdb6f7", "#a98bea", "#7f5fd0"], ["#e6e2ff", "#bbb2f6", "#968aea", "#6f62cc"], ["#f5e4ff", "#dcb4f2", "#bb8ae0", "#9462c0"]][i], K = "#43347f";
-            const o = [[50, 3], [91, 26], [91, 74], [50, 97], [9, 74], [9, 26]], t = [[50, 14], [82, 69], [18, 69]];
-            const poly = (a, f) => `<polygon points="${a.map(p => p.join(",")).join(" ")}" fill="${f}" stroke="${K}" stroke-width="1.5" stroke-linejoin="round"/>`;
-            let s = `<svg viewBox="0 0 100 100" width="100%" height="100%">`;
-            s += poly([o[5], o[0], t[0]], C[2]) + poly([o[0], o[1], t[0]], C[1]) + poly([o[1], o[2], t[1]], C[2]) + poly([o[2], o[3], t[1]], C[3]) + poly([o[3], o[4], t[2]], C[3]) + poly([o[4], o[5], t[2]], C[2]);
-            s += poly([t[0], o[5], t[2]], C[2]) + poly([t[0], o[1], t[1]], C[1]) + poly([t[2], t[1], o[3]], C[3]);
-            s += poly(t, C[0]) + `<polygon points="${t[0].join(",")} 66,41 34,41" fill="rgba(255,255,255,.55)"/></svg>`; return s;
+            const P = [["#fff1f3", "#f9cdd6", "#ecA3b8", "#d9829f"], ["#f4f8ff", "#d5e2f7", "#b2c6ea", "#8ea8d6"], ["#fff8e4", "#f7e0aa", "#e6c274", "#c99f48"]][i], u = "d" + i;
+            const o = [[50, 7], [88, 28], [88, 72], [50, 93], [12, 72], [12, 28]], t = [[50, 18], [79, 68], [21, 68]];
+            const poly = (a, f) => `<polygon points="${a.map(p => p.join(",")).join(" ")}" fill="${f}" stroke="${f}" stroke-width="2" stroke-linejoin="round"/>`;
+            let s = `<svg viewBox="0 0 100 100" width="100%" height="100%"><defs><linearGradient id="${u}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[0]}"/><stop offset="1" stop-color="${P[2]}"/></linearGradient><linearGradient id="${u}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[1]}"/><stop offset="1" stop-color="${P[3]}"/></linearGradient><linearGradient id="${u}c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P[2]}"/><stop offset="1" stop-color="${P[3]}"/></linearGradient><radialGradient id="${u}d" cx=".35" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".45" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>`;
+            s += `<polygon points="${o.map(p => p.join(",")).join(" ")}" fill="${P[2]}" stroke="${P[2]}" stroke-width="7" stroke-linejoin="round"/>`;
+            s += poly([o[5], o[0], t[0]], `url(#${u}b)`) + poly([o[0], o[1], t[0]], `url(#${u}a)`) + poly([o[1], o[2], t[1]], `url(#${u}b)`) + poly([o[2], o[3], t[1]], `url(#${u}c)`) + poly([o[3], o[4], t[2]], `url(#${u}c)`) + poly([o[4], o[5], t[2]], `url(#${u}b)`);
+            s += poly([t[0], o[5], t[2]], `url(#${u}b)`) + poly([t[0], o[1], t[1]], `url(#${u}a)`) + poly([t[2], t[1], o[3]], `url(#${u}c)`);
+            s += poly(t, `url(#${u}a)`);
+            s += `<g fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.1" stroke-linejoin="round"><polygon points="${t.map(p => p.join(",")).join(" ")}"/><path d="M${t[0]} L${o[0]} M${t[0]} L${o[5]} M${t[0]} L${o[1]} M${t[1]} L${o[1]} M${t[1]} L${o[2]} M${t[1]} L${o[3]} M${t[2]} L${o[3]} M${t[2]} L${o[4]} M${t[2]} L${o[5]}"/></g>`;
+            s += `<polygon points="${o.map(p => p.join(",")).join(" ")}" fill="url(#${u}d)"/><ellipse cx="34" cy="26" rx="10" ry="4" transform="rotate(-28 34 26)" fill="#fff" opacity=".7"/></svg>`; return s;
         }
         async function divDice() {
             const btn = document.getElementById("divRoll"); if (btn.disabled) return; btn.disabled = true; document.getElementById("divOut").innerHTML = "";
             [0, 1, 2].forEach(i => { document.getElementById("gcn" + i).innerText = "—"; document.getElementById("gck" + i).innerText = ""; });
-            const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 54, pools = [PLG_T, SGG, DHS.map((x, i) => String(i + 1))];
+            const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 54, pools = GL_POOLS;
             const res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
             // 抛骰子：从高处落下（z 为离桌面的高度），落地弹几下，每次弹起都翻滚、换一面，互相碰撞，最后停在结果面
             const MIND = S * 0.9, G = 0.25;
-            const ds = [0, 1, 2].map(i => { const el = document.getElementById("gd" + i); return { el, rot: el.firstElementChild, gs: el.querySelector(".gs"), x: W * (0.2 + 0.3 * i) - S / 2 + rnd(-14, 14), y: rnd(4, H * 0.3), z: rnd(150, 220) + i * 30, vx: rnd(-2.5, 2.5), vy: rnd(0.8, 3), vz: 0, a: rnd(0, 360), w: rnd(-14, 14), nb: 0, air: true, done: false }; });
-            window.divLastDice = ds; ds.forEach((d, i) => { d.el.style.transition = "none"; d.gs.innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; });
-            const place = d => { const sc = 1 + d.z / 220; d.el.style.transform = `translate(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px) scale(${sc.toFixed(3)})`; d.rot.style.transform = `rotate(${d.a.toFixed(1)}deg)`; d.el.style.filter = `drop-shadow(${(d.z * 0.12).toFixed(1)}px ${(1.5 + d.z * 0.3).toFixed(1)}px ${(1 + d.z * 0.08).toFixed(1)}px rgba(30,20,70,${Math.max(0.12, 0.4 - d.z / 500).toFixed(2)}))`; };
-            const land = (d, i) => { if (d.done) return; d.done = true; d.vx = d.vy = d.w = 0; d.z = 0; d.gs.innerText = pools[i][res[i]]; place(d);
+            const ds = [0, 1, 2].map(i => { const el = document.getElementById("gd" + i); return { el, sh: document.getElementById("gsh" + i), rot: el.firstElementChild, gs: el.querySelector(".gs"), x: W * (0.2 + 0.3 * i) - S / 2 + rnd(-14, 14), y: rnd(4, H * 0.3), z: rnd(150, 220) + i * 30, vx: rnd(-2.5, 2.5), vy: rnd(0.8, 3), vz: 0, a: rnd(0, 360), w: rnd(-14, 14), nb: 0, air: true, done: false }; });
+            window.divLastDice = ds; ds.forEach((d, i) => { d.el.style.transition = "none"; d.sh.style.transition = "none"; d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; });
+            const place = d => { const sc = 1 + d.z / 260; d.el.style.transform = `translate3d(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px,0) scale(${sc.toFixed(3)})`; d.rot.style.transform = `rotate(${d.a.toFixed(1)}deg)`; d.sh.style.transform = `translate3d(${(d.x + 5 + d.z * 0.16).toFixed(1)}px,${(d.y + S * 0.62 + d.z * 0.34).toFixed(1)}px,0) scale(${(1 - Math.min(0.4, d.z / 500)).toFixed(3)})`; d.sh.style.opacity = Math.max(0.25, 0.8 - d.z / 300).toFixed(2); };
+            const land = (d, i) => { if (d.done) return; d.done = true; d.vx = d.vy = d.w = 0; d.z = 0; d.gs.innerHTML = pools[i][res[i]]; place(d);
                 document.getElementById("gcn" + i).innerText = i === 0 ? DPL[res[0]][0] : i === 1 ? DSG[res[1]][0] : "第" + (res[2] + 1) + "宫"; document.getElementById("gck" + i).innerText = i === 0 ? DPL[res[0]][1] : i === 1 ? DSG[res[1]][1] : DHS[res[2]]; };
             const clampD = d => { d.x = Math.max(0, Math.min(W - S, d.x)); d.y = Math.max(0, Math.min(H - S, d.y)); };
             const collide = () => { for (let a = 0; a < 3; a++) for (let c = a + 1; c < 3; c++) {
@@ -5737,7 +5767,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     d.x += d.vx * k; d.y += d.vy * k; d.a += d.w * k;
                     d.vz -= G * k; d.z += d.vz * k;
                     if (d.z <= 0) { d.z = 0;
-                        if (d.vz < -2.4) { d.vz = -d.vz * 0.52; d.nb++; d.vx += rnd(-3.5, 3.5); d.vy += rnd(-2.5, 3.5); d.w += rnd(-18, 18); d.gs.innerText = pools[i][Math.floor(Math.random() * pools[i].length)]; } else { d.vz = 0; d.air = false; }
+                        if (d.vz < -2.4) { d.vz = -d.vz * 0.52; d.nb++; d.vx += rnd(-3.5, 3.5); d.vy += rnd(-2.5, 3.5); d.w += rnd(-18, 18); d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; } else { d.vz = 0; d.air = false; }
                     }
                     if (d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.7; d.w = -d.w * 0.7; } if (d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.7; d.w = -d.w * 0.7; }
                     if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.7; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.7; }
@@ -5782,7 +5812,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function handSvg() {
             const lens = (x, y, w) => `<path d="M${x - w} ${y} Q${x} ${y - 7} ${x + w} ${y} Q${x} ${y + 7} ${x - w} ${y}Z" class="hc"/>`;
             // 传统祥云：云头卷曲 + 尾部拖出
-            const cloud = (x, y, k, f) => `<g transform="translate(${x} ${y}) scale(${f ? -k : k} ${k})"><path class="hxf" d="M0 0 C-12 -16 6 -30 18 -19 C22 -32 46 -28 42 -11 C58 -12 60 8 44 11 C36 24 16 20 13 10 C6 16 -10 14 0 0 Z"/><path class="hxy" d="M17 -12 C25 -13 27 -3 20 -3 C15 -3 14 -9 18 -10 M34 -8 C40 -8 41 0 36 0 M0 0 C-22 7 -46 4 -72 14 C-54 17 -36 15 -16 13"/></g>`;
+            const cloud = (x, y, k, f) => { const sp = "M0 0 C0 -9 10 -10 11 -2 C12 7 1 10 -6 4 C-12 -2 -8 -13 3 -15 C15 -17 24 -6 20 6"; return `<g transform="translate(${x} ${y}) scale(${f ? -k : k} ${k})"><path class="hxy" d="${sp}"/><path class="hxy" transform="translate(30 -10) scale(.8)" d="${sp}"/><path class="hxy" transform="translate(56 -4) scale(.6)" d="${sp}"/><path class="hxy" d="M-10 12 C6 22 26 18 40 10 C54 2 70 12 92 4 C104 0 112 -4 120 2"/><path class="hxy" d="M-2 20 C16 30 40 26 62 18 C76 12 88 16 100 12" opacity=".6"/><path class="hxy" d="M6 6 C14 12 24 10 30 4" opacity=".7"/></g>`; };
             let s = `<div class="div-hand"><svg id="divHandSvg" viewBox="250 90 500 760" width="100%"><defs><filter id="hw"><feGaussianBlur stdDeviation="5"/></filter><clipPath id="hclip"><rect x="268" y="108" width="464" height="724"/></clipPath><pattern id="hsilk" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 .5H4M.5 0V4" stroke="#8a6f3e" stroke-width=".6" opacity=".16"/></pattern><radialGradient id="hvg" cx="50%" cy="50%" r="72%"><stop offset=".6" stop-color="#7a5e30" stop-opacity="0"/><stop offset="1" stop-color="#6b5128" stop-opacity=".4"/></radialGradient></defs>`;
             // 绢本：泛黄的绢面 + 经纬织纹 + 四周旧色 + 双线画框
             s += `<rect x="256" y="96" width="488" height="748" rx="6" class="hpaper"/><rect x="256" y="96" width="488" height="748" rx="6" fill="url(#hsilk)"/><rect x="256" y="96" width="488" height="748" rx="6" fill="url(#hvg)"/><rect x="268" y="108" width="464" height="724" rx="3" class="hframe"/>`;
@@ -5804,8 +5834,6 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             s += `<path class="hc" d="M428 508 C500 506 590 520 688 560"/><path class="hc" d="M428 512 C490 520 560 560 610 640"/><path class="hc" d="M416 534 C396 590 408 680 456 748"/><path class="hc" d="M372 560 C396 596 400 640 394 690"/>`;
             // 六个宫位
             s += HAND_PTS.map((h, i) => `<g class="hp" id="hp${i}"><circle cx="${h[0]}" cy="${h[1]}" r="23"/><text x="${h[0]}" y="${h[1] + 8}" text-anchor="middle">${XLR[i][0]}</text><text class="tag" id="hpt${i}" x="${h[0]}" y="${h[1] - 30}" text-anchor="middle"></text></g>`).join("");
-            // 题跋（竖排）与印章
-            s += `<g class="hti">${"六壬神课".split("").map((c, i) => `<text x="298" y="${176 + i * 30}" text-anchor="middle">${c}</text>`).join("")}</g><g class="hseal"><rect x="660" y="760" width="46" height="46" rx="3"/><text x="683" y="793" text-anchor="middle">六壬</text></g>`;
             return s + `<circle id="handDot" cx="340" cy="470" r="1" class="hd"/></svg></div>`;
         }
         async function divXlr() {
