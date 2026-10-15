@@ -199,7 +199,7 @@
         .div-table { position:relative; margin:8px 0 6px; overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 1px 1px rgba(0,0,0,.12); will-change:transform; }
         .div-table .pile { position:absolute; top:6px; bottom:6px; transform:translateX(-50%); border:1.5px dashed transparent; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; cursor:pointer; padding-bottom:2px; } .div-table .pile span { font-size:11px; color:var(--text-sub); } .div-table .pile b { position:absolute; top:4px; width:22px; height:22px; border-radius:50%; background:var(--primary); color:var(--bg); font-size:13px; display:none; align-items:center; justify-content:center; } .div-table .pile.on b { display:flex; } .div-table .pile:not(.on) { border-color:var(--primary); animation:divPulse 1.4s infinite; }
         .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 0 1px rgba(0,0,0,.2); cursor:pointer; } .div-fan .fc.up { box-shadow:0 2px 6px rgba(0,0,0,.18); border-width:2px; }
-        .div-tray { position:relative; height:156px; margin:10px 0 8px; border-radius:16px; overflow:hidden; background:none; border:1px dashed rgba(120,110,150,.35); touch-action:none; } .gd { position:absolute; left:0; top:0; width:54px; height:54px; will-change:transform; transform:translate3d(-100px,0,0); } .gsh { position:absolute; left:0; top:0; width:44px; height:14px; border-radius:50%; background:radial-gradient(ellipse, rgba(40,30,60,.45), rgba(40,30,60,0) 70%); will-change:transform,opacity; transform:translate3d(-100px,0,0); pointer-events:none; } .gdr { position:absolute; inset:0; will-change:transform; } .gd .gs { position:absolute; left:19%; top:25%; width:62%; height:62%; display:block; color:#4a3452; pointer-events:none; } .gd .gs svg { filter:drop-shadow(0 1px 0 rgba(255,255,255,.75)); } .gd.land { animation:divLand .5s ease-out; }
+        .div-tray { position:relative; height:156px; margin:10px 0 8px; border-radius:16px; overflow:hidden; background:none; border:1px dashed rgba(120,110,150,.35); touch-action:none; } .gd { position:absolute; left:0; top:0; width:54px; height:54px; will-change:transform; transform:translate3d(-100px,0,0); } .gsh { position:absolute; left:0; top:0; width:44px; height:14px; border-radius:50%; background:radial-gradient(ellipse, rgba(40,30,60,.45), rgba(40,30,60,0) 70%); will-change:transform,opacity; transform:translate3d(-100px,0,0); pointer-events:none; } .gdr { position:absolute; inset:0; will-change:transform; } .gd .gs { position:absolute; left:19%; top:25%; width:62%; height:62%; display:block; color:#173a52; pointer-events:none; } .gd .gs svg { filter:drop-shadow(0 1px 0 rgba(255,255,255,.75)); } .gd.land { animation:divLand .5s ease-out; }
         .div-caps { display:flex; gap:8px; margin-bottom:12px; } .div-caps > div { flex:1; text-align:center; border:1px solid var(--border); border-radius:12px; background:var(--panel); padding:8px 4px; } .div-caps span { display:block; font-size:11px; color:var(--text-sub); } .div-caps b { display:block; font-size:15px; margin:3px 0; color:var(--text-main); } .div-caps i { display:block; font-size:11px; color:var(--text-sub); font-style:normal; min-height:28px; line-height:1.3; }
         .mh-steps { margin:8px 0; } .mh-line { white-space:pre-wrap; font-size:13px; line-height:1.7; color:var(--text-main); border-left:3px solid var(--primary); background:var(--panel); border-radius:0 10px 10px 0; padding:6px 10px; margin-bottom:6px; animation:divIn .4s both; }
         .div-stickbox { position:relative; height:230px; margin:6px auto 0; width:200px; } .tube { position:absolute; left:50%; bottom:10px; margin-left:-48px; width:96px; height:120px; border-radius:10px 10px 18px 18px; background:linear-gradient(90deg, var(--text-sub), var(--primary), var(--text-sub)); transform-origin:50% 100%; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:30px; z-index:2; } .tube i { position:absolute; bottom:100%; width:5px; background:var(--text-main); opacity:.75; border-radius:3px 3px 0 0; margin-left:-2px; } .tube.shake { animation:divTube .22s linear infinite; } @keyframes divTube { 0% { transform:rotate(-12deg) translateY(0); } 50% { transform:rotate(12deg) translateY(-8px); } 100% { transform:rotate(-12deg) translateY(0); } }
@@ -2007,9 +2007,9 @@
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 2 + Math.random() * 5 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
-            for (let i = 0; i < 0; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.1 ? 1.7 : (Math.random() < 0.4 ? 1.1 : 0.7), p: Math.random() * 6.283, c: ["255,255,255", "235,242,255", "200,215,255"][Math.floor(Math.random() * 3)] });
+            for (let i = 0; i < 520; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.06 ? 1.8 : (Math.random() < 0.4 ? 1.2 : 0.8), p: Math.random() * 6.283, a: 0.25 + Math.random() * 0.5, c: ["255,255,255", "235,242,255", "215,225,255"][Math.floor(Math.random() * 3)] });
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
-            const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.16 + Math.random() * 0.22, a: 0.008 + Math.random() * 0.012, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
+            const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.16 + Math.random() * 0.22, a: 0.012 + Math.random() * 0.016, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
             gal = { parts, bg, dust, pink, halo, cloud, shoot: null, nextShoot: 3000 };
         }
         // 星点一律纯白，用透明度区分远近明暗
@@ -2023,7 +2023,7 @@
         function galDraw(t) {
             const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
             const bgG = ctx.createLinearGradient(0, 0, W, H); bgG.addColorStop(0, "#0b1022"); bgG.addColorStop(1, "#04060e"); ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
-            gal.bg.forEach(s => { ctx.globalAlpha = (0.4 + 0.6 * Math.abs(Math.sin(t / 1100 + s.p))) * 0.9; ctx.fillStyle = `rgb(${s.c})`; ctx.fillRect(s.x * W, s.y * H, s.s, s.s); }); ctx.globalAlpha = 1;
+            gal.bg.forEach(s => { ctx.globalAlpha = s.a * (0.7 + 0.3 * Math.sin(t / 1500 + s.p)); ctx.fillStyle = `rgb(${s.c})`; ctx.fillRect(s.x * W, s.y * H, s.s, s.s); }); ctx.globalAlpha = 1;
             { // 星系周围一层很淡的深蓝雾（普通混合，不叠加，不会把整张图染白）
               ctx.save();
               const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
@@ -2042,7 +2042,7 @@
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.17)"); g.addColorStop(0.75, "rgba(70,82,170,.09)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.018)"); g.addColorStop(0.8, "rgba(96,108,190,.04)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.03)"); g.addColorStop(0.8, "rgba(96,108,190,.065)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${q.a})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
             gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * (1.05 - p.r * 0.75)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
@@ -2158,7 +2158,7 @@
                 // 吃饭的木桌：薄桌面 + 四条细腿 + 碗碟
                 E(8, 25, 3, 1, D("#f4f0ea", "#b8b2c0")); B(14, 22, 5, 4, D("#e8dfd0", "#a89fb0")); R(15, 23, 3, 1, D("#c9744a", "#8a5a40")); B(21, 23, 3, 3, D("#f4f0ea", "#b8b2c0"));
                 // 波浪镜
-                E(34, 13, 3, 10, D("#9a948e", "#53505e")); E(34, 13, 2, 9, D("#e6e8ee", "#6c7090")); L(33, 7, 33, 18, D("#fff", "#9aa0c0"));
+                E(34, 13, 3, 10, D("#e6e8ee", "#6c7090"), D("#9a948e", "#53505e")); L(33, 7, 33, 18, D("#fff", "#9aa0c0"));
                 // 镜下边柜：蜡烛 + 插花
                 B(28, 26, 17, 5, DK); R(30, 28, 13, 1, DK2); 
                 candle(30, 26, 5);
@@ -2170,18 +2170,18 @@
                 // 木地板
                 R(0, 34, 90, 16, WD); for (let y = 37; y < 50; y += 4) R(0, y, 90, 1, WDL); for (let y = 37, i = 0; y < 50; y += 4, i++) for (let x = (i * 19) % 25; x < 90; x += 25) R(x, y - 3, 1, 3, WDL); R(0, 34, 90, 1, PX_OUT);
                 // 脚要落在地板上：桌脚、镜下边柜的柜脚（必须在地板之后画）
-                L(30, 31, 30, 40, DK); L(43, 31, 43, 40, DK); R(29, 40, 3, 1, DK); R(42, 40, 3, 1, DK);
+                L(30, 31, 30, 37, DK); L(43, 31, 43, 37, DK);
                 L(5, 29, 4, 44, DK); L(24, 29, 25, 44, DK); L(9, 29, 9, 42, DK2); L(20, 29, 20, 42, DK2); R(3, 44, 3, 1, DK); R(24, 44, 3, 1, DK); R(2, 45, 26, 1, "rgba(60,40,30,.18)"); B(2, 26, 25, 3, WD); R(3, 27, 23, 1, WDL);
                 // 深色地毯（带浅色斑），铺在沙发前整片
-                B(12, 41, 78, 9, D("#2a2c32", "#14161c")); for (let i = 0; i < 26; i++) R(14 + (i * 13) % 72, 43 + (i * 5) % 6, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
+                B(5, 41, 85, 9, D("#2a2c32", "#14161c")); for (let i = 0; i < 30; i++) R(8 + (i * 13) % 78, 43 + (i * 5) % 6, 3 + i % 3, 1, D("#3c3f47", "#1f2128"));
                 // 酒红高脚凳
                 for (const bx of [9, 18]) { L(bx - 2, 36, bx - 3, 45, DK); L(bx + 2, 36, bx + 3, 45, DK); B(bx - 3, 33, 7, 3, RED); }
                 // 南瓜凳
                 B(2, 40, 10, 7, DK); R(3, 42, 8, 1, DK2); R(6, 40, 2, 1, DK2);
                 // 大沙发：左扶手高高卷起，靠背弧形
-                B(46, 25, 44, 9, CR); B(66, 24, 24, 3, CR); B(42, 23, 10, 19, CR); E(47, 23, 4, 2, CR); R(44, 27, 1, 8, CR2);
+                for (let x = 50; x < 90; x++) { const ty = 18 + Math.round(4 * Math.sin((x - 50) / 39 * Math.PI)); R(x, ty - 1, 1, 1, PX_OUT); R(x, ty, 1, 34 - ty, CR); } R(89, 26, 1, 9, PX_OUT); B(42, 20, 10, 22, CR); E(47, 20, 4, 2, CR); R(44, 27, 1, 8, CR2);
                 B(48, 31, 42, 10, CR2); R(61, 33, 1, 8, PX_OUT); R(75, 33, 1, 8, PX_OUT); R(86, 34, 3, 1, CR);  B(44, 40, 46, 3, CR3); R(46, 43, 42, 1, DK); B(44, 43, 3, 3, DK); B(86, 43, 3, 3, DK);
-                B(42, 20, 9, 6, D("#b9bcc4", "#6a6c78")); R(44, 22, 5, 1, D("#dcdee4", "#8a8c98")); R(43, 24, 6, 1, D("#9a9ca6", "#565864")); // 左扶手银色毯子
+                B(42, 19, 9, 6, D("#b9bcc4", "#6a6c78")); R(44, 21, 5, 1, D("#dcdee4", "#8a8c98")); R(43, 23, 6, 1, D("#9a9ca6", "#565864")); // 左扶手银色毯子
                 B(52, 21, 11, 11, RED); R(54, 24, 7, 1, RED2); R(54, 27, 7, 1, RED2); R(54, 30, 7, 1, RED2); B(61, 24, 9, 9, D("#7a2636", "#4c1c2a")); R(63, 27, 5, 1, RED2); R(63, 30, 5, 1, RED2);
                 B(80, 22, 10, 9, D("#4a4c52", "#2a2c32")); // 右侧深灰靠垫
                 B(85, 27, 5, 18, RED); R(86, 31, 3, 1, RED2); R(86, 36, 3, 1, RED2); R(86, 41, 3, 1, RED2); // 垂下来的酒红毯子
@@ -5725,18 +5725,21 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             `<path d="M30 22 C54 40 54 60 30 78 M70 22 C46 40 46 60 70 78 M24 50 H76"/>`];
         const HS_SVG = Array.from({ length: 12 }, (_, k) => `<svg viewBox="0 0 100 100" width="100%" height="100%"><text x="50" y="68" text-anchor="middle" font-size="${k > 8 ? 46 : 60}" font-weight="700" font-family="Georgia,'Times New Roman',serif" fill="currentColor">${k + 1}</text></svg>`);
         const GL_POOLS = [PL_SVG.map(GL), SG_SVG.map(GL), HS_SVG];
-        // 玻璃树脂质感的多面骰：没有黑描边，边角圆润，有高光和内部光
+        // 水晶质感的多面骰：半透明、有折射出来的内部棱面、亮边和星芒
         function dieSvg(i) {
-            const P = [["#fff1f3", "#f9cdd6", "#ecA3b8", "#d9829f"], ["#f4f8ff", "#d5e2f7", "#b2c6ea", "#8ea8d6"], ["#fff8e4", "#f7e0aa", "#e6c274", "#c99f48"]][i], u = "d" + i;
-            const o = [[50, 7], [88, 28], [88, 72], [50, 93], [12, 72], [12, 28]], t = [[50, 18], [79, 68], [21, 68]];
-            const poly = (a, f) => `<polygon points="${a.map(p => p.join(",")).join(" ")}" fill="${f}" stroke="${f}" stroke-width="2" stroke-linejoin="round"/>`;
-            let s = `<svg viewBox="0 0 100 100" width="100%" height="100%"><defs><linearGradient id="${u}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[0]}"/><stop offset="1" stop-color="${P[2]}"/></linearGradient><linearGradient id="${u}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[1]}"/><stop offset="1" stop-color="${P[3]}"/></linearGradient><linearGradient id="${u}c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P[2]}"/><stop offset="1" stop-color="${P[3]}"/></linearGradient><radialGradient id="${u}d" cx=".35" cy=".28" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".45" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>`;
-            s += `<polygon points="${o.map(p => p.join(",")).join(" ")}" fill="${P[2]}" stroke="${P[2]}" stroke-width="7" stroke-linejoin="round"/>`;
-            s += poly([o[5], o[0], t[0]], `url(#${u}b)`) + poly([o[0], o[1], t[0]], `url(#${u}a)`) + poly([o[1], o[2], t[1]], `url(#${u}b)`) + poly([o[2], o[3], t[1]], `url(#${u}c)`) + poly([o[3], o[4], t[2]], `url(#${u}c)`) + poly([o[4], o[5], t[2]], `url(#${u}b)`);
-            s += poly([t[0], o[5], t[2]], `url(#${u}b)`) + poly([t[0], o[1], t[1]], `url(#${u}a)`) + poly([t[2], t[1], o[3]], `url(#${u}c)`);
-            s += poly(t, `url(#${u}a)`);
-            s += `<g fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.1" stroke-linejoin="round"><polygon points="${t.map(p => p.join(",")).join(" ")}"/><path d="M${t[0]} L${o[0]} M${t[0]} L${o[5]} M${t[0]} L${o[1]} M${t[1]} L${o[1]} M${t[1]} L${o[2]} M${t[1]} L${o[3]} M${t[2]} L${o[3]} M${t[2]} L${o[4]} M${t[2]} L${o[5]}"/></g>`;
-            s += `<polygon points="${o.map(p => p.join(",")).join(" ")}" fill="url(#${u}d)"/><ellipse cx="34" cy="26" rx="10" ry="4" transform="rotate(-28 34 26)" fill="#fff" opacity=".7"/></svg>`; return s;
+            const P = [["#e9fbff", "#9fe3ef", "#52bcd6", "#2a8fb3"], ["#fff0f6", "#f7b8d2", "#e4799f", "#c2507c"], ["#fff9dc", "#fadb7c", "#eeb23c", "#c98a1a"]][i], u = "d" + i;
+            const o = [[50, 5], [89, 27], [89, 73], [50, 95], [11, 73], [11, 27]], t = [[50, 19], [78, 67], [22, 67]], c = [50, 52];
+            const pts = a => a.map(p => p.join(",")).join(" ");
+            const f = (a, g, op) => `<polygon points="${pts(a)}" fill="url(#${u}${g})" fill-opacity="${op}" stroke="none"/>`;
+            let s = `<svg viewBox="0 0 100 100" width="100%" height="100%"><defs><linearGradient id="${u}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[0]}"/><stop offset="1" stop-color="${P[1]}"/></linearGradient><linearGradient id="${u}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[1]}"/><stop offset="1" stop-color="${P[2]}"/></linearGradient><linearGradient id="${u}c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P[2]}"/><stop offset="1" stop-color="${P[3]}"/></linearGradient><radialGradient id="${u}d" cx=".3" cy=".25" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".4" stop-color="#fff" stop-opacity=".1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><radialGradient id="${u}e" cx=".68" cy=".78" r=".4"><stop offset="0" stop-color="${P[0]}" stop-opacity=".95"/><stop offset="1" stop-color="${P[0]}" stop-opacity="0"/></radialGradient></defs>`;
+            s += `<polygon points="${pts(o)}" fill="${P[3]}" fill-opacity=".9" stroke="${P[2]}" stroke-width="5" stroke-linejoin="round" stroke-opacity=".9"/>`;
+            s += f([o[5], o[0], t[0]], "b", .85) + f([o[0], o[1], t[0]], "a", .8) + f([o[1], o[2], t[1]], "b", .8) + f([o[2], o[3], t[1]], "c", .85) + f([o[3], o[4], t[2]], "c", .85) + f([o[4], o[5], t[2]], "b", .8);
+            s += f([t[0], o[5], t[2]], "b", .7) + f([t[0], o[1], t[1]], "a", .7) + f([t[2], t[1], o[3]], "c", .75);
+            s += f(t, "a", .9);
+            // 折射：内部看到的背面棱线
+            s += `<g fill="none" stroke="#fff" stroke-linejoin="round"><polygon points="${pts([[50, 30], [68, 60], [32, 60]])}" stroke-opacity=".35" stroke-width="1"/><path d="M${t[0]} L${c} M${t[1]} L${c} M${t[2]} L${c}" stroke-opacity=".22" stroke-width=".9"/><polygon points="${pts(o)}" stroke-opacity=".95" stroke-width="1.6"/><path d="M${t[0]} L${t[1]} L${t[2]} Z M${t[0]} L${o[0]} M${t[0]} L${o[5]} M${t[0]} L${o[1]} M${t[1]} L${o[1]} M${t[1]} L${o[2]} M${t[1]} L${o[3]} M${t[2]} L${o[3]} M${t[2]} L${o[4]} M${t[2]} L${o[5]}" stroke-opacity=".7" stroke-width="1.1"/></g>`;
+            s += `<polygon points="${pts(o)}" fill="url(#${u}e)"/><polygon points="${pts(o)}" fill="url(#${u}d)"/>`;
+            s += `<path d="M30 18 L32 23 L37 25 L32 27 L30 32 L28 27 L23 25 L28 23Z" fill="#fff" opacity=".95"/><path d="M76 74 L77.2 77 L80 78 L77.2 79 L76 82 L74.8 79 L72 78 L74.8 77Z" fill="#fff" opacity=".8"/></svg>`; return s;
         }
         async function divDice() {
             const btn = document.getElementById("divRoll"); if (btn.disabled) return; btn.disabled = true; document.getElementById("divOut").innerHTML = "";
@@ -5744,7 +5747,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const tray = document.getElementById("divTray"), W = tray.clientWidth, H = tray.clientHeight, S = 54, pools = GL_POOLS;
             const res = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
             // 抛骰子：从高处落下（z 为离桌面的高度），落地弹几下，每次弹起都翻滚、换一面，互相碰撞，最后停在结果面
-            const MIND = S * 0.9, G = 0.25;
+            const MIND = S * 0.9, G = 0.11;
             const ds = [0, 1, 2].map(i => { const el = document.getElementById("gd" + i); return { el, sh: document.getElementById("gsh" + i), rot: el.firstElementChild, gs: el.querySelector(".gs"), x: W * (0.2 + 0.3 * i) - S / 2 + rnd(-14, 14), y: rnd(4, H * 0.3), z: rnd(150, 220) + i * 30, vx: rnd(-2.5, 2.5), vy: rnd(0.8, 3), vz: 0, a: rnd(0, 360), w: rnd(-14, 14), nb: 0, air: true, done: false }; });
             window.divLastDice = ds; ds.forEach((d, i) => { d.el.style.transition = "none"; d.sh.style.transition = "none"; d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; });
             const place = d => { const sc = 1 + d.z / 260; d.el.style.transform = `translate3d(${d.x.toFixed(1)}px,${d.y.toFixed(1)}px,0) scale(${sc.toFixed(3)})`; d.rot.style.transform = `rotate(${d.a.toFixed(1)}deg)`; d.sh.style.transform = `translate3d(${(d.x + 5 + d.z * 0.16).toFixed(1)}px,${(d.y + S * 0.62 + d.z * 0.34).toFixed(1)}px,0) scale(${(1 - Math.min(0.4, d.z / 500)).toFixed(3)})`; d.sh.style.opacity = Math.max(0.25, 0.8 - d.z / 300).toFixed(2); };
@@ -5767,7 +5770,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     d.x += d.vx * k; d.y += d.vy * k; d.a += d.w * k;
                     d.vz -= G * k; d.z += d.vz * k;
                     if (d.z <= 0) { d.z = 0;
-                        if (d.vz < -2.4) { d.vz = -d.vz * 0.52; d.nb++; d.vx += rnd(-3.5, 3.5); d.vy += rnd(-2.5, 3.5); d.w += rnd(-18, 18); d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; } else { d.vz = 0; d.air = false; }
+                        if (d.vz < -1.3) { d.vz = -d.vz * 0.52; d.nb++; d.vx += rnd(-3.5, 3.5); d.vy += rnd(-2.5, 3.5); d.w += rnd(-18, 18); d.gs.innerHTML = pools[i][Math.floor(Math.random() * pools[i].length)]; } else { d.vz = 0; d.air = false; }
                     }
                     if (d.x < 0) { d.x = 0; d.vx = Math.abs(d.vx) * 0.7; d.w = -d.w * 0.7; } if (d.x > W - S) { d.x = W - S; d.vx = -Math.abs(d.vx) * 0.7; d.w = -d.w * 0.7; }
                     if (d.y < 0) { d.y = 0; d.vy = Math.abs(d.vy) * 0.7; } if (d.y > H - S) { d.y = H - S; d.vy = -Math.abs(d.vy) * 0.7; }
