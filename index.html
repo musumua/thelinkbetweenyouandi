@@ -292,7 +292,7 @@
         .bottom-bar-stack { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; display: flex; flex-direction: column; }
         .input-bar input { flex: 1; border: 1px solid var(--border); border-radius: 20px; padding: 10px 16px; background: var(--input-bg); outline: none; font-size: 15px; color: var(--input-text); min-width: 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
         .input-bar button { width: 40px; height: 40px; border-radius: 50%; background: #FFFFFF; color: #513F6E; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; box-shadow: var(--shadow-sm); }
-        .more-menu-popup { display: none; position: absolute; bottom: 50px; left: 0; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); padding: 8px; z-index: 50; min-width: 130px; }
+        .more-menu-popup { display: none; position: absolute; bottom: 50px; left: 0; background: linear-gradient(var(--panel), var(--panel)), var(--bg, #1c1826); background-color: var(--bg, #1c1826); backdrop-filter: none; -webkit-backdrop-filter: none; border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); padding: 8px; z-index: 50; min-width: 130px; }
         .more-menu-popup.open { display: block; }
         .more-menu-item { display: flex; align-items: center; gap: 10px; padding: 9px 8px; border-radius: 10px; cursor: pointer; color: var(--text-main); font-size: 13px; }
         .more-menu-item:active { background: rgba(128,128,128,0.12); }
@@ -2218,7 +2218,7 @@
                 const FLR = D("#d49a64", "#8a5a3a"), FLRL = D("#c0864f", "#764c30"), SOF = D("#d6cdd6", "#8e869a"), SOFL = D("#e4dce4", "#a8a0b4"), WDC = D("#e0b280", "#9a7a54"), WDD = D("#c8935c", "#6a4a30");
                 R(0, 0, 90, 34, D("#f0dcd8", "#7a5a78")); R(0, 31, 90, 3, D("#e6cfcf", "#6e4e70"));
                 // 三扇大窗 + 城市夜景
-                for (let i = 0; i < 3; i++) { const wx = 40 + i * 17; B(wx, 2, 16, 21, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 14, 19, D("#a8cdee", "#0e1238")); skyline(wx + 1, wx + 15, 22, 2 + i * 3); if (!night) E(wx + 6, 7, 3, 1, "#fff"); else for (let k = 0; k < 34; k++) { const lx = wx + 2 + (k * 5 + i * 3) % 13, ly = 8 + (k * 7 + i) % 13; P(lx, ly, k % 3 ? "#ffd98a" : "#fff3c0"); } }
+                for (let i = 0; i < 3; i++) { const wx = 40 + i * 17; B(wx, 2, 16, 21, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 14, 19, D("#a8cdee", "#0e1238")); skyline(wx + 1, wx + 15, 22, 2 + i * 3); if (night) for (let k = 0; k < 34; k++) { const lx = wx + 2 + (k * 5 + i * 3) % 13, ly = 8 + (k * 7 + i) % 13; P(lx, ly, k % 3 ? "#ffd98a" : "#fff3c0"); } }
                 R(40, 21, 50, 3, D("#e8dede", "#8a7a98")); // 窗台
                 // 窗台上的书和小鹿、绿植
                 B(80, 14, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 15, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 18, 2, 4, D("#e89aa8", "#a86a78")); P(63, 17, D("#e89aa8", "#a86a78")); E(52, 20, 3, 2, D("#5fae60", "#2f6a40")); E(72, 20, 2, 2, D("#5fae60", "#2f6a40")); E(45, 20, 2, 2, D("#5fae60", "#2f6a40"));
@@ -3871,6 +3871,7 @@
                     if(!post.comments) post.comments = [];
                     post.comments.push({ name: db.other.name, text: `回复 <b>${db.me.name}</b>：${subArr.join(" ")}` });
                     saveData(); renderPyqStream();
+                    notifyIncomingOther2("moments", "回复了你的朋友圈评论：" + subArr.join(" ").slice(0, 30));
                 }
             }, delayReply);
         }
@@ -4609,7 +4610,7 @@
                 const item = document.createElement("div"); item.className = "card-item"; item.innerText = nText;
                 item.onclick = () => { 
                     db.chat.push({ type: "system", text: `${db.me.name}${nText}`, isNudge: true }); 
-                    closeBottomEmojiModal(); saveData(); renderChat(); 
+                    closeBottomEmojiModal(); saveData(); renderChat(); scheduleReply(); 
                 };
                 nBox.appendChild(item);
                 attachLongPressDelete(item, () => {
