@@ -531,11 +531,11 @@
         @keyframes popIn { from { opacity:0; transform:scale(.92); } to { opacity:1; transform:none; } }
         .wg-wrap { flex:1 1 0; min-height:0; display:flex; flex-direction:column; gap:16px; padding:3.2vh 20px 1.8vh; box-sizing:border-box; position:relative; z-index:1; }
         .wg { position:relative; overflow:hidden; border-radius:16px; border:1px solid rgba(255,255,255,.18); box-shadow:none; background:#10142e; min-height:0; box-sizing:border-box; }
-        .wg canvas { width:100%; height:100%; display:block; image-rendering:pixelated; } .wg-pet canvas { filter:none; }
+        .wg canvas { width:100%; height:100%; display:block; image-rendering:auto; } .wg-date canvas, .wg-pet canvas { image-rendering:pixelated; filter:none; }
         .wg-wish { flex:1 1 0; } .wg-date { flex:0 0 auto; aspect-ratio:9/5; cursor:pointer; } .wg-pet { flex:1.45 1 0; background:#f2dcd2; }
         .wish-bar { position:absolute; left:12px; right:12px; bottom:12px; z-index:2; display:flex; align-items:center; gap:6px; height:38px; padding:0 4px 0 15px; border-radius:19px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-sizing:border-box; }
         .wish-bar input { flex:1; min-width:0; background:transparent; border:none; outline:none; color:#fff; font-size:16px; padding:0; } .wish-bar input::placeholder { color:rgba(255,255,255,.62); font-size:14px; }
-        .wish-bar button { width:32px; height:32px; border-radius:50%; border:1px solid rgba(170,190,245,.45); background:radial-gradient(circle at 35% 30%, rgba(150,172,232,.55), rgba(96,116,190,.5) 75%); color:#dfe7ff; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 8px rgba(130,155,235,.35); transition:transform .12s, box-shadow .12s; } .wish-bar button:active { transform:scale(.9); }
+        .wish-bar button { position:relative; overflow:hidden; width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,226,190,.55); background:radial-gradient(circle at 50% 50%, rgba(255,238,210,.95) 0, rgba(240,190,140,.75) 14%, rgba(150,120,210,0) 52%), conic-gradient(from 20deg, #3a4aa8, #7a64c8, #3a4aa8 33%, #8a6cc0 55%, #2e3c94 78%, #3a4aa8); color:#fff; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 10px rgba(150,130,230,.55), inset 0 0 8px rgba(20,24,70,.55); transition:transform .12s, box-shadow .12s; } .wish-bar button svg { position:relative; z-index:1; filter:drop-shadow(0 0 3px rgba(60,40,120,.85)); } .wish-bar button::after { content:""; position:absolute; inset:0; border-radius:50%; background:radial-gradient(1px 1px at 22% 28%, #fff 60%, transparent 62%), radial-gradient(1px 1px at 76% 70%, #fff 60%, transparent 62%), radial-gradient(1px 1px at 70% 22%, rgba(255,255,255,.8) 60%, transparent 62%); } .wish-bar button:active { transform:scale(.9); box-shadow:0 0 14px rgba(190,160,255,.8), inset 0 0 8px rgba(20,24,70,.55); }
         .pet-mini { position:absolute; right:8px; top:7px; text-shadow:0 0 3px #fff, 0 0 3px #fff; display:flex; flex-direction:column; gap:5px; pointer-events:none; } .pet-mini div { display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:10px; line-height:10px; color:#7a6a64; } .pet-mini i { display:block; width:40px; height:5px; border-radius:3px; background:rgba(255,255,255,.7); box-shadow:0 0 0 1px rgba(120,90,80,.25); overflow:hidden; } .pet-mini b { display:block; height:100%; border-radius:3px; }
         .pet-ctl { position:absolute; left:8px; right:8px; bottom:7px; display:flex; gap:7px; justify-content:flex-start; z-index:3; overflow-x:auto; overflow-y:hidden; padding:2px 2px 5px; scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; scrollbar-width:none; touch-action:pan-x; } .pet-ctl::-webkit-scrollbar { display:none; }
         .pet-ctl button { flex:0 0 46px; height:42px; scroll-snap-align:start; border-radius:3px; border:2px solid #2b2238; background:#fff4d6; padding:2px 0 0; color:#2b2238; box-shadow:0 3px 0 #2b2238, inset 0 2px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(200,150,110,.35); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; transition:transform .06s, box-shadow .06s; font-family:inherit; } .pet-ctl button .pxi { width:24px; height:24px; image-rendering:pixelated; display:block; } .pet-ctl button i { font-style:normal; font-size:9px; line-height:1; letter-spacing:0; font-weight:700; }
@@ -641,7 +641,7 @@
         .home-p2-sticky-wrap::before { display:none; }
         .home-p2-sticky-note, .home-p2-wish-note { min-width: 0; border-radius: 0; padding: 9px 11px; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.25); box-sizing: border-box; }
         .home-p2-wish-note { width: calc(50% - 9px); flex: 0 0 auto; }
-        .home-p2-sticky-note { position: relative; z-index: 1; height: 100%; width: 100%; overflow: hidden; border-radius: 18px !important; background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05)); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 8px 24px rgba(0,0,0,0.16) !important; border: 1px solid rgba(255,255,255,0.22); }
+        .home-p2-sticky-note { position: relative; z-index: 1; height: 100%; width: 100%; overflow: hidden; border-radius: 18px !important; background: linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.03)); backdrop-filter: blur(24px) saturate(1.5) brightness(1.08); -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 8px 24px rgba(0,0,0,0.16) !important; border: 1px solid rgba(255,255,255,0.22); }
                 .home-p2-sticky-note::before { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; background: radial-gradient(120% 50% at 20% 0%, rgba(255,255,255,0.08), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(255,255,255,0.06) 21px, rgba(255,255,255,0.06) 22px); background-position: 0 0, 0 31px; z-index:0; }
         .home-p2-sticky-note > * { position: relative; z-index: 1; }
         [data-theme="eye-care"] .home-p2-sticky-note::before, [data-theme="light-green"] .home-p2-sticky-note::before { background: radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.35), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(110,150,190,0.12) 21px, rgba(110,150,190,0.08) 22px); background-position: 0 0, 0 31px; }
@@ -781,7 +781,7 @@
 
     <div class="home-screen" id="homeScreen">
         <div class="home-wallpaper-mask"></div>
-        <div class="home-master-track" id="homeMasterTrack">
+        <div class="home-master-track" id="homeMasterTrack" style="transform:translateX(-33.3333%);transition:none">
             <div class="home-master-page home-widgets-page">
                 <div class="wg-wrap">
                     <div class="wg wg-wish"><canvas id="starCanvas"></canvas><div class="wish-bar"><input id="wishInput" type="text" maxlength="60" placeholder="朝宇宙许个愿" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();starMakeWish();}"><button onclick="starMakeWish()" aria-label="送出"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z" fill="currentColor" stroke="none"/><path d="M18.5 15.5c.25 1.8 1 2.5 2.5 2.7-1.5.2-2.25.9-2.5 2.7-.25-1.8-1-2.5-2.5-2.7 1.5-.2 2.25-.9 2.5-2.7z" fill="currentColor" stroke="none" opacity=".75"/></svg></button></div></div>
@@ -1981,7 +1981,7 @@
         function handleStickyNoteInput(val) { const n = memoNormalize(val); const el = document.getElementById("homeStickyNoteInput"); if (el && n !== val) { const p = el.selectionStart + (n.length - val.length); el.value = n; el.selectionStart = el.selectionEnd = Math.max(0, p); } db.stickyNote = (n.trim() === "·" ? "" : n); saveData(); }
 
         // ==================== 🌌 许愿宇宙 / 🏠 约会像素 / 🐾 宠物（首页最左页三个组件） ====================
-        const p2Vis = () => currentHomePage === 0 && !document.hidden && !document.querySelector(".pyq-full-page.open");
+        const p2Vis = () => currentHomePage === 0 && !document.hidden && !document.querySelector(".pyq-full-page.open") && !Array.prototype.some.call(document.querySelectorAll(".pyq-full-page"), e => e.getBoundingClientRect().left < innerWidth - 2);
         function p2Fit(cv) { const r = cv.getBoundingClientRect(); if (!r.width) return null; const dpr = window.devicePixelRatio || 1, W = Math.round(r.width), H = Math.round(r.height); if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; } const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); return { ctx, W, H }; }
         let p2Raf = 0, p2Last = 0;
         function p2Init() {
@@ -2000,6 +2000,7 @@
         // ---------- 宇宙（螺旋星系 + 星云 + 流星；写下的愿望揉成星星飞进去） ----------
         let gal = null, galFly = null;
         function galG() { return (Math.random() + Math.random() + Math.random() - 1.5) / 1.5; }
+        let galDither = null;
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
             // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
@@ -2029,7 +2030,7 @@
               ctx.save();
               const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
               const mist = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
-              mist(W * 0.5, H * 0.5, R * 0.62, "34,52,118", 0.22 * br); mist(W * 0.2, H * 0.15, R * 0.4, "40,48,110", 0.12); mist(W * 0.85, H * 0.9, R * 0.45, "56,40,112", 0.14);
+              mist(W * 0.5, H * 0.5, R * 0.5, "34,52,118", 0.17 * br); mist(W * 0.2, H * 0.15, R * 0.36, "40,48,110", 0.045); mist(W * 0.85, H * 0.9, R * 0.4, "56,40,112", 0.05);
               ctx.restore(); }
             // 流星
             if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
@@ -2037,13 +2038,13 @@
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
             const pos = (r, th) => { const x = r * Rx * Math.cos(th), y = r * Ry * Math.sin(th); return [cx + x * cph - y * sph, cy + x * sph + y * cph]; };
-            const omega = r => 0.00003 / (0.22 + r);
+            const omega = r => 0.000017 / (0.22 + r);
             // 伴星系（左上亮点、右下椭圆光斑）
             { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.17)"); g.addColorStop(0.75, "rgba(70,82,170,.09)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.03)"); g.addColorStop(0.8, "rgba(96,108,190,.065)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.13)"); g.addColorStop(0.75, "rgba(70,82,170,.035)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.01)"); g.addColorStop(0.8, "rgba(96,108,190,.022)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${q.a})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
             gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * (1.05 - p.r * 0.75)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
@@ -2063,6 +2064,9 @@
                 ctx.fillStyle = "#ffffff"; ctx.globalAlpha = tw; ctx.beginPath(); ctx.arc(x, y, 1.15, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + k * 16, 0, 6.283); ctx.stroke(); }
             });
+            // 抖动噪点：打散深色渐变的色阶条纹（“像素底”的来源）
+            if (!galDither) { const n = document.createElement("canvas"); n.width = n.height = 96; const nc = n.getContext("2d"), id = nc.createImageData(96, 96); for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; } nc.putImageData(id, 0, 0); galDither = ctx.createPattern(n, "repeat"); }
+            ctx.save(); ctx.globalAlpha = 0.035; ctx.globalCompositeOperation = "overlay"; ctx.fillStyle = galDither; ctx.fillRect(0, 0, W, H); ctx.restore();
             // 一颗星星从下方飞进去
             if (galFly) {
                 const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const [tx, ty] = pos(w.r, w.a + omega(w.r) * t);
@@ -2897,7 +2901,7 @@
             document.addEventListener("DOMContentLoaded", () => {
                 const track = document.getElementById("homeMasterTrack");
                 if (!track) return;
-                track.style.transition = "none"; goToHomePage(1); setTimeout(() => { track.style.transition = ""; }, 50);
+                track.style.transition = "none"; goToHomePage(1); setTimeout(() => { track.style.transition = ""; }, 120);
                 track.addEventListener("touchstart", (e) => {
                     const t = e.touches[0]; startX = t.clientX; startY = t.clientY; dragging = true; isHorizontal = null;
                     track.style.transition = "none";
@@ -3925,7 +3929,7 @@
             closeBubblePop(); bubbleActionIdx = idx; const m = db.chat[idx];
             const el = anchor || document.querySelector(`[data-idx="${idx}"]`); if (!el) return;
             const pop = document.createElement("div"); pop.id = "bubblePop"; pop.className = "bubble-pop";
-            pop.innerHTML = `<button onclick="bubbleActionQuote()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 6 6v3"/></svg>引用</button><button onclick="bubbleActionSelect()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>多选</button>` + (m && m.me ? `<button class="danger" onclick="bubbleActionRecall()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/></svg>撤回</button>` : "");
+            pop.innerHTML = `<button onclick="bubbleActionQuote()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 6 6v3"/></svg>引用</button><button onclick="bubbleActionSelect()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>多选</button>` + (m && m.me && m.text && !m.img ? `<button onclick="bubbleActionEdit()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>编辑</button>` : "") + (m && m.me ? `<button class="danger" onclick="bubbleActionRecall()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/></svg>撤回</button>` : "");
             document.body.appendChild(pop);
             const r = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
             let left = Math.min(window.innerWidth - pw - 8, Math.max(8, r.left + r.width / 2 - pw / 2)), top = r.top - ph - 8, below = false;
@@ -3943,6 +3947,17 @@
             updateChatCollectCount();
             const el = document.querySelector(`[data-idx="${bubbleActionIdx}"]`);
             if (el) el.classList.add("collect-selected");
+        }
+        function bubbleActionEdit() {
+            const idx = bubbleActionIdx, m = db.chat[idx]; closeBubblePop(); if (!m || !m.text) return;
+            const old = document.getElementById("bubbleEditMask"); if (old) old.remove();
+            const mk = document.createElement("div"); mk.id = "bubbleEditMask"; mk.style.cssText = "position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box";
+            mk.innerHTML = '<div style="width:100%;max-width:340px;background:var(--modal-bg,#2a2634);color:var(--text-main);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.4)"><div style="font-size:14px;margin-bottom:10px;opacity:.8">编辑消息</div><textarea id="bubbleEditTa" rows="4" style="width:100%;box-sizing:border-box;resize:none;background:rgba(127,127,127,.12);color:inherit;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:16px;font-family:inherit;outline:none"></textarea><div style="display:flex;gap:10px;margin-top:12px"><button id="bubbleEditCancel" style="flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);background:none;color:inherit;font-size:14px">取消</button><button id="bubbleEditOk" style="flex:1;padding:10px;border-radius:12px;border:none;background:var(--primary,#7c8cf0);color:#fff;font-size:14px">保存</button></div></div>';
+            document.body.appendChild(mk); const ta = document.getElementById("bubbleEditTa"); ta.value = m.text; ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
+            const close = () => mk.remove();
+            mk.addEventListener("click", e => { if (e.target === mk) close(); });
+            document.getElementById("bubbleEditCancel").onclick = close;
+            document.getElementById("bubbleEditOk").onclick = () => { const v = ta.value.trim(); if (!v) { ta.focus(); return; } if (v !== m.text) { m.text = v; m.edited = true; saveData(); renderChat(); } close(); };
         }
         function bubbleActionRecall() {
             closeBubblePop();
