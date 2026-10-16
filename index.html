@@ -2031,7 +2031,7 @@
               ctx.save();
               const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
               const mist = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
-              mist(W * 0.5, H * 0.5, R * 0.5, "34,52,118", 0.17 * br); mist(W * 0.2, H * 0.15, R * 0.36, "40,48,110", 0.045); mist(W * 0.85, H * 0.9, R * 0.4, "56,40,112", 0.05);
+              mist(W * 0.5, H * 0.5, R * 0.55, "40,62,140", 0.26 * br); mist(W * 0.5, H * 0.5, R * 0.3, "70,96,190", 0.12 * br); mist(W * 0.2, H * 0.15, R * 0.36, "40,48,110", 0.045); mist(W * 0.85, H * 0.9, R * 0.4, "56,40,112", 0.05);
               ctx.restore(); }
             // 流星
             if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
@@ -2044,10 +2044,10 @@
             { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.4, "rgba(96,104,196,.13)"); g.addColorStop(0.75, "rgba(70,82,170,.035)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
+            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.01)"); g.addColorStop(0.8, "rgba(96,108,190,.022)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${(q.a * Math.max(0, 1.05 - q.r) * 0.8).toFixed(4)})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
-            gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * Math.pow(Math.max(0, 1 - p.r * 0.92), 1.35)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
+            gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.fillStyle = `rgba(${galStarColor(p.r)},${(p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05)).toFixed(3)})`; ctx.fillRect(x, y, p.s, p.s); });
             ctx.globalCompositeOperation = "source-over";
             // 深色尘埃带
             gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(14,14,30,.16)"); g.addColorStop(1, "rgba(14,14,30,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
@@ -2250,7 +2250,9 @@
                 // 落地灯：白鼓形灯罩 + 三脚架，贴近沙发，脚落在和沙发同一水平位
                 { const wd = D("#c8a070", "#7a5a3a"), wd2 = D("#9a7248", "#5a4028");
                   L(30, 19, 26, 41, wd); L(30, 19, 34, 41, wd); L(30, 19, 30, 39, wd2); R(30, 13, 1, 6, wd); R(26, 41, 2, 1, wd2); R(33, 41, 2, 1, wd2); R(29, 39, 2, 1, wd2);
-                  B(24, 4, 13, 10, D("#fffbf2", "#f4e6d0")); R(25, 5, 11, 1, D("#fff", "#fff3d8")); R(25, 12, 11, 1, D("#f0e4d4", "#d8b890")); }
+                  B(24, 4, 13, 10, D("#fffbf2", "#ffe7a8")); R(25, 5, 11, 1, D("#fff", "#fff6d0")); R(25, 12, 11, 1, D("#f0e4d4", "#f2c872"));
+                  if (night) { const gl = (cx, cy, rx, ry, al) => { c.globalAlpha = al; c.fillStyle = "#ffd27a"; for (let y = -ry; y <= ry; y++) for (let x = -rx; x <= rx; x++) if (x * x / (rx * rx) + y * y / (ry * ry) <= 1) c.fillRect(cx + x, cy + y, 1, 1); c.globalAlpha = 1; };
+                    gl(30, 9, 17, 11, 0.07); gl(30, 9, 13, 8, 0.09); gl(30, 9, 9, 6, 0.1); gl(30, 25, 11, 12, 0.06); gl(30, 36, 14, 5, 0.1); gl(30, 38, 8, 3, 0.1); R(25, 6, 11, 6, "#ffefc0"); R(26, 7, 9, 4, "#fff6dc"); } }
                 // 地板上的花瓶 + 开白花的枝 + 干枝
                 { const br = D("#6a5040", "#3a2a22"), wh = "#fff", lv = D("#f0e4f6", "#d8c8ec"), gold = D("#e0b060", "#c89a50");
                   for (const [tx, ty] of [[2, 24], [6, 20], [10, 23], [12, 29], [1, 30]]) { L(7, 37, tx, ty, br); for (const [dx, dy] of [[0, 0], [1, -1], [-1, 1], [1, 1], [-1, -1], [0, 2], [2, 0]]) P(tx + dx, ty + dy, (dx + dy) % 2 ? wh : lv); }
