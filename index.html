@@ -2060,14 +2060,14 @@
             // 愿望星
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const [x, y] = pos(w.r, w.a + omega(w.r) * t); const tw = 0.82 + 0.18 * Math.sin(t / 520 + w.ts % 9);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 4); g.addColorStop(0, `rgba(255,255,255,${0.55 * tw})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 4, y - 4, 8, 8);
-                ctx.fillStyle = "#ffffff"; ctx.globalAlpha = tw; ctx.beginPath(); ctx.arc(x, y, 1.15, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
-                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 3 + k * 16, 0, 6.283); ctx.stroke(); }
+                if (w.arrive && nowMs < w.arrive) return; const wr = 0.08 + w.r * 0.42, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = 0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 2.6); g.addColorStop(0, `rgba(235,240,255,${0.3 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 3, y - 3, 6, 6);
+                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.8; ctx.beginPath(); ctx.arc(x, y, 0.7, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
             });
             // 一颗星星从下方飞进去
             if (galFly) {
-                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const [tx, ty] = pos(w.r, w.a + omega(w.r) * t);
+                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.08 + w.r * 0.42, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
                 if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,.85)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
@@ -2538,13 +2538,13 @@
             petPos.x = Math.max(2, Math.min(w - sw - 2, petPos.x));
             for (let i = 0; i < p.poops; i++) c.drawImage(sprGet("poop"), 6 + i * 11, feet - 8 + (i % 2) * 2);
             c.fillStyle = "rgba(0,0,0,.16)"; c.fillRect(Math.round(petPos.x + 2), feet, sw - 4, 1);
-            let oy = 0, sy = 1; if (st === "happy") oy = -Math.round(Math.abs(Math.sin(t / 150)) * 6); else if (st === "idle") oy = (Math.floor(t / 450) % 2) ? -1 : 0; else if (st === "eat") sy = (Math.floor(t / 130) % 2) ? 0.88 : 1; else if (st === "sleep") sy = 0.86; else if (st === "sad" || st === "tired" || st === "sick") sy = 0.92; else if (st === "bath") oy = 3 + (Math.floor(t / 300) % 2);
+            let oy = 0, sy = 1; if (st === "happy") oy = -Math.round(Math.abs(Math.sin(t / 150)) * 6); else if (st === "idle") oy = (Math.floor(t / 450) % 2) ? -1 : 0; else if (st === "eat") sy = (Math.floor(t / 130) % 2) ? 0.88 : 1; else if (st === "sleep") sy = 0.86; else if (st === "sad" || st === "tired" || st === "sick") sy = 0.92; else if (st === "bath") oy = -4 - ((Math.floor(t / 300) % 2) ? 1 : 0);
             const dh = Math.round(sh * sy), dx = Math.round(petPos.x) + (st === "sick" ? (Math.floor(t / 140) % 2) : 0), dy = feet - dh + oy; c.imageSmoothingEnabled = false;
             c.save(); if (petPos.dir < 0 && st === "idle") { c.translate(dx + sw, 0); c.scale(-1, 1); c.drawImage(spr, 0, dy, sw, dh); } else c.drawImage(spr, dx, dy, sw, dh); c.restore();
             if (st === "eat" && petAnim.food) { const k = (petAnim.until - Date.now()) / 2400, fs = sprGet(petAnim.food); c.drawImage(fs, dx + sw - 2 - Math.round((1 - k) * 4), dy - 4 + Math.round((1 - k) * 12) + (Math.floor(t / 130) % 2)); }
             if (st === "happy") { c.drawImage(sprGet("heart"), dx - 4, dy - 4 - Math.round(Math.sin(t / 200) * 2)); c.drawImage(sprGet("heart"), dx + sw - 2, dy - 6 + Math.round(Math.sin(t / 230) * 2)); }
             if (st === "bath") {
-                const tub = sprGet("tub"); c.drawImage(tub, dx - 5, feet - 7, sw + 10, 9);
+                const tcx = dx + Math.round(sw / 2), trx = Math.round(sw / 2) + 7, tcy = feet - 3; K.E(tcx, tcy + 1, trx, 5, "#dfe9f4", "#b99aa6"); K.E(tcx, tcy - 1, trx - 1, 4, "#f4f9fd", "#b99aa6"); K.E(tcx, tcy - 4, trx - 4, 2, "#8fd0f2", "#5aa8d8"); c.fillStyle = "#fff"; c.fillRect(tcx - trx + 4, tcy - 2, 3, 1); 
                 for (let i = 0; i < 8; i++) { const bx = dx - 2 + ((i * 13) % (sw + 4)) + Math.round(Math.sin(t / 300 + i) * 2), by = feet - 6 - ((t / 45 + i * 11) % (sh + 6)); c.drawImage(sprGet("bub"), bx, Math.round(by)); }
             }
             if (st === "heal") { c.drawImage(sprGet("cross"), dx + Math.round(sw / 2) - 6, dy - 14 - Math.round(Math.abs(Math.sin(t / 250)) * 3)); for (let k = 0; k < 5; k++) { const sx = dx + 2 + ((k * 9) % (sw - 2)), sy2 = dy + sh - ((t / 40 + k * 7) % (sh + 4)); c.fillStyle = "#8fe0a8"; c.fillRect(sx, Math.round(sy2), 1, 3); c.fillRect(sx - 1, Math.round(sy2) + 1, 3, 1); } }
@@ -2866,6 +2866,7 @@
             let lastBack = 0, toastEl = null;
             const toast = (t) => { if (!toastEl) { toastEl = document.createElement("div"); toastEl.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:9px 18px;border-radius:18px;font-size:13px;z-index:3000;pointer-events:none;transition:opacity .25s;opacity:0"; document.body.appendChild(toastEl); } toastEl.innerText = t; toastEl.style.opacity = "1"; clearTimeout(toast._t); toast._t = setTimeout(() => toastEl.style.opacity = "0", 1800); };
             function handleBack() {
+                const bem = document.getElementById("bubbleEditMask"); if (bem) { bem.remove(); return true; }
                 if (document.getElementById("bubblePop")) { closeBubblePop(); return true; }
                 const mm = document.querySelector(".more-menu-popup.open"); if (mm) { mm.classList.remove("open"); return true; }
                 const m = Array.from(document.querySelectorAll(".universal-modal.open")).pop(); if (m) { closeModal(m.id); return true; }
@@ -2896,8 +2897,7 @@
                 // 补守卫：有过用户操作时补满；还没有时只补一层（连塞多层会被浏览器当成“无操作记录”一次跳过）
                 const refill = () => { if (hasActivation()) { while (depth < TARGET) pushGuard(); } else pushGuard(); };
                 if (handleBack()) { refill(); return; }
-                if (Date.now() - lastBack < 2000) { exiting = true; history.go(-Math.max(1, depth + 1)); return; }
-                lastBack = Date.now(); toast("再划一次退出网页"); refill();
+                lastBack = Date.now(); toast("已在首页（返回手势不会退出网页）"); refill();
             });
         })();
 
