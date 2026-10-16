@@ -537,9 +537,9 @@
         .wish-bar input { flex:1; min-width:0; background:transparent; border:none; outline:none; color:#fff; font-size:16px; padding:0; } .wish-bar input::placeholder { color:rgba(255,255,255,.62); font-size:14px; }
         .wish-bar button { position:relative; overflow:hidden; width:32px; height:32px; border-radius:50%; border:1px solid rgba(255,226,190,.55); background:radial-gradient(circle at 50% 50%, rgba(255,238,210,.95) 0, rgba(240,190,140,.75) 14%, rgba(150,120,210,0) 52%), conic-gradient(from 20deg, #3a4aa8, #7a64c8, #3a4aa8 33%, #8a6cc0 55%, #2e3c94 78%, #3a4aa8); color:#fff; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 10px rgba(150,130,230,.55), inset 0 0 8px rgba(20,24,70,.55); transition:transform .12s, box-shadow .12s; } .wish-bar button svg { position:relative; z-index:1; filter:drop-shadow(0 0 3px rgba(60,40,120,.85)); } .wish-bar button::after { content:""; position:absolute; inset:0; border-radius:50%; background:radial-gradient(1px 1px at 22% 28%, #fff 60%, transparent 62%), radial-gradient(1px 1px at 76% 70%, #fff 60%, transparent 62%), radial-gradient(1px 1px at 70% 22%, rgba(255,255,255,.8) 60%, transparent 62%); } .wish-bar button:active { transform:scale(.9); box-shadow:0 0 14px rgba(190,160,255,.8), inset 0 0 8px rgba(20,24,70,.55); }
         .pet-mini { position:absolute; right:8px; top:7px; text-shadow:0 0 3px #fff, 0 0 3px #fff; display:flex; flex-direction:column; gap:5px; pointer-events:none; } .pet-mini div { display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:10px; line-height:10px; color:#7a6a64; } .pet-mini i { display:block; width:40px; height:5px; border-radius:3px; background:rgba(255,255,255,.7); box-shadow:0 0 0 1px rgba(120,90,80,.25); overflow:hidden; } .pet-mini b { display:block; height:100%; border-radius:3px; }
-        .pet-ctl { position:absolute; left:8px; right:8px; bottom:7px; display:flex; gap:7px; justify-content:flex-start; z-index:3; overflow-x:auto; overflow-y:hidden; padding:2px 2px 5px; scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; scrollbar-width:none; touch-action:pan-x; } .pet-ctl::-webkit-scrollbar { display:none; }
-        .pet-ctl button { flex:0 0 46px; height:42px; scroll-snap-align:start; border-radius:3px; border:2px solid #2b2238; background:#fff4d6; padding:2px 0 0; color:#2b2238; box-shadow:0 3px 0 #2b2238, inset 0 2px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(200,150,110,.35); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; transition:transform .06s, box-shadow .06s; font-family:inherit; } .pet-ctl button .pxi { width:24px; height:24px; image-rendering:pixelated; display:block; } .pet-ctl button i { font-style:normal; font-size:9px; line-height:1; letter-spacing:0; font-weight:700; }
-        .pet-ctl button:active, .pet-ctl button.down { transform:translateY(3px); box-shadow:0 0 0 #2b2238, inset 0 2px 0 rgba(255,255,255,.5); background:#ffe08a; } .pet-ctl button.on { background:#ffd9c6; }
+        .pet-ctl { position:absolute; left:8px; right:8px; bottom:7px; display:flex; gap:0; justify-content:flex-start; z-index:3; overflow-x:auto; overflow-y:hidden; padding:3px; box-sizing:border-box; height:50px; background:rgba(255,244,214,.72); border:2px solid #2b2238; border-radius:4px; box-shadow:0 3px 0 #2b2238, inset 0 2px 0 rgba(255,255,255,.55); overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; scrollbar-width:none; touch-action:pan-x; contain:layout paint; } .pet-ctl::-webkit-scrollbar { display:none; }
+        .pet-ctl button { flex:0 0 48px; height:100%; border:none; border-radius:2px; background:transparent; padding:0; color:#2b2238; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-family:inherit; position:relative; -webkit-tap-highlight-color:transparent; box-shadow:none; transform:none; } .pet-ctl button + button::before { content:""; position:absolute; left:0; top:7px; bottom:7px; width:2px; background:repeating-linear-gradient(to bottom, rgba(43,34,56,.35) 0 2px, transparent 2px 4px); } .pet-ctl button .pxi { width:24px; height:24px; image-rendering:pixelated; display:block; } .pet-ctl button i { font-style:normal; font-size:9px; line-height:1; font-weight:700; }
+        .pet-ctl button:active, .pet-ctl button.down { background:#ffd98a; box-shadow:inset 0 2px 0 rgba(43,34,56,.35); } .pet-ctl button.on { background:rgba(255,200,170,.8); }
         .pet-tray { position:absolute; left:10px; right:10px; bottom:52px; z-index:3; display:none; flex-wrap:wrap; justify-content:center; gap:4px 2px; padding:6px 8px; border-radius:14px; background:#fff1ea; border:1px solid #e9bfb3; } .pet-tray.on { display:flex; }
         .pet-tray div { flex:0 0 24%; width:auto; text-align:center; font-size:10px; color:#6a5a54; } .pet-tray img { width:32px; height:32px; image-rendering:pixelated; display:block; margin:0 auto 1px; }
         .wg-pet .pet-msg { top:34px; font-size:12px; padding:3px 12px; }
@@ -642,9 +642,9 @@
         .home-p2-sticky-note, .home-p2-wish-note { min-width: 0; border-radius: 0; padding: 9px 11px; display: flex; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.25); box-sizing: border-box; }
         .home-p2-wish-note { width: calc(50% - 9px); flex: 0 0 auto; }
         .home-p2-sticky-note { position: relative; z-index: 1; height: 100%; width: 100%; overflow: hidden; border-radius: 18px !important; background: linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.03)); backdrop-filter: blur(24px) saturate(1.5) brightness(1.08); -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 8px 24px rgba(0,0,0,0.16) !important; border: 1px solid rgba(255,255,255,0.22); }
-                .home-p2-sticky-note::before { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; background: radial-gradient(120% 50% at 20% 0%, rgba(255,255,255,0.08), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(255,255,255,0.06) 21px, rgba(255,255,255,0.06) 22px); background-position: 0 0, 0 31px; z-index:0; }
+                .home-p2-sticky-note::before { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; background: radial-gradient(120% 50% at 20% 0%, rgba(255,255,255,0.08), transparent 60%); z-index:0; }
         .home-p2-sticky-note > * { position: relative; z-index: 1; }
-        [data-theme="eye-care"] .home-p2-sticky-note::before, [data-theme="light-green"] .home-p2-sticky-note::before { background: radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.35), transparent 60%), repeating-linear-gradient(to bottom, transparent 0, transparent 21px, rgba(110,150,190,0.12) 21px, rgba(110,150,190,0.08) 22px); background-position: 0 0, 0 31px; }
+        [data-theme="eye-care"] .home-p2-sticky-note::before, [data-theme="light-green"] .home-p2-sticky-note::before { background: radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.35), transparent 60%); }
         [data-theme="eye-care"] .home-p2-sticky-note, [data-theme="light-green"] .home-p2-sticky-note { background: linear-gradient(145deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1)); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 24px rgba(120,160,200,0.14) !important; border-color: rgba(255,255,255,0.55); }
         .home-p2-wish-note { background: linear-gradient(160deg, var(--wish-note-c1), var(--wish-note-c2)); }
         .home-p2-note-label { font-size: 11px; font-weight: 700; color: #7A6423; margin-bottom: 4px; flex-shrink: 0; }
@@ -1983,6 +1983,7 @@
         // ==================== 🌌 许愿宇宙 / 🏠 约会像素 / 🐾 宠物（首页最左页三个组件） ====================
         const p2Vis = () => currentHomePage === 0 && !document.hidden && !document.querySelector(".pyq-full-page.open") && !Array.prototype.some.call(document.querySelectorAll(".pyq-full-page"), e => e.getBoundingClientRect().left < innerWidth - 2);
         function p2Fit(cv) { const r = cv.getBoundingClientRect(); if (!r.width) return null; const dpr = window.devicePixelRatio || 1, W = Math.round(r.width), H = Math.round(r.height); if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; } const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); return { ctx, W, H }; }
+        document.addEventListener("scroll", e => { if (e.target && e.target.classList && e.target.classList.contains("pet-ctl")) window.__ctlTs = performance.now(); }, true);
         let p2Raf = 0, p2Last = 0;
         function p2Init() {
             if (!db.wishStars) db.wishStars = [];
@@ -1993,7 +1994,7 @@
         function p2Frame(t) {
             p2Raf = requestAnimationFrame(p2Frame);
             if (t - p2Last < 33) return; p2Last = t;
-            if (p2Vis()) { galDraw(t); dateStripDraw(t); petDrawStrip(t); }
+            if (p2Vis()) { if (t - (window.__ctlTs || -999) > 300) galDraw(t); dateStripDraw(t); petDrawStrip(t); }
             const pp = document.getElementById("petFullPage"); if (pp && pp.classList.contains("open") && !document.hidden) petDrawPage(t);
         }
 
@@ -2225,14 +2226,14 @@
                 // 粉色窗帘
                 B(27, 0, 12, 28, D("#e8c4c4", "#8a5a6e")); for (let x = 29; x < 37; x += 3) R(x, 1, 1, 26, D("#d8aeb0", "#704a5e"));
                 // 龟背竹
-                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 21, 7, 4, D("#3a8a52", "#225a3a")); E(4, 27, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828")); E(3, 20, 4, 3, D("#3a8a52", "#225a3a")); E(12, 17, 4, 3, D("#2a6a42", "#18402c")); E(15, 25, 4, 3, D("#3a8a52", "#225a3a")); E(2, 34, 4, 3, D("#2f7a4a", "#1c4a34")); /* 落地盆栽 */ B(3, 37, 9, 7, D("#d8c6ae", "#8a7a68")); R(4, 39, 7, 1, D("#c4b098", "#76685a")); leaf(7, 36, -2, -2, 4, D("#58a85a", "#2f5a3a")); leaf(7, 36, 2, -2, 4, D("#6fbf6a", "#38704a")); leaf(7, 36, 0, -3, 5, D("#4a9a52", "#2a5a38")); /* 花瓶白花（靠窗帘前） */ B(31, 33, 4, 7, D("#f2e8e0", "#b0a090")); L(33, 33, 29, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 35, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 32, 26, D("#6a9a60", "#2f5a3a")); L(33, 33, 34, 25, D("#6a9a60", "#2f5a3a")); for (const q of [[29, 26], [35, 26], [32, 25], [34, 24], [30, 28], [36, 28]]) { P(q[0], q[1], "#fff"); P(q[0] + 1, q[1], D("#f6e0f6", "#e8d0e8")); }
+                E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(9, 21, 6, 4, D("#3a8a52", "#225a3a")); E(4, 27, 6, 4, D("#2a6a42", "#18402c")); R(7, 14, 1, 14, D("#256040", "#143828")); E(3, 20, 4, 3, D("#3a8a52", "#225a3a")); E(12, 17, 3, 3, D("#2a6a42", "#18402c")); /* 花瓶白花（靠窗帘前） */ B(31, 33, 4, 7, D("#f2e8e0", "#b0a090")); L(33, 33, 29, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 35, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 32, 26, D("#6a9a60", "#2f5a3a")); L(33, 33, 34, 25, D("#6a9a60", "#2f5a3a")); for (const q of [[29, 26], [35, 26], [32, 25], [34, 24], [30, 28], [36, 28]]) { P(q[0], q[1], "#fff"); P(q[0] + 1, q[1], D("#f6e0f6", "#e8d0e8")); }
                 // 落地灯：直杆 + 圆底座
-                B(17, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(22, 11, 2, 2, D("#e8e0d0", "#8a8090")); R(22, 13, 2, 29, D("#c8a070", "#7a5a3a")); // 灯杆在地板之后补画底座
-                if (night) sp(23, 7, "#ffe9b0", 1);
+                for (let y = 3; y <= 10; y++) { const h = 3 + Math.floor((y - 3) * 0.6); R(21 - h, y, 2 * h, 1, D("#fffefb", "#d8d0e0")); P(21 - h, y, PX_OUT); P(20 + h, y, PX_OUT); } R(18, 3, 6, 1, PX_OUT); R(14, 11, 14, 1, PX_OUT); R(20, 12, 2, 30, D("#c8a070", "#7a5a3a")); // 灯杆在地板之后补画底座
+                if (night) sp(21, 8, "#ffe9b0", 1);
                 // 木地板
                 R(0, 34, 90, 16, FLR); for (let y = 37; y < 50; y += 3) R(0, y, 90, 1, FLRL); for (let y = 37, i = 0; y < 50; y += 3, i++) for (let x = (i * 13) % 19; x < 90; x += 19) R(x, y - 2, 1, 2, FLRL); R(0, 34, 90, 1, PX_OUT);
                 // 地毯（灰白锯齿纹）
-                E(46, 45, 30, 5, D("#cfcac6", "#6e6a78")); E(46, 45, 28, 4, D("#e6e2de", "#8a8694")); for (let y = 42; y <= 48; y += 2) for (let x = 22 + (y % 4); x < 70; x += 4) { P(x, y, D("#6a6a70", "#4a4a56")); P(x + 1, y + 1, D("#6a6a70", "#4a4a56")); }
+                B(29, 42, 44, 7, D("#cfc6bd", "#6e6a78")); R(31, 44, 40, 3, D("#efe8e0", "#8e8a98")); for (let x = 32; x <= 68; x += 4) { P(x, 45, D("#c4b8ae", "#6a6674")); P(x + 2, 46, D("#c4b8ae", "#6a6674")); }
                 // 窗下长沙发（占大半宽度）+ 靠垫
                 B(40, 24, 46, 9, SOF); B(36, 25, 6, 15, SOFL); B(84, 25, 6, 15, SOFL); B(40, 31, 44, 8, SOFL); R(42, 33, 40, 1, D("#c4bccc", "#7a7288")); B(38, 39, 3, 3, WDD); B(85, 39, 3, 3, WDD); R(40, 38, 44, 1, D("#c8935c", "#6a4a30"));
                 B(43, 19, 10, 9, D("#f0eaec", "#a8a0b2")); B(54, 21, 10, 8, D("#e8e0ea", "#a09aae")); B(65, 19, 10, 9, D("#e4dcea", "#9890a8")); B(75, 22, 8, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 3; i++) L(76 + i * 2, 23, 76 + i * 2, 28, D("#b8b0c4", "#7a7288"));
@@ -2242,11 +2243,9 @@
                 B(48, 37, 3, 6, D("#f2e8e0", "#b0a090")); L(49, 37, 47, 32, D("#6a9a60", "#2f5a3a")); L(49, 37, 51, 32, D("#6a9a60", "#2f5a3a")); P(47, 31, "#fff"); P(51, 31, "#fff"); P(49, 30, "#fff"); P(46, 34, "#f6e0f6"); P(52, 34, "#f6e0f6");
                 B(54, 41, 4, 3, "#fffdf4"); B(40, 42, 6, 2, D("#fff", "#d8d8e8")); B(42, 41, 3, 1, "#e0627a");
                 // 地板上的花瓶 + 开白花的枝（参考图左下）+ 灯座
-                R(22, 34, 2, 8, D("#c8a070", "#7a5a3a")); B(19, 42, 9, 2, D("#d8cfc4", "#8a8090")); B(3, 33, 9, 10, D("#8a8a90", "#4a4a58")); R(4, 35, 3, 6, D("#b0b0b8", "#6a6a78")); for (const [a, b2] of [[5, 14], [8, 12], [10, 18], [3, 20]]) L(7, 33, a, b2 + 10, D("#4a6a40", "#2a4a30")); for (const [x, y] of [[5, 24], [4, 27], [8, 22], [7, 26], [10, 28], [3, 30], [9, 31], [6, 29]]) { P(x, y, "#fff"); P(x + 1, y, "#efe6ff"); }
-                E(14, 39, 4, 2, D("#3a8a52", "#225a3a")); E(15, 41, 5, 2, D("#2a6a42", "#18402c")); E(9, 8, 8, 4, D("#2f7a4a", "#1c4a34")); E(16, 14, 6, 3, D("#3a8a52", "#225a3a"));
-                // 玩具小火车
-                B(28, 46, 4, 3, "#d94a3a"); B(33, 46, 4, 3, "#e8603a"); B(38, 45, 7, 4, "#2a2a30"); R(38, 44, 3, 1, "#2a2a30"); P(30, 49, "#222"); P(35, 49, "#222"); P(40, 49, "#222"); P(44, 49, "#222");
-                if (night) { sp(23, 7, "#ffe9b0", 1); sp(60, 8, "#fff", 1); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
+                R(20, 34, 2, 8, D("#c8a070", "#7a5a3a")); B(16, 42, 10, 3, D("#d8cfc4", "#8a8090")); B(3, 33, 9, 10, D("#8a8a90", "#4a4a58")); R(4, 35, 3, 6, D("#b0b0b8", "#6a6a78")); for (const [a, b2] of [[5, 14], [8, 12], [10, 18], [3, 20]]) L(7, 33, a, b2 + 10, D("#4a6a40", "#2a4a30")); for (const [x, y] of [[5, 24], [4, 27], [8, 22], [7, 26], [10, 28], [3, 30], [9, 31], [6, 29]]) { P(x, y, "#fff"); P(x + 1, y, "#efe6ff"); }
+                E(9, 8, 6, 3, D("#2f7a4a", "#1c4a34"));
+                                if (night) { sp(21, 8, "#ffe9b0", 1); sp(60, 8, "#fff", 1); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
             } else if (kind === "terrace") {
                 for (let y = 0; y < 34; y++) { const t = y / 34; c.fillStyle = night ? `rgb(${Math.round(12 + t * 26)},${Math.round(18 + t * 30)},${Math.round(58 + t * 50)})` : `rgb(${Math.round(176 + t * 50)},${Math.round(214 + t * 26)},248)`; c.fillRect(0, y, 90, 1); }
                 if (night) { for (let i = 0; i < 18; i++) sp((i * 41) % 90, 1 + (i * 13) % 18, "#fff", i % 3 === 0); } else { E(14, 8, 7, 2, "#fff"); E(20, 6, 5, 2, "#fff"); E(66, 16, 6, 2, "#f4faff"); }
@@ -2903,6 +2902,7 @@
                 if (!track) return;
                 track.style.transition = "none"; goToHomePage(1); setTimeout(() => { track.style.transition = ""; }, 120);
                 track.addEventListener("touchstart", (e) => {
+                    if (e.target.closest && e.target.closest(".pet-ctl")) { dragging = false; return; }
                     const t = e.touches[0]; startX = t.clientX; startY = t.clientY; dragging = true; isHorizontal = null;
                     track.style.transition = "none";
                 }, { passive: true });
