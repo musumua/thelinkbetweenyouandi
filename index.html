@@ -316,6 +316,7 @@
         .game-diff button.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; }
         .game-card { width:100%; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow-sm); cursor:pointer; }
         .gc-t { font-size:16px; font-weight:600; } .gc-d { font-size:12px; color:var(--text-sub); margin-top:4px; } .gc-r { font-size:11px; color:var(--text-sub); margin-top:8px; opacity:.8; }
+.g48 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; width:min(86vw,340px); aspect-ratio:1; margin:8px auto; padding:8px; border-radius:14px; background:var(--border); touch-action:none; box-sizing:border-box; } .g48c { border-radius:8px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-weight:800; user-select:none; } .g48c.nw { animation:g48pop .18s ease-out; } @keyframes g48pop { from { transform:scale(.4); opacity:.3; } to { transform:none; opacity:1; } } .g48-pad { grid-template-columns:repeat(3,64px); grid-template-rows:repeat(2,52px); } .g48-pad .dp-u { grid-column:2; grid-row:1; } .g48-pad .dp-l { grid-column:1; grid-row:2; } .g48-pad .dp-d { grid-column:2; grid-row:2; } .g48-pad .dp-r { grid-column:3; grid-row:2; }
         .game-msg { font-size:13px; color:var(--text-sub); min-height:18px; text-align:center; }
         .game-canvas { border-radius:4px; box-shadow:var(--shadow-md); touch-action:manipulation; }
         .game-btns { display:flex; gap:10px; justify-content:center; margin-top:4px; }
@@ -536,9 +537,9 @@
         .wish-bar input { flex:1; min-width:0; background:transparent; border:none; outline:none; color:#fff; font-size:16px; padding:0; } .wish-bar input::placeholder { color:rgba(255,255,255,.62); font-size:14px; }
         .wish-bar button { width:32px; height:32px; border-radius:50%; border:1px solid rgba(170,190,245,.45); background:radial-gradient(circle at 35% 30%, rgba(150,172,232,.55), rgba(96,116,190,.5) 75%); color:#dfe7ff; display:flex; align-items:center; justify-content:center; padding:0; flex-shrink:0; box-shadow:0 0 8px rgba(130,155,235,.35); transition:transform .12s, box-shadow .12s; } .wish-bar button:active { transform:scale(.9); }
         .pet-mini { position:absolute; right:8px; top:7px; text-shadow:0 0 3px #fff, 0 0 3px #fff; display:flex; flex-direction:column; gap:5px; pointer-events:none; } .pet-mini div { display:flex; align-items:center; justify-content:flex-end; gap:4px; font-size:10px; line-height:10px; color:#7a6a64; } .pet-mini i { display:block; width:40px; height:5px; border-radius:3px; background:rgba(255,255,255,.7); box-shadow:0 0 0 1px rgba(120,90,80,.25); overflow:hidden; } .pet-mini b { display:block; height:100%; border-radius:3px; }
-        .pet-ctl { position:absolute; left:10px; right:10px; bottom:9px; display:flex; gap:6px; justify-content:center; z-index:3; }
-        .pet-ctl button { flex:1; max-width:52px; height:36px; border-radius:12px; border:1px solid #e9bfb3; background:#fff1ea; font-size:17px; line-height:1; padding:0; color:#6a5a54; transition:transform .08s, background .08s; }
-        .pet-ctl button:active, .pet-ctl button.down { transform:translateY(1px) scale(.94); background:#ffd9c6; } .pet-ctl button.on { background:#ffd9c6; }
+        .pet-ctl { position:absolute; left:8px; right:8px; bottom:7px; display:flex; gap:7px; justify-content:flex-start; z-index:3; overflow-x:auto; overflow-y:hidden; padding:2px 2px 5px; scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; scrollbar-width:none; touch-action:pan-x; } .pet-ctl::-webkit-scrollbar { display:none; }
+        .pet-ctl button { flex:0 0 46px; height:42px; scroll-snap-align:start; border-radius:3px; border:2px solid #2b2238; background:#fff4d6; padding:2px 0 0; color:#2b2238; box-shadow:0 3px 0 #2b2238, inset 0 2px 0 rgba(255,255,255,.7), inset 0 -2px 0 rgba(200,150,110,.35); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; transition:transform .06s, box-shadow .06s; font-family:inherit; } .pet-ctl button .pxi { width:24px; height:24px; image-rendering:pixelated; display:block; } .pet-ctl button i { font-style:normal; font-size:9px; line-height:1; letter-spacing:0; font-weight:700; }
+        .pet-ctl button:active, .pet-ctl button.down { transform:translateY(3px); box-shadow:0 0 0 #2b2238, inset 0 2px 0 rgba(255,255,255,.5); background:#ffe08a; } .pet-ctl button.on { background:#ffd9c6; }
         .pet-tray { position:absolute; left:10px; right:10px; bottom:52px; z-index:3; display:none; flex-wrap:wrap; justify-content:center; gap:4px 2px; padding:6px 8px; border-radius:14px; background:#fff1ea; border:1px solid #e9bfb3; } .pet-tray.on { display:flex; }
         .pet-tray div { flex:0 0 24%; width:auto; text-align:center; font-size:10px; color:#6a5a54; } .pet-tray img { width:32px; height:32px; image-rendering:pixelated; display:block; margin:0 auto 1px; }
         .wg-pet .pet-msg { top:34px; font-size:12px; padding:3px 12px; }
@@ -560,8 +561,8 @@
         .tama-hole { position:absolute; left:50%; top:3.5%; width:9%; aspect-ratio:1; transform:translateX(-50%); border:3px solid #2b2238; border-radius:50%; background:rgba(0,0,0,.25); }
         .tama-screen { position:absolute; left:15%; right:15%; top:15%; height:44%; background:#cfe3b8; border:4px solid #2b2238; border-radius:10px; overflow:hidden; box-shadow:inset 0 0 0 3px rgba(0,0,0,.15); }
         .tama-screen canvas { width:100%; height:100%; display:block; image-rendering:pixelated; }
-        .tama-menu { position:absolute; left:0; right:0; top:0; z-index:2; display:flex; justify-content:space-around; padding:3px 4px; background:rgba(255,255,255,.55); border-bottom:2px solid #2b2238; }
-        .tama-menu button { border:2px solid transparent; background:transparent; border-radius:6px; padding:0 4px; font-size:15px; line-height:22px; } .tama-menu button.on { border-color:#2b2238; background:#fff7b0; }
+        .tama-menu { position:absolute; left:0; right:0; top:0; z-index:2; display:flex; justify-content:flex-start; gap:2px; overflow-x:auto; scrollbar-width:none; touch-action:pan-x; padding:3px 4px; background:rgba(255,255,255,.55); border-bottom:2px solid #2b2238; }
+        .tama-menu::-webkit-scrollbar { display:none; } .tama-menu button { flex:0 0 auto; border:2px solid transparent; background:transparent; border-radius:3px; padding:1px 2px; line-height:0; } .tama-menu .pxi { width:20px; height:20px; image-rendering:pixelated; } .tama-menu button.on { border-color:#2b2238; background:#fff7b0; }
         .tama-btns { position:absolute; left:0; right:0; bottom:9%; display:flex; justify-content:center; gap:7%; }
         .tama-btns button { width:17%; aspect-ratio:1; border-radius:50%; border:3px solid #2b2238; background:radial-gradient(circle at 35% 30%, #fff, #ddd 60%, #bbb); color:#2b2238; font-weight:800; font-size:16px; box-shadow:0 5px 0 #2b2238; transition:transform .06s, box-shadow .06s; }
         .tama-btns button:active, .tama-btns button.down { transform:translateY(4px); box-shadow:0 1px 0 #2b2238; background:radial-gradient(circle at 35% 30%, #ffe9a8, #ffd05a 60%, #e8a830); }
@@ -2103,7 +2104,16 @@
             poop: ["....oo....", "...onno...", "..onNnno..", ".oonnnnoo.", "onnwnnwnno", "onnknnknno", "onnnnnnnno", ".oonnnnoo.", "..oooooo.."],
             heart: [".oo.oo.", "orroRro", "orrrrro", ".orrro.", "..oro..", "...o..."],
             drop: ["..o..", ".oto.", "ouuuo", "ouuuo", ".ooo."],
-            zz: ["ooooo", "...o.", "..o..", ".o...", "ooooo"]
+            zz: ["ooooo", "...o.", "..o..", ".o...", "ooooo"],
+            bulb: ["...oooooo...", "..oyyyyyyo..", ".oyyYyyyyyo.", ".oyYyyyyyyo.", ".oyyyyyyyyo.", "..oyyyyyyo..", "...oyyyyo...", "...oWWWWo...", "...oooooo...", "...oWWWWo...", "....oooo...."],
+            sun: ["....o..o....", "..o.oooo.o..", "...oyyyyo...", ".o.oyyyyo.o.", "..oyyYyyyo..", "..oyyyyyyo..", ".o.oyyyyo.o.", "...oyyyyo...", "..o.oooo.o..", "....o..o...."],
+            ball: ["...oooooo...", "..oyyyyyyo..", ".oyywyyyyyo.", ".oywyyyyyyo.", "oyywyyyyyyyo", "oyywyyyyyyyo", "oyywyyyyyyyo", ".oywyyyyyyo.", ".oyywyyyyyo.", "..oyyywwyo..", "...oooooo..."],
+            broom: [".........oo.", "........oBo.", ".......oBo..", "......oBo...", ".....oBo....", "....oBo.....", "..ooyYoo....", ".oyYyYyYo...", ".oYyYyYyo...", ".oyYyYyYo...", "..oooooo...."],
+            pic: [".oooooooooo.", ".obbbbbbbbo.", ".obUUUUyUbo.", ".obUUUUUUUbo".slice(0,12), ".obUUUUUUUbo".slice(0,12), ".obgUUUUggo.", ".obGgggggGbo".slice(0,12), ".obggggggGbo".slice(0,12), ".obbbbbbbbo.", ".oooooooooo."],
+            pencil: ["........oo..", ".......orro.", "......orRro.", ".....oyyro..", "....oyYyo...", "...oyYyo....", "..oyYyo.....", ".oBYyo......", ".oBBo.......", ".oooo......."],
+            tub: ["................", "oooooooooooooooo", "owwwwwwwwwwwwwwo", "owUUUUUUUUUUUUwo", "owUtUUUUUtUUUUwo", ".owwwwwwwwwwwwo.", "..owwwwwwwwwwo..", "..ooo......ooo.."],
+            cross: ["...oooooo...", "...orrrro...", "...orwwro...", "oooorwwroooo", "orrrrwwrrrro", "orwwwwwwwwro", "orwwwwwwwwro", "orrrrwwrrrro", "oooorwwroooo", "...orwwro...", "...orrrro...", "...oooooo..."],
+            bub: [".oo.", "oUto", "oUUo", ".oo."]
         };
         let sprCache = {};
         function sprGet(key) { if (!sprCache[key]) sprCache[key] = sprCanvas(SPR[key], SPR_PAL); return sprCache[key]; }
@@ -2212,8 +2222,9 @@
                 B(27, 0, 12, 28, D("#e8c4c4", "#8a5a6e")); for (let x = 29; x < 37; x += 3) R(x, 1, 1, 26, D("#d8aeb0", "#704a5e"));
                 // 龟背竹
                 E(5, 14, 7, 5, D("#2f7a4a", "#1c4a34")); E(10, 21, 7, 4, D("#3a8a52", "#225a3a")); E(4, 27, 6, 4, D("#2a6a42", "#18402c")); E(14, 8, 5, 3, D("#3a8a52", "#225a3a")); R(7, 14, 1, 14, D("#256040", "#143828")); E(3, 20, 4, 3, D("#3a8a52", "#225a3a")); E(12, 17, 4, 3, D("#2a6a42", "#18402c")); E(15, 25, 4, 3, D("#3a8a52", "#225a3a")); E(2, 34, 4, 3, D("#2f7a4a", "#1c4a34")); /* 落地盆栽 */ B(3, 37, 9, 7, D("#d8c6ae", "#8a7a68")); R(4, 39, 7, 1, D("#c4b098", "#76685a")); leaf(7, 36, -2, -2, 4, D("#58a85a", "#2f5a3a")); leaf(7, 36, 2, -2, 4, D("#6fbf6a", "#38704a")); leaf(7, 36, 0, -3, 5, D("#4a9a52", "#2a5a38")); /* 花瓶白花（靠窗帘前） */ B(31, 33, 4, 7, D("#f2e8e0", "#b0a090")); L(33, 33, 29, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 35, 27, D("#6a9a60", "#2f5a3a")); L(33, 33, 32, 26, D("#6a9a60", "#2f5a3a")); L(33, 33, 34, 25, D("#6a9a60", "#2f5a3a")); for (const q of [[29, 26], [35, 26], [32, 25], [34, 24], [30, 28], [36, 28]]) { P(q[0], q[1], "#fff"); P(q[0] + 1, q[1], D("#f6e0f6", "#e8d0e8")); }
-                // 落地灯（三脚架）
-                B(17, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(22, 11, 2, 2, D("#e8e0d0", "#8a8090")); L(23, 13, 18, 31, D("#c8a070", "#7a5a3a")); L(23, 13, 28, 31, D("#c8a070", "#7a5a3a")); L(23, 13, 23, 31, D("#c8a070", "#7a5a3a")); if (night) sp(23, 7, "#ffe9b0", 1);
+                // 落地灯：直杆 + 圆底座
+                B(17, 3, 12, 8, D("#fffefb", "#d8d0e0")); R(22, 11, 2, 2, D("#e8e0d0", "#8a8090")); R(22, 13, 2, 29, D("#c8a070", "#7a5a3a")); // 灯杆在地板之后补画底座
+                if (night) sp(23, 7, "#ffe9b0", 1);
                 // 木地板
                 R(0, 34, 90, 16, FLR); for (let y = 37; y < 50; y += 3) R(0, y, 90, 1, FLRL); for (let y = 37, i = 0; y < 50; y += 3, i++) for (let x = (i * 13) % 19; x < 90; x += 19) R(x, y - 2, 1, 2, FLRL); R(0, 34, 90, 1, PX_OUT);
                 // 地毯（灰白锯齿纹）
@@ -2223,12 +2234,12 @@
                 B(43, 19, 10, 9, D("#f0eaec", "#a8a0b2")); B(54, 21, 10, 8, D("#e8e0ea", "#a09aae")); B(65, 19, 10, 9, D("#e4dcea", "#9890a8")); B(75, 22, 8, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 3; i++) L(76 + i * 2, 23, 76 + i * 2, 28, D("#b8b0c4", "#7a7288"));
                 B(46, 28, 7, 4, D("#a8b8d8", "#6a7498")); R(47, 29, 5, 1, D("#c8d4ec", "#8a94b8")); B(76, 31, 10, 6, D("#a8b0a0", "#5e6a5a")); R(77, 33, 8, 1, D("#c8d0c0", "#7a8a76")); B(60, 30, 9, 3, D("#e8d8b8", "#a89870"));
                 // 圆木茶几 + 花瓶 + 杯子 + 杂志
-                E(46, 40, 11, 3, WDC); E(46, 39, 10, 2, D("#f0cfa0", "#b08e66")); L(38, 42, 36, 47, WDD); L(54, 42, 56, 47, WDD); L(46, 43, 46, 48, WDD);
-                B(44, 33, 3, 5, D("#f2e8e0", "#b0a090")); L(45, 33, 43, 29, D("#6a9a60", "#2f5a3a")); L(45, 33, 47, 29, D("#6a9a60", "#2f5a3a")); P(43, 28, "#fff"); P(47, 28, "#fff"); P(45, 27, "#fff"); P(42, 30, "#f6e0f6"); P(48, 30, "#f6e0f6");
-                B(50, 37, 4, 3, "#fffdf4"); B(38, 38, 6, 2, D("#fff", "#d8d8e8")); B(40, 37, 3, 1, "#e0627a");
-                // 左右藤编摇椅
-                L(10, 41, 10, 30, WDC); B(8, 31, 10, 10, WDC); R(9, 33, 8, 7, D("#c89868", "#7a5a38")); for (let y = 34; y < 40; y += 2) R(9, y, 8, 1, WDC); B(8, 39, 18, 4, D("#e8d8c0", "#a89a88")); L(5, 47, 26, 47, WDC); L(8, 43, 7, 47, WDC); L(24, 43, 25, 47, WDC);
-                B(68, 33, 14, 14, WDC); R(70, 35, 10, 9, D("#c89868", "#7a5a38")); for (let y = 36; y < 44; y += 2) R(70, y, 10, 1, WDC); B(64, 44, 26, 3, WDC); R(62, 48, 30, 1, WDC); B(72, 38, 8, 6, D("#f0e8dc", "#b0a8b0"));
+                E(50, 44, 12, 3, WDC); E(50, 43, 11, 2, D("#f0cfa0", "#b08e66")); L(41, 45, 39, 49, WDD); L(59, 45, 61, 49, WDD); L(50, 46, 50, 49, WDD);
+                B(48, 37, 3, 6, D("#f2e8e0", "#b0a090")); L(49, 37, 47, 32, D("#6a9a60", "#2f5a3a")); L(49, 37, 51, 32, D("#6a9a60", "#2f5a3a")); P(47, 31, "#fff"); P(51, 31, "#fff"); P(49, 30, "#fff"); P(46, 34, "#f6e0f6"); P(52, 34, "#f6e0f6");
+                B(54, 41, 4, 3, "#fffdf4"); B(40, 42, 6, 2, D("#fff", "#d8d8e8")); B(42, 41, 3, 1, "#e0627a");
+                // 地板上的花瓶 + 开白花的枝（参考图左下）+ 灯座
+                R(22, 34, 2, 8, D("#c8a070", "#7a5a3a")); B(19, 42, 9, 2, D("#d8cfc4", "#8a8090")); B(3, 33, 9, 10, D("#8a8a90", "#4a4a58")); R(4, 35, 3, 6, D("#b0b0b8", "#6a6a78")); for (const [a, b2] of [[5, 14], [8, 12], [10, 18], [3, 20]]) L(7, 33, a, b2 + 10, D("#4a6a40", "#2a4a30")); for (const [x, y] of [[5, 24], [4, 27], [8, 22], [7, 26], [10, 28], [3, 30], [9, 31], [6, 29]]) { P(x, y, "#fff"); P(x + 1, y, "#efe6ff"); }
+                E(14, 39, 4, 2, D("#3a8a52", "#225a3a")); E(15, 41, 5, 2, D("#2a6a42", "#18402c")); E(9, 8, 8, 4, D("#2f7a4a", "#1c4a34")); E(16, 14, 6, 3, D("#3a8a52", "#225a3a"));
                 // 玩具小火车
                 B(28, 46, 4, 3, "#d94a3a"); B(33, 46, 4, 3, "#e8603a"); B(38, 45, 7, 4, "#2a2a30"); R(38, 44, 3, 1, "#2a2a30"); P(30, 49, "#222"); P(35, 49, "#222"); P(40, 49, "#222"); P(44, 49, "#222");
                 if (night) { sp(23, 7, "#ffe9b0", 1); sp(60, 8, "#fff", 1); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
@@ -2364,11 +2375,13 @@
             { id: "water", spr: "water", n: "清水", water: 38, digest: 0, drink: true }, { id: "milk", spr: "milk", n: "牛奶", water: 26, full: 8, mood: 3, digest: 40, drink: true }
         ];
         const PET_SCENES = [{ id: "house", n: "小屋" }, { id: "grass", n: "草地" }, { id: "sea", n: "海边" }, { id: "night", n: "夜晚" }];
-        const PET_MENU = [["food", "🍙", "喂食"], ["light", "💡", "睡觉"], ["play", "🎾", "玩耍"], ["clean", "🧹", "清理"], ["scene", "🖼", "换场景"]];
+        const PET_MENU = [["food", "rice", "喂食"], ["light", "bulb", "睡觉"], ["play", "ball", "玩耍"], ["clean", "broom", "清理"], ["bath", "tub", "洗澡"], ["heal", "cross", "治疗"], ["scene", "pic", "换场景"]];
+        const pxImgCache = {}; function pxImg(k, sc) { const id = k + sc; if (!pxImgCache[id]) pxImgCache[id] = sprURL(k, sc); return `<img class="pxi" src="${pxImgCache[id]}" alt="">`; }
         const SHELLS = ["#ffb6d0", "#a8d8ff", "#c8f0b8", "#ffe08a", "#d6c0ff"];
         let petAnim = { kind: "", until: 0, food: "" }, petSel = 0, petPos = { x: 30, dir: 1, pause: 0, last: 0 }, petBuf = null, petSprCache = { v: -1, cv: null };
         function petInit() {
-            if (!db.pet) db.pet = { name: "团子", scene: "house", full: 80, water: 80, energy: 90, mood: 80, poops: 0, sleeping: false, digest: 0, lastTs: Date.now(), born: Date.now(), shell: 0, sprV: 0 };
+            if (!db.pet) db.pet = { name: "团子", scene: "house", full: 80, water: 80, energy: 90, mood: 80, poops: 0, dirt: 0, sick: false, sleeping: false, digest: 0, lastTs: Date.now(), born: Date.now(), shell: 0, sprV: 0 };
+            if (db.pet.dirt === undefined) db.pet.dirt = 0; if (db.pet.sick === undefined) db.pet.sick = false;
             if (db.pet.shell === undefined) db.pet.shell = 0; if (db.pet.sprV === undefined) db.pet.sprV = 0;
             petTick();
         }
@@ -2377,15 +2390,18 @@
             p.full = Math.max(0, p.full - dt * 0.22); p.water = Math.max(0, p.water - dt * 0.3);
             if (p.sleeping) { p.energy = Math.min(100, p.energy + dt * 1.1); if (p.energy >= 100) p.sleeping = false; } else p.energy = Math.max(0, p.energy - dt * 0.1);
             if (p.digest > 0) { p.digest -= dt; if (p.digest <= 0) { p.digest = 0; p.poops = Math.min(4, p.poops + 1); } }
-            const base = (Math.min(p.full, 100) + Math.min(p.water, 100) + p.energy) / 3, target = Math.max(0, Math.min(100, base - p.poops * 9));
+            // 会变脏、会生病：身上的脏污随时间和便便累积；太脏/太饿/太渴/便便多了就可能生病
+            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.05 : 0.14) + p.poops * dt * 0.06);
+            if (!p.sick && (p.dirt > 75 || p.poops >= 3 || p.full < 8 || p.water < 8) && Math.random() < Math.min(0.5, dt * 0.03)) { p.sick = true; saveData(); }
+            const base = (Math.min(p.full, 100) + Math.min(p.water, 100) + p.energy) / 3, target = Math.max(0, Math.min(100, base - p.poops * 9 - (p.dirt > 50 ? (p.dirt - 50) * 0.3 : 0) - (p.sick ? 25 : 0)));
             p.mood += (target - p.mood) * Math.min(1, dt * 0.05);
             if (Math.random() < 0.02) saveData();
         }
-        function petNeeds() { const p = db.pet; return !p.sleeping && (p.full < 25 || p.water < 25 || p.poops >= 1 || p.energy < 18); }
+        function petNeeds() { const p = db.pet; return !p.sleeping && (p.sick || p.dirt > 65 || p.full < 25 || p.water < 25 || p.poops >= 1 || p.energy < 18); }
         function petState() {
             const p = db.pet, now = Date.now();
             if (p.sleeping) return "sleep"; if (petAnim.until > now) return petAnim.kind;
-            if (p.full < 22 || p.water < 22 || p.poops >= 2) return "sad"; if (p.energy < 18) return "tired"; return "idle";
+            if (p.sick) return "sick"; if (p.full < 22 || p.water < 22 || p.poops >= 2) return "sad"; if (p.energy < 18) return "tired"; return "idle";
         }
         function petMsg(m) { const els = [document.getElementById("petMsg"), document.getElementById("petMsgHome")].filter(Boolean); els.forEach(el => { el.innerText = m; el.classList.add("on"); }); clearTimeout(petMsg._t); petMsg._t = setTimeout(() => els.forEach(el => el.classList.remove("on")), 2000); }
         function petBtnFx(el) { if (navigator.vibrate) navigator.vibrate(8); try { gameSfx("tap"); } catch (e) { } }
@@ -2398,7 +2414,9 @@
             petAnim = { kind: "eat", until: Date.now() + 2400, food: f.spr }; saveData(); closeModal("petFoodModal"); { const tr = document.getElementById("petTray"); if (tr) tr.classList.remove("on"); } petBars(); petMsg(f.drink ? "咕嘟咕嘟～" : "好吃！");
         }
         function petClean() { const p = db.pet; if (!p.poops) { petMsg("很干净呢"); return; } p.poops = 0; p.mood = Math.min(100, p.mood + 6); petAnim = { kind: "happy", until: Date.now() + 1500 }; saveData(); petBars(); petMsg("清理干净啦"); }
-        function petPlay() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (p.energy < 15) { petMsg("太累了，哄它睡吧"); return; } p.energy -= 10; p.mood = Math.min(100, p.mood + 14); p.full = Math.max(0, p.full - 4); p.water = Math.max(0, p.water - 4); petAnim = { kind: "happy", until: Date.now() + 2200 }; saveData(); petBars(); petMsg("好开心！"); }
+        function petPlay() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (p.energy < 15) { petMsg("太累了，哄它睡吧"); return; } if (p.sick) { petMsg("生病了，先治疗吧"); return; } p.energy -= 10; p.mood = Math.min(100, p.mood + 14); p.dirt = Math.min(100, (p.dirt || 0) + 6); p.full = Math.max(0, p.full - 4); p.water = Math.max(0, p.water - 4); petAnim = { kind: "happy", until: Date.now() + 2200 }; saveData(); petBars(); petMsg("好开心！"); }
+        function petBath() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if ((p.dirt || 0) < 12) { petMsg("身上很干净呢"); return; } p.dirt = 0; p.mood = Math.min(100, p.mood + 8); petAnim = { kind: "bath", until: Date.now() + 3200 }; saveData(); petBars(); petMsg("洗香香～"); }
+        function petHeal() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (!p.sick) { petMsg("没有生病，不用吃药"); return; } p.sick = false; p.mood = Math.min(100, p.mood + 6); p.energy = Math.max(0, p.energy - 5); petAnim = { kind: "heal", until: Date.now() + 2400 }; saveData(); petBars(); petMsg("吃了药，好多了"); }
         function petSleep() { const p = db.pet; petTick(); p.sleeping = !p.sleeping; petAnim = { kind: "", until: 0 }; saveData(); petBars(); petMsg(p.sleeping ? "晚安，zZ…" : "睡醒啦"); }
         function petSetScene(id) { db.pet.scene = id; saveData(); petBars(); }
         function petNextScene() { const i = PET_SCENES.findIndex(s => s.id === db.pet.scene); petSetScene(PET_SCENES[(i + 1) % PET_SCENES.length].id); petMsg("场景：" + PET_SCENES.find(s => s.id === db.pet.scene).n); }
@@ -2406,27 +2424,27 @@
         function petShellNext() { db.pet.shell = (db.pet.shell + 1) % SHELLS.length; saveData(); petBars(); }
         function openPetPage() { petInit(); petBars(); petRenderMenu(); document.getElementById("petFullPage").classList.add("open"); }
         function closePetPage() { document.getElementById("petFullPage").classList.remove("open"); }
-        function petAct(i) { petSel = i; petRenderMenu(); const k = PET_MENU[i][0]; if (k === "food") openPetFood(); else if (k === "light") petSleep(); else if (k === "play") petPlay(); else if (k === "clean") petClean(); else if (k === "scene") petNextScene(); }
+        function petAct(i) { petSel = i; petRenderMenu(); const k = PET_MENU[i][0]; if (k === "food") openPetFood(); else if (k === "light") petSleep(); else if (k === "play") petPlay(); else if (k === "clean") petClean(); else if (k === "bath") petBath(); else if (k === "heal") petHeal(); else if (k === "scene") petNextScene(); }
         function petBtn(b) { const el = document.getElementById("tamaBtn" + b); if (el) { el.classList.add("down"); setTimeout(() => el.classList.remove("down"), 140); } petBtnFx();
             if (b === "A") { petSel = (petSel + 1) % PET_MENU.length; petRenderMenu(); } else if (b === "B") petAct(petSel); else { petSel = -1; petRenderMenu(); closeModal("petFoodModal"); if (db.pet.sleeping) petSleep(); } }
-        function petRenderMenu() { const el = document.getElementById("petMenu"); if (!el) return; el.innerHTML = PET_MENU.map((m, i) => `<button class="${i === petSel ? "on" : ""}" onclick="petAct(${i})"><span>${m[0] === "light" && db.pet && db.pet.sleeping ? "☀️" : m[1]}</span></button>`).join(""); }
+        function petRenderMenu() { const el = document.getElementById("petMenu"); if (!el) return; el.innerHTML = PET_MENU.map((m, i) => `<button class="${i === petSel ? "on" : ""}" onclick="petAct(${i})"><span>${pxImg(m[0] === "light" && db.pet && db.pet.sleeping ? "sun" : m[1], 2)}</span></button>`).join(""); }
         function openPetFood() { petInit(); const g = arr => arr.map(f => `<div class="pet-food" onclick="petEat('${f.id}')"><img src="${sprURL(f.spr, 4)}"><b>${f.n}</b></div>`).join(""); document.getElementById("petFoodGrid").innerHTML = `<div class="pet-sec">食物</div><div class="pet-grid">${g(PET_FOODS.filter(f => !f.drink))}</div><div class="pet-sec">饮品</div><div class="pet-grid">${g(PET_FOODS.filter(f => f.drink))}</div>`; openModalBox("petFoodModal"); }
         function petBars() {
             const p = db.pet; if (!p) return;
             const row = (n, v, c) => `<div class="pet-bar"><span>${n}</span><i><b style="width:${Math.round(Math.max(0, Math.min(100, v)))}%;background:${c}"></b></i></div>`;
-            const el = document.getElementById("petStats"); if (el) el.innerHTML = row("饱腹", p.full, "#FFB36B") + row("水分", p.water, "#6BC4FF") + row("精力", p.energy, "#B79BFF") + row("心情", p.mood, "#FF8FB1");
+            const el = document.getElementById("petStats"); if (el) el.innerHTML = row("饱腹", p.full, "#FFB36B") + row("水分", p.water, "#6BC4FF") + row("精力", p.energy, "#B79BFF") + row("心情", p.mood, "#FF8FB1") + row("清洁", 100 - (p.dirt || 0), "#7fd6c8") + (p.sick ? `<div class="pet-bar" style="color:#e0586a"><span>状态</span>生病了，点「治疗」</div>` : "");
             const nm = document.getElementById("petName"); if (nm) nm.innerText = p.name;
             const t = document.getElementById("tama"); if (t) t.style.setProperty("--shell", SHELLS[p.shell || 0]);
             petRenderMenu();
             const mini = document.getElementById("petMini"); if (mini) mini.innerHTML = [["饱腹", p.full, "#ffc9a0"], ["水分", p.water, "#a8d8ff"], ["精力", p.energy, "#cdbfff"], ["心情", p.mood, "#ffb8cc"]].map(a => `<div>${a[0]}<i><b style="width:${Math.round(Math.max(0, Math.min(100, a[1])))}%;background:${a[2]}"></b></i></div>`).join("");
-            const ctl = document.getElementById("petCtl"); if (ctl) { const sig = p.sleeping ? "1" : "0"; if (ctl.dataset.sig !== sig) { ctl.dataset.sig = sig; ctl.innerHTML = `<button onclick="petHome('food',this)">🍙</button><button onclick="petHome('light',this)">${p.sleeping ? "☀️" : "💡"}</button><button onclick="petHome('play',this)">🎾</button><button onclick="petHome('clean',this)">🧹</button><button onclick="petHome('scene',this)">🖼</button><button onclick="petHome('draw',this)">✏️</button>`; } }
+            const ctl = document.getElementById("petCtl"); if (ctl) { const sig = p.sleeping ? "1" : "0";  if (ctl.dataset.sig !== sig) { ctl.dataset.sig = sig; ctl.innerHTML = [["food", "rice", "喂食"], ["light", p.sleeping ? "sun" : "bulb", "睡觉"], ["play", "ball", "玩耍"], ["clean", "broom", "清理"], ["bath", "tub", "洗澡"], ["heal", "cross", "治疗"], ["scene", "pic", "场景"], ["draw", "pencil", "画画"]].map(a => `<button onclick="petHome('${a[0]}',this)">${pxImg(a[1], 2)}<i>${a[2]}</i></button>`).join(""); } }
         }
         function petHome(k, el) {
             petBtnFx(); if (el) { el.classList.add("down"); setTimeout(() => el.classList.remove("down"), 140); } petInit();
             const tray = document.getElementById("petTray");
             if (k === "food") { if (tray.classList.contains("on")) { tray.classList.remove("on"); return; } tray.innerHTML = PET_FOODS.map(f => `<div onclick="petEat('${f.id}')"><img src="${sprURL(f.spr, 3)}">${f.n}</div>`).join(""); tray.classList.add("on"); return; }
             tray.classList.remove("on");
-            if (k === "light") petSleep(); else if (k === "play") petPlay(); else if (k === "clean") petClean(); else if (k === "scene") petNextScene(); else if (k === "draw") petEditOpen();
+            if (k === "light") petSleep(); else if (k === "play") petPlay(); else if (k === "clean") petClean(); else if (k === "bath") petBath(); else if (k === "heal") petHeal(); else if (k === "scene") petNextScene(); else if (k === "draw") petEditOpen();
         }
         // 当前宠物像素图（用户画的；没画时用默认小团子）
         function petSprite() {
@@ -2485,21 +2503,36 @@
                 for (let i = 0; i < 5; i++) { const fx = (i * 29 + 11) % w, fy = y0 + 5 + (i * 13) % 12 + Math.round(Math.sin(t / 700 + i) * 2); if (Math.sin(t / 400 + i * 2) > -0.2) { P(fx, fy, "#e6ff9a"); } }
             }
         }
+        function petLook(base) {
+            const p = db.pet, dl = Math.min(8, Math.floor((p.dirt || 0) / 12)), sk = p.sick ? 1 : 0; if (!dl && !sk) return base;
+            const key = (p.sprV || 0) + "_" + dl + "_" + sk; if (petLook.k === key && petLook.cv) return petLook.cv;
+            const cv = document.createElement("canvas"); cv.width = base.width; cv.height = base.height; const c = cv.getContext("2d"); c.drawImage(base, 0, 0); c.globalCompositeOperation = "source-atop";
+            if (sk) { c.fillStyle = "rgba(130,190,120,.4)"; c.fillRect(0, 0, cv.width, cv.height); }
+            for (let i = 0; i < dl * 2; i++) { c.fillStyle = i % 2 ? "#9a7a58" : "#7a6048"; c.fillRect((i * 7 + 3) % cv.width, (i * 5 + 2) % cv.height, 1 + (i % 2), 1 + (i % 3 === 0 ? 1 : 0)); }
+            petLook.k = key; petLook.cv = cv; return cv;
+        }
         function petScene(ctxOut, W, H, t) {
             const w = 76, h = Math.max(40, Math.round(76 * H / W)); if (!petBuf) petBuf = document.createElement("canvas"); if (petBuf.width !== w || petBuf.height !== h) { petBuf.width = w; petBuf.height = h; }
             const c = petBuf.getContext("2d"); c.clearRect(0, 0, w, h); const K = pxKit(c), p = db.pet; petTick();
             const st = petState(); petBgPix(K, w, h, p.scene, t); 
-            const spr = petSprite(), sw = spr.width, sh = spr.height, y0 = Math.round(h * 0.52), feet = y0 + Math.round((h - y0) * 0.42);
+            const spr = petLook(petSprite()), sw = spr.width, sh = spr.height, y0 = Math.round(h * 0.52), feet = y0 + Math.round((h - y0) * 0.42);
             const dt = petPos.last ? Math.min(100, t - petPos.last) : 16; petPos.last = t;
             if (st === "idle") { if (petPos.pause > 0) petPos.pause -= dt; else { petPos.x += petPos.dir * 0.011 * dt; if (petPos.x < 4 || petPos.x > w - sw - 4) { petPos.dir *= -1; petPos.x = Math.max(4, Math.min(w - sw - 4, petPos.x)); petPos.pause = 1200; } else if (Math.random() < 0.004) petPos.pause = 1500 + Math.random() * 1500; if (Math.random() < 0.002) petPos.dir *= -1; } }
             petPos.x = Math.max(2, Math.min(w - sw - 2, petPos.x));
             for (let i = 0; i < p.poops; i++) c.drawImage(sprGet("poop"), 6 + i * 11, feet - 8 + (i % 2) * 2);
             c.fillStyle = "rgba(0,0,0,.16)"; c.fillRect(Math.round(petPos.x + 2), feet, sw - 4, 1);
-            let oy = 0, sy = 1; if (st === "happy") oy = -Math.round(Math.abs(Math.sin(t / 150)) * 6); else if (st === "idle") oy = (Math.floor(t / 450) % 2) ? -1 : 0; else if (st === "eat") sy = (Math.floor(t / 130) % 2) ? 0.88 : 1; else if (st === "sleep") sy = 0.86; else if (st === "sad" || st === "tired") sy = 0.92;
-            const dh = Math.round(sh * sy), dx = Math.round(petPos.x), dy = feet - dh + oy; c.imageSmoothingEnabled = false;
+            let oy = 0, sy = 1; if (st === "happy") oy = -Math.round(Math.abs(Math.sin(t / 150)) * 6); else if (st === "idle") oy = (Math.floor(t / 450) % 2) ? -1 : 0; else if (st === "eat") sy = (Math.floor(t / 130) % 2) ? 0.88 : 1; else if (st === "sleep") sy = 0.86; else if (st === "sad" || st === "tired" || st === "sick") sy = 0.92; else if (st === "bath") oy = 3 + (Math.floor(t / 300) % 2);
+            const dh = Math.round(sh * sy), dx = Math.round(petPos.x) + (st === "sick" ? (Math.floor(t / 140) % 2) : 0), dy = feet - dh + oy; c.imageSmoothingEnabled = false;
             c.save(); if (petPos.dir < 0 && st === "idle") { c.translate(dx + sw, 0); c.scale(-1, 1); c.drawImage(spr, 0, dy, sw, dh); } else c.drawImage(spr, dx, dy, sw, dh); c.restore();
             if (st === "eat" && petAnim.food) { const k = (petAnim.until - Date.now()) / 2400, fs = sprGet(petAnim.food); c.drawImage(fs, dx + sw - 2 - Math.round((1 - k) * 4), dy - 4 + Math.round((1 - k) * 12) + (Math.floor(t / 130) % 2)); }
             if (st === "happy") { c.drawImage(sprGet("heart"), dx - 4, dy - 4 - Math.round(Math.sin(t / 200) * 2)); c.drawImage(sprGet("heart"), dx + sw - 2, dy - 6 + Math.round(Math.sin(t / 230) * 2)); }
+            if (st === "bath") {
+                const tub = sprGet("tub"); c.drawImage(tub, dx - 5, feet - 7, sw + 10, 9);
+                for (let i = 0; i < 8; i++) { const bx = dx - 2 + ((i * 13) % (sw + 4)) + Math.round(Math.sin(t / 300 + i) * 2), by = feet - 6 - ((t / 45 + i * 11) % (sh + 6)); c.drawImage(sprGet("bub"), bx, Math.round(by)); }
+            }
+            if (st === "heal") { c.drawImage(sprGet("cross"), dx + Math.round(sw / 2) - 6, dy - 14 - Math.round(Math.abs(Math.sin(t / 250)) * 3)); for (let k = 0; k < 5; k++) { const sx = dx + 2 + ((k * 9) % (sw - 2)), sy2 = dy + sh - ((t / 40 + k * 7) % (sh + 4)); c.fillStyle = "#8fe0a8"; c.fillRect(sx, Math.round(sy2), 1, 3); c.fillRect(sx - 1, Math.round(sy2) + 1, 3, 1); } }
+            if (st === "sick") { if (Math.floor(t / 500) % 2 === 0) c.drawImage(sprGet("cross"), dx + sw - 5, dy - 10); c.drawImage(sprGet("drop"), dx - 3, dy + 3 + (Math.floor(t / 300) % 3)); }
+            if ((db.pet.dirt || 0) > 55 && st !== "bath") { for (let k = 0; k < 2; k++) { const fx = dx + sw / 2 + Math.cos(t / 220 + k * 3) * (sw / 2 + 2), fy = dy - 2 + Math.sin(t / 170 + k * 2) * 4; c.fillStyle = "#4a4048"; c.fillRect(Math.round(fx), Math.round(fy), 1, 1); } if (Math.floor(t / 400) % 2) { c.fillStyle = "#b6a98a"; c.fillRect(dx + 3, dy - 4, 1, 3); c.fillRect(dx + sw - 5, dy - 5, 1, 3); } }
             if (st === "sad") c.drawImage(sprGet("drop"), dx + sw - 3, dy + 2 + (Math.floor(t / 300) % 3));
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { c.fillStyle = "#ff4a5a"; c.fillRect(w - 8, 3, 2, 6); c.fillRect(w - 8, 11, 2, 2); }
@@ -2508,7 +2541,7 @@
         function petDrawPage(t) { const cv = document.getElementById("petCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; petScene(f.ctx, f.W, f.H, t); if (!petDrawPage._t || t - petDrawPage._t > 2500) { petDrawPage._t = t; petBars(); } }
         function petDrawStrip(t) {
             const cv = document.getElementById("petStripCanvas"); if (!cv || !db.pet) return; const f = p2Fit(cv); if (!f) return; petScene(f.ctx, f.W, f.H, t); if (!petDrawStrip._t || t - petDrawStrip._t > 2500) { petDrawStrip._t = t; petBars(); }
-            const p = db.pet, lab = document.getElementById("petStripLab"); if (lab) { const st = petState(), tx = p.name + " ✎" + (st === "sleep" ? " · 睡觉中" : petNeeds() ? " · 需要照顾！" : ""); if (lab.innerText !== tx) lab.innerText = tx; lab.style.pointerEvents = "auto"; lab.onclick = petRename; }
+            const p = db.pet, lab = document.getElementById("petStripLab"); if (lab) { const st = petState(), tx = p.name + " ✎" + (st === "sleep" ? " · 睡觉中" : p.sick ? " · 生病了" : (p.dirt || 0) > 65 ? " · 脏脏的" : petNeeds() ? " · 需要照顾！" : ""); if (lab.innerText !== tx) lab.innerText = tx; lab.style.pointerEvents = "auto"; lab.onclick = petRename; }
         }
 
         // ---------- ✏️ 画宠物（像素画板，透明底，保存时自动裁成实际大小） ----------
@@ -6028,6 +6061,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         // 游戏音效（和发消息的音效不同）
         function gameSfx(type) {
+            if (type === "tap") { const nt = performance.now(); if (nt - (gameSfx._t || 0) < 130) return; gameSfx._t = nt; }
             try {
                 initAudio(); if (!audioCtx) return;
                 const t0 = audioCtx.currentTime;
@@ -6074,7 +6108,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["g2048", "2048", `滑动合并相同数字，合出 2048 就赢　最高 ${db.best2048 || 0}`]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
@@ -6089,14 +6123,51 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
-            document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", g2048: "2048" };
+            document.getElementById("gameTitle").innerText = names[k] + (k === "g2048" ? "" : " · " + GAME_DIFF_NAMES[gameDiff]);
+            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, g2048: game2048 })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
         const hisName = () => db.other.name || "他", myName = () => db.me.name || "我";
 
+        // ---------- 2048 ----------
+        function game2048() {
+            const body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">在棋盘上滑动，或用方向键</div><div class="mine-score" id="g48Score"></div><div class="g48" id="g48"></div><div class="dpad g48-pad"><button data-d="U" class="dp-u">▲</button><button data-d="L" class="dp-l">◀</button><button data-d="D" class="dp-d">▼</button><button data-d="R" class="dp-r">▶</button></div><div id="gameEnd"></div>`;
+            let B, score = 0, over = false, won = false, fresh = new Set();
+            const box = document.getElementById("g48"), N = 4;
+            const empty = () => { const e = []; for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (!B[y][x]) e.push([x, y]); return e; };
+            const spawn = () => { const e = empty(); if (!e.length) return; const [x, y] = e[Math.floor(Math.random() * e.length)]; B[y][x] = Math.random() < 0.9 ? 2 : 4; fresh.add(x + "," + y); };
+            const col = v => { const k = Math.log2(v), h = (200 + k * 28) % 360; return v <= 4 ? ["hsl(35,45%,90%)", "#5a4a3a"] : [`hsl(${h},62%,${Math.max(48, 72 - k * 2.5)}%)`, "#fff"]; };
+            function draw() {
+                box.innerHTML = B.map((r, y) => r.map((v, x) => { const c = v ? col(v) : ["transparent", "#000"]; return `<div class="g48c${v ? " v" : ""}${fresh.has(x + "," + y) ? " nw" : ""}" style="background:${c[0]};color:${c[1]};font-size:${v >= 1024 ? 18 : v >= 128 ? 22 : 26}px">${v || ""}</div>`; }).join("")).join("");
+                fresh = new Set(); const best = Math.max(db.best2048 || 0, score); document.getElementById("g48Score").innerText = `分数 ${score}　|　最高 ${best}`;
+            }
+            function slide(line) { const a = line.filter(v => v), out = []; let gain = 0; for (let i = 0; i < a.length; i++) { if (a[i] === a[i + 1]) { out.push(a[i] * 2); gain += a[i] * 2; i++; } else out.push(a[i]); } while (out.length < N) out.push(0); return { out, gain }; }
+            function move(d) {
+                if (over) return; let moved = false, gain = 0; const old = JSON.stringify(B);
+                const get = (i, j) => d === "L" ? B[i][j] : d === "R" ? B[i][N - 1 - j] : d === "U" ? B[j][i] : B[N - 1 - j][i];
+                const set = (i, j, v) => { if (d === "L") B[i][j] = v; else if (d === "R") B[i][N - 1 - j] = v; else if (d === "U") B[j][i] = v; else B[N - 1 - j][i] = v; };
+                for (let i = 0; i < N; i++) { const line = []; for (let j = 0; j < N; j++) line.push(get(i, j)); const r = slide(line); gain += r.gain; for (let j = 0; j < N; j++) set(i, j, r.out[j]); }
+                moved = JSON.stringify(B) !== old; if (!moved) return;
+                score += gain; if (gain) gameSfx("match"); else gameSfx("tap"); spawn(); draw();
+                if (score > (db.best2048 || 0)) { db.best2048 = score; saveData(); }
+                if (!won && B.some(r => r.some(v => v >= 2048))) { won = true; over = true; gameResultBar("合出 2048 了，你赢了 🎉"); gameStat("g2048", "w"); document.getElementById("gameEnd").innerHTML = gameEndButtons(); return; }
+                const dead = !empty().length && !B.some((r, y) => r.some((v, x) => (x < N - 1 && v === r[x + 1]) || (y < N - 1 && v === B[y + 1][x])));
+                if (dead) { over = true; gameResultBar("没有可以合并的了，结束"); gameStat("g2048", "l"); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            }
+            function start() { B = Array.from({ length: N }, () => new Array(N).fill(0)); score = 0; over = false; won = false; spawn(); spawn(); draw(); }
+            const key = e => { const m = { ArrowUp: "U", ArrowDown: "D", ArrowLeft: "L", ArrowRight: "R" }[e.key]; if (m) { e.preventDefault(); move(m); } };
+            let tx = 0, ty = 0;
+            box.addEventListener("touchstart", e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+            box.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.max(Math.abs(dx), Math.abs(dy)) < 18) return; move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "R" : "L") : (dy > 0 ? "D" : "U")); });
+            document.querySelectorAll(".g48-pad button").forEach(b => { b.onclick = () => move(b.dataset.d); });
+            document.addEventListener("keydown", key); start();
+            gameCleanup = () => { document.removeEventListener("keydown", key); };
+            gamePause = () => { document.removeEventListener("keydown", key); };
+            gameResume = () => { document.addEventListener("keydown", key); };
+        }
         // ---------- 五子棋 ----------
         function gameGomoku() {
             const N = 15, body = document.getElementById("gameBody");
