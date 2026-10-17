@@ -2045,6 +2045,14 @@
             const omega = r => 0.000017 / (0.22 + r);
             // 伴星系（左上亮点、右下椭圆光斑）
             { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
+            // 愿望星
+            const nowMs = Date.now();
+            (db.wishStars || []).forEach(w => {
+                if (w.arrive && nowMs < w.arrive) return; const wr = 0.08 + w.r * 0.42, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = 0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 1.6); g.addColorStop(0, `rgba(235,240,255,${0.2 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 2, y - 2, 4, 4);
+                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.7; ctx.beginPath(); ctx.arc(x, y, 0.45, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
+            });
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
@@ -2062,14 +2070,6 @@
             // 明亮的核心
             { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,244,222,.95)"); g.addColorStop(0.12, "rgba(255,222,170,.7)"); g.addColorStop(0.45, "rgba(224,176,120,.2)"); g.addColorStop(1, "rgba(210,160,110,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
             ctx.globalCompositeOperation = "source-over";
-            // 愿望星
-            const nowMs = Date.now();
-            (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const wr = 0.08 + w.r * 0.42, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = 0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 2.6); g.addColorStop(0, `rgba(235,240,255,${0.3 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 3, y - 3, 6, 6);
-                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.8; ctx.beginPath(); ctx.arc(x, y, 0.7, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
-                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
-            });
             // 一颗星星从下方飞进去
             if (galFly) {
                 const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.08 + w.r * 0.42, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
@@ -2509,12 +2509,19 @@
                 tree(w - 10, y0 + 2, "#c9996f", "#5fb872", "#7cc88c");
                 [[12, 6, "#f58fb0"], [28, 10, "#ffe27a"], [48, 5, "#ffffff"], [66, 9, "#ffb27a"]].forEach(([x, dy, col]) => { R(x, y0 + dy, 1, 4, "#5fb872"); P(x, y0 + dy - 1, col); P(x - 1, y0 + dy, col); P(x + 1, y0 + dy, col); P(x, y0 + dy, "#ffe27a"); });
             } else if (scene === "sea") {
-                for (let y = 0; y < y0 * 0.6; y++) R(0, y, w, 1, y < 8 ? "#f8b79a" : y < 16 ? "#fbcdb0" : "#fddcc4");
-                Bl(w * 0.5, 13, 6, 6, "#ffd78a"); R(0, Math.round(y0 * 0.6), w, Math.round(y0 * 0.4) + 1, "#7fc4e8");
-                for (let i = 0; i < 2; i++) { const y = Math.round(y0 * 0.66) + i * 4; for (let x = 0; x < w; x += 2) R(x, y + Math.round(Math.sin(x / 5 + t / 600 + i) * 1.1), 2, 1, "#d2edfa"); }
-                R(0, y0, w, h - y0, "#f0d398"); for (let x = 4; x < w; x += 9) P(x, y0 + 3 + (x * 5) % 8, "#e0be7c");
-                R(9, y0 - 16, 3, 16, "#c9996f"); Bl(10, y0 - 18, 7, 2, "#6fbf86"); Bl(5, y0 - 16, 3, 2, "#8fd09c"); Bl(15, y0 - 16, 3, 2, "#8fd09c");
-                Bl(w - 13, y0 + 8, 4, 2, "#f59ea8");
+                const hz = Math.round(y0 * 0.42);
+                for (let y = 0; y < hz; y++) R(0, y, w, 1, y < hz * 0.4 ? "#7cc6f2" : y < hz * 0.75 ? "#a2d8f6" : "#c6e8fa");
+                cloud(((t / 900) % (w + 30)) - 12, 7, "#ffffff"); cloud(w * 0.55, 15, "#f4fbff");
+                Bl(w - 14, 9, 5, 5, "#ffe08a");
+                for (let y = hz; y < y0; y++) { const q = (y - hz) / (y0 - hz); R(0, y, w, 1, q < 0.3 ? "#3f9fd6" : q < 0.65 ? "#58b4e4" : "#78c8ee"); }
+                R(0, hz, w, 1, "#2f86be");
+                for (let i = 0; i < 4; i++) { const y = hz + 3 + i * 4; for (let x = (i * 7) % 6; x < w; x += 9) { const o = Math.round(Math.sin(x / 4 + t / 500 + i) * 1); R(x, y + o, 4, 1, "#d8f2fc"); } }
+                { const bx = 18 + Math.round(((t / 1400) % 1) * 4), by = hz - 1; R(bx, by - 8, 1, 8, "#8c7a6a"); for (let k = 0; k < 7; k++) R(bx + 1, by - 8 + k, Math.max(1, 6 - k), 1, "#ffffff"); R(bx - 4, by, 10, 2, "#e8806a"); R(bx - 3, by + 2, 8, 1, "#c96a58"); }
+                // 岸边：一层泡沫的浪边 + 湿沙 + 干沙
+                const sy = y0 - 2; for (let x = 0; x < w; x++) { const o = Math.round(Math.sin(x / 6 + t / 700) * 1.4); R(x, sy + o, 1, 2, "#eefaff"); }
+                R(0, y0, w, 3, "#e6c98e"); R(0, y0 + 3, w, h - y0 - 3, "#f5dfa8"); for (let x = 4; x < w; x += 9) P(x, y0 + 5 + (x * 5) % 8, "#e2c585");
+                { const ux = w - 20, uy = y0 - 4; R(ux + 8, uy - 2, 1, 16, "#b98a62"); for (let k = 0; k < 6; k++) R(ux + 8 - (6 - k) * 2 + 1, uy - 8 + k, (6 - k) * 4 - 2, 1, k % 2 ? "#ffffff" : "#f5788f"); }
+                P(10, y0 + 12, "#f59ea8"); P(11, y0 + 12, "#f59ea8"); P(9, y0 + 12, "#f59ea8"); P(10, y0 + 11, "#f59ea8"); P(10, y0 + 13, "#f59ea8"); Bl(30, y0 + 14, 3, 2, "#ffffff");
             } else {
                 for (let y = 0; y < y0; y++) { const q = y / y0; R(0, y, w, 1, q < 0.5 ? "#2c3472" : q < 0.8 ? "#3d4786" : "#52599a"); }
                 for (let i = 0; i < 16; i++) { const x = (i * 37 + 5) % w, y = (i * 23 + 3) % Math.round(y0 * 0.7); if (Math.sin(t / 500 + i) > -0.4) P(x, y, "#ffffff"); }
@@ -2548,7 +2555,7 @@
             const B2 = (x, y, w2, h2, col, oc) => { c.fillStyle = oc; c.fillRect(x, y, w2, h2); c.fillStyle = col; c.fillRect(x + 1, y + 1, w2 - 2, h2 - 2); c.clearRect(x, y, 1, 1); c.clearRect(x + w2 - 1, y, 1, 1); };
             if (st === "bath") { const bw = sw + 18, bx = Math.round(dx + sw / 2 - bw / 2), ty = feet - 8; B2(bx, ty - 2, bw, 7, "#dbe8f4", "#8c7a96"); c.fillStyle = "#9fd8f5"; c.fillRect(bx + 2, ty, bw - 4, 4); c.fillStyle = "#c8ecfb"; c.fillRect(bx + 4, ty + 1, 6, 1); }
             c.save(); if (petPos.dir < 0 && st === "idle") { c.translate(dx + sw, 0); c.scale(-1, 1); c.drawImage(spr, 0, dy, sw, dh); } else c.drawImage(spr, dx, dy, sw, dh); c.restore();
-            if (st === "eat" && petAnim.food) { const k = (petAnim.until - Date.now()) / 2400, fs = sprGet(petAnim.food); c.drawImage(fs, dx + sw - 2 - Math.round((1 - k) * 4), dy - 4 + Math.round((1 - k) * 12) + (Math.floor(t / 130) % 2)); }
+            if (st === "eat" && petAnim.food) { const k = Math.max(0.12, (petAnim.until - Date.now()) / 2400), fs = sprGet(petAnim.food), fw = Math.max(1, Math.round(fs.width * k)), fh = Math.max(1, Math.round(fs.height * k)); c.drawImage(fs, dx + sw - 2 - Math.round((1 - k) * 4) + Math.round((fs.width - fw) / 2), dy + 4 + Math.round((fs.height - fh)) + (Math.floor(t / 130) % 2), fw, fh); }
             if (st === "happy") { c.drawImage(sprGet("heart"), dx - 4, dy - 4 - Math.round(Math.sin(t / 200) * 2)); c.drawImage(sprGet("heart"), dx + sw - 2, dy - 6 + Math.round(Math.sin(t / 230) * 2)); }
             if (st === "bath") {
                 { const bw = sw + 18, bx = Math.round(dx + sw / 2 - bw / 2), ty = feet - 8;
@@ -3701,8 +3708,16 @@
             const now = new Date();
             const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
             const dateLabel = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
-            let qi = -1; for (let k = db.chat.length - 1; k >= 0; k--) { const m = db.chat[k]; if (m && m.me && (m.text || m.img)) { qi = k; break; } }
-            const replyTo = qi >= 0 ? { author: db.me.name || "我", text: db.chat[qi].text ? db.chat[qi].text.slice(0, 60) : "[图片]" } : null;
+            let replyTo = null;
+            if (Math.random() < 0.3) {
+                const cand = [], cutoff = Date.now() - 3600000;
+                for (let k = db.chat.length - 1; k >= 0 && k >= db.chat.length - 60; k--) {
+                    const m = db.chat[k]; if (!m || m.type === "system" || !(m.text || m.img)) continue;
+                    let ts = m.ts; if (!ts && m.timeLabel && m.time) { const mm = /(\d+)年(\d+)月(\d+)日/.exec(m.timeLabel), tt = /(\d+):(\d+)/.exec(m.time); if (mm && tt) ts = new Date(+mm[1], +mm[2] - 1, +mm[3], +tt[1], +tt[2]).getTime(); }
+                    if (ts && ts >= cutoff) cand.push(m);
+                }
+                if (cand.length) { const m = cand[Math.floor(Math.random() * cand.length)]; replyTo = { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]" }; }
+            }
             const cards = getSignalCards();
             const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100, freeP = (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100;
             const r = Math.random(); let preview = "", msg = null;
