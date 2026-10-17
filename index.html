@@ -2029,8 +2029,7 @@
             { const TAU = 6.2832, bk = [[], [], [], [], [], []]; ctx.fillStyle = "#fff";
               gal.bg.forEach(s => { const a = s.a * (0.7 + 0.3 * Math.sin(t / 1500 + s.p)); bk[Math.min(5, Math.floor(a * 7))].push(s); });
               bk.forEach((arr, bi) => { if (!arr.length) return; ctx.globalAlpha = (bi + 0.5) / 7; ctx.beginPath(); arr.forEach(s => { const x = s.x * W, y = s.y * H, r = s.s * 0.5 + 0.3; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); }); ctx.fill(); });
-              ctx.globalAlpha = 1; ctx.strokeStyle = "#fff"; ctx.lineWidth = 0.6;
-              gal.bg.forEach(s => { if (s.s < 1.7) return; const x = s.x * W, y = s.y * H, L = 2.6 + 1.2 * Math.sin(t / 900 + s.p); ctx.globalAlpha = 0.45 * s.a; ctx.beginPath(); ctx.moveTo(x - L, y); ctx.lineTo(x + L, y); ctx.moveTo(x, y - L); ctx.lineTo(x, y + L); ctx.stroke(); }); ctx.globalAlpha = 1; }
+              ctx.globalAlpha = 1; }
             { // 星系周围一层很淡的深蓝雾（普通混合，不叠加，不会把整张图染白）
               ctx.save();
               const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
@@ -2527,13 +2526,11 @@
             }
         }
         function petLook(base) {
-            const p = db.pet, dl = Math.min(8, Math.floor((p.dirt || 0) / 12)), sk = p.sick ? 1 : 0; if (!dl && !sk) return base;
+            const p = db.pet, dl = 0, sk = p.sick ? 1 : 0; if (!dl && !sk) return base;
             const key = (p.sprV || 0) + "_" + dl + "_" + sk; if (petLook.k === key && petLook.cv) return petLook.cv;
             const cv = document.createElement("canvas"); cv.width = base.width; cv.height = base.height; const c = cv.getContext("2d"); c.drawImage(base, 0, 0); c.globalCompositeOperation = "source-atop";
             if (sk) { c.fillStyle = "rgba(130,190,120,.4)"; c.fillRect(0, 0, cv.width, cv.height); }
-            if (dl) { c.fillStyle = `rgba(118,112,126,${(dl * 0.07).toFixed(3)})`; c.fillRect(0, 0, cv.width, cv.height);
-                for (let k = 0; k < dl; k++) { const x = (k * 7 + 3) % cv.width, y = (k * 5 + 2) % cv.height; c.fillStyle = k % 2 ? "rgba(40,36,46,.5)" : "rgba(84,78,92,.45)"; c.fillRect(x, y, 2 + (k % 2), 1 + (k % 2)); }
-                c.fillStyle = "rgba(60,55,68,.35)"; c.fillRect(0, Math.round(cv.height * 0.72), cv.width, Math.max(1, Math.round(cv.height * 0.28))); }
+
             petLook.k = key; petLook.cv = cv; return cv;
         }
         function petScene(ctxOut, W, H, t) {
@@ -2560,9 +2557,12 @@
                     for (let k = 0; k < 5; k++) { const fx = bx + 4 + ((k * 7 + Math.floor(t / 400)) % (bw - 8)); c.fillStyle = "#fff"; c.fillRect(fx, ty + 2 + (k % 2), 2, 2); } }
                 for (let i = 0; i < 8; i++) { const bx = dx - 2 + ((i * 13) % (sw + 4)) + Math.round(Math.sin(t / 300 + i) * 2), by = feet - 6 - ((t / 45 + i * 11) % (sh + 6)); c.drawImage(sprGet("bub"), bx, Math.round(by)); }
             }
-            if ((db.pet.dirt || 0) >= 24 && st !== "bath" && st !== "sleep") { for (let k = 0; k < 4; k++) { const ph = ((t / 1100) + k / 4) % 1, px2 = dx + Math.round(sw * (0.1 + 0.27 * k)) + Math.round(Math.sin(t / 400 + k * 2) * 2), py2 = dy + Math.round(sh * 0.45) - Math.round(ph * 12); c.globalAlpha = Math.max(0, (1 - ph) * 0.75); c.fillStyle = "#8d8896"; c.fillRect(px2, py2, 3, 2); c.fillRect(px2 + 1, py2 - 1, 2, 1); c.fillRect(px2 - 1, py2 + 1, 1, 1); c.fillStyle = "#6f6a79"; c.fillRect(px2 + 2, py2 + 1, 2, 1); c.globalAlpha = 1; } }
-            if (st === "heal") { c.drawImage(sprGet("cross"), dx + Math.round(sw / 2) - 6, dy - 14 - Math.round(Math.abs(Math.sin(t / 250)) * 3)); for (let k = 0; k < 5; k++) { const sx = dx + 2 + ((k * 9) % (sw - 2)), sy2 = dy + sh - ((t / 40 + k * 7) % (sh + 4)); c.fillStyle = "#8fe0a8"; c.fillRect(sx, Math.round(sy2), 1, 3); c.fillRect(sx - 1, Math.round(sy2) + 1, 3, 1); } }
-            if (st === "sick") { for (let k = 0; k < 3; k++) { const x0 = dx - 2 + k * 3; for (let yy = 0; yy < 11; yy++) { const px = x0 + Math.round(Math.sin(t / 200 + yy * 0.9 + k * 1.3) * 1.2); c.fillStyle = "#4f7a5c"; c.fillRect(px, dy - 12 + yy, 1, 2); } } }
+            if ((db.pet.dirt || 0) >= 24 && st !== "bath" && st !== "sleep") {
+                const lv = Math.min(3, 1 + Math.floor(((db.pet.dirt || 0) - 24) / 24));
+                for (let k = 0; k < lv + 1; k++) { const bx = dx + Math.round(sw * (0.15 + 0.7 * k / Math.max(1, lv))), ph = ((t / 1300) + k * 0.31) % 1; c.globalAlpha = Math.max(0, 1 - ph * 0.8); c.fillStyle = "#98a52c"; for (let yy = 0; yy < 9; yy++) { const px = bx + Math.round(Math.sin(t / 220 + yy * 0.9 + k * 2) * 1.6); c.fillRect(px, dy - 2 - Math.round(ph * 6) - yy, 1, 1); } c.globalAlpha = 1; }
+                for (let k = 0; k < Math.min(3, lv + 1); k++) { const ang = t / 240 + k * 2.1, fx = Math.round(dx + sw / 2 + Math.cos(ang) * (sw / 2 + 3)), fy = Math.round(dy - 3 + Math.sin(ang * 1.3) * 5); c.fillStyle = "#3d3640"; c.fillRect(fx, fy, 2, 1); c.fillStyle = "#c9d6e0"; c.fillRect(fx + (Math.floor(t / 90) % 2 ? -1 : 2), fy - 1, 1, 1); } }
+            if (st === "heal") { for (let k = 0; k < 7; k++) { const ph = ((t / 1500) + k / 7) % 1, hx = dx + 1 + Math.round(((k * 37) % 100) / 100 * (sw - 4)) + Math.round(Math.sin(t / 300 + k) * 1), hy = dy + sh - 2 - Math.round(ph * (sh + 10)); c.globalAlpha = Math.min(1, (1 - ph) * 1.6); c.fillStyle = k % 2 ? "#4fc47a" : "#7ddc9a"; c.fillRect(hx, hy - 1, 1, 3); c.fillRect(hx - 1, hy, 3, 1); c.globalAlpha = 1; } }
+            if (st === "sick") { const sh0 = Math.round(Math.sin(t / 300)), WV = [0, 1, 1, 0, -1, -1]; c.fillStyle = "#4a464e"; for (let k = 0; k < 3; k++) for (let yy = 0; yy < 6; yy++) c.fillRect(dx + 4 + k * 3 + WV[(yy + (t / 200 | 0)) % 6] * 1, dy - 4 + yy, 1, 1); }
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { const ex = dx + sw - 1, ey = dy + 1; c.fillStyle = "#ff4a5a"; c.fillRect(ex, ey, 1, 3); c.fillRect(ex, ey + 4, 1, 1); }
             ctxOut.imageSmoothingEnabled = false; ctxOut.drawImage(petBuf, 0, 0, w, h, 0, 0, W, H);
@@ -3719,8 +3719,13 @@
                 msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
             }
             if (!msg) return;
-            db.chat.push(msg); saveData(); forceChatBottom = true; renderChat(); setTimeout(() => { forceChatBottom = false; }, 200);
-            notifyIncomingOtherMessage(preview);
+            const typ = document.getElementById("typing"); if (typ) typ.style.display = "flex";
+            setTimeout(() => { const c0 = document.getElementById("content"); if (c0) c0.scrollTop = c0.scrollHeight; }, 20);
+            setTimeout(() => {
+                if (typ) typ.style.display = "none";
+                db.chat.push(msg); saveData(); forceChatBottom = true; renderChat(); setTimeout(() => { forceChatBottom = false; }, 200);
+                notifyIncomingOtherMessage(preview);
+            }, 900 + Math.random() * 600);
         }
 
         // ==================== 📲 朋友圈业务层 ====================
@@ -6134,7 +6139,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
@@ -6149,9 +6154,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
+            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
@@ -6268,6 +6273,164 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 }, 600 + Math.random() * 600);
             });
             draw();
+            gameCleanup = () => clearTimeout(timer);
+        }
+
+        // ---------- 四子棋 ----------
+        function gameConnect4() {
+            const C = 7, R = 6, body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你执红先手，点一列落子</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d");
+            const w = Math.min(body.clientWidth - 24, 400), cell = w / C, h = cell * R, dpr = window.devicePixelRatio || 1;
+            cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; ctx.scale(dpr, dpr);
+            const B = Array.from({ length: R }, () => new Array(C).fill(0));
+            let over = false, thinking = false, timer = null, glow = [], last = null;
+            function draw() {
+                ctx.clearRect(0, 0, w, h); ctx.fillStyle = "#3d5a9e"; ctx.fillRect(0, 0, w, h);
+                for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) {
+                    const cx = cell * (x + .5), cy = cell * (y + .5), v = B[y][x];
+                    ctx.beginPath(); ctx.arc(cx, cy, cell * .38, 0, 7);
+                    ctx.fillStyle = v === 1 ? "#e0405a" : v === 2 ? "#f2c94c" : "#e9eef8"; ctx.fill();
+                    if (glow.some(g => g[0] === x && g[1] === y)) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 3; ctx.stroke(); }
+                    else if (last && last[0] === x && last[1] === y) { ctx.strokeStyle = "rgba(0,0,0,.45)"; ctx.lineWidth = 2; ctx.stroke(); }
+                }
+            }
+            const drop = (x) => { for (let y = R - 1; y >= 0; y--) if (!B[y][x]) return y; return -1; };
+            function lineOf(x, y, p) {
+                for (const [dx, dy] of [[1, 0], [0, 1], [1, 1], [1, -1]]) {
+                    const out = [[x, y]];
+                    for (let s = 1; s < 4; s++) { const nx = x + dx * s, ny = y + dy * s; if (nx < 0 || ny < 0 || nx >= C || ny >= R || B[ny][nx] !== p) break; out.push([nx, ny]); }
+                    for (let s = 1; s < 4; s++) { const nx = x - dx * s, ny = y - dy * s; if (nx < 0 || ny < 0 || nx >= C || ny >= R || B[ny][nx] !== p) break; out.push([nx, ny]); }
+                    if (out.length >= 4) return out;
+                }
+                return null;
+            }
+            function winAt(x, y, p) { return !!lineOf(x, y, p); }
+            function evalB() {
+                let sc = 0;
+                const win4 = (cells) => { let a = 0, b = 0; cells.forEach(([x, y]) => { if (B[y][x] === 2) a++; else if (B[y][x] === 1) b++; }); if (a && b) return 0; return a === 3 ? 5 : a === 2 ? 2 : b === 3 ? -6 : b === 2 ? -2 : 0; };
+                for (let y = 0; y < R; y++) sc += (B[y][3] === 2 ? 3 : B[y][3] === 1 ? -3 : 0);
+                for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) for (const [dx, dy] of [[1, 0], [0, 1], [1, 1], [1, -1]]) {
+                    const cs = []; for (let s = 0; s < 4; s++) { const nx = x + dx * s, ny = y + dy * s; if (nx < 0 || ny < 0 || nx >= C || ny >= R) break; cs.push([nx, ny]); }
+                    if (cs.length === 4) sc += win4(cs);
+                }
+                return sc;
+            }
+            function search(depth, alpha, beta, p) {
+                const cols = [3, 2, 4, 1, 5, 0, 6].filter(c => drop(c) >= 0);
+                if (!cols.length) return 0;
+                if (depth === 0) return evalB();
+                let best = p === 2 ? -1e9 : 1e9;
+                for (const c of cols) {
+                    const y = drop(c); B[y][c] = p;
+                    let v;
+                    if (winAt(c, y, p)) v = p === 2 ? 1e6 + depth : -1e6 - depth; else v = search(depth - 1, alpha, beta, 3 - p);
+                    B[y][c] = 0;
+                    if (p === 2) { best = Math.max(best, v); alpha = Math.max(alpha, v); } else { best = Math.min(best, v); beta = Math.min(beta, v); }
+                    if (beta <= alpha) break;
+                }
+                return best;
+            }
+            function aiMove() {
+                const cols = [3, 2, 4, 1, 5, 0, 6].filter(c => drop(c) >= 0);
+                // 必赢/必挡
+                for (const c of cols) { const y = drop(c); B[y][c] = 2; const k = winAt(c, y, 2); B[y][c] = 0; if (k && gameDiff !== "easy") return c; }
+                for (const c of cols) { const y = drop(c); B[y][c] = 1; const k = winAt(c, y, 1); B[y][c] = 0; if (k && (gameDiff !== "easy" || Math.random() < .6)) return c; }
+                if (gameDiff === "easy") return cols[Math.floor(Math.random() * cols.length)];
+                const depth = gameDiff === "normal" ? 3 : 6;
+                let best = cols[0], bv = -1e9;
+                for (const c of cols) { const y = drop(c); B[y][c] = 2; const v = search(depth - 1, -1e9, 1e9, 1); B[y][c] = 0; if (v > bv) { bv = v; best = c; } }
+                return best;
+            }
+            function finish(wn) {
+                over = true;
+                if (wn === 1) { gameResultBar("你赢了 🎉"); gameStat("connect4", "w"); } else if (wn === 2) { gameResultBar(hisName() + "赢了"); gameStat("connect4", "l"); } else { gameResultBar("平局"); gameStat("connect4", "d"); }
+                document.getElementById("gameEnd").innerHTML = gameEndButtons();
+            }
+            const full = () => B[0].every(v => v);
+            function place(x, p, done) {
+                const y = drop(x); B[y][x] = p; last = [x, y]; draw(); gameSfx(p === 1 ? "tap" : "his");
+                const ln = lineOf(x, y, p);
+                if (ln) { over = true; let i = 0; glow = []; timer = setInterval(() => { glow.push(ln[i]); draw(); i++; if (i >= ln.length) { clearInterval(timer); setTimeout(() => finish(p), 300); } }, 160); return true; }
+                if (full()) { finish(0); return true; }
+                return false;
+            }
+            cv.addEventListener("click", e => {
+                if (over || thinking) return;
+                const r = cv.getBoundingClientRect(), x = Math.floor((e.clientX - r.left) / cell);
+                if (x < 0 || x >= C || drop(x) < 0) return;
+                if (place(x, 1)) return;
+                thinking = true; gameResultBar(hisName() + "在想…");
+                timer = setTimeout(() => { thinking = false; if (place(aiMove(), 2)) return; gameResultBar("轮到你了"); }, 600 + Math.random() * 500);
+            });
+            draw();
+            gameCleanup = () => { clearTimeout(timer); clearInterval(timer); };
+        }
+
+        // ---------- 记忆翻牌 ----------
+        function gameMemory() {
+            const body = document.getElementById("gameBody");
+            const icons = ["🍓", "🌙", "🐱", "🍀", "🎈", "🍪", "⭐", "🐟", "🌷", "🎧"];
+            const deck = icons.concat(icons).sort(() => Math.random() - .5);
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻，翻两张</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(340px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
+            const grid = document.getElementById("memGrid");
+            const st = deck.map(() => 0); // 0盖 1翻开 2已配对
+            const sc = [0, 0], known = {}; let turn = 1, picks = [], busy = false, over = false, timer = null;
+            const els = deck.map((ic, i) => {
+                const d = document.createElement("div");
+                d.style.cssText = "aspect-ratio:3/4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;transition:transform .25s,background .25s;user-select:none;-webkit-user-select:none";
+                d.addEventListener("click", () => { if (turn === 1 && !busy && !over) flip(i); });
+                grid.appendChild(d); return d;
+            });
+            function paint() {
+                els.forEach((d, i) => {
+                    const open = st[i] > 0;
+                    d.textContent = open ? deck[i] : "";
+                    d.style.background = st[i] === 2 ? "rgba(120,200,150,.25)" : open ? "#f4f4f6" : "#6b7fb8";
+                    d.style.border = open ? "1px solid rgba(0,0,0,.12)" : "none";
+                    d.style.opacity = st[i] === 2 ? ".6" : "1";
+                });
+                document.getElementById("memScore").textContent = `你 ${sc[0]}　:　${sc[1]} ${hisName()}`;
+            }
+            function flip(i) {
+                if (st[i] || picks.includes(i)) return;
+                st[i] = 1; picks.push(i); known[i] = deck[i]; gameSfx(turn === 1 ? "tap" : "his"); paint();
+                if (picks.length < 2) { if (turn === 2) timer = setTimeout(hisSecond, 700); return; }
+                busy = true;
+                timer = setTimeout(() => {
+                    const [a, b] = picks; picks = [];
+                    if (deck[a] === deck[b]) { st[a] = st[b] = 2; sc[turn - 1]++; delete known[a]; delete known[b]; gameSfx("tap"); }
+                    else { st[a] = st[b] = 0; turn = 3 - turn; }
+                    paint(); busy = false;
+                    if (sc[0] + sc[1] === icons.length) return finish();
+                    if (turn === 2) { gameResultBar(hisName() + "翻牌中…"); timer = setTimeout(hisFirst, 700); }
+                    else gameResultBar("轮到你了，翻两张");
+                }, 900);
+            }
+            const mem = () => gameDiff === "easy" ? .35 : gameDiff === "normal" ? .65 : .95;
+            function unknownCards() { return deck.map((_, i) => i).filter(i => !st[i] && !(i in known)); }
+            function hisFirst() {
+                if (over) return;
+                // 记得的一对
+                const m = mem(), seen = Object.keys(known).map(Number).filter(i => !st[i] || st[i] === 0);
+                for (const i of seen) for (const j of seen) if (i < j && deck[i] === deck[j] && Math.random() < m) { flip(i); timer = setTimeout(() => flip(j), 700); return; }
+                const u = unknownCards(); const pool = u.length ? u : deck.map((_, i) => i).filter(i => !st[i]);
+                flip(pool[Math.floor(Math.random() * pool.length)]);
+            }
+            function hisSecond() {
+                if (over) return;
+                const first = picks[0], m = mem();
+                const partner = Object.keys(known).map(Number).find(j => j !== first && !st[j] && deck[j] === deck[first]);
+                if (partner !== undefined && Math.random() < m) return flip(partner);
+                const u = unknownCards().filter(i => i !== first); const pool = u.length ? u : deck.map((_, i) => i).filter(i => !st[i] && i !== first);
+                flip(pool[Math.floor(Math.random() * pool.length)]);
+            }
+            function finish() {
+                over = true; const r = sc[0] > sc[1] ? 1 : sc[0] < sc[1] ? 2 : 0;
+                if (r === 1) { gameResultBar("你赢了 🎉"); gameStat("memory", "w"); } else if (r === 2) { gameResultBar(hisName() + "赢了"); gameStat("memory", "l"); } else { gameResultBar("平局"); gameStat("memory", "d"); }
+                document.getElementById("gameEnd").innerHTML = gameEndButtons();
+            }
+            paint();
             gameCleanup = () => clearTimeout(timer);
         }
 
