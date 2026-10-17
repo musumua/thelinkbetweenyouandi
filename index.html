@@ -2496,7 +2496,7 @@
                 R(w - 31, 5, 23, 21, "#ffffff"); R(w - 29, 7, 19, 17, "#9fd3f0"); R(w - 20, 7, 1, 17, "#ffffff"); R(w - 29, 15, 19, 1, "#ffffff"); R(w - 33, 4, 5, 23, "#f59db3"); R(w - 9, 4, 4, 23, "#f59db3");
                 R(8, 8, 16, 12, "#ffffff"); R(10, 10, 12, 8, "#c3e6c2"); Bl(16, 14, 3, 2, "#f08fa4");
                 R(w * 0.5 - 6, y0 - 13, 11, 13, "#e8a07e"); Bl(w * 0.5 - 1, y0 - 18, 5, 4, "#6fbf86"); Bl(w * 0.5 - 4, y0 - 15, 3, 2, "#8fd09c"); Bl(w * 0.5 + 3, y0 - 15, 3, 2, "#8fd09c");
-                Bl(w * 0.42, y0 + (h - y0) * 0.58, 27, 5, "#8ccfc0"); Bl(w * 0.42, y0 + (h - y0) * 0.58, 19, 3, "#b4e3d7");
+                Bl(w * 0.42, y0 + (h - y0) * 0.36, 27, 5, "#8ccfc0"); Bl(w * 0.42, y0 + (h - y0) * 0.36, 19, 3, "#b4e3d7");
             } else if (scene === "grass") {
                 for (let y = 0; y < y0; y++) R(0, y, w, 1, y < y0 * 0.5 ? "#8fd0f0" : "#b4e1f8");
                 cloud(((t / 600) % (w + 30)) - 10, 9, "#ffffff"); cloud(w * 0.62, 17, "#f4fbff");
@@ -2526,7 +2526,8 @@
             const key = (p.sprV || 0) + "_" + dl + "_" + sk; if (petLook.k === key && petLook.cv) return petLook.cv;
             const cv = document.createElement("canvas"); cv.width = base.width; cv.height = base.height; const c = cv.getContext("2d"); c.drawImage(base, 0, 0); c.globalCompositeOperation = "source-atop";
             if (sk) { c.fillStyle = "rgba(130,190,120,.4)"; c.fillRect(0, 0, cv.width, cv.height); }
-            for (let i = 0; i < dl * 2; i++) { c.fillStyle = i % 2 ? "#9a7a58" : "#7a6048"; c.fillRect((i * 7 + 3) % cv.width, (i * 5 + 2) % cv.height, 1 + (i % 2), 1 + (i % 3 === 0 ? 1 : 0)); }
+            if (dl) { c.fillStyle = `rgba(44,38,52,${(dl * 0.028).toFixed(3)})`; c.fillRect(0, 0, cv.width, cv.height);
+                for (let k = 0; k < dl * 3; k++) { const x = (k * 7 + 3) % cv.width, y = (k * 5 + 2) % cv.height, ww = 2 + (k % 3), hh = 2 + (k % 2); c.fillStyle = k % 2 ? "rgba(34,30,40,.62)" : "rgba(70,62,78,.5)"; c.fillRect(x, y, ww, hh); if (k % 3 === 0) c.fillRect(x + 1, y - 1, 1, 1); } }
             petLook.k = key; petLook.cv = cv; return cv;
         }
         function petScene(ctxOut, W, H, t) {
@@ -2554,8 +2555,7 @@
                 for (let i = 0; i < 8; i++) { const bx = dx - 2 + ((i * 13) % (sw + 4)) + Math.round(Math.sin(t / 300 + i) * 2), by = feet - 6 - ((t / 45 + i * 11) % (sh + 6)); c.drawImage(sprGet("bub"), bx, Math.round(by)); }
             }
             if (st === "heal") { c.drawImage(sprGet("cross"), dx + Math.round(sw / 2) - 6, dy - 14 - Math.round(Math.abs(Math.sin(t / 250)) * 3)); for (let k = 0; k < 5; k++) { const sx = dx + 2 + ((k * 9) % (sw - 2)), sy2 = dy + sh - ((t / 40 + k * 7) % (sh + 4)); c.fillStyle = "#8fe0a8"; c.fillRect(sx, Math.round(sy2), 1, 3); c.fillRect(sx - 1, Math.round(sy2) + 1, 3, 1); } }
-            if (st === "sick") { if (Math.floor(t / 500) % 2 === 0) c.drawImage(sprGet("cross"), dx + sw - 5, dy - 10); c.drawImage(sprGet("drop"), dx - 3, dy + 3 + (Math.floor(t / 300) % 3)); }
-            if ((db.pet.dirt || 0) > 55 && st !== "bath") { for (let k = 0; k < 2; k++) { const fx = dx + sw / 2 + Math.cos(t / 220 + k * 3) * (sw / 2 + 2), fy = dy - 2 + Math.sin(t / 170 + k * 2) * 4; c.fillStyle = "#4a4048"; c.fillRect(Math.round(fx), Math.round(fy), 1, 1); } if (Math.floor(t / 400) % 2) { c.fillStyle = "#b6a98a"; c.fillRect(dx + 3, dy - 4, 1, 3); c.fillRect(dx + sw - 5, dy - 5, 1, 3); } }
+            if (st === "sick") { for (let k = 0; k < 3; k++) { const x0 = dx - 2 + k * 3; for (let yy = 0; yy < 11; yy++) { const px = x0 + Math.round(Math.sin(t / 200 + yy * 0.9 + k * 1.3) * 1.2); c.fillStyle = "#4f7a5c"; c.fillRect(px, dy - 12 + yy, 1, 2); } } }
             if (st === "sad") c.drawImage(sprGet("drop"), dx + sw - 3, dy + 2 + (Math.floor(t / 300) % 3));
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { c.fillStyle = "#ff4a5a"; c.fillRect(w - 8, 3, 2, 6); c.fillRect(w - 8, 11, 2, 2); }
@@ -2979,19 +2979,21 @@
         }
 
         function goHome() {
-            const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView");
+            const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView"); chatTransit = -1; setTimeout(() => { chatTransit = 0; }, 520);
             m.style.transition = "opacity .2s ease, transform .2s ease"; m.style.opacity = "0"; m.style.transform = "translateY(10px)";
             setTimeout(() => { m.style.display = "none"; m.style.transition = ""; m.style.opacity = ""; m.style.transform = ""; h.style.transition = "none"; h.style.opacity = "0"; h.style.display = "flex"; h.getBoundingClientRect(); h.style.transition = "opacity .26s ease"; h.style.opacity = "1"; setTimeout(() => { h.style.transition = ""; }, 280); }, 200);
         }
         function openMainChatView() {
-            const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView");
+            const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView"); chatTransit = 1; setTimeout(() => { chatTransit = 0; }, 420);
             h.style.transition = "opacity .18s ease"; h.style.opacity = "0";
             setTimeout(() => { h.style.display = "none"; h.style.transition = ""; h.style.opacity = "1"; m.style.display = "flex"; m.classList.remove("chat-in"); m.getBoundingClientRect(); m.classList.add("chat-in");
                 const c = document.getElementById("content"); if (c) c.scrollTop = c.scrollHeight; }, 180);
             setTimeout(() => { const c = document.getElementById("content"); if (c) c.scrollTop = c.scrollHeight; }, 230);
             if (db.unreadCount) { db.unreadCount = 0; saveData(); renderHomeScreen(); }
         }
+        let chatTransit = 0; // 1=正在进入聊天，-1=正在退出聊天（过渡动画期间收到消息要按“进入/退出后”的状态算未读）
         function isMainChatViewOpen() {
+            if (chatTransit === -1) return false; if (chatTransit === 1) return true;
             const el = document.getElementById("mainAppView");
             return !!el && el.style.display !== "none" && el.style.display !== "";
         }
@@ -4074,7 +4076,7 @@
             if (Math.random() * 100 < pct) {
                 db.chat.forEach(m => { if (m.me) m.readReceipt = true; });
                 const t0 = document.getElementById("typing"); if (t0) t0.style.display = "none";
-                hisBubbleNow({ text: "（已读不回）", readNoReply: true }); finish(); return;
+                hisBubbleNow({ text: "（已读不回）", readNoReply: true }); notifyIncomingOtherMessage("（已读不回）"); finish(); return;
             }
             try { sendBurst(pickBubbleCount(), false, finish); } catch (e) { finish(); console.error("reply failed", e); }
         }
@@ -4108,8 +4110,7 @@
             const mMax = Math.max(mMin, parseInt(db.freq.mergeCardMax, 10) || 1);
             const n = Math.min(cards.length, mMin + Math.floor(Math.random() * (mMax - mMin + 1)));
             const out = [];
-            let pool = cards.filter(c => !recentCardTexts.includes(c.text));
-            if (pool.length < n) pool = cards.slice();
+            let pool = cards.slice(); // 字卡可重复使用，不再排除最近用过的
             for (let k = 0; k < n && pool.length; k++) { const i = Math.floor(Math.random() * pool.length); out.push(pool.splice(i, 1)[0].text); }
             { const keepN = Math.max(0, Math.min(12, cards.length - 6)); recentCardTexts = keepN ? recentCardTexts.concat(out).slice(-keepN) : []; }
             return out;
