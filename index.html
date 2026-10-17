@@ -837,7 +837,7 @@
                         <div class="home-p2-sticky-wrap">
                             <div class="home-p2-sticky-note">
                                 <div class="home-p2-note-label">备忘录</div>
-                                <textarea class="home-p2-note-textarea sticky-font" id="homeStickyNoteInput" placeholder="· 写点什么..." oninput="handleStickyNoteInput(this.value)" onfocus="memoFocus(this)" onkeydown="memoKey(event,this)"></textarea>
+                                <textarea class="home-p2-note-textarea sticky-font" id="homeStickyNoteInput" placeholder="写点什么..." oninput="handleStickyNoteInput(this.value)" onfocus="memoFocus(this)" onkeydown="memoKey(event,this)"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1975,8 +1975,8 @@
             if (sticky) sticky.value = memoNormalize(db.stickyNote || "");
             p2Init();
         }
-        function memoNormalize(t) { return t.split("\n").map(l => (l.trim() && !l.startsWith("· ")) ? "· " + l.replace(/^[·•\-]\s*/, "") : l).join("\n"); }
-        function memoFocus(el) { if (!el.value.trim()) el.value = "· "; }
+        function memoNormalize(t) { const ls = t.split("\n"); if (ls.length === 1) return ls[0].replace(/^[·•]\s?/, ""); return ls.map(l => (l.trim() && !l.startsWith("· ")) ? "· " + l.replace(/^[·•\-]\s*/, "") : l).join("\n"); }
+        function memoFocus(el) { }
         function memoKey(e, el) { if (e.key === "Enter") { e.preventDefault(); const p = el.selectionStart; el.value = el.value.slice(0, p) + "\n· " + el.value.slice(el.selectionEnd); el.selectionStart = el.selectionEnd = p + 3; handleStickyNoteInput(el.value); } }
         function handleStickyNoteInput(val) { const n = memoNormalize(val); const el = document.getElementById("homeStickyNoteInput"); if (el && n !== val) { const p = el.selectionStart + (n.length - val.length); el.value = n; el.selectionStart = el.selectionEnd = Math.max(0, p); } db.stickyNote = (n.trim() === "·" ? "" : n); saveData(); }
 
