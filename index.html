@@ -316,7 +316,6 @@
         .game-diff button.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; }
         .game-card { width:100%; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow-sm); cursor:pointer; }
         .gc-t { font-size:16px; font-weight:600; } .gc-d { font-size:12px; color:var(--text-sub); margin-top:4px; } .gc-r { font-size:11px; color:var(--text-sub); margin-top:8px; opacity:.8; }
-.g48 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; width:min(86vw,340px); aspect-ratio:1; margin:8px auto; padding:8px; border-radius:14px; background:var(--border); touch-action:none; box-sizing:border-box; } .g48c { border-radius:8px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-weight:800; user-select:none; } .g48c.nw { animation:g48pop .18s ease-out; } @keyframes g48pop { from { transform:scale(.4); opacity:.3; } to { transform:none; opacity:1; } } .g48-pad { grid-template-columns:repeat(3,64px); grid-template-rows:repeat(2,52px); } .g48-pad .dp-u { grid-column:2; grid-row:1; } .g48-pad .dp-l { grid-column:1; grid-row:2; } .g48-pad .dp-d { grid-column:2; grid-row:2; } .g48-pad .dp-r { grid-column:3; grid-row:2; }
         .game-msg { font-size:13px; color:var(--text-sub); min-height:18px; text-align:center; }
         .game-canvas { border-radius:4px; box-shadow:var(--shadow-md); touch-action:manipulation; }
         .game-btns { display:flex; gap:10px; justify-content:center; margin-top:4px; }
@@ -2027,7 +2026,11 @@
             const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
             const bgG = ctx.createLinearGradient(0, 0, W, H); bgG.addColorStop(0, "#0b1022"); bgG.addColorStop(1, "#04060e"); ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
             if (!galSpr) { galSpr = document.createElement("canvas"); galSpr.width = galSpr.height = 24; const sc2 = galSpr.getContext("2d"), sg = sc2.createRadialGradient(12, 12, 0, 12, 12, 12); sg.addColorStop(0, "rgba(255,255,255,1)"); sg.addColorStop(0.3, "rgba(255,255,255,.85)"); sg.addColorStop(0.65, "rgba(255,255,255,.22)"); sg.addColorStop(1, "rgba(255,255,255,0)"); sc2.fillStyle = sg; sc2.fillRect(0, 0, 24, 24); }
-            gal.bg.forEach(s => { ctx.globalAlpha = s.a * (0.7 + 0.3 * Math.sin(t / 1500 + s.p)); const d = s.s * 1.5 + 1; ctx.drawImage(galSpr, s.x * W - d / 2, s.y * H - d / 2, d, d); }); ctx.globalAlpha = 1;
+            { const TAU = 6.2832, bk = [[], [], [], [], [], []]; ctx.fillStyle = "#fff";
+              gal.bg.forEach(s => { const a = s.a * (0.7 + 0.3 * Math.sin(t / 1500 + s.p)); bk[Math.min(5, Math.floor(a * 7))].push(s); });
+              bk.forEach((arr, bi) => { if (!arr.length) return; ctx.globalAlpha = (bi + 0.5) / 7; ctx.beginPath(); arr.forEach(s => { const x = s.x * W, y = s.y * H, r = s.s * 0.5 + 0.3; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); }); ctx.fill(); });
+              ctx.globalAlpha = 1; ctx.strokeStyle = "#fff"; ctx.lineWidth = 0.6;
+              gal.bg.forEach(s => { if (s.s < 1.7) return; const x = s.x * W, y = s.y * H, L = 2.6 + 1.2 * Math.sin(t / 900 + s.p); ctx.globalAlpha = 0.45 * s.a; ctx.beginPath(); ctx.moveTo(x - L, y); ctx.lineTo(x + L, y); ctx.moveTo(x, y - L); ctx.lineTo(x, y + L); ctx.stroke(); }); ctx.globalAlpha = 1; }
             { // 星系周围一层很淡的深蓝雾（普通混合，不叠加，不会把整张图染白）
               ctx.save();
               const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
@@ -2048,7 +2051,9 @@
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.01)"); g.addColorStop(0.8, "rgba(96,108,190,.022)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${(q.a * Math.max(0, 1.05 - q.r) * 0.8).toFixed(4)})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
-            gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t); ctx.globalAlpha = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25); ctx.drawImage(galSpr, x - 1.1, y - 1.1, 2.2, 2.2); }); ctx.globalAlpha = 1;
+            { const TAU = 6.2832, bk = [[], [], [], [], [], [], []]; ctx.fillStyle = "#fff";
+              gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25); bk[Math.min(6, Math.floor(a * 9))].push(x, y); });
+              bk.forEach((arr, bi) => { if (!arr.length) return; ctx.globalAlpha = (bi + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.7, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.7, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
             ctx.globalCompositeOperation = "source-over";
             // 深色尘埃带
             gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(14,14,30,.16)"); g.addColorStop(1, "rgba(14,14,30,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
@@ -2526,8 +2531,9 @@
             const key = (p.sprV || 0) + "_" + dl + "_" + sk; if (petLook.k === key && petLook.cv) return petLook.cv;
             const cv = document.createElement("canvas"); cv.width = base.width; cv.height = base.height; const c = cv.getContext("2d"); c.drawImage(base, 0, 0); c.globalCompositeOperation = "source-atop";
             if (sk) { c.fillStyle = "rgba(130,190,120,.4)"; c.fillRect(0, 0, cv.width, cv.height); }
-            if (dl) { c.fillStyle = `rgba(44,38,52,${(dl * 0.028).toFixed(3)})`; c.fillRect(0, 0, cv.width, cv.height);
-                for (let k = 0; k < dl * 3; k++) { const x = (k * 7 + 3) % cv.width, y = (k * 5 + 2) % cv.height, ww = 2 + (k % 3), hh = 2 + (k % 2); c.fillStyle = k % 2 ? "rgba(34,30,40,.62)" : "rgba(70,62,78,.5)"; c.fillRect(x, y, ww, hh); if (k % 3 === 0) c.fillRect(x + 1, y - 1, 1, 1); } }
+            if (dl) { c.fillStyle = `rgba(118,112,126,${(dl * 0.07).toFixed(3)})`; c.fillRect(0, 0, cv.width, cv.height);
+                for (let k = 0; k < dl; k++) { const x = (k * 7 + 3) % cv.width, y = (k * 5 + 2) % cv.height; c.fillStyle = k % 2 ? "rgba(40,36,46,.5)" : "rgba(84,78,92,.45)"; c.fillRect(x, y, 2 + (k % 2), 1 + (k % 2)); }
+                c.fillStyle = "rgba(60,55,68,.35)"; c.fillRect(0, Math.round(cv.height * 0.72), cv.width, Math.max(1, Math.round(cv.height * 0.28))); }
             petLook.k = key; petLook.cv = cv; return cv;
         }
         function petScene(ctxOut, W, H, t) {
@@ -2540,7 +2546,7 @@
             petPos.x = Math.max(2, Math.min(w - sw - 2, petPos.x));
             for (let i = 0; i < p.poops; i++) c.drawImage(sprGet("poop"), 6 + i * 11, feet - 8 + (i % 2) * 2);
             c.fillStyle = "rgba(0,0,0,.16)"; c.fillRect(Math.round(petPos.x + 2), feet, sw - 4, 1);
-            let oy = 0, sy = 1; if (st === "happy") oy = -Math.round(Math.abs(Math.sin(t / 150)) * 6); else if (st === "idle") oy = (Math.floor(t / 450) % 2) ? -1 : 0; else if (st === "eat") sy = (Math.floor(t / 130) % 2) ? 0.88 : 1; else if (st === "sleep") sy = 0.86; else if (st === "sad" || st === "tired" || st === "sick") sy = 0.92; else if (st === "bath") oy = -4 - ((Math.floor(t / 300) % 2) ? 1 : 0);
+            let oy = 0, sy = 1; if (st === "happy") oy = -Math.round(Math.abs(Math.sin(t / 150)) * 6); else if (st === "idle") oy = (Math.floor(t / 450) % 2) ? -1 : 0; else if (st === "eat") sy = (Math.floor(t / 130) % 2) ? 0.88 : 1; else if (st === "sleep") sy = 0.86; else if (st === "sad" || st === "tired" || st === "sick") sy = 0.92; else if (st === "bath") oy = (Math.floor(t / 300) % 2) ? -1 : 0;
             const dh = Math.round(sh * sy), dx = Math.round(petPos.x) + (st === "sick" ? (Math.floor(t / 140) % 2) : 0), dy = feet - dh + oy; c.imageSmoothingEnabled = false;
             const B2 = (x, y, w2, h2, col, oc) => { c.fillStyle = oc; c.fillRect(x, y, w2, h2); c.fillStyle = col; c.fillRect(x + 1, y + 1, w2 - 2, h2 - 2); c.clearRect(x, y, 1, 1); c.clearRect(x + w2 - 1, y, 1, 1); };
             if (st === "bath") { const bw = sw + 18, bx = Math.round(dx + sw / 2 - bw / 2), ty = feet - 8; B2(bx, ty - 2, bw, 7, "#dbe8f4", "#8c7a96"); c.fillStyle = "#9fd8f5"; c.fillRect(bx + 2, ty, bw - 4, 4); c.fillStyle = "#c8ecfb"; c.fillRect(bx + 4, ty + 1, 6, 1); }
@@ -2554,11 +2560,11 @@
                     for (let k = 0; k < 5; k++) { const fx = bx + 4 + ((k * 7 + Math.floor(t / 400)) % (bw - 8)); c.fillStyle = "#fff"; c.fillRect(fx, ty + 2 + (k % 2), 2, 2); } }
                 for (let i = 0; i < 8; i++) { const bx = dx - 2 + ((i * 13) % (sw + 4)) + Math.round(Math.sin(t / 300 + i) * 2), by = feet - 6 - ((t / 45 + i * 11) % (sh + 6)); c.drawImage(sprGet("bub"), bx, Math.round(by)); }
             }
+            if ((db.pet.dirt || 0) >= 24 && st !== "bath" && st !== "sleep") { for (let k = 0; k < 4; k++) { const ph = ((t / 1100) + k / 4) % 1, px2 = dx + Math.round(sw * (0.1 + 0.27 * k)) + Math.round(Math.sin(t / 400 + k * 2) * 2), py2 = dy + Math.round(sh * 0.45) - Math.round(ph * 12); c.globalAlpha = Math.max(0, (1 - ph) * 0.75); c.fillStyle = "#8d8896"; c.fillRect(px2, py2, 3, 2); c.fillRect(px2 + 1, py2 - 1, 2, 1); c.fillRect(px2 - 1, py2 + 1, 1, 1); c.fillStyle = "#6f6a79"; c.fillRect(px2 + 2, py2 + 1, 2, 1); c.globalAlpha = 1; } }
             if (st === "heal") { c.drawImage(sprGet("cross"), dx + Math.round(sw / 2) - 6, dy - 14 - Math.round(Math.abs(Math.sin(t / 250)) * 3)); for (let k = 0; k < 5; k++) { const sx = dx + 2 + ((k * 9) % (sw - 2)), sy2 = dy + sh - ((t / 40 + k * 7) % (sh + 4)); c.fillStyle = "#8fe0a8"; c.fillRect(sx, Math.round(sy2), 1, 3); c.fillRect(sx - 1, Math.round(sy2) + 1, 3, 1); } }
             if (st === "sick") { for (let k = 0; k < 3; k++) { const x0 = dx - 2 + k * 3; for (let yy = 0; yy < 11; yy++) { const px = x0 + Math.round(Math.sin(t / 200 + yy * 0.9 + k * 1.3) * 1.2); c.fillStyle = "#4f7a5c"; c.fillRect(px, dy - 12 + yy, 1, 2); } } }
-            if (st === "sad") c.drawImage(sprGet("drop"), dx + sw - 3, dy + 2 + (Math.floor(t / 300) % 3));
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
-            if (petNeeds() && Math.floor(t / 500) % 2 === 0) { c.fillStyle = "#ff4a5a"; c.fillRect(w - 8, 3, 2, 6); c.fillRect(w - 8, 11, 2, 2); }
+            if (petNeeds() && Math.floor(t / 500) % 2 === 0) { const ex = dx + sw - 1, ey = dy + 1; c.fillStyle = "#ff4a5a"; c.fillRect(ex, ey, 1, 3); c.fillRect(ex, ey + 4, 1, 1); }
             ctxOut.imageSmoothingEnabled = false; ctxOut.drawImage(petBuf, 0, 0, w, h, 0, 0, W, H);
         }
         function petDrawPage(t) { const cv = document.getElementById("petCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; petScene(f.ctx, f.W, f.H, t); if (!petDrawPage._t || t - petDrawPage._t > 2500) { petDrawPage._t = t; petBars(); } }
@@ -3691,48 +3697,30 @@
         function triggerRandomStarAction() {
             initAudio();
             if (Math.random() * 100 < (db.freq.callPct === undefined ? 3 : db.freq.callPct)) { triggerIncomingCallMock(); return; }
-            const poolDecision = Math.random();
+            // 点名字：他立刻回一条（不用等），不是主动发的所以没有星标；有我发的消息时就引用最近一条来回复
             const now = new Date();
-            const timeStr = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
-            const dateLabel = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
-
-            document.getElementById("typing").style.display = "flex";
-            setTimeout(() => {
-                const contentDiv = document.getElementById("content");
-                if(contentDiv && (contentDiv.scrollHeight - contentDiv.scrollTop - contentDiv.clientHeight) < 220) contentDiv.scrollTop = contentDiv.scrollHeight;
-            }, 20);
-
-            setTimeout(() => {
-                document.getElementById("typing").style.display = "none";
-                const _sigCards1 = getSignalCards();
-                let previewText = "";
-                const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100, freeP = (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100;
-                const cardEnd = 1 - nudgeP - emojiP - freeP, freeEnd = cardEnd + freeP, nudgeEnd = freeEnd + nudgeP;
-                if (poolDecision < cardEnd && _sigCards1.length > 0) {
-                    sendBurst(Math.max(2, pickBubbleCount()), true, null); return;
-                } else if (poolDecision < freeEnd && hasFreeWords()) {
-                    const sen = makeFreeSentence();
-                    db.chat.push({ me: false, text: sen, time: timeStr, timeLabel: dateLabel, proactive: true });
-                    previewText = sen;
-                } else if (poolDecision < nudgeEnd && db.nudgeList.length > 0) {
-                    let nudge = db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)];
-                    const nudgeText = `${db.other.name}${nudge}`;
-                    db.chat.push({ type: "system", text: nudgeText, isNudge: true, time: timeStr, timeLabel: dateLabel });
-                    previewText = nudgeText;
-                } else if (db.otherEmojis.length > 0) {
-                    let emo = db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)];
-                    db.chat.push({ me: false, img: emo, time: timeStr, timeLabel: dateLabel, proactive: true });
-                    previewText = "[表情]";
-                } else if (_sigCards1.length > 0) {
-                    let card = _sigCards1[Math.floor(Math.random() * _sigCards1.length)];
-                    db.chat.push({ me: false, text: card.text, time: timeStr, timeLabel: dateLabel, proactive: true });
-                    previewText = card.text;
-                }
-                saveData();
-                renderChat();
-                if (previewText) notifyIncomingOtherMessage(previewText);
-                { const more = Math.max(2, pickBubbleCount()) - 1; if (previewText && more > 0 && getSignalCards().length) { const typ = document.getElementById("typing"); const gap = 1200 + Math.random() * 1800; if (typ) setTimeout(() => { typ.style.display = "flex"; }, Math.max(0, gap - 1200)); setTimeout(() => sendBurst(more, true, null), gap); } }
-            }, 1500);
+            const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+            const dateLabel = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+            let qi = -1; for (let k = db.chat.length - 1; k >= 0; k--) { const m = db.chat[k]; if (m && m.me && (m.text || m.img)) { qi = k; break; } }
+            const replyTo = qi >= 0 ? { author: db.me.name || "我", text: db.chat[qi].text ? db.chat[qi].text.slice(0, 60) : "[图片]" } : null;
+            const cards = getSignalCards();
+            const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100, freeP = (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100;
+            const r = Math.random(); let preview = "", msg = null;
+            if (r < nudgeP && db.nudgeList.length > 0) {
+                const nudgeText = `${db.other.name}${db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)]}`;
+                msg = { type: "system", text: nudgeText, isNudge: true, time: timeStr, timeLabel: dateLabel }; preview = nudgeText;
+            } else if (r < nudgeP + emojiP && db.otherEmojis.length > 0) {
+                msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
+            } else if (r < nudgeP + emojiP + freeP && hasFreeWords()) {
+                const sen = makeFreeSentence(); msg = { me: false, text: sen, time: timeStr, timeLabel: dateLabel, replyTo }; preview = sen;
+            } else if (cards.length) {
+                const t = pickMergedTexts(cards).join("\n"); msg = { me: false, text: t, time: timeStr, timeLabel: dateLabel, replyTo }; preview = t.split("\n")[0];
+            } else if (db.otherEmojis.length > 0) {
+                msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
+            }
+            if (!msg) return;
+            db.chat.push(msg); saveData(); forceChatBottom = true; renderChat(); setTimeout(() => { forceChatBottom = false; }, 200);
+            notifyIncomingOtherMessage(preview);
         }
 
         // ==================== 📲 朋友圈业务层 ====================
@@ -6146,7 +6134,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["g2048", "2048", `滑动合并相同数字，合出 2048 就赢　最高 ${db.best2048 || 0}`]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
@@ -6161,52 +6149,15 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", g2048: "2048" };
-            document.getElementById("gameTitle").innerText = names[k] + (k === "g2048" ? "" : " · " + GAME_DIFF_NAMES[gameDiff]);
-            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, g2048: game2048 })[k]();
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
+            document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
+            ({ snake: gameSnake, gomoku: gameGomoku, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
         const hisName = () => db.other.name || "他", myName = () => db.me.name || "我";
 
         // ---------- 2048 ----------
-        function game2048() {
-            const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">在棋盘上滑动，或用方向键</div><div class="mine-score" id="g48Score"></div><div class="g48" id="g48"></div><div class="dpad g48-pad"><button data-d="U" class="dp-u">▲</button><button data-d="L" class="dp-l">◀</button><button data-d="D" class="dp-d">▼</button><button data-d="R" class="dp-r">▶</button></div><div id="gameEnd"></div>`;
-            let B, score = 0, over = false, won = false, fresh = new Set();
-            const box = document.getElementById("g48"), N = 4;
-            const empty = () => { const e = []; for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (!B[y][x]) e.push([x, y]); return e; };
-            const spawn = () => { const e = empty(); if (!e.length) return; const [x, y] = e[Math.floor(Math.random() * e.length)]; B[y][x] = Math.random() < 0.9 ? 2 : 4; fresh.add(x + "," + y); };
-            const col = v => { const k = Math.log2(v), h = (200 + k * 28) % 360; return v <= 4 ? ["hsl(35,45%,90%)", "#5a4a3a"] : [`hsl(${h},62%,${Math.max(48, 72 - k * 2.5)}%)`, "#fff"]; };
-            function draw() {
-                box.innerHTML = B.map((r, y) => r.map((v, x) => { const c = v ? col(v) : ["transparent", "#000"]; return `<div class="g48c${v ? " v" : ""}${fresh.has(x + "," + y) ? " nw" : ""}" style="background:${c[0]};color:${c[1]};font-size:${v >= 1024 ? 18 : v >= 128 ? 22 : 26}px">${v || ""}</div>`; }).join("")).join("");
-                fresh = new Set(); const best = Math.max(db.best2048 || 0, score); document.getElementById("g48Score").innerText = `分数 ${score}　|　最高 ${best}`;
-            }
-            function slide(line) { const a = line.filter(v => v), out = []; let gain = 0; for (let i = 0; i < a.length; i++) { if (a[i] === a[i + 1]) { out.push(a[i] * 2); gain += a[i] * 2; i++; } else out.push(a[i]); } while (out.length < N) out.push(0); return { out, gain }; }
-            function move(d) {
-                if (over) return; let moved = false, gain = 0; const old = JSON.stringify(B);
-                const get = (i, j) => d === "L" ? B[i][j] : d === "R" ? B[i][N - 1 - j] : d === "U" ? B[j][i] : B[N - 1 - j][i];
-                const set = (i, j, v) => { if (d === "L") B[i][j] = v; else if (d === "R") B[i][N - 1 - j] = v; else if (d === "U") B[j][i] = v; else B[N - 1 - j][i] = v; };
-                for (let i = 0; i < N; i++) { const line = []; for (let j = 0; j < N; j++) line.push(get(i, j)); const r = slide(line); gain += r.gain; for (let j = 0; j < N; j++) set(i, j, r.out[j]); }
-                moved = JSON.stringify(B) !== old; if (!moved) return;
-                score += gain; if (gain) gameSfx("match"); else gameSfx("tap"); spawn(); draw();
-                if (score > (db.best2048 || 0)) { db.best2048 = score; saveData(); }
-                if (!won && B.some(r => r.some(v => v >= 2048))) { won = true; over = true; gameResultBar("合出 2048 了，你赢了 🎉"); gameStat("g2048", "w"); document.getElementById("gameEnd").innerHTML = gameEndButtons(); return; }
-                const dead = !empty().length && !B.some((r, y) => r.some((v, x) => (x < N - 1 && v === r[x + 1]) || (y < N - 1 && v === B[y + 1][x])));
-                if (dead) { over = true; gameResultBar("没有可以合并的了，结束"); gameStat("g2048", "l"); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
-            }
-            function start() { B = Array.from({ length: N }, () => new Array(N).fill(0)); score = 0; over = false; won = false; spawn(); spawn(); draw(); }
-            const key = e => { const m = { ArrowUp: "U", ArrowDown: "D", ArrowLeft: "L", ArrowRight: "R" }[e.key]; if (m) { e.preventDefault(); move(m); } };
-            let tx = 0, ty = 0;
-            box.addEventListener("touchstart", e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
-            box.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.max(Math.abs(dx), Math.abs(dy)) < 18) return; move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "R" : "L") : (dy > 0 ? "D" : "U")); });
-            document.querySelectorAll(".g48-pad button").forEach(b => { b.onclick = () => move(b.dataset.d); });
-            document.addEventListener("keydown", key); start();
-            gameCleanup = () => { document.removeEventListener("keydown", key); };
-            gamePause = () => { document.removeEventListener("keydown", key); };
-            gameResume = () => { document.addEventListener("keydown", key); };
-        }
-        // ---------- 五子棋 ----------
         function gameGomoku() {
             const N = 15, body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-msg" id="gameMsg">你执黑先手</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
