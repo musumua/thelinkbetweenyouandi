@@ -880,7 +880,7 @@
     <div id="mainAppView" style="display:none; flex-direction:column; height:100%;">
         <div class="header">
             <button class="home-back-btn" onclick="goHome()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-            <div class="header-other-看板" onclick="triggerRandomStarAction()">
+            <div class="header-other-看板" onclick="triggerRandomStarAction(true)">
                 <div class="看板-info">
                     <div class="name" id="name_other">他</div>
                     <div class="status" id="status_other">在线</div>
@@ -2048,9 +2048,9 @@
             // 愿望星
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const wr = 0.08 + w.r * 0.42, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = 0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 1.6); g.addColorStop(0, `rgba(235,240,255,${0.2 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 2, y - 2, 4, 4);
-                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.7; ctx.beginPath(); ctx.arc(x, y, 0.45, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+                if (w.arrive && nowMs < w.arrive) return; const wr = 0.3 + w.r * 0.68, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9)) * Math.min(1, (wr - 0.3) / 0.25 + 0.35);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 1.3); g.addColorStop(0, `rgba(235,240,255,${0.2 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 2, y - 2, 4, 4);
+                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.7; ctx.beginPath(); ctx.arc(x, y, 0.38, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
             });
             ctx.globalCompositeOperation = "lighter";
@@ -2072,7 +2072,7 @@
             ctx.globalCompositeOperation = "source-over";
             // 一颗星星从下方飞进去
             if (galFly) {
-                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.08 + w.r * 0.42, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
+                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.3 + w.r * 0.68, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
                 if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,.85)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
@@ -3701,9 +3701,10 @@
         }
         function hasFreeWords() { return Object.values(db.freeWords || {}).reduce((n, a) => n + a.length, 0) >= 2; }
         let recentCardTexts = [], replyRunning = false;
-        function triggerRandomStarAction() {
+        function triggerRandomStarAction(manual) {
             initAudio();
             if (Math.random() * 100 < (db.freq.callPct === undefined ? 3 : db.freq.callPct)) { triggerIncomingCallMock(); return; }
+            if (!manual) { if (replyRunning) return; replyRunning = true; try { sendBurst(pickBubbleCount(), true, () => { replyRunning = false; }); } catch (e) { replyRunning = false; console.error(e); } return; } // 定时主动发：带 ★，气泡间隔在最短/最长之间随机
             // 点名字：他立刻回一条（不用等），不是主动发的所以没有星标；有我发的消息时就引用最近一条来回复
             const now = new Date();
             const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
@@ -3984,7 +3985,7 @@
             const idx = bubbleActionIdx, m = db.chat[idx]; closeBubblePop(); if (!m || !m.text) return;
             const old = document.getElementById("bubbleEditMask"); if (old) old.remove();
             const mk = document.createElement("div"); mk.id = "bubbleEditMask"; mk.style.cssText = "position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box";
-            mk.innerHTML = '<div style="width:100%;max-width:340px;background:var(--modal-bg,#2a2634);color:var(--text-main);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.4)"><div style="font-size:14px;margin-bottom:10px;opacity:.8">编辑消息</div><textarea id="bubbleEditTa" rows="4" style="width:100%;box-sizing:border-box;resize:none;background:rgba(127,127,127,.12);color:inherit;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:16px;font-family:inherit;outline:none"></textarea><div style="display:flex;gap:10px;margin-top:12px"><button id="bubbleEditCancel" style="flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);background:none;color:inherit;font-size:14px">取消</button><button id="bubbleEditOk" style="flex:1;padding:10px;border-radius:12px;border:none;background:var(--primary,#7c8cf0);color:#fff;font-size:14px">保存</button></div></div>';
+            mk.innerHTML = '<div style="width:100%;max-width:300px;background:var(--modal-bg,#2a2634);color:var(--text-main);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.4)"><div style="font-size:14px;margin-bottom:10px;opacity:.8">编辑消息</div><textarea id="bubbleEditTa" rows="4" style="width:100%;box-sizing:border-box;resize:none;background:rgba(127,127,127,.12);color:inherit;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:16px;font-family:inherit;outline:none"></textarea><div style="display:flex;gap:10px;margin-top:12px"><button id="bubbleEditCancel" style="flex:1;padding:10px;border-radius:12px;border:1px solid var(--border);background:none;color:inherit;font-size:14px">取消</button><button id="bubbleEditOk" style="flex:1;padding:10px;border-radius:12px;border:none;background:var(--primary,#7c8cf0);color:#fff;font-size:14px">保存</button></div></div>';
             document.body.appendChild(mk); const ta = document.getElementById("bubbleEditTa"); ta.value = m.text; ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
             const close = () => mk.remove();
             mk.addEventListener("click", e => { if (e.target === mk) close(); });
@@ -4105,7 +4106,7 @@
                 if (b) { if (pro) b.proactive = true; hisBubbleNow(b); notifyIncomingOtherMessage(b.text ? b.text.split("\n")[0] : "[表情]"); }
                 i++;
                 if (i >= total) { if (done) done(); return; }
-                const gap = 1200 + Math.random() * 1800; // 同一轮里两条气泡间隔 1.2–3 秒
+                const f0 = db.freq, ga = Math.max(0.8, parseFloat(f0.replyMin) || 1), gb = Math.max(ga, parseFloat(f0.replyMax) || 5), gap = (ga + Math.random() * (gb - ga)) * 1000; // 同一轮里两条气泡间隔：在最短和最长之间随机
                 if (typing) { typing.style.display = "none"; setTimeout(() => { if (typing) typing.style.display = "flex"; }, Math.max(0, gap - 1200)); }
                 setTimeout(step, gap);
             };
@@ -6387,13 +6388,13 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const body = document.getElementById("gameBody");
             const icons = ["🍓", "🌙", "🐱", "🍀", "🎈", "🍪", "⭐", "🐟", "🌷", "🎧"];
             const deck = icons.concat(icons).sort(() => Math.random() - .5);
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻，翻两张</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(340px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻，翻两张</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:min(300px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
             const grid = document.getElementById("memGrid");
             const st = deck.map(() => 0); // 0盖 1翻开 2已配对
-            const sc = [0, 0], known = {}; let turn = 1, picks = [], busy = false, over = false, timer = null;
+            const sc = [0, 0], known = {}; let forced = -1, turn = 1, picks = [], busy = false, over = false, timer = null;
             const els = deck.map((ic, i) => {
                 const d = document.createElement("div");
-                d.style.cssText = "aspect-ratio:3/4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px;cursor:pointer;transition:transform .25s,background .25s;user-select:none;-webkit-user-select:none";
+                d.style.cssText = "aspect-ratio:1/1.1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:transform .25s,background .25s;user-select:none;-webkit-user-select:none";
                 d.addEventListener("click", () => { if (turn === 1 && !busy && !over) flip(i); });
                 grid.appendChild(d); return d;
             });
@@ -6422,19 +6423,20 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     else gameResultBar("轮到你了，翻两张");
                 }, 900);
             }
-            const mem = () => gameDiff === "easy" ? .35 : gameDiff === "normal" ? .65 : .95;
+            const mem = () => gameDiff === "easy" ? .1 : gameDiff === "normal" ? .55 : 1;
             function unknownCards() { return deck.map((_, i) => i).filter(i => !st[i] && !(i in known)); }
             function hisFirst() {
                 if (over) return;
                 // 记得的一对
                 const m = mem(), seen = Object.keys(known).map(Number).filter(i => !st[i] || st[i] === 0);
-                for (const i of seen) for (const j of seen) if (i < j && deck[i] === deck[j] && Math.random() < m) { flip(i); timer = setTimeout(() => flip(j), 700); return; }
+                for (const i of seen) for (const j of seen) if (i < j && deck[i] === deck[j] && Math.random() < m) { forced = j; flip(i); return; }
                 const u = unknownCards(); const pool = u.length ? u : deck.map((_, i) => i).filter(i => !st[i]);
                 flip(pool[Math.floor(Math.random() * pool.length)]);
             }
             function hisSecond() {
                 if (over) return;
-                const first = picks[0], m = mem();
+                if (picks.length !== 1 || turn !== 2) return; const first = picks[0], m = mem();
+                if (forced >= 0 && !st[forced]) { const fj = forced; forced = -1; return flip(fj); } forced = -1;
                 const partner = Object.keys(known).map(Number).find(j => j !== first && !st[j] && deck[j] === deck[first]);
                 if (partner !== undefined && Math.random() < m) return flip(partner);
                 const u = unknownCards().filter(i => i !== first); const pool = u.length ? u : deck.map((_, i) => i).filter(i => !st[i] && i !== first);
@@ -6668,7 +6670,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const V = { U: [0, -1], D: [0, 1], L: [-1, 0], R: [1, 0] }, OPP = { U: "D", D: "U", L: "R", R: "L" };
             const base = { easy: 360, normal: 250, hard: 170 }[gameDiff];
             const mid = Math.floor(N / 2);
-            let me, him, foods = [], running = false, over = false, timer = null, startAt = 0, myDir, hisDir, queued = null;
+            let me, him, foods = [], running = false, paused = false, over = false, timer = null, startAt = 0, myDir, hisDir, queued = null;
             function reset() {
                 me = [[5, mid], [4, mid], [3, mid]]; him = [[N - 6, mid], [N - 5, mid], [N - 4, mid]]; myDir = "R"; hisDir = "L"; queued = null; over = false;
                 foods = []; placeFood(0); placeFood(1); draw(); score();
@@ -6739,7 +6741,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 if (eatM || eatH) { foods.forEach((f, i) => { if ((eatM && f[0] === mh[0] && f[1] === mh[1]) || (eatH && f[0] === hh[0] && f[1] === hh[1])) { foods[i] = null; } }); foods.forEach((f, i) => { if (!f) placeFood(i); }); gameSfx(eatM ? "eat" : "his"); }
                 draw(); score();
                 if (meDead || himDead) {
-                    running = false; over = true;
+                    running = false; over = true; { const sb = document.getElementById("snStart"); if (sb) sb.innerText = "开始"; }
                     if (meDead && himDead) { gameResultBar("同时撞上了，平局"); gameStat("snake", "d"); }
                     else if (meDead) { gameResultBar("你撞到了，" + hisName() + "赢了"); gameStat("snake", "l"); }
                     else { gameResultBar(hisName() + "撞到了，你赢了 🎉"); gameStat("snake", "w"); }
@@ -6748,18 +6750,18 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const el = Date.now() - startAt;
                 timer = setTimeout(tick, Math.max(70, base * Math.pow(0.5, el / 90000)));
             }
-            function press(d) { if (!running) return; if (d !== OPP[myDir]) queued = d; }
+            function press(d) { if (!running || paused) return; if (d !== OPP[myDir]) queued = d; }
             document.querySelectorAll(".dpad button[data-d]").forEach(b => { const f = e => { e.preventDefault(); b.classList.add("down"); if (navigator.vibrate) navigator.vibrate(8); try { gameSfx("tap"); } catch (er) { } press(b.dataset.d); }; const u = () => b.classList.remove("down"); b.addEventListener("touchstart", f, { passive: false }); b.addEventListener("mousedown", f); ["touchend", "touchcancel", "mouseup", "mouseleave"].forEach(ev => b.addEventListener(ev, u)); });
             const key = e => { const m = { ArrowUp: "U", ArrowDown: "D", ArrowLeft: "L", ArrowRight: "R" }[e.key]; if (m) { e.preventDefault(); press(m); } };
             document.addEventListener("keydown", key);
             let tx = 0, ty = 0;
             cv.addEventListener("touchstart", e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
             cv.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return; press(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "R" : "L") : (dy > 0 ? "D" : "U")); });
-            document.getElementById("snStart").onclick = () => { if (running) return; reset(); document.getElementById("gameEnd").innerHTML = ""; running = true; startAt = Date.now(); gameResultBar("加油！速度会越来越快"); gameSfx("tap"); clearTimeout(timer); timer = setTimeout(tick, base); };
+            document.getElementById("snStart").onclick = () => { const sb = document.getElementById("snStart"); if (running) { paused = !paused; if (paused) { clearTimeout(timer); sb.innerText = "继续"; gameResultBar("已暂停"); } else { sb.innerText = "暂停"; gameResultBar("加油！速度会越来越快"); clearTimeout(timer); timer = setTimeout(tick, 500); } return; } paused = false; sb.innerText = "暂停"; reset(); document.getElementById("gameEnd").innerHTML = ""; running = true; startAt = Date.now(); gameResultBar("加油！速度会越来越快"); gameSfx("tap"); clearTimeout(timer); timer = setTimeout(tick, base); };
             reset();
             gameCleanup = () => { running = false; clearTimeout(timer); document.removeEventListener("keydown", key); };
             gamePause = () => { clearTimeout(timer); document.removeEventListener("keydown", key); };
-            gameResume = () => { document.addEventListener("keydown", key); if (running) { clearTimeout(timer); timer = setTimeout(tick, 400); } };
+            gameResume = () => { document.addEventListener("keydown", key); if (running && !paused) { clearTimeout(timer); timer = setTimeout(tick, 400); } };
         }
 
         // ---------- 俄罗斯方块（90年代掌机版：你一盘、他一盘，消行给对方加垃圾行） ----------
