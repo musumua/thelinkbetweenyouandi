@@ -602,8 +602,8 @@
         .cal-cell.today { font-weight: 700; }
         .cal-cell.period { position: relative; color: #fff; font-weight: 700; z-index: 0; }
         .cal-cell.period::before { content: ""; position: absolute; top: 15%; bottom: 15%; background: #E36C86; z-index: -1; }
-        .cal-cell.pred { position: relative; color: #E36C86; }
-        .cal-cell.pred::after { content: ""; position: absolute; top: 15%; bottom: 15%; left: 10%; right: 10%; border: 1.5px dashed #E36C86; border-radius: 999px; opacity: .75; pointer-events: none; }
+        .cal-cell.pred { position: relative; z-index: 0; }
+        .cal-cell.pred::after { content: ""; position: absolute; top: 15%; bottom: 15%; left: 10%; right: 10%; background: rgba(227,108,134,.2); border-radius: 999px; z-index: -1; pointer-events: none; }
         .cal-predict { font-size: 10.5px; color: #E36C86; text-align: center; margin-top: 4px; line-height: 1.35; }
         .cal-cell.period-solo::before { left: 10%; right: 10%; border-radius: 999px; }
         .cal-cell.period-start::before { left: 10%; right: -3px; border-radius: 999px 0 0 999px; }
@@ -833,7 +833,6 @@
                         </div>
                         <div class="cal-weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
                         <div class="cal-grid" id="calGridBox"></div>
-                        <div class="cal-predict" id="calPredict" style="display:none"></div>
                         <div class="cal-legend"><span class="cal-legend-dot"></span>点击日期添加日程 · 长按标记经期</div>
                     </div>
                     <div class="home-p2-notes-row">
@@ -1978,10 +1977,31 @@
             if (sticky) sticky.value = memoNormalize(db.stickyNote || "");
             p2Init();
         }
-        function memoNormalize(t) { const ls = t.split("\n"); if (ls.length === 1) return ls[0].replace(/^[·•]\s?/, ""); return ls.map((l, i) => i === 0 ? l.replace(/^[·•]\s?/, "") : ((l.trim() && !l.startsWith("· ")) ? "· " + l.replace(/^[·•\-]\s*/, "") : l)).join("\n"); }
+        // 备忘录：只有一行时没有 ·；出现多行后，有内容的行（含第一行）前面都有 ·，空行没有 ·
+        function memoNormalize(t) {
+            const ls = t.split("\n"); const strip = l => l.replace(/^[·•]\s?/, "");
+            if (ls.length === 1) return strip(ls[0]);
+            return ls.map(l => { const c = strip(l.replace(/^\s*-\s+/, "")); return c.trim() ? "· " + c : ""; }).join("\n");
+        }
         function memoFocus(el) { }
-        function memoKey(e, el) { if (e.key === "Enter") { e.preventDefault(); const p = el.selectionStart; el.value = el.value.slice(0, p) + "\n· " + el.value.slice(el.selectionEnd); el.selectionStart = el.selectionEnd = p + 3; handleStickyNoteInput(el.value); } }
-        function handleStickyNoteInput(val) { const n = memoNormalize(val); const el = document.getElementById("homeStickyNoteInput"); if (el && n !== val) { const p = el.selectionStart + (n.length - val.length); el.value = n; el.selectionStart = el.selectionEnd = Math.max(0, p); } db.stickyNote = (n.trim() === "·" ? "" : n); saveData(); }
+        function memoLC(v, pos) { const ls = v.split("\n"); let o = 0; for (let i = 0; i < ls.length; i++) { if (pos <= o + ls[i].length) return [i, pos - o]; o += ls[i].length + 1; } return [ls.length - 1, ls[ls.length - 1].length]; }
+        function memoKey(e, el) {
+            if (e.key !== "Backspace" || el.selectionStart !== el.selectionEnd) return;
+            const v = el.value, [li, col] = memoLC(v, el.selectionStart), ls = v.split("\n"), line = ls[li], bpl = (/^[·•]\s?/.exec(line) || [""])[0].length;
+            if (li > 0 && col <= bpl) { // 在行首（或只在 · 后面）：并回上一行
+                e.preventDefault(); const junction = ls.slice(0, li).join("\n").length;
+                ls.splice(li - 1, 2, ls[li - 1] + line.slice(bpl)); el.value = ls.join("\n"); el.selectionStart = el.selectionEnd = junction; handleStickyNoteInput(el.value);
+            } else if (li === 0 && bpl && col <= bpl) e.preventDefault();
+        }
+        function handleStickyNoteInput(val) {
+            const el = document.getElementById("homeStickyNoteInput"), n = memoNormalize(val);
+            if (el && n !== val) {
+                const [li, col] = memoLC(val, el.selectionStart), ols = val.split("\n"), nls = n.split("\n"), ob = (/^[·•]\s?/.exec(ols[li] || "") || [""])[0].length, nb = (/^[·•]\s?/.exec(nls[li] || "") || [""])[0].length;
+                let o = 0; for (let i = 0; i < li; i++) o += (nls[i] || "").length + 1;
+                const newCol = Math.min((nls[li] || "").length, Math.max(nb, col - ob + nb)); el.value = n; el.selectionStart = el.selectionEnd = o + newCol;
+            }
+            db.stickyNote = n.trim() === "" ? "" : n; saveData();
+        }
 
         // ==================== 🌌 许愿宇宙 / 🏠 约会像素 / 🐾 宠物（首页最左页三个组件） ====================
         const p2Vis = () => currentHomePage === 0 && !document.hidden && !document.querySelector(".pyq-full-page.open") && !Array.prototype.some.call(document.querySelectorAll(".pyq-full-page"), e => e.getBoundingClientRect().left < innerWidth - 2);
@@ -2013,7 +2033,8 @@
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
-            for (let i = 0; i < 520; i++) bg.push({ x: Math.random(), y: Math.random(), s: Math.random() < 0.06 ? 1.8 : (Math.random() < 0.4 ? 1.2 : 0.8), p: Math.random() * 6.283, a: 0.25 + Math.random() * 0.5, c: ["255,255,255", "235,242,255", "215,225,255"][Math.floor(Math.random() * 3)] });
+            // 远处的群星：很多、很小；星云中间少，四周多（拒绝采样）
+            for (let n = 0, tries = 0; n < 2300 && tries < 40000; tries++) { const x = Math.random(), y = Math.random(), d = Math.hypot((x - 0.5) * 1.0, (y - 0.5) * 1.7) / 0.62, acc = 0.07 + 0.93 * Math.min(1, Math.pow(d, 1.6)); if (Math.random() > acc) continue; n++; const big = Math.random() < 0.03; bg.push({ x, y, s: big ? 0.9 : 0.05 + Math.random() * 0.35, p: Math.random() * 6.283, a: big ? 0.5 + Math.random() * 0.3 : 0.22 + Math.random() * 0.55, c: "255,255,255" }); }
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
             const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.16 + Math.random() * 0.22, a: 0.012 + Math.random() * 0.016, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
             gal = { parts, bg, dust, pink, halo, cloud, shoot: null, nextShoot: 3000 };
@@ -2052,8 +2073,7 @@
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
             });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
-            // 伴星系（左上亮点、右下椭圆光斑）
-            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
+            // （不画伴星系的大白点）
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
@@ -2264,7 +2284,7 @@
                   if (night) { const gl = (cx, cy, rx, ry, al) => { c.globalAlpha = al; c.fillStyle = "#ffd27a"; for (let y = -ry; y <= ry; y++) for (let x = -rx; x <= rx; x++) if (x * x / (rx * rx) + y * y / (ry * ry) <= 1) c.fillRect(cx + x, cy + y, 1, 1); c.globalAlpha = 1; };
                     gl(30, 9, 17, 11, 0.07); gl(30, 9, 13, 8, 0.09); gl(30, 9, 9, 6, 0.1); gl(30, 25, 11, 12, 0.06); gl(30, 36, 14, 5, 0.1); gl(30, 38, 8, 3, 0.1); R(25, 6, 11, 6, "#ffefc0"); R(26, 7, 9, 4, "#fff6dc"); } }
                 // 地板上的花瓶 + 开白花的枝 + 干枝
-                R(7, 30, 2, 9, D("#256040", "#173a2a")); B(0, 37, 16, 3, D("#faf6f2", "#a8a4b4")); B(1, 39, 14, 10, D("#f1ece8", "#9894a6")); R(2, 41, 12, 1, D("#ddd6d0", "#7e7a8e")); R(2, 38, 12, 1, D("#6a4a38", "#3a2a22"));
+                R(7, 26, 2, 7, D("#256040", "#173a2a")); B(0, 30, 16, 3, D("#faf6f2", "#a8a4b4")); B(1, 32, 14, 10, D("#f1ece8", "#9894a6")); R(2, 34, 12, 1, D("#ddd6d0", "#7e7a8e")); R(2, 31, 12, 1, D("#6a4a38", "#3a2a22"));
                 { const br = D("#6a5040", "#3a2a22"), wh = "#fff", lv = D("#f0e4f6", "#d8c8ec"), gold = D("#e0b060", "#c89a50");
                   for (const [tx, ty] of [[2, 24], [6, 20], [10, 23], [12, 29], [1, 30]]) { L(7, 37, tx, ty, br); for (const [dx, dy] of [[0, 0], [1, -1], [-1, 1], [1, 1], [-1, -1], [0, 2], [2, 0]]) P(tx + dx, ty + dy, (dx + dy) % 2 ? wh : lv); }
                   for (const [gx, gy] of [[15, 31], [17, 34], [14, 36]]) { L(14, 40, gx, gy, br); for (const [dx, dy] of [[0, 0], [1, 0], [0, 1], [-1, 0]]) P(gx + dx, gy + dy, gold); }
@@ -2663,7 +2683,8 @@
             const pk = k => { const a = String(k).split("-").map(Number); return new Date(a[0], a[1] - 1, a[2]); };
             const DAY = 86400000, rs = (db.periodRanges || []).filter(r => r && r.start).map(r => ({ s: pk(r.start), e: r.end ? pk(r.end) : null })).sort((a, b) => a.s - b.s);
             if (!rs.length) return null;
-            const gaps = []; for (let i = 1; i < rs.length; i++) { const g = Math.round((rs[i].s - rs[i - 1].s) / DAY); if (g >= 15 && g <= 60) gaps.push(g); }
+            let gaps = []; for (let i = 1; i < rs.length; i++) { const g = Math.round((rs[i].s - rs[i - 1].s) / DAY); if (g >= 15 && g <= 60) gaps.push(g); }
+            if (gaps.length >= 4) { const md = gaps.slice().sort((a, b) => a - b)[Math.floor(gaps.length / 2)]; const kept = gaps.filter(g => Math.abs(g - md) <= Math.max(5, md * 0.2)); if (kept.length >= 3) gaps = kept; } // 去掉偏差很大的那几次（漏记/特殊月份）
             const use = gaps.slice(-6); let cyc = 28, basis = 0;
             if (use.length) { let sw = 0, sv = 0; use.forEach((g, i) => { const w = i + 1; sw += w; sv += w * g; }); cyc = Math.round(sv / sw); basis = use.length; }
             const lens = rs.filter(r => r.e).map(r => Math.round((r.e - r.s) / DAY) + 1).filter(n => n >= 2 && n <= 10).slice(-6);
@@ -2753,7 +2774,6 @@
             }
             for (let i = firstDay + daysInMonth; i < 42; i++) html += `<div class="cal-cell empty"></div>`;
             grid.innerHTML = html;
-            { const pe = document.getElementById("calPredict"); if (pe) { const t = periodPredText(); pe.innerText = t; pe.style.display = t ? "" : "none"; } }
             grid.querySelectorAll(".cal-cell:not(.empty)").forEach(cell => {
                 attachLongPressDelete(cell, () => openPeriodMarkChoice(cell.dataset.key));
             });
