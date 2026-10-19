@@ -602,6 +602,9 @@
         .cal-cell.today { font-weight: 700; }
         .cal-cell.period { position: relative; color: #fff; font-weight: 700; z-index: 0; }
         .cal-cell.period::before { content: ""; position: absolute; top: 15%; bottom: 15%; background: #E36C86; z-index: -1; }
+        .cal-cell.pred { position: relative; color: #E36C86; }
+        .cal-cell.pred::after { content: ""; position: absolute; top: 15%; bottom: 15%; left: 10%; right: 10%; border: 1.5px dashed #E36C86; border-radius: 999px; opacity: .75; pointer-events: none; }
+        .cal-predict { font-size: 10.5px; color: #E36C86; text-align: center; margin-top: 4px; line-height: 1.35; }
         .cal-cell.period-solo::before { left: 10%; right: 10%; border-radius: 999px; }
         .cal-cell.period-start::before { left: 10%; right: -3px; border-radius: 999px 0 0 999px; }
         .cal-cell.period-mid::before { left: -3px; right: -3px; border-radius: 0; }
@@ -830,6 +833,7 @@
                         </div>
                         <div class="cal-weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
                         <div class="cal-grid" id="calGridBox"></div>
+                        <div class="cal-predict" id="calPredict" style="display:none"></div>
                         <div class="cal-legend"><span class="cal-legend-dot"></span>点击日期添加日程 · 长按标记经期</div>
                     </div>
                     <div class="home-p2-notes-row">
@@ -1974,7 +1978,7 @@
             if (sticky) sticky.value = memoNormalize(db.stickyNote || "");
             p2Init();
         }
-        function memoNormalize(t) { const ls = t.split("\n"); if (ls.length === 1) return ls[0].replace(/^[·•]\s?/, ""); return ls.map(l => (l.trim() && !l.startsWith("· ")) ? "· " + l.replace(/^[·•\-]\s*/, "") : l).join("\n"); }
+        function memoNormalize(t) { const ls = t.split("\n"); if (ls.length === 1) return ls[0].replace(/^[·•]\s?/, ""); return ls.map((l, i) => i === 0 ? l.replace(/^[·•]\s?/, "") : ((l.trim() && !l.startsWith("· ")) ? "· " + l.replace(/^[·•\-]\s*/, "") : l)).join("\n"); }
         function memoFocus(el) { }
         function memoKey(e, el) { if (e.key === "Enter") { e.preventDefault(); const p = el.selectionStart; el.value = el.value.slice(0, p) + "\n· " + el.value.slice(el.selectionEnd); el.selectionStart = el.selectionEnd = p + 3; handleStickyNoteInput(el.value); } }
         function handleStickyNoteInput(val) { const n = memoNormalize(val); const el = document.getElementById("homeStickyNoteInput"); if (el && n !== val) { const p = el.selectionStart + (n.length - val.length); el.value = n; el.selectionStart = el.selectionEnd = Math.max(0, p); } db.stickyNote = (n.trim() === "·" ? "" : n); saveData(); }
@@ -2036,23 +2040,20 @@
               const mist = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
               mist(W * 0.5, H * 0.5, R * 0.55, "40,62,140", 0.26 * br); mist(W * 0.5, H * 0.5, R * 0.3, "70,96,190", 0.12 * br); mist(W * 0.2, H * 0.15, R * 0.36, "40,48,110", 0.045); mist(W * 0.85, H * 0.9, R * 0.4, "56,40,112", 0.05);
               ctx.restore(); }
-            // 流星
-            if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
-            if (gal.shoot) { const k = (t - gal.shoot.t0) / 700; if (k > 1) gal.shoot = null; else { const x = gal.shoot.x + gal.shoot.dx * k * 90, y = gal.shoot.y + gal.shoot.dy * k * 90; const g = ctx.createLinearGradient(x, y, x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); g.addColorStop(0, `rgba(255,255,255,${(1 - k) * 0.7})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); ctx.stroke(); } }
-            gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
-            const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
-            const pos = (r, th) => { const x = r * Rx * Math.cos(th), y = r * Ry * Math.sin(th); return [cx + x * cph - y * sph, cy + x * sph + y * cph]; };
+            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25), _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
+            const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
-            // 伴星系（左上亮点、右下椭圆光斑）
-            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             // 愿望星
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.3);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 1); g.addColorStop(0, `rgba(235,240,255,${0.2 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
-                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.7; ctx.beginPath(); ctx.arc(x, y, 0.3, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+                if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 1100 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.3);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 0.9); g.addColorStop(0, `rgba(235,240,255,${0.1 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
+                ctx.fillStyle = "#b9c6f2"; ctx.globalAlpha = tw * 0.45; ctx.beginPath(); ctx.arc(x, y, 0.26, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
             });
+            const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
+            // 伴星系（左上亮点、右下椭圆光斑）
+            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
@@ -2070,6 +2071,10 @@
             // 明亮的核心
             { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,244,222,.95)"); g.addColorStop(0.12, "rgba(255,222,170,.7)"); g.addColorStop(0.45, "rgba(224,176,120,.2)"); g.addColorStop(1, "rgba(210,160,110,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
             ctx.globalCompositeOperation = "source-over";
+            // 流星
+            if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
+            if (gal.shoot) { const k = (t - gal.shoot.t0) / 700; if (k > 1) gal.shoot = null; else { const x = gal.shoot.x + gal.shoot.dx * k * 90, y = gal.shoot.y + gal.shoot.dy * k * 90; const g = ctx.createLinearGradient(x, y, x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); g.addColorStop(0, `rgba(255,255,255,${(1 - k) * 0.7})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); ctx.stroke(); } }
+            gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             // 一颗星星从下方飞进去
             if (galFly) {
                 const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.38 + w.r * 0.62, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
@@ -2221,7 +2226,7 @@
                 const FLR = D("#d49a64", "#8a5a3a"), FLRL = D("#c0864f", "#764c30"), SOF = D("#d6cdd6", "#8e869a"), SOFL = D("#e4dce4", "#a8a0b4"), WDC = D("#e0b280", "#9a7a54"), WDD = D("#c8935c", "#6a4a30");
                 R(0, 0, 90, 34, D("#f0dcd8", "#7a5a78")); R(0, 31, 90, 3, D("#e6cfcf", "#6e4e70"));
                 // 三扇大窗 + 城市夜景
-                for (let i = 0; i < 3; i++) { const wx = 40 + i * 17; B(wx, 2, 16, 21, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 14, 19, D("#a8cdee", "#0e1238")); skyline(wx + 1, wx + 15, 22, 2 + i * 3); if (night) for (let k = 0; k < 34; k++) { const lx = wx + 2 + (k * 5 + i * 3) % 13, ly = 8 + (k * 7 + i) % 13; P(lx, ly, k % 3 ? "#ffd98a" : "#fff3c0"); } }
+                for (let i = 0; i < 3; i++) { const wx = 40 + i * 17; B(wx, 2, 16, 21, D("#f6eeee", "#9a8aa6")); R(wx + 1, 3, 14, 19, D("#a8cdee", "#0e1238")); skyline(wx + 1, wx + 15, 22, 2 + i * 3); if (night) for (let k = 0; k < 10; k++) { const lx = wx + 2 + (k * 5 + i * 3) % 13, ly = 10 + (k * 7 + i) % 11; P(lx, ly, k % 3 ? "#ffd98a" : "#fff3c0"); } }
                 R(40, 21, 50, 3, D("#e8dede", "#8a7a98")); // 窗台
                 // 窗台上的书和小鹿、绿植
                 B(80, 14, 8, 8, D("#e8e0d8", "#9a90a0")); for (let i = 0; i < 4; i++) R(81 + i * 2, 15, 1, 6, ["#e0627a", "#f0f0f0", "#6a90c8", "#f2c26a"][i]); B(62, 18, 2, 4, D("#e89aa8", "#a86a78")); P(63, 17, D("#e89aa8", "#a86a78")); E(52, 20, 3, 2, D("#5fae60", "#2f6a40")); E(72, 20, 2, 2, D("#5fae60", "#2f6a40")); E(45, 20, 2, 2, D("#5fae60", "#2f6a40"));
@@ -2259,10 +2264,11 @@
                   if (night) { const gl = (cx, cy, rx, ry, al) => { c.globalAlpha = al; c.fillStyle = "#ffd27a"; for (let y = -ry; y <= ry; y++) for (let x = -rx; x <= rx; x++) if (x * x / (rx * rx) + y * y / (ry * ry) <= 1) c.fillRect(cx + x, cy + y, 1, 1); c.globalAlpha = 1; };
                     gl(30, 9, 17, 11, 0.07); gl(30, 9, 13, 8, 0.09); gl(30, 9, 9, 6, 0.1); gl(30, 25, 11, 12, 0.06); gl(30, 36, 14, 5, 0.1); gl(30, 38, 8, 3, 0.1); R(25, 6, 11, 6, "#ffefc0"); R(26, 7, 9, 4, "#fff6dc"); } }
                 // 地板上的花瓶 + 开白花的枝 + 干枝
+                R(7, 30, 2, 9, D("#256040", "#173a2a")); B(0, 37, 16, 3, D("#faf6f2", "#a8a4b4")); B(1, 39, 14, 10, D("#f1ece8", "#9894a6")); R(2, 41, 12, 1, D("#ddd6d0", "#7e7a8e")); R(2, 38, 12, 1, D("#6a4a38", "#3a2a22"));
                 { const br = D("#6a5040", "#3a2a22"), wh = "#fff", lv = D("#f0e4f6", "#d8c8ec"), gold = D("#e0b060", "#c89a50");
                   for (const [tx, ty] of [[2, 24], [6, 20], [10, 23], [12, 29], [1, 30]]) { L(7, 37, tx, ty, br); for (const [dx, dy] of [[0, 0], [1, -1], [-1, 1], [1, 1], [-1, -1], [0, 2], [2, 0]]) P(tx + dx, ty + dy, (dx + dy) % 2 ? wh : lv); }
                   for (const [gx, gy] of [[15, 31], [17, 34], [14, 36]]) { L(14, 40, gx, gy, br); for (const [dx, dy] of [[0, 0], [1, 0], [0, 1], [-1, 0]]) P(gx + dx, gy + dy, gold); }
-                  R(7, 30, 2, 9, D("#256040", "#173a2a")); B(1, 37, 15, 3, D("#e09a70", "#9a5a44")); B(2, 39, 13, 10, D("#d98a5f", "#8a4a3a")); R(3, 41, 11, 1, D("#c47a52", "#7a4034")); R(3, 38, 11, 1, D("#6a4a38", "#3a2a22")); }
+                  E(7, 41, 4, 3, D("#4a4a58", "#2a2a38")); B(5, 36, 5, 3, D("#4a4a58", "#2a2a38")); R(4, 40, 2, 2, D("#8a8a98", "#5a5a6a")); }
 
                                 if (night) { sp(30, 9, "#ffe9b0", 1); sp(60, 8, "#fff", 1); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
             } else if (kind === "terrace") {
@@ -2569,7 +2575,7 @@
                 for (let k = 0; k < lv + 1; k++) { const bx = dx + Math.round(sw * (0.15 + 0.7 * k / Math.max(1, lv))), ph = ((t / 1300) + k * 0.31) % 1; c.globalAlpha = Math.max(0, 1 - ph * 0.8); c.fillStyle = "#98a52c"; for (let yy = 0; yy < 9; yy++) { const px = bx + Math.round(Math.sin(t / 220 + yy * 0.9 + k * 2) * 1.6); c.fillRect(px, dy - 2 - Math.round(ph * 6) - yy, 1, 1); } c.globalAlpha = 1; }
                 for (let k = 0; k < Math.min(3, lv + 1); k++) { const ang = t / 240 + k * 2.1, fx = Math.round(dx + sw / 2 + Math.cos(ang) * (sw / 2 + 3)), fy = Math.round(dy - 3 + Math.sin(ang * 1.3) * 5); c.fillStyle = "#3d3640"; c.fillRect(fx, fy, 2, 1); c.fillStyle = "#c9d6e0"; c.fillRect(fx + (Math.floor(t / 90) % 2 ? -1 : 2), fy - 1, 1, 1); } }
             if (st === "heal") { for (let k = 0; k < 7; k++) { const ph = ((t / 1500) + k / 7) % 1, hx = dx + 1 + Math.round(((k * 37) % 100) / 100 * (sw - 4)) + Math.round(Math.sin(t / 300 + k) * 1), hy = dy + sh - 2 - Math.round(ph * (sh + 10)); c.globalAlpha = Math.min(1, (1 - ph) * 1.6); c.fillStyle = k % 2 ? "#4fc47a" : "#7ddc9a"; c.fillRect(hx, hy - 1, 1, 3); c.fillRect(hx - 1, hy, 3, 1); c.globalAlpha = 1; } }
-            if (st === "sick") { const nx = dx + Math.round(sw * 0.5), ny = dy + Math.round(dh * 0.62), pr = 0.55 + 0.45 * Math.abs(Math.sin(t / 500)); c.globalAlpha = 0.5 + 0.2 * pr; c.fillStyle = "#6fcf6a"; for (let yy = -3; yy <= 3; yy++) for (let xx = -6; xx <= 6; xx++) { const d2 = xx * xx / 36 + yy * yy / 9; if (d2 <= 1 && d2 > 0.35) c.fillRect(nx + xx, ny + yy, 1, 1); } c.globalAlpha = 1; }
+            if (st === "sick") { const nx = dx + Math.round(sw * 0.5), ny = dy + Math.round(dh * 0.62), pr = 0.55 + 0.45 * Math.abs(Math.sin(t / 500)); c.globalAlpha = 0.6; c.fillStyle = "#6fcf6a"; for (let yy = -3; yy <= 3; yy++) for (let xx = -6; xx <= 6; xx++) { const d2 = xx * xx / 36 + yy * yy / 9; if (d2 <= 1 && d2 > 0.35) c.fillRect(nx + xx, ny + yy, 1, 1); } c.globalAlpha = 1; }
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { const ex = dx + sw - 1, ey = dy + 1; c.fillStyle = "#ff4a5a"; c.fillRect(ex, ey, 1, 3); c.fillRect(ex, ey + 4, 1, 1); }
             ctxOut.imageSmoothingEnabled = false; ctxOut.drawImage(petBuf, 0, 0, w, h, 0, 0, W, H);
@@ -2652,6 +2658,31 @@
                 return d >= s && d <= e;
             });
         }
+        // 经期预测：按已标记的每次开始日算平均周期（近几次更重），只预测下次开始日和持续天数，不做排卵期
+        function periodPredict() {
+            const pk = k => { const a = String(k).split("-").map(Number); return new Date(a[0], a[1] - 1, a[2]); };
+            const DAY = 86400000, rs = (db.periodRanges || []).filter(r => r && r.start).map(r => ({ s: pk(r.start), e: r.end ? pk(r.end) : null })).sort((a, b) => a.s - b.s);
+            if (!rs.length) return null;
+            const gaps = []; for (let i = 1; i < rs.length; i++) { const g = Math.round((rs[i].s - rs[i - 1].s) / DAY); if (g >= 15 && g <= 60) gaps.push(g); }
+            const use = gaps.slice(-6); let cyc = 28, basis = 0;
+            if (use.length) { let sw = 0, sv = 0; use.forEach((g, i) => { const w = i + 1; sw += w; sv += w * g; }); cyc = Math.round(sv / sw); basis = use.length; }
+            const lens = rs.filter(r => r.e).map(r => Math.round((r.e - r.s) / DAY) + 1).filter(n => n >= 2 && n <= 10).slice(-6);
+            const len = lens.length ? Math.round(lens.reduce((a, b) => a + b, 0) / lens.length) : 5;
+            const last = rs[rs.length - 1].s, today = new Date(); today.setHours(0, 0, 0, 0);
+            const list = []; let st = new Date(last.getTime() + cyc * DAY);
+            for (let n = 0; n < 4; n++) { list.push({ s: new Date(st), len }); st = new Date(st.getTime() + cyc * DAY); }
+            let next = list.find(x => x.s >= today) || list[0]; const late = list[0].s < today && !list.some(x => x.s >= today) ? 0 : (list[0].s < today ? Math.round((today - list[0].s) / DAY) : 0);
+            return { cyc, len, basis, list, next: list[0].s >= today ? list[0] : list[0], late, today, last };
+        }
+        function periodPredKeySet() { const pr = periodPredict(), set = new Set(); if (!pr) return set; pr.list.forEach(x => { for (let i = 0; i < x.len; i++) { const d = new Date(x.s.getFullYear(), x.s.getMonth(), x.s.getDate() + i); set.add(calDateKey(d.getFullYear(), d.getMonth(), d.getDate())); } }); return set; }
+        function periodPredText() {
+            const pr = periodPredict(); if (!pr) return "";
+            const n = pr.list[0], md = `${n.s.getMonth() + 1}月${n.s.getDate()}日`, diff = Math.round((n.s - pr.today) / 86400000);
+            const how = pr.basis ? `按你标记的 ${pr.basis + 1} 次平均 ${pr.cyc} 天一次` : "只标记了一次，先按 28 天估算";
+            if (diff > 0) return `预计下次 ${md} 来（还有 ${diff} 天）· ${how}`;
+            if (diff === 0) return `预计今天来 · ${how}`;
+            return `预计 ${md} 来，已晚了 ${-diff} 天 · ${how}`;
+        }
         let periodMarkTargetKey = null;
         function openPeriodMarkChoice(key) {
             periodMarkTargetKey = key;
@@ -2702,7 +2733,7 @@
             if (!grid) return;
             const firstDay = new Date(calendarViewYear, calendarViewMonth, 1).getDay();
             const daysInMonth = new Date(calendarViewYear, calendarViewMonth + 1, 0).getDate();
-            const today = new Date();
+            const today = new Date(), predSet = periodPredKeySet();
             let html = "";
             for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
             for (let d = 1; d <= daysInMonth; d++) {
@@ -2718,10 +2749,11 @@
                 const isToday = today.getFullYear() === calendarViewYear && today.getMonth() === calendarViewMonth && today.getDate() === d;
                 const dotColor = getDayHighestImportanceColor(key);
                 const dayLabel = isToday ? `（${d}）` : d;
-                html += `<div class="cal-cell ${isToday ? 'today' : ''} ${isPeriod ? 'period ' + periodClass : ''}" data-key="${key}" onclick="openDayDetailModal('${key}')">${dayLabel}${dotColor ? `<span class="cal-cell-dot" style="background:${dotColor}"></span>` : ''}</div>`;
+                html += `<div class="cal-cell ${isToday ? 'today' : ''} ${isPeriod ? 'period ' + periodClass : ''} ${!isPeriod && predSet.has(key) ? 'pred' : ''}" data-key="${key}" onclick="openDayDetailModal('${key}')">${dayLabel}${dotColor ? `<span class="cal-cell-dot" style="background:${dotColor}"></span>` : ''}</div>`;
             }
             for (let i = firstDay + daysInMonth; i < 42; i++) html += `<div class="cal-cell empty"></div>`;
             grid.innerHTML = html;
+            { const pe = document.getElementById("calPredict"); if (pe) { const t = periodPredText(); pe.innerText = t; pe.style.display = t ? "" : "none"; } }
             grid.querySelectorAll(".cal-cell:not(.empty)").forEach(cell => {
                 attachLongPressDelete(cell, () => openPeriodMarkChoice(cell.dataset.key));
             });
