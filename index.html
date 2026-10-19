@@ -2055,6 +2055,8 @@
               gal.bg.forEach(s => { const a = s.a * (0.7 + 0.3 * Math.sin(t / 1500 + s.p)); bk[Math.min(5, Math.floor(a * 7))].push(s); });
               bk.forEach((arr, bi) => { if (!arr.length) return; ctx.globalAlpha = (bi + 0.5) / 7; ctx.beginPath(); arr.forEach(s => { const x = s.x * W, y = s.y * H, r = s.s * 0.5 + 0.3; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); }); ctx.fill(); });
               ctx.globalAlpha = 1; }
+            { // 群星在最底层：星云区域盖一层深色罩，让中间的星被星云“挡”在后面
+              ctx.save(); ctx.translate(W * 0.5, H * 0.5); ctx.rotate(-0.36); ctx.scale(1, 0.55); const R0 = Math.min(W * 0.62, H * 1.4), vg = ctx.createRadialGradient(0, 0, 0, 0, 0, R0); vg.addColorStop(0, "rgba(6,10,32,.92)"); vg.addColorStop(0.55, "rgba(6,10,32,.6)"); vg.addColorStop(1, "rgba(6,10,32,0)"); ctx.fillStyle = vg; ctx.fillRect(-R0, -R0, R0 * 2, R0 * 2); ctx.restore(); }
             { // 星系周围一层很淡的深蓝雾（普通混合，不叠加，不会把整张图染白）
               ctx.save();
               const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
@@ -2073,7 +2075,8 @@
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
             });
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
-            // （不画伴星系的大白点）
+            // 伴星系（左上亮点、右下椭圆光斑）
+            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
             ctx.globalCompositeOperation = "lighter";
             // 整体柔光（暖核 + 蓝紫盘面）
             { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
@@ -2559,10 +2562,10 @@
             }
         }
         function petLook(base) {
-            const p = db.pet, dl = 0, sk = p.sick ? 1 : 0; if (!dl && !sk) return base;
+            const p = db.pet, dl = 0, sk = 0; if (!dl && !sk) return base;
             const key = (p.sprV || 0) + "_" + dl + "_" + sk; if (petLook.k === key && petLook.cv) return petLook.cv;
             const cv = document.createElement("canvas"); cv.width = base.width; cv.height = base.height; const c = cv.getContext("2d"); c.drawImage(base, 0, 0); c.globalCompositeOperation = "source-atop";
-            if (sk) { c.fillStyle = "rgba(130,190,120,.4)"; c.fillRect(0, 0, cv.width, cv.height); }
+            
 
             petLook.k = key; petLook.cv = cv; return cv;
         }
@@ -2595,7 +2598,7 @@
                 for (let k = 0; k < lv + 1; k++) { const bx = dx + Math.round(sw * (0.15 + 0.7 * k / Math.max(1, lv))), ph = ((t / 1300) + k * 0.31) % 1; c.globalAlpha = Math.max(0, 1 - ph * 0.8); c.fillStyle = "#98a52c"; for (let yy = 0; yy < 9; yy++) { const px = bx + Math.round(Math.sin(t / 220 + yy * 0.9 + k * 2) * 1.6); c.fillRect(px, dy - 2 - Math.round(ph * 6) - yy, 1, 1); } c.globalAlpha = 1; }
                 for (let k = 0; k < Math.min(3, lv + 1); k++) { const ang = t / 240 + k * 2.1, fx = Math.round(dx + sw / 2 + Math.cos(ang) * (sw / 2 + 3)), fy = Math.round(dy - 3 + Math.sin(ang * 1.3) * 5); c.fillStyle = "#3d3640"; c.fillRect(fx, fy, 2, 1); c.fillStyle = "#c9d6e0"; c.fillRect(fx + (Math.floor(t / 90) % 2 ? -1 : 2), fy - 1, 1, 1); } }
             if (st === "heal") { for (let k = 0; k < 7; k++) { const ph = ((t / 1500) + k / 7) % 1, hx = dx + 1 + Math.round(((k * 37) % 100) / 100 * (sw - 4)) + Math.round(Math.sin(t / 300 + k) * 1), hy = dy + sh - 2 - Math.round(ph * (sh + 10)); c.globalAlpha = Math.min(1, (1 - ph) * 1.6); c.fillStyle = k % 2 ? "#4fc47a" : "#7ddc9a"; c.fillRect(hx, hy - 1, 1, 3); c.fillRect(hx - 1, hy, 3, 1); c.globalAlpha = 1; } }
-            if (st === "sick") { const nx = dx + Math.round(sw * 0.5), ny = dy + Math.round(dh * 0.62), pr = 0.55 + 0.45 * Math.abs(Math.sin(t / 500)); c.globalAlpha = 0.6; c.fillStyle = "#6fcf6a"; for (let yy = -3; yy <= 3; yy++) for (let xx = -6; xx <= 6; xx++) { const d2 = xx * xx / 36 + yy * yy / 9; if (d2 <= 1 && d2 > 0.35) c.fillRect(nx + xx, ny + yy, 1, 1); } c.globalAlpha = 1; }
+            if (st === "sick") { const ex = dx + Math.round(sw * 0.5), ey = dy + Math.round(dh * 0.42), gw = Math.max(5, Math.round(sw * 0.2)); c.fillStyle = "#79c96a"; c.fillRect(ex - (gw >> 1), ey, gw, 5); c.fillStyle = "#4e9a46"; for (let k = 1; k < gw; k += 2) c.fillRect(ex - (gw >> 1) + k, ey, 1, 5); c.fillStyle = "#79c96a"; c.fillRect(ex - (gw >> 1) + 1, ey + 5, gw - 2, 1); }
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { const ex = dx + sw - 1, ey = dy + 1; c.fillStyle = "#ff4a5a"; c.fillRect(ex, ey, 1, 3); c.fillRect(ex, ey + 4, 1, 1); }
             ctxOut.imageSmoothingEnabled = false; ctxOut.drawImage(petBuf, 0, 0, w, h, 0, 0, W, H);
@@ -2695,7 +2698,7 @@
             let next = list.find(x => x.s >= today) || list[0]; const late = list[0].s < today && !list.some(x => x.s >= today) ? 0 : (list[0].s < today ? Math.round((today - list[0].s) / DAY) : 0);
             return { cyc, len, basis, list, next: list[0].s >= today ? list[0] : list[0], late, today, last };
         }
-        function periodPredKeySet() { const pr = periodPredict(), set = new Set(); if (!pr) return set; pr.list.forEach(x => { for (let i = 0; i < x.len; i++) { const d = new Date(x.s.getFullYear(), x.s.getMonth(), x.s.getDate() + i); set.add(calDateKey(d.getFullYear(), d.getMonth(), d.getDate())); } }); return set; }
+        function periodPredKeySet() { const pr = periodPredict(), set = new Set(); if (!pr) return set; { const x = pr.list.find(q => q.s >= pr.today) || pr.list[0]; for (let i = 0; i < 1; i++) { const d = new Date(x.s.getFullYear(), x.s.getMonth(), x.s.getDate() + i); set.add(calDateKey(d.getFullYear(), d.getMonth(), d.getDate())); } } return set; }
         function periodPredText() {
             const pr = periodPredict(); if (!pr) return "";
             const n = pr.list[0], md = `${n.s.getMonth() + 1}月${n.s.getDate()}日`, diff = Math.round((n.s - pr.today) / 86400000);
