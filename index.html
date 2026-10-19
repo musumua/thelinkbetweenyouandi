@@ -2019,7 +2019,7 @@
         function starMakeWish() {
             const inp = document.getElementById("wishInput"); if (!inp) return; const v = (inp.value || "").trim(); if (!v) { inp.focus(); return; }
             inp.value = ""; inp.blur(); if (!db.wishStars) db.wishStars = [];
-            const w = { a: Math.random() * 6.283, r: 0.25 + Math.random() * 0.7, ts: Date.now() };
+            const w = { a: Math.random() * 6.283, r: Math.min(0.99, 0.35 + Math.pow(Math.random(), 0.5) * 0.65), ts: Date.now() };
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         function galDraw(t) {
@@ -2048,9 +2048,9 @@
             // 愿望星
             const nowMs = Date.now();
             (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const wr = 0.3 + w.r * 0.68, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9)) * Math.min(1, (wr - 0.3) / 0.25 + 0.35);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 1.3); g.addColorStop(0, `rgba(235,240,255,${0.2 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 2, y - 2, 4, 4);
-                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.7; ctx.beginPath(); ctx.arc(x, y, 0.38, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
+                if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 520 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.3);
+                const g = ctx.createRadialGradient(x, y, 0, x, y, 1); g.addColorStop(0, `rgba(235,240,255,${0.2 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
+                ctx.fillStyle = "#eef2ff"; ctx.globalAlpha = tw * 0.7; ctx.beginPath(); ctx.arc(x, y, 0.3, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
                 if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
             });
             ctx.globalCompositeOperation = "lighter";
@@ -2072,7 +2072,7 @@
             ctx.globalCompositeOperation = "source-over";
             // 一颗星星从下方飞进去
             if (galFly) {
-                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.3 + w.r * 0.68, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
+                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.38 + w.r * 0.62, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
                 if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,.85)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
@@ -2262,7 +2262,7 @@
                 { const br = D("#6a5040", "#3a2a22"), wh = "#fff", lv = D("#f0e4f6", "#d8c8ec"), gold = D("#e0b060", "#c89a50");
                   for (const [tx, ty] of [[2, 24], [6, 20], [10, 23], [12, 29], [1, 30]]) { L(7, 37, tx, ty, br); for (const [dx, dy] of [[0, 0], [1, -1], [-1, 1], [1, 1], [-1, -1], [0, 2], [2, 0]]) P(tx + dx, ty + dy, (dx + dy) % 2 ? wh : lv); }
                   for (const [gx, gy] of [[15, 31], [17, 34], [14, 36]]) { L(14, 40, gx, gy, br); for (const [dx, dy] of [[0, 0], [1, 0], [0, 1], [-1, 0]]) P(gx + dx, gy + dy, gold); }
-                  E(7, 41, 4, 3, D("#4a4a58", "#2a2a38")); B(5, 36, 5, 3, D("#4a4a58", "#2a2a38")); R(4, 40, 2, 2, D("#8a8a98", "#5a5a6a")); }
+                  R(7, 30, 2, 9, D("#256040", "#173a2a")); B(1, 37, 15, 3, D("#e09a70", "#9a5a44")); B(2, 39, 13, 10, D("#d98a5f", "#8a4a3a")); R(3, 41, 11, 1, D("#c47a52", "#7a4034")); R(3, 38, 11, 1, D("#6a4a38", "#3a2a22")); }
 
                                 if (night) { sp(30, 9, "#ffe9b0", 1); sp(60, 8, "#fff", 1); } else { sp(30, 36, "#fff"); sp(70, 30, "#fff"); }
             } else if (kind === "terrace") {
@@ -2569,7 +2569,7 @@
                 for (let k = 0; k < lv + 1; k++) { const bx = dx + Math.round(sw * (0.15 + 0.7 * k / Math.max(1, lv))), ph = ((t / 1300) + k * 0.31) % 1; c.globalAlpha = Math.max(0, 1 - ph * 0.8); c.fillStyle = "#98a52c"; for (let yy = 0; yy < 9; yy++) { const px = bx + Math.round(Math.sin(t / 220 + yy * 0.9 + k * 2) * 1.6); c.fillRect(px, dy - 2 - Math.round(ph * 6) - yy, 1, 1); } c.globalAlpha = 1; }
                 for (let k = 0; k < Math.min(3, lv + 1); k++) { const ang = t / 240 + k * 2.1, fx = Math.round(dx + sw / 2 + Math.cos(ang) * (sw / 2 + 3)), fy = Math.round(dy - 3 + Math.sin(ang * 1.3) * 5); c.fillStyle = "#3d3640"; c.fillRect(fx, fy, 2, 1); c.fillStyle = "#c9d6e0"; c.fillRect(fx + (Math.floor(t / 90) % 2 ? -1 : 2), fy - 1, 1, 1); } }
             if (st === "heal") { for (let k = 0; k < 7; k++) { const ph = ((t / 1500) + k / 7) % 1, hx = dx + 1 + Math.round(((k * 37) % 100) / 100 * (sw - 4)) + Math.round(Math.sin(t / 300 + k) * 1), hy = dy + sh - 2 - Math.round(ph * (sh + 10)); c.globalAlpha = Math.min(1, (1 - ph) * 1.6); c.fillStyle = k % 2 ? "#4fc47a" : "#7ddc9a"; c.fillRect(hx, hy - 1, 1, 3); c.fillRect(hx - 1, hy, 3, 1); c.globalAlpha = 1; } }
-            if (st === "sick") { const sh0 = Math.round(Math.sin(t / 300)), WV = [0, 1, 1, 0, -1, -1]; c.fillStyle = "#4a464e"; for (let k = 0; k < 3; k++) for (let yy = 0; yy < 6; yy++) c.fillRect(dx + 4 + k * 3 + WV[(yy + (t / 200 | 0)) % 6] * 1, dy - 4 + yy, 1, 1); }
+            if (st === "sick") { const nx = dx + Math.round(sw * 0.5), ny = dy + Math.round(dh * 0.62), pr = 0.55 + 0.45 * Math.abs(Math.sin(t / 500)); c.globalAlpha = 0.5 + 0.2 * pr; c.fillStyle = "#6fcf6a"; for (let yy = -3; yy <= 3; yy++) for (let xx = -6; xx <= 6; xx++) { const d2 = xx * xx / 36 + yy * yy / 9; if (d2 <= 1 && d2 > 0.35) c.fillRect(nx + xx, ny + yy, 1, 1); } c.globalAlpha = 1; }
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { const ex = dx + sw - 1, ey = dy + 1; c.fillStyle = "#ff4a5a"; c.fillRect(ex, ey, 1, 3); c.fillRect(ex, ey + 4, 1, 1); }
             ctxOut.imageSmoothingEnabled = false; ctxOut.drawImage(petBuf, 0, 0, w, h, 0, 0, W, H);
@@ -2899,7 +2899,7 @@
             // 守卫记录用同一个网址（不带 #g1 这类后缀），层号 i 存在 state 里：
             // 刷新/页面被系统回收重载（比如选完相册图片回来）时，沿用已有的守卫层，不再往历史里追加记录。
             // 层数 depth 一律以当前所在记录的 state.i 为准，不自己累加：浏览器跳过了没有用户操作时塞进去的记录，也能自动校正。
-            let depth = 0; const TARGET = 3; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
+            let depth = 0; const TARGET = 8; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
             const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, ""); depth++; } catch (e) { } };
             { const hs = history.state;
               if (hs && hs.guard) depth = hs.i || 1;
@@ -2910,7 +2910,7 @@
             let exiting = false, touched = false;
             const ensureGuard = () => { touched = true; while (depth < TARGET) pushGuard(); };
             window.addEventListener("beforeunload", e => { if (touched && !exiting) { e.preventDefault(); e.returnValue = ""; } });
-            ["pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
+            ["pointerdown", "touchstart", "pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
             window.addEventListener("popstate", (e) => {
                 const st = e.state; depth = st && st.guard ? (st.i || 1) : 0;
                 // 补守卫：有过用户操作时补满；还没有时只补一层（连塞多层会被浏览器当成“无操作记录”一次跳过）
@@ -6386,15 +6386,17 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         // ---------- 记忆翻牌 ----------
         function gameMemory() {
             const body = document.getElementById("gameBody");
-            const icons = ["🍓", "🌙", "🐱", "🍀", "🎈", "🍪", "⭐", "🐟", "🌷", "🎧"];
+            const ALL = ["🍓", "🌙", "🐱", "🍀", "🎈", "🍪", "⭐", "🐟", "🌷", "🎧", "🍉", "🦋", "🌻", "🍩", "🐳", "🎁", "🍄", "🐰", "🌈", "🔔", "🍒", "🐝", "🧸", "🎀"];
+            const icons = ALL.slice(0, { easy: 6, normal: 10, hard: 15 }[gameDiff] || 10);
             const deck = icons.concat(icons).sort(() => Math.random() - .5);
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻，翻两张</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:min(300px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
+            const cols = { easy: 4, normal: 5, hard: 6 }[gameDiff] || 5;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻，翻两张</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:5px;width:min(${cols * 54}px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
             const grid = document.getElementById("memGrid");
             const st = deck.map(() => 0); // 0盖 1翻开 2已配对
             const sc = [0, 0], known = {}; let forced = -1, turn = 1, picks = [], busy = false, over = false, timer = null;
             const els = deck.map((ic, i) => {
                 const d = document.createElement("div");
-                d.style.cssText = "aspect-ratio:1/1.1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:transform .25s,background .25s;user-select:none;-webkit-user-select:none";
+                d.style.cssText = `aspect-ratio:1/1.1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:${cols > 5 ? 19 : 22}px;cursor:pointer;transition:transform .25s,background .25s;user-select:none;-webkit-user-select:none`;
                 d.addEventListener("click", () => { if (turn === 1 && !busy && !over) flip(i); });
                 grid.appendChild(d); return d;
             });
