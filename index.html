@@ -603,7 +603,7 @@
         .cal-cell.period { position: relative; color: #fff; font-weight: 700; z-index: 0; }
         .cal-cell.period::before { content: ""; position: absolute; top: 15%; bottom: 15%; background: #E36C86; z-index: -1; }
         .cal-cell.pred { position: relative; z-index: 0; }
-        .cal-cell.pred::after { content: ""; position: absolute; top: 15%; bottom: 15%; left: 10%; right: 10%; background: rgba(227,108,134,.2); border-radius: 999px; z-index: -1; pointer-events: none; }
+        .cal-cell.pred::after { content: ""; position: absolute; top: 15%; bottom: 15%; left: 10%; right: 10%; background: rgba(227,108,134,.38); border-radius: 999px; z-index: -1; pointer-events: none; }
         .cal-predict { font-size: 10.5px; color: #E36C86; text-align: center; margin-top: 4px; line-height: 1.35; }
         .cal-cell.period-solo::before { left: 10%; right: 10%; border-radius: 999px; }
         .cal-cell.period-start::before { left: 10%; right: -3px; border-radius: 999px 0 0 999px; }
@@ -2071,12 +2071,13 @@
             const sg = (d, st) => { for (let i = 1; i < st.length; i++) if (d <= st[i][0]) { const a0 = st[i - 1], a1 = st[i], f = (d - a0[0]) / (a1[0] - a0[0] || 1); return a0.slice(1).map((v, j) => v + (a1[j + 1] - v) * f); } return null; };
             // 通用：在 (x0,y0) 处、旋转 rot、纵向压缩 k、半径 r 的渐变；st=[[位置,r,g,b,a],...]；mode 0 叠加 1 压暗 2 罩(veil)
             const splat = (x0, y0, rot, k, r, st, mode) => {
+                const LN = 40, lut = []; for (let q = 0; q <= LN; q++) { const v = sg(q / LN, st); lut.push(v || [0, 0, 0, 0]); }
                 const cr = Math.cos(rot), sr = Math.sin(rot), ext = r, ix0 = Math.max(0, Math.floor((x0 - ext) / S)), ix1 = Math.min(gw - 1, Math.ceil((x0 + ext) / S)), iy0 = Math.max(0, Math.floor((y0 - ext) / S)), iy1 = Math.min(gh - 1, Math.ceil((y0 + ext) / S));
                 for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) {
                     const dx = ix * S + S / 2 - x0, dy = iy * S + S / 2 - y0, lx = dx * cr + dy * sr, ly = (-dx * sr + dy * cr) / k, d = Math.sqrt(lx * lx + ly * ly) / r; if (d >= 1) continue;
-                    const v = sg(d, st); if (!v) continue; const i = iy * gw + ix, al = v[3];
+                    const v = lut[(d * LN + 0.5) | 0], i = iy * gw + ix, al = v[3];
                     if (mode === 0) { add[i * 3] += v[0] * al; add[i * 3 + 1] += v[1] * al; add[i * 3 + 2] += v[2] * al; }
-                    else if (mode === 1) { const m = 1 - al; add[i * 3] *= m; add[i * 3 + 1] *= m; add[i * 3 + 2] *= m; }
+                    else if (mode === 1) { const mm = 1 - al; add[i * 3] *= mm; add[i * 3 + 1] *= mm; add[i * 3 + 2] *= mm; }
                     else vl[i] = 1 - (1 - vl[i]) * (1 - al);
                 }
             };
@@ -2095,16 +2096,12 @@
             for (let i = 0; i < N; i++) { gi.data[i * 4] = Math.min(255, add[i * 3]); gi.data[i * 4 + 1] = Math.min(255, add[i * 3 + 1]); gi.data[i * 4 + 2] = Math.min(255, add[i * 3 + 2]); gi.data[i * 4 + 3] = 255; vi.data[i * 4] = 6; vi.data[i * 4 + 1] = 10; vi.data[i * 4 + 2] = 32; vi.data[i * 4 + 3] = Math.round(vl[i] * 255); }
             gcv.getContext("2d").putImageData(gi, 0, 0); vcv.getContext("2d").putImageData(vi, 0, 0);
             ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high"; ctx.drawImage(vcv, 0, 0, W, H); ctx.globalCompositeOperation = "lighter"; ctx.drawImage(gcv, 0, 0, W, H); ctx.globalCompositeOperation = "source-over";
-            ctx.globalCompositeOperation = "lighter";
-            { const TAU = 6.2832, bk = [[], [], [], [], [], [], []]; ctx.fillStyle = "#fff";
-              gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25); bk[Math.min(6, Math.floor(a * 9))].push(x, y); });
-              bk.forEach((arr, bi) => { if (!arr.length ) return; ctx.globalAlpha = (bi + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.7, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.7, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
             ctx.globalCompositeOperation = "source-over";
         }
         function galDraw(t) {
             const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
             const dpr = window.devicePixelRatio || 1, nowMs = Date.now(), arrivedN = (db.wishStars || []).filter(w => !(w.arrive && nowMs < w.arrive)).length;
-            let cc = gal.cache; if (!cc || cc.W !== W || cc.H !== H || cc.dpr !== dpr || cc.n !== arrivedN || t - cc.t > 8000) {
+            let cc = gal.cache; if (!cc || cc.W !== W || cc.H !== H || cc.dpr !== dpr || cc.n !== arrivedN || t - cc.t > 120000) {
                 if (!cc) { cc = gal.cache = { cv: document.createElement("canvas") }; } cc.W = W; cc.H = H; cc.dpr = dpr; cc.n = arrivedN; cc.t = t; cc.cv.width = Math.round(W * dpr); cc.cv.height = Math.round(H * dpr);
                 const oc = cc.cv.getContext("2d"); oc.setTransform(dpr, 0, 0, dpr, 0, 0); galLayer(oc, W, H, t);
             }
@@ -2112,6 +2109,12 @@
             const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25), _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
+            ctx.globalCompositeOperation = "lighter";
+                        { const TAU = 6.2832, bk = [[], [], [], [], [], [], []]; ctx.fillStyle = "#fff";
+              gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25); bk[Math.min(6, Math.floor(a * 9))].push(x, y); });
+              bk.forEach((arr, bi) => { if (!arr.length ) return; ctx.globalAlpha = (bi + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.7, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.7, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
+            { ctx.fillStyle = "#fff"; if (!gal.tw) gal.tw = gal.bg.filter(q => q.s < 0.6).slice(0, 90); gal.tw.forEach(q => { const a = 0.25 + 0.55 * Math.max(0, Math.sin(t / 900 + q.p * 3)); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(q.x * W, q.y * H, 0.5 + q.s * 0.6, 0, 6.283); ctx.fill(); }); ctx.globalAlpha = 1; }
+            ctx.globalCompositeOperation = "source-over";
             (db.wishStars || []).forEach(w => { if (w.arrive && nowMs - w.arrive < 600 && nowMs >= w.arrive) { const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t), k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); } });
             // 流星
             if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
@@ -6234,7 +6237,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "青蛙过河背单词", "看中文拼英文，拼对青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
@@ -6249,7 +6252,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
             ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
         }
@@ -6912,48 +6915,52 @@ zeal:热情,热忱`.split("\n").map(l => { const i = l.indexOf(":"); return [l.s
         function gameFrog() {
             const N = 8, body = document.getElementById("gameBody");
             const cfg = { easy: { time: 30000, show: 2, his: [11000, 16000], p: 0.75 }, normal: { time: 21000, show: 1, his: [8000, 12000], p: 0.85 }, hard: { time: 14000, show: 0, his: [5500, 8500], p: 0.93 } }[gameDiff] || { time: 21000, show: 1, his: [8000, 12000], p: 0.85 };
-            body.innerHTML = `<div class="game-msg" id="gameMsg">看中文，拼出英文，青蛙才能跳过去</div><canvas id="frCv" class="game-canvas"></canvas>
-              <div id="frMean" style="text-align:center;font-size:20px;font-weight:700;margin:6px 12px 2px;min-height:28px"></div>
-              <div id="frTime" style="height:5px;border-radius:3px;background:rgba(127,127,127,.25);margin:4px 20px"><div id="frBar" style="height:100%;width:100%;border-radius:3px;background:#6fcf6a"></div></div>
-              <div id="frSlots" style="display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:10px 12px;position:relative;min-height:38px"></div>
-              <input id="frInp" type="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0">
-              <div style="text-align:center"><button class="btn btn-outline" id="frSkip" style="padding:4px 14px;font-size:13px">不会，跳过（掉水里）</button></div><div id="gameEnd"></div>`;
-            const cv = document.getElementById("frCv"), ctx = cv.getContext("2d"), inp = document.getElementById("frInp"), slots = document.getElementById("frSlots");
-            const W = Math.min(body.clientWidth - 24, 420), H = 150, dpr = window.devicePixelRatio || 1;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">在荷叶上拼出英文，小青蛙才会往前跳</div><canvas id="frCv" class="game-canvas"></canvas>
+              <div id="frMean" style="text-align:center;font-size:20px;font-weight:700;margin:6px 12px 0;min-height:28px"></div>
+              <div id="frHint" style="text-align:center;font:15px/22px 'Courier New',monospace;letter-spacing:3px;color:#8a8aa0;min-height:22px"></div>
+              <div id="frTime" style="height:5px;border-radius:3px;background:rgba(127,127,127,.25);margin:6px 20px"><div id="frBar" style="height:100%;width:100%;border-radius:3px;background:#6fcf6a"></div></div>
+              <input id="frInp" type="text" inputmode="latin" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0">
+              <div style="text-align:center;margin-top:6px"><button class="btn btn-outline" id="frSkip" style="padding:4px 14px;font-size:13px">不会，跳过（掉水里）</button></div><div id="gameEnd"></div>`;
+            const cv = document.getElementById("frCv"), ctx = cv.getContext("2d"), inp = document.getElementById("frInp");
+            const W = Math.min(body.clientWidth - 24, 420), H = Math.max(260, Math.min(330, body.clientHeight - 250)), dpr = window.devicePixelRatio || 1;
             cv.style.width = W + "px"; cv.style.height = H + "px"; cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
-            const pool = FROG_VOCAB.slice().sort(() => Math.random() - 0.5); let wi = -1, cur = null, typed = "", left = 0, over = false, paused = false, locked = false;
-            let me = 0, him = 0, mD = 0, hD = 0, mFall = 0, hFall = 0, hisT = 0, hisAt = 0, last = performance.now(), acc = 0;
+            const pool = FROG_VOCAB.slice().sort(() => Math.random() - 0.5); let wi = -1, cur = null, typed = "", left = 0, total = 1, over = false, paused = false, locked = false, reveal = false, shake = 0;
+            let me = 0, him = 0, mD = 0, hD = 0, mFall = 0, hFall = 0, hisT = 0, last = performance.now();
             const rr = (a, b) => a + Math.random() * (b - a);
-            const prefix = () => cur[0].slice(0, Math.min(cfg.show, cur[0].length - 2));
-            function nextWord() { wi = (wi + 1) % pool.length; cur = pool[wi]; typed = prefix(); inp.value = typed; left = cfg.time + Math.max(0, cur[0].length - 6) * 900; locked = false; document.getElementById("frMean").innerText = cur[1]; renderSlots(); }
-            function renderSlots(shake, show) {
-                slots.innerHTML = ""; const w = cur[0];
-                for (let i = 0; i < w.length; i++) { const d = document.createElement("div"); const ch = show ? w[i] : (typed[i] || ""); d.textContent = ch; d.style.cssText = `width:26px;height:34px;border-bottom:3px solid ${i < typed.length ? "#6fcf6a" : "rgba(127,127,127,.6)"};text-align:center;font:700 22px/34px "Courier New",monospace;${show ? "color:#e0405a;" : ""}`; slots.appendChild(d); }
-                if (shake) { slots.animate([{ transform: "translateX(0)" }, { transform: "translateX(-8px)" }, { transform: "translateX(8px)" }, { transform: "translateX(-5px)" }, { transform: "translateX(0)" }], { duration: 300 }); }
-            }
-            const xOf = i => 16 + i * (W - 32) / N;
+            const hint = () => { const w = cur[0], k = Math.min(cfg.show, w.length - 2); return w.slice(0, k) + "·".repeat(w.length - k); };
+            function nextWord() { wi = (wi + 1) % pool.length; cur = pool[wi]; typed = ""; inp.value = ""; total = left = cfg.time + Math.max(0, cur[0].length - 6) * 900; locked = false; reveal = false; document.getElementById("frMean").innerText = cur[1]; document.getElementById("frHint").innerText = "提示：" + hint() + "（" + cur[0].length + "个字母）"; }
+            const xOf = (col, i) => (col === 0 ? W * 0.27 : W * 0.73) + Math.sin(i * 1.9 + col) * 11 * (1 - i / (N + 2));
+            const yOf = i => H - 30 - i * (H - 70) / N, scOf = i => 1 - i * 0.045;
             function draw(now) {
-                const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#5fb8e8"); g.addColorStop(1, "#2f86be"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-                ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1; for (let k = 0; k < 7; k++) { const y = 16 + k * 20 + Math.sin(now / 600 + k) * 2; ctx.beginPath(); for (let x = 0; x <= W; x += 6) ctx.lineTo(x, y + Math.sin(x / 9 + now / 400 + k) * 1.5); ctx.stroke(); }
-                ctx.fillStyle = "#7cc47a"; ctx.fillRect(0, 0, 12, H); ctx.fillRect(W - 12, 0, 12, H);
-                const lane = (y, pos, fall, isMe) => {
-                    for (let i = 1; i < N; i++) { const x = xOf(i); ctx.fillStyle = "#3f9d56"; ctx.beginPath(); ctx.ellipse(x, y + 8, 14, 6.5, 0, 0.25, 6.0); ctx.lineTo(x, y + 8); ctx.fill(); ctx.fillStyle = "#58b86a"; ctx.beginPath(); ctx.ellipse(x, y + 7, 12, 5, 0, 0.25, 6.0); ctx.lineTo(x, y + 7); ctx.fill(); }
-                    const fx = xOf(pos) , arc = Math.abs(Math.sin(Math.min(1, Math.abs(fx - xOf(Math.round(pos))) / 10) * 1.6)) * 12;
-                    ctx.font = "22px serif"; ctx.textAlign = "center"; if (fall > 0) { ctx.fillText("💦", xOf(Math.round(pos)), y + 4); } else ctx.fillText("🐸", fx, y + 6 - arc);
-                    ctx.font = "11px sans-serif"; ctx.fillStyle = "#fff"; ctx.textAlign = "left"; ctx.fillText(isMe ? "我" : "他", 15, y - 14);
+                const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#74c6ee"); g.addColorStop(1, "#2f86be"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+                ctx.strokeStyle = "rgba(255,255,255,.3)"; ctx.lineWidth = 1; for (let k = 0; k < 9; k++) { const y = 30 + k * 34 + Math.sin(now / 700 + k) * 2; ctx.beginPath(); for (let x = 0; x <= W; x += 6) ctx.lineTo(x, y + Math.sin(x / 11 + now / 500 + k) * 1.5); ctx.stroke(); }
+                ctx.fillStyle = "#7cc47a"; ctx.fillRect(0, 0, W, 22); ctx.fillStyle = "#6bb36a"; ctx.fillRect(0, 17, W, 5); ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillText("🏁", W / 2, 16);
+                ctx.fillStyle = "#6bb36a"; ctx.fillRect(0, H - 14, W, 14);
+                const lane = (col, pos, tgt, fall, isMe) => {
+                    for (let i = 1; i < N; i++) { if (i === tgt) continue; const x = xOf(col, i), y = yOf(i), sc = scOf(i); ctx.fillStyle = "#3f9d56"; ctx.beginPath(); ctx.ellipse(x, y + 2, 17 * sc, 7.5 * sc, 0, 0.25, 6.0); ctx.lineTo(x, y + 2); ctx.fill(); ctx.fillStyle = "#58b86a"; ctx.beginPath(); ctx.ellipse(x, y, 15 * sc, 6 * sc, 0, 0.25, 6.0); ctx.lineTo(x, y); ctx.fill(); }
+                    if (tgt <= N) { // 前方这片大荷叶：你要打的字就写在上面
+                        const w = isMe ? cur[0].length : 6, pw = Math.max(34, w * 5.6 + 14), x = xOf(col, tgt) + (isMe && shake > 0 ? Math.sin(now / 25) * 4 : 0), y = yOf(tgt);
+                        ctx.fillStyle = "#3f9d56"; ctx.beginPath(); ctx.ellipse(x, y + 3, pw, 17, 0, 0.12, 6.16); ctx.lineTo(x, y + 3); ctx.fill(); ctx.fillStyle = "#6fcf7e"; ctx.beginPath(); ctx.ellipse(x, y, pw - 2, 15, 0, 0.12, 6.16); ctx.lineTo(x, y); ctx.fill();
+                        if (isMe) { ctx.font = "bold 16px 'Courier New',monospace"; ctx.textAlign = "center"; const sw2 = 10, x0 = x - (cur[0].length * sw2) / 2 + sw2 / 2; for (let i = 0; i < cur[0].length; i++) { const ch = reveal ? cur[0][i] : typed[i]; if (ch) { ctx.fillStyle = reveal ? "#e0405a" : "#1c4a2a"; ctx.fillText(ch, x0 + i * sw2, y + 5); } else { ctx.fillStyle = "rgba(28,74,42,.45)"; ctx.fillRect(x0 + i * sw2 - 3, y + 7, 6, 1.5); } } }
+                        else { ctx.font = "13px sans-serif"; ctx.fillStyle = "rgba(28,74,42,.6)"; ctx.textAlign = "center"; ctx.fillText("···", x, y + 4); }
+                    }
+                    const f0 = Math.floor(pos), fr = pos - f0, f1 = Math.min(N, f0 + 1), x = xOf(col, f0) + (xOf(col, f1) - xOf(col, f0)) * fr, y = yOf(f0) + (yOf(f1) - yOf(f0)) * fr - Math.sin(fr * Math.PI) * 16, sc = scOf(f0);
+                    ctx.font = Math.round(24 * sc + 4) + "px serif"; ctx.textAlign = "center";
+                    if (fall > 0) ctx.fillText("💦", xOf(col, Math.round(pos)), yOf(Math.round(pos))); else ctx.fillText("🐸", x, y - 2);
+                    ctx.font = "11px sans-serif"; ctx.fillStyle = "#fff"; ctx.fillText(isMe ? "我" : "他", xOf(col, 0), H - 3);
                 };
-                lane(40, hD, hFall, false); lane(108, mD, mFall, true);
+                lane(1, hD, Math.min(N, him + 1), hFall, false); lane(0, mD, Math.min(N, me + 1), mFall, true);
             }
             function finish(w) { over = true; document.getElementById("frBar").style.width = "0%"; inp.blur(); if (w === 1) { gameResultBar("你过河啦 🎉"); gameStat("frog", "w"); } else { gameResultBar(hisName() + "先过河了"); gameStat("frog", "l"); } document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
-            function fall(msg) { gameSfx("splash"); mFall = 700; me = Math.max(0, me - 1); locked = true; gameResultBar(msg); renderSlots(false, true); setTimeout(() => { if (!over) { gameResultBar("下一个词"); nextWord(); } }, 1100); }
+            function fall(msg) { gameSfx("splash"); mFall = 700; me = Math.max(0, me - 1); locked = true; reveal = true; gameResultBar(msg); setTimeout(() => { if (!over) { gameResultBar("下一个词"); nextWord(); } }, 1200); }
             function check() {
                 if (typed.length !== cur[0].length || locked) return;
-                if (typed === cur[0]) { gameSfx("bell"); me++; locked = true; gameResultBar("答对了！"); if (me >= N) { mD = me - 0.001; setTimeout(() => finish(1), 450); return; } setTimeout(() => { if (!over) nextWord(); }, 500); }
-                else { gameSfx("miss"); renderSlots(true); gameResultBar("拼错了，再试一次"); left = Math.max(1500, left - 3000); typed = prefix(); inp.value = typed; setTimeout(() => { if (!over && !locked) renderSlots(); }, 320); }
+                if (typed === cur[0]) { gameSfx("bell"); me++; locked = true; gameResultBar("答对了！"); if (me >= N) { setTimeout(() => finish(1), 600); return; } setTimeout(() => { if (!over) nextWord(); }, 600); }
+                else { gameSfx("miss"); shake = 350; gameResultBar("拼错了，再试一次"); left = Math.max(1500, left - 3000); setTimeout(() => { typed = ""; inp.value = ""; }, 350); locked = true; setTimeout(() => { if (!over) locked = false; }, 360); }
             }
-            inp.addEventListener("input", () => { if (over || locked || paused) { inp.value = typed; return; } let l = inp.value.toLowerCase().replace(/[^a-z]/g, ""); const pf = prefix(); if (!l.startsWith(pf)) l = pf + l.slice(pf.length); l = l.slice(0, cur[0].length); if (l.length > typed.length) gameSfx("type"); typed = l; inp.value = l; renderSlots(); check(); });
+            inp.addEventListener("input", () => { if (over || locked || paused) { inp.value = typed; return; } const l = inp.value.toLowerCase().replace(/[^a-z]/g, "").slice(0, cur[0].length); if (l.length > typed.length) gameSfx("type"); typed = l; if (inp.value !== l) inp.value = l; check(); });
             const focusIt = () => { try { inp.focus(); } catch (e) { } };
-            slots.addEventListener("click", focusIt); cv.addEventListener("click", focusIt); document.getElementById("frMean").addEventListener("click", focusIt);
+            body.addEventListener("click", e => { if (!e.target.closest("button")) focusIt(); });
             document.getElementById("frSkip").onclick = () => { if (over || locked || paused) return; fall("跳过了，答案：" + cur[0]); };
             const keyHandler = e => { if (over || paused || locked) return; if (document.activeElement !== inp && /^[a-zA-Z]$/.test(e.key) && !e.ctrlKey && !e.metaKey) focusIt(); };
             document.addEventListener("keydown", keyHandler);
@@ -6961,11 +6968,11 @@ zeal:热情,热忱`.split("\n").map(l => { const i = l.indexOf(":"); return [l.s
             const loop = setInterval(() => {
                 const now = performance.now(), dt = Math.min(200, now - last); last = now;
                 if (!over && !paused) {
-                    if (!locked) { left -= dt; document.getElementById("frBar").style.width = Math.max(0, left / (cfg.time + Math.max(0, cur[0].length - 6) * 900) * 100) + "%"; if (left <= 0) fall("时间到，掉水里了！答案：" + cur[0]); }
-                    hisT -= dt; if (hisT <= 0) { hisT = rr(cfg.his[0], cfg.his[1]); if (Math.random() < cfg.p) { him++; gameSfx("his"); if (him >= N) { hD = him - 0.001; finish(2); } } else { him = Math.max(0, him - 1); hFall = 600; gameSfx("splash"); } }
-                    if (mFall > 0) mFall -= dt; if (hFall > 0) hFall -= dt;
+                    if (!locked) { left -= dt; document.getElementById("frBar").style.width = Math.max(0, left / total * 100) + "%"; if (left <= 0) fall("时间到，掉水里了！答案：" + cur[0]); }
+                    hisT -= dt; if (hisT <= 0) { hisT = rr(cfg.his[0], cfg.his[1]); if (Math.random() < cfg.p) { him++; gameSfx("his"); if (him >= N) { finish(2); } } else { him = Math.max(0, him - 1); hFall = 600; gameSfx("splash"); } }
+                    if (mFall > 0) mFall -= dt; if (hFall > 0) hFall -= dt; if (shake > 0) shake -= dt;
                 }
-                mD += (me - mD) * 0.22; hD += (him - hD) * 0.22; draw(now);
+                mD += (me - mD) * 0.2; hD += (him - hD) * 0.2; draw(now);
             }, 40);
             nextWord(); setTimeout(focusIt, 200);
             gameCleanup = () => { over = true; clearInterval(loop); document.removeEventListener("keydown", keyHandler); };
