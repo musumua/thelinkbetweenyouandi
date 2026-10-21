@@ -2047,22 +2047,13 @@
             const w = { a: Math.random() * 6.283, r: Math.min(0.99, 0.35 + Math.pow(Math.random(), 0.5) * 0.65), ts: Date.now() };
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
-        function galDraw(t) {
-            const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
-            const bgG = ctx.createLinearGradient(0, 0, W, H); bgG.addColorStop(0, "#0b1022"); bgG.addColorStop(1, "#04060e"); ctx.fillStyle = bgG; ctx.fillRect(0, 0, W, H);
+        function galLayer(ctx, W, H, t) {
+            ctx.fillStyle = "#070a18"; ctx.fillRect(0, 0, W, H);
             if (!galSpr) { galSpr = document.createElement("canvas"); galSpr.width = galSpr.height = 24; const sc2 = galSpr.getContext("2d"), sg = sc2.createRadialGradient(12, 12, 0, 12, 12, 12); sg.addColorStop(0, "rgba(255,255,255,1)"); sg.addColorStop(0.3, "rgba(255,255,255,.85)"); sg.addColorStop(0.65, "rgba(255,255,255,.22)"); sg.addColorStop(1, "rgba(255,255,255,0)"); sc2.fillStyle = sg; sc2.fillRect(0, 0, 24, 24); }
             { const TAU = 6.2832, bk = [[], [], [], [], [], []]; ctx.fillStyle = "#fff";
-              gal.bg.forEach(s => { const a = s.a * (0.7 + 0.3 * Math.sin(t / 1500 + s.p)); bk[Math.min(5, Math.floor(a * 7))].push(s); });
+              gal.bg.forEach(s => { const a = s.a * 0.85; bk[Math.min(5, Math.floor(a * 7))].push(s); });
               bk.forEach((arr, bi) => { if (!arr.length) return; ctx.globalAlpha = (bi + 0.5) / 7; ctx.beginPath(); arr.forEach(s => { const x = s.x * W, y = s.y * H, r = s.s * 0.5 + 0.3; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); }); ctx.fill(); });
               ctx.globalAlpha = 1; }
-            { // 群星在最底层：星云区域盖一层深色罩，让中间的星被星云“挡”在后面
-              ctx.save(); ctx.translate(W * 0.5, H * 0.5); ctx.rotate(-0.36); ctx.scale(1, 0.55); const R0 = Math.min(W * 0.62, H * 1.4), vg = ctx.createRadialGradient(0, 0, 0, 0, 0, R0); vg.addColorStop(0, "rgba(6,10,32,.92)"); vg.addColorStop(0.55, "rgba(6,10,32,.6)"); vg.addColorStop(1, "rgba(6,10,32,0)"); ctx.fillStyle = vg; ctx.fillRect(-R0, -R0, R0 * 2, R0 * 2); ctx.restore(); }
-            { // 星系周围一层很淡的深蓝雾（普通混合，不叠加，不会把整张图染白）
-              ctx.save();
-              const br = 0.9 + 0.1 * Math.sin(t / 2600), R = Math.max(W, H);
-              const mist = (x, y, r, c, a) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); };
-              mist(W * 0.5, H * 0.5, R * 0.55, "40,62,140", 0.26 * br); mist(W * 0.5, H * 0.5, R * 0.3, "70,96,190", 0.12 * br); mist(W * 0.2, H * 0.15, R * 0.36, "40,48,110", 0.045); mist(W * 0.85, H * 0.9, R * 0.4, "56,40,112", 0.05);
-              ctx.restore(); }
             const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25), _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
@@ -2072,28 +2063,56 @@
                 if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 1100 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.3);
                 const g = ctx.createRadialGradient(x, y, 0, x, y, 0.9); g.addColorStop(0, `rgba(235,240,255,${0.1 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
                 ctx.fillStyle = "#b9c6f2"; ctx.globalAlpha = tw * 0.45; ctx.beginPath(); ctx.arc(x, y, 0.26, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
-                if (w.arrive && nowMs - w.arrive < 600) { const k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); }
+
             });
+            // 光雾/星云光晕：逐像素直接算（不用 Chrome 的渐变，渐变自带抖动点阵会成“纹路”），低分辨率算好再平滑放大
+            const S = 3, gw = Math.ceil(W / S), gh = Math.ceil(H / S), N = gw * gh, add = new Float32Array(N * 3), vl = new Float32Array(N);
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
-            // 伴星系（左上亮点、右下椭圆光斑）
-            { const blob = (x, y, rx, ry, a, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(ph); ctx.scale(1, ry / rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, rx); g.addColorStop(0, `rgba(${c},${a})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.fillRect(-rx, -rx, rx * 2, rx * 2); ctx.restore(); }; }
+            const sg = (d, st) => { for (let i = 1; i < st.length; i++) if (d <= st[i][0]) { const a0 = st[i - 1], a1 = st[i], f = (d - a0[0]) / (a1[0] - a0[0] || 1); return a0.slice(1).map((v, j) => v + (a1[j + 1] - v) * f); } return null; };
+            // 通用：在 (x0,y0) 处、旋转 rot、纵向压缩 k、半径 r 的渐变；st=[[位置,r,g,b,a],...]；mode 0 叠加 1 压暗 2 罩(veil)
+            const splat = (x0, y0, rot, k, r, st, mode) => {
+                const cr = Math.cos(rot), sr = Math.sin(rot), ext = r, ix0 = Math.max(0, Math.floor((x0 - ext) / S)), ix1 = Math.min(gw - 1, Math.ceil((x0 + ext) / S)), iy0 = Math.max(0, Math.floor((y0 - ext) / S)), iy1 = Math.min(gh - 1, Math.ceil((y0 + ext) / S));
+                for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) {
+                    const dx = ix * S + S / 2 - x0, dy = iy * S + S / 2 - y0, lx = dx * cr + dy * sr, ly = (-dx * sr + dy * cr) / k, d = Math.sqrt(lx * lx + ly * ly) / r; if (d >= 1) continue;
+                    const v = sg(d, st); if (!v) continue; const i = iy * gw + ix, al = v[3];
+                    if (mode === 0) { add[i * 3] += v[0] * al; add[i * 3 + 1] += v[1] * al; add[i * 3 + 2] += v[2] * al; }
+                    else if (mode === 1) { const m = 1 - al; add[i * 3] *= m; add[i * 3 + 1] *= m; add[i * 3 + 2] *= m; }
+                    else vl[i] = 1 - (1 - vl[i]) * (1 - al);
+                }
+            };
+            const br = 0.95, R = Math.max(W, H), lin = (c, a) => [[0, c[0], c[1], c[2], a], [1, c[0], c[1], c[2], 0]];
+            splat(cx, cy, -0.36, 0.55, Math.min(W * 0.62, H * 1.4), [[0, 6, 10, 32, 0.92], [0.55, 6, 10, 32, 0.6], [1, 6, 10, 32, 0]], 2); // 群星罩在星云后面
+            splat(cx, cy, 0, 1, R * 0.55, lin([40, 62, 140], 0.26 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 96, 190], 0.12 * br), 0);
+            splat(W * 0.2, H * 0.15, 0, 1, R * 0.36, lin([40, 48, 110], 0.045), 0); splat(W * 0.85, H * 0.9, 0, 1, R * 0.4, lin([56, 40, 112], 0.05), 0);
+            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 210, 160, 110, 0.30], [0.35, 96, 110, 206, 0.2], [0.7, 70, 86, 180, 0.08], [1, 60, 76, 160, 0]], 0);
+            splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.01], [0.8, 96, 108, 190, 0.022], [1, 80, 90, 180, 0]], 0);
+            gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), c = q.c.split(",").map(Number); splat(x, y, 0, 1, q.s * Rx, lin(c, q.a * Math.max(0, 1.05 - q.r) * 0.8), 0); });
+            gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t); splat(x, y, 0, 1, d.s, lin([14, 14, 30], 0.16), 1); });
+            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), fa = Math.pow(Math.max(0, 1 - q.r), 1.6); splat(x, y, 0, 1, q.s * 3, [[0, 255, 255, 255, 0.16 * fa], [0.4, 255, 255, 255, 0.04 * fa], [1, 255, 255, 255, 0]], 0); });
+            splat(cx, cy, ph, 0.62, Rx * 0.27, [[0, 255, 244, 222, 0.95], [0.12, 255, 222, 170, 0.7], [0.45, 224, 176, 120, 0.2], [1, 210, 160, 110, 0]], 0);
+            const gcv = gal.glow || (gal.glow = document.createElement("canvas")), vcv = gal.veil || (gal.veil = document.createElement("canvas")); gcv.width = vcv.width = gw; gcv.height = vcv.height = gh;
+            const gi = new ImageData(gw, gh), vi = new ImageData(gw, gh);
+            for (let i = 0; i < N; i++) { gi.data[i * 4] = Math.min(255, add[i * 3]); gi.data[i * 4 + 1] = Math.min(255, add[i * 3 + 1]); gi.data[i * 4 + 2] = Math.min(255, add[i * 3 + 2]); gi.data[i * 4 + 3] = 255; vi.data[i * 4] = 6; vi.data[i * 4 + 1] = 10; vi.data[i * 4 + 2] = 32; vi.data[i * 4 + 3] = Math.round(vl[i] * 255); }
+            gcv.getContext("2d").putImageData(gi, 0, 0); vcv.getContext("2d").putImageData(vi, 0, 0);
+            ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high"; ctx.drawImage(vcv, 0, 0, W, H); ctx.globalCompositeOperation = "lighter"; ctx.drawImage(gcv, 0, 0, W, H); ctx.globalCompositeOperation = "source-over";
             ctx.globalCompositeOperation = "lighter";
-            // 整体柔光（暖核 + 蓝紫盘面）
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, Ry / Rx); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx); g.addColorStop(0, "rgba(210,160,110,.30)"); g.addColorStop(0.35, "rgba(96,110,206,.2)"); g.addColorStop(0.7, "rgba(70,86,180,.08)"); g.addColorStop(1, "rgba(60,76,160,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx, -Rx, Rx * 2, Rx * 2); ctx.restore(); }
-            { ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.7); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Rx * 1.3); g.addColorStop(0, "rgba(90,110,190,0)"); g.addColorStop(0.5, "rgba(90,110,190,.01)"); g.addColorStop(0.8, "rgba(96,108,190,.022)"); g.addColorStop(1, "rgba(80,90,180,0)"); ctx.fillStyle = g; ctx.fillRect(-Rx * 1.4, -Rx * 1.4, Rx * 2.8, Rx * 2.8); ctx.restore(); }
-            gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), rr = q.s * Rx, g = ctx.createRadialGradient(x, y, 0, x, y, rr); g.addColorStop(0, `rgba(${q.c},${(q.a * Math.max(0, 1.05 - q.r) * 0.8).toFixed(4)})`); g.addColorStop(1, `rgba(${q.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
             { const TAU = 6.2832, bk = [[], [], [], [], [], [], []]; ctx.fillStyle = "#fff";
               gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25); bk[Math.min(6, Math.floor(a * 9))].push(x, y); });
-              bk.forEach((arr, bi) => { if (!arr.length) return; ctx.globalAlpha = (bi + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.7, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.7, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
+              bk.forEach((arr, bi) => { if (!arr.length ) return; ctx.globalAlpha = (bi + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.7, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.7, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
             ctx.globalCompositeOperation = "source-over";
-            // 深色尘埃带
-            gal.dust.forEach(d => { const [x, y] = pos(d.r, d.th + omega(d.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, d.s); g.addColorStop(0, "rgba(14,14,30,.16)"); g.addColorStop(1, "rgba(14,14,30,0)"); ctx.fillStyle = g; ctx.fillRect(x - d.s, y - d.s, d.s * 2, d.s * 2); });
-            ctx.globalCompositeOperation = "lighter";
-            // 粉色发光区
-            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), g = ctx.createRadialGradient(x, y, 0, x, y, q.s * 3); const fa = Math.pow(Math.max(0, 1 - q.r), 1.6); g.addColorStop(0, `rgba(255,255,255,${(.16 * fa).toFixed(3)})`); g.addColorStop(0.4, `rgba(255,255,255,${(.04 * fa).toFixed(3)})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - q.s * 3, y - q.s * 3, q.s * 6, q.s * 6); });
-            // 明亮的核心
-            { const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Rx * 0.27); g.addColorStop(0, "rgba(255,244,222,.95)"); g.addColorStop(0.12, "rgba(255,222,170,.7)"); g.addColorStop(0.45, "rgba(224,176,120,.2)"); g.addColorStop(1, "rgba(210,160,110,0)"); ctx.save(); ctx.translate(cx, cy); ctx.rotate(ph); ctx.scale(1, 0.62); ctx.translate(-cx, -cy); ctx.fillStyle = g; ctx.fillRect(cx - Rx * 0.3, cy - Rx * 0.3, Rx * 0.6, Rx * 0.6); ctx.restore(); }
-            ctx.globalCompositeOperation = "source-over";
+        }
+        function galDraw(t) {
+            const cv = document.getElementById("starCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f; galInit();
+            const dpr = window.devicePixelRatio || 1, nowMs = Date.now(), arrivedN = (db.wishStars || []).filter(w => !(w.arrive && nowMs < w.arrive)).length;
+            let cc = gal.cache; if (!cc || cc.W !== W || cc.H !== H || cc.dpr !== dpr || cc.n !== arrivedN || t - cc.t > 8000) {
+                if (!cc) { cc = gal.cache = { cv: document.createElement("canvas") }; } cc.W = W; cc.H = H; cc.dpr = dpr; cc.n = arrivedN; cc.t = t; cc.cv.width = Math.round(W * dpr); cc.cv.height = Math.round(H * dpr);
+                const oc = cc.cv.getContext("2d"); oc.setTransform(dpr, 0, 0, dpr, 0, 0); galLayer(oc, W, H, t);
+            }
+            ctx.drawImage(cc.cv, 0, 0, W, H);
+            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25), _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
+            const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
+            const omega = r => 0.000017 / (0.22 + r);
+            (db.wishStars || []).forEach(w => { if (w.arrive && nowMs - w.arrive < 600 && nowMs >= w.arrive) { const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t), k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); } });
             // 流星
             if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
             if (gal.shoot) { const k = (t - gal.shoot.t0) / 700; if (k > 1) gal.shoot = null; else { const x = gal.shoot.x + gal.shoot.dx * k * 90, y = gal.shoot.y + gal.shoot.dy * k * 90; const g = ctx.createLinearGradient(x, y, x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); g.addColorStop(0, `rgba(255,255,255,${(1 - k) * 0.7})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); ctx.stroke(); } }
@@ -2140,10 +2159,11 @@
             heart: [".oo.oo.", "orroRro", "orrrrro", ".orrro.", "..oro..", "...o..."],
             drop: ["..o..", ".oto.", "ouuuo", "ouuuo", ".ooo."],
             zz: ["ooooo", "...o.", "..o..", ".o...", "ooooo"],
+            moon: ["....oooo....", "..ooyyyo....", ".oyyyyo.....", ".oyyYyo.....", "oyyYYyo.....", "oyyYyyo.....", "oyyyyyo.....", ".oyyyyyo....", ".oyyyyyyoooo", "..ooyyyyyyyo", "....oooooooo"],
             bulb: ["...oooooo...", "..oyyyyyyo..", ".oyyYyyyyyo.", ".oyYyyyyyyo.", ".oyyyyyyyyo.", "..oyyyyyyo..", "...oyyyyo...", "...oWWWWo...", "...oooooo...", "...oWWWWo...", "....oooo...."],
             sun: ["....o..o....", "..o.oooo.o..", "...oyyyyo...", ".o.oyyyyo.o.", "..oyyYyyyo..", "..oyyyyyyo..", ".o.oyyyyo.o.", "...oyyyyo...", "..o.oooo.o..", "....o..o...."],
             ball: ["...oooooo...", "..oyyyyyyo..", ".oyywyyyyyo.", ".oywyyyyyyo.", "oyywyyyyyyyo", "oyywyyyyyyyo", "oyywyyyyyyyo", ".oywyyyyyyo.", ".oyywyyyyyo.", "..oyyywwyo..", "...oooooo..."],
-            broom: [".........oo.", "........oBo.", ".......oBo..", "......oBo...", ".....oBo....", "....oBo.....", "..ooyYoo....", ".oyYyYyYo...", ".oYyYyYyo...", ".oyYyYyYo...", "..oooooo...."],
+            broom: ["........oo..", ".......oBBo.", "......oBBo..", ".....oBBo...", "....oBBo....", "...oBBo.....", "..ooBBoooo..", ".oyYyYyYyYo.", "oyYyYyYyYyYo", "oYyYyYyYyYyo", ".oooooooooo."],
             pic: [".oooooooooo.", ".obbbbbbbbo.", ".obUUUUyUbo.", ".obUUUUUUUbo".slice(0,12), ".obUUUUUUUbo".slice(0,12), ".obgUUUUggo.", ".obGgggggGbo".slice(0,12), ".obggggggGbo".slice(0,12), ".obbbbbbbbo.", ".oooooooooo."],
             pencil: ["........oo..", ".......orro.", "......orRro.", ".....oyyro..", "....oyYyo...", "...oyYyo....", "..oyYyo.....", ".oBYyo......", ".oBBo.......", ".oooo......."],
             tub: ["................", "oooooooooooooooo", "owwwwwwwwwwwwwwo", "owUUUUUUUUUUUUwo", "owUtUUUUUtUUUUwo", ".owwwwwwwwwwwwo.", "..owwwwwwwwwwo..", "..ooo......ooo.."],
@@ -2271,7 +2291,7 @@
                 c.restore();
                 // 窗下长沙发（占大半宽度）+ 靠垫
                 B(40, 24, 46, 9, SOF); B(36, 25, 6, 15, SOFL); B(84, 25, 6, 15, SOFL); B(40, 31, 44, 8, SOFL); R(42, 33, 40, 1, D("#c4bccc", "#7a7288")); B(38, 39, 3, 3, WDD); B(85, 39, 3, 3, WDD); R(40, 38, 44, 1, D("#c8935c", "#6a4a30"));
-                B(43, 19, 10, 9, D("#f0eaec", "#a8a0b2")); B(54, 21, 10, 8, D("#e8e0ea", "#a09aae")); B(65, 19, 10, 9, D("#e4dcea", "#9890a8")); B(75, 22, 8, 7, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 3; i++) L(76 + i * 2, 23, 76 + i * 2, 28, D("#b8b0c4", "#7a7288"));
+                B(43, 21, 10, 10, D("#f0eaec", "#a8a0b2")); B(54, 23, 10, 8, D("#e8e0ea", "#a09aae")); B(65, 21, 10, 10, D("#e4dcea", "#9890a8")); B(75, 25, 8, 6, D("#e0d8e6", "#9890a8")); for (let i = 0; i < 3; i++) L(76 + i * 2, 26, 76 + i * 2, 29, D("#b8b0c4", "#7a7288"));
                 B(46, 28, 7, 4, D("#a8b8d8", "#6a7498")); R(47, 29, 5, 1, D("#c8d4ec", "#8a94b8")); B(76, 31, 10, 6, D("#a8b0a0", "#5e6a5a")); R(77, 33, 8, 1, D("#c8d0c0", "#7a8a76")); B(60, 30, 9, 3, D("#e8d8b8", "#a89870"));
                 // 圆木茶几 + 花瓶 + 杯子 + 杂志
                 c.save(); c.translate(12, 0);
@@ -2426,7 +2446,7 @@
             { id: "water", spr: "water", n: "清水", water: 38, digest: 0, drink: true }, { id: "milk", spr: "milk", n: "牛奶", water: 26, full: 8, mood: 3, digest: 40, drink: true }
         ];
         const PET_SCENES = [{ id: "house", n: "小屋" }, { id: "grass", n: "草地" }, { id: "sea", n: "海边" }, { id: "night", n: "夜晚" }];
-        const PET_MENU = [["food", "rice", "喂食"], ["light", "bulb", "睡觉"], ["play", "ball", "玩耍"], ["clean", "broom", "清理"], ["bath", "tub", "洗澡"], ["heal", "cross", "治疗"], ["scene", "pic", "换场景"]];
+        const PET_MENU = [["food", "rice", "喂食"], ["light", "moon", "睡觉"], ["play", "ball", "玩耍"], ["clean", "broom", "清理"], ["bath", "tub", "洗澡"], ["heal", "cross", "治疗"], ["scene", "pic", "换场景"]];
         const pxImgCache = {}; function pxImg(k, sc) { const id = k + sc; if (!pxImgCache[id]) pxImgCache[id] = sprURL(k, sc); return `<img class="pxi" src="${pxImgCache[id]}" alt="">`; }
         const SHELLS = ["#ffb6d0", "#a8d8ff", "#c8f0b8", "#ffe08a", "#d6c0ff"];
         let petAnim = { kind: "", until: 0, food: "" }, petSel = 0, petPos = { x: 30, dir: 1, pause: 0, last: 0 }, petBuf = null, petSprCache = { v: -1, cv: null };
@@ -2488,7 +2508,7 @@
             const t = document.getElementById("tama"); if (t) t.style.setProperty("--shell", SHELLS[p.shell || 0]);
             petRenderMenu();
             const mini = document.getElementById("petMini"); if (mini) mini.innerHTML = [["饱腹", p.full, "#ffc9a0"], ["水分", p.water, "#a8d8ff"], ["精力", p.energy, "#cdbfff"], ["心情", p.mood, "#ffb8cc"]].map(a => `<div>${a[0]}<i><b style="width:${Math.round(Math.max(0, Math.min(100, a[1])))}%;background:${a[2]}"></b></i></div>`).join("");
-            const ctl = document.getElementById("petCtl"); if (ctl) { const sig = p.sleeping ? "1" : "0";  if (ctl.dataset.sig !== sig) { ctl.dataset.sig = sig; ctl.innerHTML = [["food", "rice", "喂食"], ["light", p.sleeping ? "sun" : "bulb", "睡觉"], ["play", "ball", "玩耍"], ["clean", "broom", "清理"], ["bath", "tub", "洗澡"], ["heal", "cross", "治疗"], ["scene", "pic", "场景"], ["draw", "pencil", "画画"]].map(a => `<button onclick="petHome('${a[0]}',this)">${pxImg(a[1], 2)}<i>${a[2]}</i></button>`).join(""); } }
+            const ctl = document.getElementById("petCtl"); if (ctl) { const sig = p.sleeping ? "1" : "0";  if (ctl.dataset.sig !== sig) { ctl.dataset.sig = sig; ctl.innerHTML = [["food", "rice", "喂食"], ["light", p.sleeping ? "sun" : "moon", "睡觉"], ["play", "ball", "玩耍"], ["clean", "broom", "清理"], ["bath", "tub", "洗澡"], ["heal", "cross", "治疗"], ["scene", "pic", "场景"], ["draw", "pencil", "画画"]].map(a => `<button onclick="petHome('${a[0]}',this)">${pxImg(a[1], 2)}<i>${a[2]}</i></button>`).join(""); } }
         }
         function petHome(k, el) {
             petBtnFx(); if (el) { el.classList.add("down"); setTimeout(() => el.classList.remove("down"), 140); } petInit();
@@ -2598,7 +2618,7 @@
                 for (let k = 0; k < lv + 1; k++) { const bx = dx + Math.round(sw * (0.15 + 0.7 * k / Math.max(1, lv))), ph = ((t / 1300) + k * 0.31) % 1; c.globalAlpha = Math.max(0, 1 - ph * 0.8); c.fillStyle = "#98a52c"; for (let yy = 0; yy < 9; yy++) { const px = bx + Math.round(Math.sin(t / 220 + yy * 0.9 + k * 2) * 1.6); c.fillRect(px, dy - 2 - Math.round(ph * 6) - yy, 1, 1); } c.globalAlpha = 1; }
                 for (let k = 0; k < Math.min(3, lv + 1); k++) { const ang = t / 240 + k * 2.1, fx = Math.round(dx + sw / 2 + Math.cos(ang) * (sw / 2 + 3)), fy = Math.round(dy - 3 + Math.sin(ang * 1.3) * 5); c.fillStyle = "#3d3640"; c.fillRect(fx, fy, 2, 1); c.fillStyle = "#c9d6e0"; c.fillRect(fx + (Math.floor(t / 90) % 2 ? -1 : 2), fy - 1, 1, 1); } }
             if (st === "heal") { for (let k = 0; k < 7; k++) { const ph = ((t / 1500) + k / 7) % 1, hx = dx + 1 + Math.round(((k * 37) % 100) / 100 * (sw - 4)) + Math.round(Math.sin(t / 300 + k) * 1), hy = dy + sh - 2 - Math.round(ph * (sh + 10)); c.globalAlpha = Math.min(1, (1 - ph) * 1.6); c.fillStyle = k % 2 ? "#4fc47a" : "#7ddc9a"; c.fillRect(hx, hy - 1, 1, 3); c.fillRect(hx - 1, hy, 3, 1); c.globalAlpha = 1; } }
-            if (st === "sick") { const ex = dx + Math.round(sw * 0.5), ey = dy + Math.round(dh * 0.42), gw = Math.max(5, Math.round(sw * 0.2)); c.fillStyle = "#79c96a"; c.fillRect(ex - (gw >> 1), ey, gw, 5); c.fillStyle = "#4e9a46"; for (let k = 1; k < gw; k += 2) c.fillRect(ex - (gw >> 1) + k, ey, 1, 5); c.fillStyle = "#79c96a"; c.fillRect(ex - (gw >> 1) + 1, ey + 5, gw - 2, 1); }
+            if (st === "sick") { const ex = dx + Math.round(sw * 0.5), ey = dy + Math.round(dh * 0.44), rx = Math.max(4, Math.round(sw * 0.13)), ry = 2.6; c.fillStyle = "#b9e8a6"; c.globalAlpha = 0.95; for (let yy = -3; yy <= 3; yy++) for (let xx = -rx - 1; xx <= rx + 1; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(ex + xx, ey + yy, 1, 1); c.globalAlpha = 1; }
             if (st === "sleep") { const z = Math.floor(t / 600) % 3; c.drawImage(sprGet("zz"), dx + sw - 2 + z * 2, dy - 4 - z * 3); c.fillStyle = "rgba(70,80,130,.22)"; c.fillRect(0, 0, w, h); }
             if (petNeeds() && Math.floor(t / 500) % 2 === 0) { const ex = dx + sw - 1, ey = dy + 1; c.fillStyle = "#ff4a5a"; c.fillRect(ex, ey, 1, 3); c.fillRect(ex, ey + 4, 1, 1); }
             ctxOut.imageSmoothingEnabled = false; ctxOut.drawImage(petBuf, 0, 0, w, h, 0, 0, W, H);
@@ -4078,7 +4098,7 @@
         function confirmChatCollect() {
             if (!chatCollectSelected.size) { alert("请先选择要收藏的气泡～"); return; }
             const indices = Array.from(chatCollectSelected).sort((a, b) => a - b);
-            const items = indices.map(i => db.chat[i]).filter(m => m && (m.text || m.img)).map(m => ({ me: !!m.me, text: m.text || null, img: m.img || null, time: m.time || "", isNudge: !!m.isNudge }));
+            const items = indices.map(i => db.chat[i]).filter(m => m && (m.text || m.img)).map(m => ({ me: !!m.me, text: m.text || null, img: m.img || null, time: m.time || "", isNudge: !!m.isNudge, replyTo: m.replyTo ? { author: m.replyTo.author, text: m.replyTo.text } : null }));
             if (!items.length) { alert("所选内容无法收藏～"); return; }
             if (!db.memories) db.memories = [];
             db.memories.unshift({ id: "mem_" + Date.now(), time: Date.now(), title: "", items });
@@ -4548,7 +4568,8 @@
                         return `<div class="system-msg" style="margin:8px auto;">${(it.text || '').replace(/</g,'&lt;')}</div>`;
                     }
                     const inner = it.img ? `<img src="${it.img}" class="msg-img">` : `<span>${(it.text || '').replace(/</g,'&lt;')}</span>`;
-                    return `<div class="memory-bubble-row ${it.me ? 'my' : 'other'}"><div class="msg ${it.me ? 'my' : 'other'} memory-bubble">${inner}</div></div>`;
+                    const quote = it.replyTo ? `<div class="reply-quote-block"><b>${String(it.replyTo.author || '').replace(/</g,'&lt;')}</b>：${String(it.replyTo.text || '').replace(/</g,'&lt;')}</div>` : "";
+                    return `<div class="memory-bubble-row ${it.me ? 'my' : 'other'}"><div class="msg ${it.me ? 'my' : 'other'} memory-bubble">${quote}${inner}</div></div>`;
                 }).join("");
                 const isExpanded = expandedMemoryIds.has(mem.id);
                 return `
@@ -6175,6 +6196,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     o.connect(g); g.connect(audioCtx.destination); o.start(t0 + start); o.stop(t0 + start + dur + 0.02);
                 };
                 if (type === "tap") tone(520, 0, 0.06, "square", 0.06);
+                else if (type === "type") { const nb = audioCtx.createBuffer(1, 900, audioCtx.sampleRate), d = nb.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3); const src = audioCtx.createBufferSource(); src.buffer = nb; const gn = audioCtx.createGain(); gn.gain.value = 0.5; const bp = audioCtx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800 + Math.random() * 1200; src.connect(bp); bp.connect(gn); gn.connect(audioCtx.destination); src.start(t0); tone(160, 0, 0.05, "square", 0.07, 80); }
+                else if (type === "bell") { tone(2093, 0, 0.55, "sine", 0.1); tone(2637, 0.02, 0.45, "sine", 0.06); tone(300, 0, 0.06, "square", 0.05, 120); }
+                else if (type === "splash") tone(420, 0, 0.3, "sawtooth", 0.07, 110);
                 else if (type === "his") tone(330, 0, 0.09, "triangle", 0.12);
                 else if (type === "eat") { tone(700, 0, 0.05, "square", 0.06); tone(990, 0.05, 0.06, "square", 0.06); }
                 else if (type === "match") { tone(660, 0, 0.08, "triangle", 0.12); tone(880, 0.08, 0.08, "triangle", 0.12); tone(1175, 0.16, 0.12, "triangle", 0.12); }
@@ -6210,7 +6234,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "青蛙过河背单词", "看中文拼英文，拼对青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
@@ -6225,9 +6249,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
+            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
@@ -6506,6 +6530,447 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             }
             paint();
             gameCleanup = () => clearTimeout(timer);
+        }
+
+        // ---------- 青蛙过河背单词 ----------
+        const FROG_VOCAB = `abandon:放弃,抛弃
+abate:减轻,减弱
+abbreviate:缩写,缩短
+abdicate:退位,放弃(权利)
+aberration:偏差,失常
+abhor:憎恶,痛恨
+abide:忍受,遵守
+abolish:废除
+abrupt:突然的,唐突的
+absolve:赦免,免除
+abstain:戒除,弃权
+abstract:抽象的,摘要
+absurd:荒谬的
+abundant:丰富的,充裕的
+accelerate:加速
+accommodate:容纳,适应
+accumulate:积累
+acquire:获得,习得
+acute:敏锐的,急性的
+adapt:适应,改编
+adequate:足够的,适当的
+adhere:黏附,坚持
+adjacent:邻近的
+adolescent:青少年
+adopt:采用,收养
+advocate:拥护,提倡
+aesthetic:美学的,审美的
+affirm:断言,证实
+affluent:富裕的
+agenda:议程
+agile:敏捷的
+alleviate:缓解,减轻
+allocate:分配,拨出
+ambiguous:模棱两可的
+ambition:雄心,抱负
+amend:修正,改善
+analogy:类比,类推
+anonymous:匿名的
+anticipate:预期,期待
+apathy:冷漠,无动于衷
+appease:安抚,平息
+applaud:鼓掌,称赞
+appraise:评估,鉴定
+arbitrary:任意的,武断的
+arduous:艰巨的
+articulate:清晰表达的
+ascend:上升,攀登
+assert:断言,主张
+assimilate:同化,吸收
+astonish:使惊讶
+atrocity:暴行
+attribute:归因于,属性
+audacity:大胆,厚颜
+authentic:真正的,可信的
+autonomy:自治,自主
+averse:反对的,厌恶的
+awkward:笨拙的,尴尬的
+barren:贫瘠的
+benevolent:仁慈的
+bias:偏见
+blunt:钝的,直率的
+bolster:支持,增强
+brevity:简短
+brisk:轻快的,敏捷的
+bureaucracy:官僚主义
+camouflage:伪装
+candid:坦率的
+capacity:容量,能力
+catastrophe:灾难
+censure:谴责
+chronic:慢性的,长期的
+circumstance:情况,环境
+clarify:澄清,阐明
+coherent:连贯的
+collaborate:合作
+colossal:巨大的
+commend:称赞,推荐
+compel:强迫
+competent:胜任的
+complement:补充,补足物
+comprehend:理解
+compromise:妥协
+conceal:隐藏
+concede:承认,让步
+condemn:谴责,判刑
+confine:限制,禁闭
+conform:遵守,符合
+consensus:共识
+conserve:保存,节约
+considerable:相当大的
+consistent:一致的,始终如一的
+constrain:约束,强迫
+contemplate:沉思,凝视
+contend:竞争,主张
+contradict:反驳,与…矛盾
+controversy:争议
+convene:召集,集会
+conventional:传统的,惯例的
+conviction:信念,定罪
+cooperate:合作
+cordial:热忱的,诚恳的
+credible:可信的
+criterion:标准,准则
+crucial:至关重要的
+cultivate:培养,耕种
+cumbersome:笨重的,麻烦的
+curb:抑制,控制
+cynical:愤世嫉俗的
+dazzle:使眼花,耀眼
+debate:辩论
+deceive:欺骗
+decline:下降,拒绝
+dedicate:奉献,致力
+deficit:赤字,不足
+defy:违抗,挑战
+deliberate:故意的,深思熟虑的
+delicate:精致的,脆弱的
+demolish:拆毁,推翻
+denounce:谴责,告发
+deplore:悲叹,谴责
+deprive:剥夺
+derive:源自,获得
+designate:指定,标明
+despair:绝望
+detach:分开,拆卸
+deter:阻止,威慑
+deteriorate:恶化
+devastate:毁坏,使荒废
+devise:设计,想出
+devote:奉献,专心
+diligent:勤奋的
+diminish:减少,缩小
+discern:辨别,识别
+discourage:使泄气,劝阻
+discrepancy:差异,不符
+disguise:伪装
+dismiss:解雇,摒弃
+disperse:散开,驱散
+dispose:处置,安排
+dispute:争论,争端
+distinct:明显的,独特的
+distort:扭曲,歪曲
+diverse:多样的
+doctrine:教义,信条
+dominant:占优势的
+dormant:休眠的,潜伏的
+drastic:激烈的,严厉的
+dubious:怀疑的,可疑的
+durable:耐用的
+eccentric:古怪的
+efficient:高效的
+elaborate:精心制作的,详述
+eligible:有资格的
+eloquent:雄辩的
+embrace:拥抱,接受
+emerge:出现,浮现
+eminent:卓越的,杰出的
+emphasis:强调
+enable:使能够
+encounter:遇到,遭遇
+endeavor:努力,尽力
+endorse:认可,背书
+enhance:提高,增强
+enormous:巨大的
+ensure:确保
+entitle:给…权利,题名
+envision:设想,展望
+ephemeral:短暂的
+equivalent:相等的,等价物
+eradicate:根除
+erode:侵蚀,腐蚀
+erratic:不稳定的,古怪的
+essence:本质,精华
+eternal:永恒的
+evade:逃避,躲避
+evoke:唤起,引起
+evolve:进化,发展
+exaggerate:夸大
+exceed:超过
+exclude:排除
+exempt:免除的,豁免
+exhaust:耗尽,使筋疲力尽
+exploit:开发,剥削
+exquisite:精美的
+extinct:灭绝的
+fabricate:捏造,制造
+facilitate:促进,使便利
+fallacy:谬论
+famine:饥荒
+fatigue:疲劳
+feasible:可行的
+fervent:热情的,强烈的
+fickle:善变的
+flourish:繁荣,茂盛
+fluctuate:波动
+foresee:预见
+formidable:可怕的,强大的
+fragile:易碎的,脆弱的
+frugal:节俭的
+fundamental:基本的
+futile:徒劳的
+gloomy:阴郁的,沮丧的
+gorgeous:华丽的
+gratitude:感激
+grievance:不满,委屈
+hamper:妨碍
+harmony:和谐
+hazard:危险,冒险
+hesitate:犹豫
+hinder:阻碍
+hostile:敌对的
+humble:谦逊的,卑微的
+hypothesis:假设
+idle:闲置的,懒散的
+illuminate:照亮,阐明
+illusion:幻觉,错觉
+immense:巨大的
+imminent:即将发生的
+impartial:公正的
+implement:实施,工具
+implicit:含蓄的,暗示的
+inevitable:不可避免的
+infer:推断
+inherent:固有的
+inhibit:抑制
+initiate:发起,开始
+innovate:创新
+inquire:询问,调查
+insight:洞察力
+integrity:正直,完整
+intense:强烈的
+interpret:解释,口译
+intricate:错综复杂的
+intuition:直觉
+invalid:无效的,病人
+irony:讽刺,反语
+jeopardy:危险,危难
+justify:证明…正当
+keen:敏锐的,热衷的
+lament:悲叹,哀悼
+legacy:遗产,遗留
+legitimate:合法的,合理的
+lenient:宽大的,仁慈的
+literate:有文化的
+lucrative:有利可图的
+magnify:放大,夸大
+maintain:维持,坚持
+malice:恶意
+mandatory:强制的
+manifest:显示,明显的
+meager:贫乏的,不足的
+mediocre:平庸的
+meticulous:一丝不苟的
+mimic:模仿
+miniature:缩小的,微型
+mitigate:减轻,缓和
+modest:谦虚的,适度的
+momentum:动力,势头
+monotonous:单调的
+motivate:激励
+mundane:平凡的,世俗的
+mysterious:神秘的
+narrate:叙述
+negligible:可忽略的
+neutral:中立的
+notorious:臭名昭著的
+nurture:养育,培育
+oblige:迫使,施恩惠
+oblivious:遗忘的,不在意的
+obscure:模糊的,晦涩的
+obsolete:过时的
+obstacle:障碍
+obstinate:顽固的
+obvious:明显的
+occupy:占据
+omit:省略,遗漏
+opponent:对手
+oppress:压迫
+optimistic:乐观的
+ordeal:严峻考验
+orthodox:正统的
+overcome:克服
+panic:恐慌
+paradox:悖论,矛盾
+partial:部分的,偏心的
+patron:赞助人,顾客
+peculiar:奇特的,特有的
+perceive:察觉,理解
+perish:消亡,死亡
+perpetual:永久的
+persevere:坚持不懈
+persist:坚持,持续
+perspective:观点,视角
+pessimistic:悲观的
+phenomenon:现象
+pioneer:先驱,开拓
+plausible:似乎合理的
+plight:困境
+ponder:沉思
+portray:描绘
+postpone:推迟
+potential:潜在的,潜力
+precise:精确的
+predecessor:前任,前辈
+prejudice:偏见
+prestige:声望
+prevail:盛行,获胜
+prevalent:流行的,普遍的
+privilege:特权
+profound:深刻的
+prolific:多产的
+prominent:突出的,著名的
+propaganda:宣传
+prosper:繁荣
+provoke:激怒,挑起
+prudent:谨慎的
+pursue:追求,追赶
+quest:探索,追求
+radical:激进的,根本的
+rational:理性的
+reconcile:调和,和解
+reluctant:不情愿的
+remarkable:卓越的,非凡的
+reinforce:加强
+reject:拒绝
+resemble:类似
+resilient:有弹性的,适应力强的
+restrain:抑制,约束
+retain:保留
+reveal:揭示,显露
+rigid:严格的,僵硬的
+robust:强健的
+rural:农村的
+sacrifice:牺牲
+scarce:稀缺的
+scrutiny:仔细审查
+secure:安全的,获得
+shallow:浅的,肤浅的
+sincere:真诚的
+skeptical:怀疑的
+solemn:庄严的
+sophisticated:老练的,复杂的
+spontaneous:自发的
+stagnant:停滞的
+subtle:微妙的
+sufficient:足够的
+superficial:表面的,肤浅的
+suppress:镇压,抑制
+sustain:维持,承受
+tangible:有形的,切实的
+tedious:乏味的
+tenacious:顽强的
+tentative:试探性的
+thrive:茁壮成长
+tolerate:容忍
+transient:短暂的
+trivial:琐碎的
+ubiquitous:无处不在的
+ultimate:最终的
+unanimous:一致同意的
+uphold:支持,维护
+utilize:利用
+vague:模糊的
+valid:有效的
+vanish:消失
+vast:广阔的
+verify:核实
+versatile:多才多艺的
+vigorous:精力充沛的
+vital:至关重要的
+vivid:生动的
+vulnerable:脆弱的,易受伤的
+wither:枯萎
+wrath:愤怒
+yield:产出,屈服
+zeal:热情,热忱`.split("\n").map(l => { const i = l.indexOf(":"); return [l.slice(0, i), l.slice(i + 1)]; }).filter(w => /^[a-z]+$/.test(w[0]));
+        function gameFrog() {
+            const N = 8, body = document.getElementById("gameBody");
+            const cfg = { easy: { time: 30000, show: 2, his: [11000, 16000], p: 0.75 }, normal: { time: 21000, show: 1, his: [8000, 12000], p: 0.85 }, hard: { time: 14000, show: 0, his: [5500, 8500], p: 0.93 } }[gameDiff] || { time: 21000, show: 1, his: [8000, 12000], p: 0.85 };
+            body.innerHTML = `<div class="game-msg" id="gameMsg">看中文，拼出英文，青蛙才能跳过去</div><canvas id="frCv" class="game-canvas"></canvas>
+              <div id="frMean" style="text-align:center;font-size:20px;font-weight:700;margin:6px 12px 2px;min-height:28px"></div>
+              <div id="frTime" style="height:5px;border-radius:3px;background:rgba(127,127,127,.25);margin:4px 20px"><div id="frBar" style="height:100%;width:100%;border-radius:3px;background:#6fcf6a"></div></div>
+              <div id="frSlots" style="display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:10px 12px;position:relative;min-height:38px"></div>
+              <input id="frInp" type="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0">
+              <div style="text-align:center"><button class="btn btn-outline" id="frSkip" style="padding:4px 14px;font-size:13px">不会，跳过（掉水里）</button></div><div id="gameEnd"></div>`;
+            const cv = document.getElementById("frCv"), ctx = cv.getContext("2d"), inp = document.getElementById("frInp"), slots = document.getElementById("frSlots");
+            const W = Math.min(body.clientWidth - 24, 420), H = 150, dpr = window.devicePixelRatio || 1;
+            cv.style.width = W + "px"; cv.style.height = H + "px"; cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
+            const pool = FROG_VOCAB.slice().sort(() => Math.random() - 0.5); let wi = -1, cur = null, typed = "", left = 0, over = false, paused = false, locked = false;
+            let me = 0, him = 0, mD = 0, hD = 0, mFall = 0, hFall = 0, hisT = 0, hisAt = 0, last = performance.now(), acc = 0;
+            const rr = (a, b) => a + Math.random() * (b - a);
+            const prefix = () => cur[0].slice(0, Math.min(cfg.show, cur[0].length - 2));
+            function nextWord() { wi = (wi + 1) % pool.length; cur = pool[wi]; typed = prefix(); inp.value = typed; left = cfg.time + Math.max(0, cur[0].length - 6) * 900; locked = false; document.getElementById("frMean").innerText = cur[1]; renderSlots(); }
+            function renderSlots(shake, show) {
+                slots.innerHTML = ""; const w = cur[0];
+                for (let i = 0; i < w.length; i++) { const d = document.createElement("div"); const ch = show ? w[i] : (typed[i] || ""); d.textContent = ch; d.style.cssText = `width:26px;height:34px;border-bottom:3px solid ${i < typed.length ? "#6fcf6a" : "rgba(127,127,127,.6)"};text-align:center;font:700 22px/34px "Courier New",monospace;${show ? "color:#e0405a;" : ""}`; slots.appendChild(d); }
+                if (shake) { slots.animate([{ transform: "translateX(0)" }, { transform: "translateX(-8px)" }, { transform: "translateX(8px)" }, { transform: "translateX(-5px)" }, { transform: "translateX(0)" }], { duration: 300 }); }
+            }
+            const xOf = i => 16 + i * (W - 32) / N;
+            function draw(now) {
+                const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#5fb8e8"); g.addColorStop(1, "#2f86be"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+                ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1; for (let k = 0; k < 7; k++) { const y = 16 + k * 20 + Math.sin(now / 600 + k) * 2; ctx.beginPath(); for (let x = 0; x <= W; x += 6) ctx.lineTo(x, y + Math.sin(x / 9 + now / 400 + k) * 1.5); ctx.stroke(); }
+                ctx.fillStyle = "#7cc47a"; ctx.fillRect(0, 0, 12, H); ctx.fillRect(W - 12, 0, 12, H);
+                const lane = (y, pos, fall, isMe) => {
+                    for (let i = 1; i < N; i++) { const x = xOf(i); ctx.fillStyle = "#3f9d56"; ctx.beginPath(); ctx.ellipse(x, y + 8, 14, 6.5, 0, 0.25, 6.0); ctx.lineTo(x, y + 8); ctx.fill(); ctx.fillStyle = "#58b86a"; ctx.beginPath(); ctx.ellipse(x, y + 7, 12, 5, 0, 0.25, 6.0); ctx.lineTo(x, y + 7); ctx.fill(); }
+                    const fx = xOf(pos) , arc = Math.abs(Math.sin(Math.min(1, Math.abs(fx - xOf(Math.round(pos))) / 10) * 1.6)) * 12;
+                    ctx.font = "22px serif"; ctx.textAlign = "center"; if (fall > 0) { ctx.fillText("💦", xOf(Math.round(pos)), y + 4); } else ctx.fillText("🐸", fx, y + 6 - arc);
+                    ctx.font = "11px sans-serif"; ctx.fillStyle = "#fff"; ctx.textAlign = "left"; ctx.fillText(isMe ? "我" : "他", 15, y - 14);
+                };
+                lane(40, hD, hFall, false); lane(108, mD, mFall, true);
+            }
+            function finish(w) { over = true; document.getElementById("frBar").style.width = "0%"; inp.blur(); if (w === 1) { gameResultBar("你过河啦 🎉"); gameStat("frog", "w"); } else { gameResultBar(hisName() + "先过河了"); gameStat("frog", "l"); } document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function fall(msg) { gameSfx("splash"); mFall = 700; me = Math.max(0, me - 1); locked = true; gameResultBar(msg); renderSlots(false, true); setTimeout(() => { if (!over) { gameResultBar("下一个词"); nextWord(); } }, 1100); }
+            function check() {
+                if (typed.length !== cur[0].length || locked) return;
+                if (typed === cur[0]) { gameSfx("bell"); me++; locked = true; gameResultBar("答对了！"); if (me >= N) { mD = me - 0.001; setTimeout(() => finish(1), 450); return; } setTimeout(() => { if (!over) nextWord(); }, 500); }
+                else { gameSfx("miss"); renderSlots(true); gameResultBar("拼错了，再试一次"); left = Math.max(1500, left - 3000); typed = prefix(); inp.value = typed; setTimeout(() => { if (!over && !locked) renderSlots(); }, 320); }
+            }
+            inp.addEventListener("input", () => { if (over || locked || paused) { inp.value = typed; return; } let l = inp.value.toLowerCase().replace(/[^a-z]/g, ""); const pf = prefix(); if (!l.startsWith(pf)) l = pf + l.slice(pf.length); l = l.slice(0, cur[0].length); if (l.length > typed.length) gameSfx("type"); typed = l; inp.value = l; renderSlots(); check(); });
+            const focusIt = () => { try { inp.focus(); } catch (e) { } };
+            slots.addEventListener("click", focusIt); cv.addEventListener("click", focusIt); document.getElementById("frMean").addEventListener("click", focusIt);
+            document.getElementById("frSkip").onclick = () => { if (over || locked || paused) return; fall("跳过了，答案：" + cur[0]); };
+            const keyHandler = e => { if (over || paused || locked) return; if (document.activeElement !== inp && /^[a-zA-Z]$/.test(e.key) && !e.ctrlKey && !e.metaKey) focusIt(); };
+            document.addEventListener("keydown", keyHandler);
+            hisT = rr(cfg.his[0], cfg.his[1]);
+            const loop = setInterval(() => {
+                const now = performance.now(), dt = Math.min(200, now - last); last = now;
+                if (!over && !paused) {
+                    if (!locked) { left -= dt; document.getElementById("frBar").style.width = Math.max(0, left / (cfg.time + Math.max(0, cur[0].length - 6) * 900) * 100) + "%"; if (left <= 0) fall("时间到，掉水里了！答案：" + cur[0]); }
+                    hisT -= dt; if (hisT <= 0) { hisT = rr(cfg.his[0], cfg.his[1]); if (Math.random() < cfg.p) { him++; gameSfx("his"); if (him >= N) { hD = him - 0.001; finish(2); } } else { him = Math.max(0, him - 1); hFall = 600; gameSfx("splash"); } }
+                    if (mFall > 0) mFall -= dt; if (hFall > 0) hFall -= dt;
+                }
+                mD += (me - mD) * 0.22; hD += (him - hD) * 0.22; draw(now);
+            }, 40);
+            nextWord(); setTimeout(focusIt, 200);
+            gameCleanup = () => { over = true; clearInterval(loop); document.removeEventListener("keydown", keyHandler); };
+            gamePause = () => { paused = true; };
+            gameResume = () => { paused = false; last = performance.now(); focusIt(); };
         }
 
         // ---------- 扫雷 ----------
