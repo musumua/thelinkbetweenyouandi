@@ -165,9 +165,9 @@
         .msg-foot.my-foot { justify-content: flex-end; }
         .msg-foot.other-foot { justify-content: flex-start; }
         .msg-img { max-width: 200px; max-height: 200px; border-radius: 12px; display: block; margin-top: 2px; }
-        .reply-quote-block { font-size: 12px; padding: 6px 8px; border-radius: 8px; margin-bottom: 6px; background: rgba(0,0,0,0.15); border-left: 3px solid var(--primary); color: var(--text-sub); }
-        [data-theme="eye-care"] .reply-quote-block, [data-theme="light-green"] .reply-quote-block { background: rgba(0,0,0,0.05); }
-        .reply-quote-block b { color: var(--primary); }
+        .reply-quote-block { position:relative; display:block; padding:6px 10px 6px 13px; border-radius:10px; margin-bottom:7px; background:color-mix(in srgb, currentColor 9%, transparent); color:inherit; font-size:12px; line-height:1.45; overflow:hidden; text-align:left; white-space:normal; }
+        .reply-quote-block::before { content:""; position:absolute; left:4px; top:6px; bottom:6px; width:3px; border-radius:2px; background:var(--primary); }
+        .reply-quote-block .rq-a { font-weight:700; font-size:11px; opacity:.78; margin-bottom:1px; } .reply-quote-block .rq-t { opacity:.72; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-break:break-all; }
 
         .reply-preview-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12px; }
         .chat-collect-bar { display: none; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-sub); }
@@ -192,7 +192,7 @@
         #divZoom { position:fixed; inset:0; z-index:4000; background:rgba(10,10,16,.86); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
         #divZoom .zc { position:relative; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6); } #divZoom .zt { color:#fff; font-size:17px; font-weight:bold; margin-top:14px; } #divZoom .zk { color:#d8d8e4; font-size:13px; margin-top:4px; text-align:center; max-width:340px; line-height:1.5; } #divZoom .zh { color:#9a9ab0; font-size:11px; margin-top:10px; }
         .ccard { min-width:200px; max-width:260px; font-size:13px; line-height:1.55; text-align:left; } .ccard .cc-sec + .cc-sec { margin-top:8px; padding-top:7px; border-top:1px dashed rgba(127,127,127,.45); } .ccard .cc-h { font-size:11.5px; font-weight:bold; opacity:.75; margin-bottom:3px; letter-spacing:.04em; }
-        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; gap:6px; padding:3px 8px; margin:3px 0; border-radius:8px; background:rgba(127,127,127,.16); } .ccard .cc-opt b { opacity:.7; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
+        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; align-items:center; gap:8px; padding:5px 10px 5px 6px; margin:5px 0; border-radius:12px; background:color-mix(in srgb, var(--primary) 15%, transparent); border:1px solid color-mix(in srgb, var(--primary) 38%, transparent); } .ccard .cc-opt b { flex:0 0 auto; width:19px; height:19px; border-radius:50%; border:1.5px solid var(--primary); color:inherit; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
         .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
         .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
@@ -2069,7 +2069,7 @@
               gal.bg.forEach(s => { const a = s.a * 0.85; bk[s.k * 6 + Math.min(5, Math.floor(a * 7))].push(s); });
               bk.forEach((arr, bi) => { if (!arr.length) return; ctx.fillStyle = SC[Math.floor(bi / 6)]; ctx.globalAlpha = ((bi % 6) + 0.5) / 7; ctx.beginPath(); arr.forEach(s => { const x = s.x * W, y = s.y * H, r = s.s * 0.5 + 0.3; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); }); ctx.fill(); });
               ctx.globalAlpha = 1; }
-            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25), _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
+            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.3, _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
             // 愿望星
@@ -2082,7 +2082,7 @@
             });
             // 光雾/星云光晕：逐像素直接算（不用 Chrome 的渐变，渐变自带抖动点阵会成“纹路”），低分辨率算好再平滑放大
             const S = 3, gw = Math.ceil(W / S), gh = Math.ceil(H / S), N = gw * gh, add = new Float32Array(N * 3), vl = new Float32Array(N);
-            const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25), Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
+            const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25) * 1.3, Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
             const sg = (d, st) => { for (let i = 1; i < st.length; i++) if (d <= st[i][0]) { const a0 = st[i - 1], a1 = st[i], f = (d - a0[0]) / (a1[0] - a0[0] || 1); return a0.slice(1).map((v, j) => v + (a1[j + 1] - v) * f); } return null; };
             // 通用：在 (x0,y0) 处、旋转 rot、纵向压缩 k、半径 r 的渐变；st=[[位置,r,g,b,a],...]；mode 0 叠加 1 压暗 2 罩(veil)
             const splat = (x0, y0, rot, k, r, st, mode) => {
@@ -2100,11 +2100,12 @@
             splat(cx, cy, -0.36, 0.55, Math.min(W * 0.62, H * 1.4), [[0, 6, 10, 32, 0.88], [0.5, 6, 10, 32, 0.6], [1, 6, 10, 32, 0]], 2); // 群星罩在星云后面
             splat(cx, cy, 0, 1, R * 0.55, lin([40, 62, 140], 0.26 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 96, 190], 0.12 * br), 0);
             splat(W * 0.2, H * 0.15, 0, 1, R * 0.36, lin([40, 48, 110], 0.045), 0); splat(W * 0.85, H * 0.9, 0, 1, R * 0.4, lin([56, 40, 112], 0.05), 0);
-            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.30], [0.35, 124, 130, 178, 0.2], [0.7, 88, 98, 150, 0.08], [1, 60, 76, 140, 0]], 0);
+            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.38], [0.35, 128, 134, 184, 0.27], [0.7, 92, 102, 156, 0.11], [1, 60, 76, 140, 0]], 0);
             splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.01], [0.8, 96, 108, 190, 0.022], [1, 80, 90, 180, 0]], 0);
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), c = q.c.split(",").map(Number); splat(x, y, 0, 1, q.s * Rx, lin(c, q.a * Math.max(0, 1.05 - q.r) * 0.8), 0); });
             gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), fa = Math.pow(Math.max(0, 1 - q.r), 1.6); splat(x, y, 0, 1, q.s * 3, [[0, 255, 255, 255, 0.16 * fa], [0.4, 255, 255, 255, 0.04 * fa], [1, 255, 255, 255, 0]], 0); });
             splat(cx, cy, ph, 0.62, Rx * 0.27, [[0, 255, 244, 222, 0.95], [0.12, 255, 222, 170, 0.7], [0.45, 224, 176, 120, 0.2], [1, 210, 160, 110, 0]], 0);
+            for (let i = 0; i < N; i++) { const lum = (add[i * 3] + add[i * 3 + 1] + add[i * 3 + 2]) / 3; vl[i] = 1 - (1 - vl[i]) * (1 - Math.min(0.93, lum / 45)); }
             const gcv = gal.glow || (gal.glow = document.createElement("canvas")), vcv = gal.veil || (gal.veil = document.createElement("canvas")); gcv.width = vcv.width = gw; gcv.height = vcv.height = gh;
             const gi = new ImageData(gw, gh), vi = new ImageData(gw, gh);
             for (let i = 0; i < N; i++) { gi.data[i * 4] = Math.min(255, add[i * 3]); gi.data[i * 4 + 1] = Math.min(255, add[i * 3 + 1]); gi.data[i * 4 + 2] = Math.min(255, add[i * 3 + 2]); gi.data[i * 4 + 3] = 255; vi.data[i * 4] = 6; vi.data[i * 4 + 1] = 10; vi.data[i * 4 + 2] = 32; vi.data[i * 4 + 3] = Math.round(vl[i] * 255); }
@@ -2120,14 +2121,14 @@
                 const oc = cc.cv.getContext("2d"); oc.setTransform(dpr, 0, 0, dpr, 0, 0); galLayer(oc, W, H, t);
             }
             ctx.drawImage(cc.cv, 0, 0, W, H);
-            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25), _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
+            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.3, _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
             ctx.globalCompositeOperation = "lighter";
                         { const TAU = 6.2832, bk = Array.from({ length: 21 }, () => []), PC = ["#ffeedd", "#ffffff", "#d6e4ff"];
               gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25), ci = p.r < 0.22 ? 0 : p.r < 0.55 ? 1 : 2; bk[ci * 7 + Math.min(6, Math.floor(a * 9))].push(x, y); });
               bk.forEach((arr, bi) => { if (!arr.length ) return; ctx.fillStyle = PC[Math.floor(bi / 7)]; ctx.globalAlpha = ((bi % 7) + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.5, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.5, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
-            { ctx.fillStyle = "#fff"; if (!gal.tw) gal.tw = gal.bg.filter(q => q.s < 0.6 && Math.hypot((q.x - 0.5) * 1.0, (q.y - 0.5) * 1.7) / 0.62 > 0.85).slice(0, 90); gal.tw.forEach(q => { const a = 0.25 + 0.55 * Math.max(0, Math.sin(t / 900 + q.p * 3)); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(q.x * W, q.y * H, 0.5 + q.s * 0.6, 0, 6.283); ctx.fill(); }); ctx.globalAlpha = 1; }
+            { ctx.fillStyle = "#fff"; if (!gal.tw) gal.tw = gal.bg.filter(q => q.s < 0.6 && Math.hypot((q.x - 0.5) * 1.0, (q.y - 0.5) * 1.7) / 0.62 > 1.1).slice(0, 90); gal.tw.forEach(q => { const a = 0.25 + 0.55 * Math.max(0, Math.sin(t / 900 + q.p * 3)); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(q.x * W, q.y * H, 0.5 + q.s * 0.6, 0, 6.283); ctx.fill(); }); ctx.globalAlpha = 1; }
             ctx.globalCompositeOperation = "source-over";
             (db.wishStars || []).forEach(w => { if (w.arrive && nowMs - w.arrive < 600 && nowMs >= w.arrive) { const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t), k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); } });
             // 流星
@@ -3000,7 +3001,7 @@
             // 刷新/页面被系统回收重载（比如选完相册图片回来）时，沿用已有的守卫层，不再往历史里追加记录。
             // 层数 depth 一律以当前所在记录的 state.i 为准，不自己累加：浏览器跳过了没有用户操作时塞进去的记录，也能自动校正。
             let depth = 0; const TARGET = 12; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
-            const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, "", "#g" + (depth + 1)); depth++; } catch (e) { } };
+            const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, ""); depth++; } catch (e) { } };
             { const hs = history.state;
               if (hs && hs.guard) depth = hs.i || 1;
               else if (hs && hs.base) { depth = 0; pushGuard(); }
@@ -4600,7 +4601,7 @@
                         return `<div class="system-msg" style="margin:8px auto;">${(it.text || '').replace(/</g,'&lt;')}</div>`;
                     }
                     const inner = it.img ? `<img src="${it.img}" class="msg-img">` : `<span>${(it.text || '').replace(/</g,'&lt;')}</span>`;
-                    const quote = it.replyTo ? `<div class="reply-quote-block"><b>${String(it.replyTo.author || '').replace(/</g,'&lt;')}</b>：${String(it.replyTo.text || '').replace(/</g,'&lt;')}</div>` : "";
+                    const quote = it.replyTo ? `<div class="reply-quote-block"><div class="rq-a">↩ ${String(it.replyTo.author || '').replace(/</g,'&lt;')}</div><div class="rq-t">${String(it.replyTo.text || '').replace(/</g,'&lt;')}</div></div>` : "";
                     return `<div class="memory-bubble-row ${it.me ? 'my' : 'other'}"><div class="msg ${it.me ? 'my' : 'other'} memory-bubble">${quote}${inner}</div></div>`;
                 }).join("");
                 const isExpanded = expandedMemoryIds.has(mem.id);
@@ -5564,7 +5565,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     if (m.proactive && !m.me) { const st = document.createElement("i"); st.className = "pro-star"; st.innerText = "★"; box.appendChild(st); }
                     if (m.replyTo) {
                         const q = document.createElement("div"); q.className = "reply-quote-block";
-                        q.innerHTML = `<b>${m.replyTo.author}</b>：${m.replyTo.text}`;
+                        q.innerHTML = `<div class="rq-a">↩ ${m.replyTo.author}</div><div class="rq-t">${m.replyTo.text}</div>`;
                         box.appendChild(q);
                     }
                     if (m.dcard) { const d = document.createElement("div"); d.innerHTML = chatCardHtml(m.dcard); box.appendChild(d.firstElementChild); } else if (m.text) { const txt = document.createElement("span"); txt.innerText = m.text; box.appendChild(txt); } else if (m.img) { const img = document.createElement("img"); img.src = m.img; img.className = "msg-img"; box.appendChild(img); }
@@ -8328,6 +8329,7 @@ treaty:条约`
                 else { let p = 0; while (p < t.length && raw[p] === t[p]) p++; let q = 0; while (q < t.length - p && raw[raw.length - 1 - q] === t[t.length - 1 - q]) q++; t = (t + raw.slice(p, raw.length - q).replace(/[^a-z]/g, "")).slice(0, L); }
                 if (t.length > typed.length) gameSfx("type"); typed = t; sync(); check();
             });
+            { const dt = body.querySelector(".frbank"); dt.querySelector("summary").addEventListener("pointerdown", () => { try { inp.blur(); } catch (x) { } }); dt.addEventListener("toggle", () => { if (dt.open) { try { inp.blur(); } catch (x) { } setTimeout(() => { try { dt.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (x) { } }, 120); } }); }
             document.getElementById("frDel").onclick = () => { if (over || locked || paused) return; typed = typed.slice(0, -1); sync(); focusIt(); };
             body.querySelectorAll("[data-bank]").forEach(b => b.onclick = () => { db.frogBank = b.dataset.bank; saveData(); frNoFocus = true; try { inp.blur(); } catch (x) { } gameCleanup(); gameFrog(); });
             const focusIt = () => { try { inp.focus(); } catch (e) { } };
