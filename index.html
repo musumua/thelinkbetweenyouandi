@@ -165,9 +165,8 @@
         .msg-foot.my-foot { justify-content: flex-end; }
         .msg-foot.other-foot { justify-content: flex-start; }
         .msg-img { max-width: 200px; max-height: 200px; border-radius: 12px; display: block; margin-top: 2px; }
-        .reply-quote-block { position:relative; display:block; padding:6px 10px 6px 13px; border-radius:10px; margin-bottom:7px; background:color-mix(in srgb, currentColor 9%, transparent); color:inherit; font-size:12px; line-height:1.45; overflow:hidden; text-align:left; white-space:normal; }
-        .reply-quote-block::before { content:""; position:absolute; left:4px; top:6px; bottom:6px; width:3px; border-radius:2px; background:var(--primary); }
-        .reply-quote-block .rq-a { font-weight:700; font-size:11px; opacity:.78; margin-bottom:1px; } .reply-quote-block .rq-t { opacity:.72; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; word-break:break-all; }
+        .reply-quote-block { display:block; padding:0 0 0 9px; margin:0 0 8px; border-left:2px solid color-mix(in srgb, currentColor 40%, transparent); background:none; color:inherit; font-size:12px; line-height:1.45; text-align:left; white-space:normal; }
+        .reply-quote-block .rq-a { font-weight:700; font-size:11px; opacity:.6; margin-bottom:1px; } .reply-quote-block .rq-t { opacity:.7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 
         .reply-preview-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12px; }
         .chat-collect-bar { display: none; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-sub); }
@@ -192,7 +191,7 @@
         #divZoom { position:fixed; inset:0; z-index:4000; background:rgba(10,10,16,.86); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
         #divZoom .zc { position:relative; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6); } #divZoom .zt { color:#fff; font-size:17px; font-weight:bold; margin-top:14px; } #divZoom .zk { color:#d8d8e4; font-size:13px; margin-top:4px; text-align:center; max-width:340px; line-height:1.5; } #divZoom .zh { color:#9a9ab0; font-size:11px; margin-top:10px; }
         .ccard { min-width:200px; max-width:260px; font-size:13px; line-height:1.55; text-align:left; } .ccard .cc-sec + .cc-sec { margin-top:8px; padding-top:7px; border-top:1px dashed rgba(127,127,127,.45); } .ccard .cc-h { font-size:11.5px; font-weight:bold; opacity:.75; margin-bottom:3px; letter-spacing:.04em; }
-        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; align-items:center; gap:8px; padding:5px 10px 5px 6px; margin:5px 0; border-radius:12px; background:color-mix(in srgb, var(--primary) 15%, transparent); border:1px solid color-mix(in srgb, var(--primary) 38%, transparent); } .ccard .cc-opt b { flex:0 0 auto; width:19px; height:19px; border-radius:50%; border:1.5px solid var(--primary); color:inherit; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
+        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; align-items:baseline; gap:10px; padding:7px 2px; border-top:1px solid color-mix(in srgb, currentColor 14%, transparent); } .ccard .cc-opt b { flex:0 0 auto; width:16px; font-weight:800; opacity:.5; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
         .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
         .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
@@ -211,7 +210,7 @@
         .div-cupwrap { height:92px; position:relative; margin-top:6px; } .cup { position:absolute; left:50%; top:10px; margin-left:-44px; width:88px; height:78px; background:linear-gradient(160deg, var(--primary), var(--text-sub)); clip-path:polygon(14% 0, 86% 0, 100% 100%, 0 100%); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--bg); font-size:16px; transform-origin:50% 100%; transition:transform .45s, opacity .45s; } .cup.shake { animation:divCup .18s linear infinite; } .cup.lift { transform:translateY(-12px) rotate(-38deg) translateX(-34px); opacity:.25; } @keyframes divCup { 0% { transform:translate(-5px,0) rotate(-5deg); } 50% { transform:translate(5px,-9px) rotate(5deg); } 100% { transform:translate(-5px,0) rotate(-5deg); } }
         .div-hand { max-width:300px; margin:6px auto 4px; } .hpaper { fill:#e6d6b4; stroke:#8f7c56; stroke-width:2; } .hframe { fill:none; stroke:#c2b08c; stroke-width:1.5; } .hcloud ellipse { fill:#cfc2a4; opacity:.75; } .hring circle, .hring line { fill:none; stroke:#c6b690; stroke-width:1.2; } .hstar { fill:#a58a52; opacity:.7; } .hxf { fill:#efe3c6; stroke:#8a7650; stroke-width:2.2; stroke-linejoin:round; opacity:.9; } .hf2 { fill:none; stroke:#3b2f22; stroke-width:3; stroke-linecap:round; } .hti text { font-size:24px; fill:#5a4a30; font-family:'STKaiti','KaiTi','Kaiti SC','Songti SC','Noto Serif CJK SC',serif; opacity:.85; } .hf { fill:#f1e4c6; stroke:#3b2f22; stroke-width:3; stroke-linejoin:round; } .hc { fill:none; stroke:#8a7458; stroke-width:2.6; stroke-linecap:round; } .hj { display:none; } .hwash { fill:url(#hwg); stroke:none; } .hbrush { fill:none; stroke:#3b2f22; stroke-width:7; stroke-linejoin:round; opacity:.18; } .hxy { fill:none; stroke:#8a7650; stroke-width:2; stroke-linecap:round; opacity:.85; } .hsh { fill:none; stroke:#6e6048; stroke-width:2.2; stroke-linecap:round; opacity:.55; } .hn { font-size:22px; fill:#6a5a40; letter-spacing:4px; font-family:'STKaiti','KaiTi','Kaiti SC','Songti SC','Noto Serif CJK SC',serif; } .hp circle { fill:#f6edd8; stroke:#8a7458; stroke-width:2; transition:all .15s; } .hp text { font-size:21px; fill:#3b2f22; font-family:'STKaiti','KaiTi','Kaiti SC','Songti SC','Noto Serif CJK SC',serif; font-weight:bold; } .hp text.tag { font-size:23px; fill:#6a5a40; font-weight:bold; } .hp.on circle { fill:#3b2f22; stroke:#3b2f22; } .hp.on text { fill:#fbf3e2; } .hp.fix circle { stroke:#3b2f22; stroke-width:4; } .hp.last circle { fill:#3b2f22; } .hp.last text:not(.tag) { fill:#fbf3e2; } .hp.on text.tag, .hp.last text.tag { fill:#6a5a40; } .hseal rect { fill:#b0503a; opacity:.9; } .hseal text { font-size:18px; fill:#f6e8d0; } .hd { fill:#4a3b2c; opacity:0; transition:cx .28s ease, cy .28s ease; }
         .div-pop { position:absolute; left:0; right:0; top:calc(100% - 4px); z-index:30; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:10px; flex-wrap:wrap; gap:8px; box-shadow:0 10px 28px rgba(0,0,0,.4); } .div-pop button { border:1px solid var(--border); background:var(--bg); color:var(--text-main); border-radius:12px; padding:8px 12px; font-size:13px; display:flex; flex-direction:column; align-items:center; line-height:1.25; } .div-pop button small { font-size:10px; color:var(--text-sub); } .div-pop button.main { background:var(--primary); color:var(--bg); border-color:transparent; } .div-pop button.main small { color:inherit; opacity:.75; }
-        .div-table { position:relative; margin:8px 0 6px; overflow:hidden; touch-action:none; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 1px 1px rgba(0,0,0,.12); will-change:transform; }
+        .div-table { position:relative; margin:8px 0 6px; overflow:hidden; touch-action:pan-y; } .div-table .tcs { position:absolute; left:50%; top:50%; } .tc { position:absolute; left:0; top:0; border-radius:4px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 1px 1px rgba(0,0,0,.12); will-change:transform; }
         .div-table .pile { position:absolute; top:6px; bottom:6px; transform:translateX(-50%); border:1.5px dashed transparent; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; cursor:pointer; padding-bottom:2px; } .div-table .pile span { font-size:11px; color:var(--text-sub); } .div-table .pile b { position:absolute; top:4px; width:22px; height:22px; border-radius:50%; background:var(--primary); color:var(--bg); font-size:13px; display:none; align-items:center; justify-content:center; } .div-table .pile.on b { display:flex; } .div-table .pile:not(.on) { border-color:var(--primary); animation:divPulse 1.4s infinite; }
         .div-fan { display:block; overflow:visible; padding:0; position:relative; margin:6px 0 4px; user-select:none; -webkit-user-select:none; } .div-fan .fc { animation:none; margin:0; position:absolute; border-radius:6px; box-sizing:border-box; border:1.5px solid var(--primary); background:repeating-linear-gradient(45deg, var(--primary) 0 2px, transparent 2px 5px), var(--bg); box-shadow:0 0 1px rgba(0,0,0,.2); cursor:pointer; } .div-fan .fc.up { box-shadow:0 2px 6px rgba(0,0,0,.18); border-width:2px; }
         .div-tray { position:relative; height:156px; margin:10px 0 8px; border-radius:16px; overflow:hidden; background:none; border:1px dashed rgba(120,110,150,.35); touch-action:none; } .gd { position:absolute; left:0; top:0; width:54px; height:54px; will-change:transform; transform:translate3d(-100px,0,0); } .gsh { position:absolute; left:0; top:0; width:44px; height:14px; border-radius:50%; background:radial-gradient(ellipse, rgba(40,30,60,.45), rgba(40,30,60,0) 70%); will-change:transform,opacity; transform:translate3d(-100px,0,0); pointer-events:none; } .gdr { position:absolute; inset:0; will-change:transform; } .gd .gs { position:absolute; left:19%; top:25%; width:62%; height:62%; display:block; color:#173a52; pointer-events:none; } .gd .gs svg { filter:drop-shadow(0 1px 0 rgba(255,255,255,.75)); } .gd.land { animation:divLand .5s ease-out; }
@@ -2043,7 +2042,7 @@
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
             // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
-            for (let i = 0; i < 900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.12 + Math.random() * 0.26 }); }
+            for (let i = 0; i < 1900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.12 + Math.random() * 0.26 }); }
             for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
@@ -2069,7 +2068,7 @@
               gal.bg.forEach(s => { const a = s.a * 0.85; bk[s.k * 6 + Math.min(5, Math.floor(a * 7))].push(s); });
               bk.forEach((arr, bi) => { if (!arr.length) return; ctx.fillStyle = SC[Math.floor(bi / 6)]; ctx.globalAlpha = ((bi % 6) + 0.5) / 7; ctx.beginPath(); arr.forEach(s => { const x = s.x * W, y = s.y * H, r = s.s * 0.5 + 0.3; ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, TAU); }); ctx.fill(); });
               ctx.globalAlpha = 1; }
-            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.3, _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
+            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.55, _Ry = _Rx * 0.4, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
             // 愿望星
@@ -2082,7 +2081,7 @@
             });
             // 光雾/星云光晕：逐像素直接算（不用 Chrome 的渐变，渐变自带抖动点阵会成“纹路”），低分辨率算好再平滑放大
             const S = 3, gw = Math.ceil(W / S), gh = Math.ceil(H / S), N = gw * gh, add = new Float32Array(N * 3), vl = new Float32Array(N);
-            const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25) * 1.3, Ry = Rx * 0.34, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
+            const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25) * 1.55, Ry = Rx * 0.4, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
             const sg = (d, st) => { for (let i = 1; i < st.length; i++) if (d <= st[i][0]) { const a0 = st[i - 1], a1 = st[i], f = (d - a0[0]) / (a1[0] - a0[0] || 1); return a0.slice(1).map((v, j) => v + (a1[j + 1] - v) * f); } return null; };
             // 通用：在 (x0,y0) 处、旋转 rot、纵向压缩 k、半径 r 的渐变；st=[[位置,r,g,b,a],...]；mode 0 叠加 1 压暗 2 罩(veil)
             const splat = (x0, y0, rot, k, r, st, mode) => {
@@ -2121,7 +2120,7 @@
                 const oc = cc.cv.getContext("2d"); oc.setTransform(dpr, 0, 0, dpr, 0, 0); galLayer(oc, W, H, t);
             }
             ctx.drawImage(cc.cv, 0, 0, W, H);
-            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.3, _Ry = _Rx * 0.34, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
+            const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.55, _Ry = _Rx * 0.4, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000017 / (0.22 + r);
             ctx.globalCompositeOperation = "lighter";
@@ -3000,7 +2999,7 @@
             // 守卫记录用同一个网址（不带 #g1 这类后缀），层号 i 存在 state 里：
             // 刷新/页面被系统回收重载（比如选完相册图片回来）时，沿用已有的守卫层，不再往历史里追加记录。
             // 层数 depth 一律以当前所在记录的 state.i 为准，不自己累加：浏览器跳过了没有用户操作时塞进去的记录，也能自动校正。
-            let depth = 0; const TARGET = 12; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
+            let depth = 0; const TARGET = 2; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
             const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, ""); depth++; } catch (e) { } };
             { const hs = history.state;
               if (hs && hs.guard) depth = hs.i || 1;
@@ -3010,11 +3009,10 @@
             // 浏览器会忽略“没有用户操作就加入的历史记录”，所以在用户触摸时、以及每次抬手时都把守卫补满
             let exiting = false, touched = false, exitN = 0, exitT = 0;
             const ensureGuard = () => { touched = true; while (depth < TARGET) pushGuard(); };
-            window.addEventListener("beforeunload", e => { if (touched && !exiting) { e.preventDefault(); e.returnValue = ""; } });
+            
             ["pointerdown", "touchstart", "pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
             const topUp = () => { const hs = history.state; depth = hs && hs.guard ? (hs.i || 1) : 0; if (touched || hasActivation()) { while (depth < TARGET) pushGuard(); } };
             window.addEventListener("pageshow", topUp); document.addEventListener("visibilitychange", () => { if (!document.hidden) topUp(); });
-            setInterval(() => { if (!exiting && depth < 4 && (touched || hasActivation())) topUp(); }, 1500);
             window.addEventListener("popstate", (e) => {
                 const st = e.state; depth = st && st.guard ? (st.i || 1) : 0;
                 // 补守卫：有过用户操作时补满；还没有时只补一层（连塞多层会被浏览器当成“无操作记录”一次跳过）
@@ -3137,7 +3135,9 @@
             try { if (typeof closeGamesPage === "function") { gameStopCurrent(); herSpeakStop("game"); herSpeakStop("lib"); } } catch (e) {}
             openMainChatView();
         }
+        function gameDnd() { const g = document.getElementById("gamesFullPage"); return !!(g && g.classList.contains("open") && typeof gameCurrent !== "undefined" && gameCurrent); }
         function showInAppBanner(title, body, onTap) {
+            if (gameDnd()) return;
             let banner = document.getElementById("inAppNotifBanner");
             if (!banner) {
                 banner = document.createElement("div");
@@ -3717,6 +3717,7 @@
         }
 
         function triggerIncomingCallMock() {
+            if (gameDnd()) return;
             if (document.getElementById("callBannerBar").style.display === "flex" || document.getElementById("incomingCallScreen").style.display === "flex") return;
             initAudio();
             document.getElementById("incomingCallAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
@@ -4601,7 +4602,7 @@
                         return `<div class="system-msg" style="margin:8px auto;">${(it.text || '').replace(/</g,'&lt;')}</div>`;
                     }
                     const inner = it.img ? `<img src="${it.img}" class="msg-img">` : `<span>${(it.text || '').replace(/</g,'&lt;')}</span>`;
-                    const quote = it.replyTo ? `<div class="reply-quote-block"><div class="rq-a">↩ ${String(it.replyTo.author || '').replace(/</g,'&lt;')}</div><div class="rq-t">${String(it.replyTo.text || '').replace(/</g,'&lt;')}</div></div>` : "";
+                    const quote = it.replyTo ? `<div class="reply-quote-block"><div class="rq-a">${String(it.replyTo.author || '').replace(/</g,'&lt;')}</div><div class="rq-t">${String(it.replyTo.text || '').replace(/</g,'&lt;')}</div></div>` : "";
                     return `<div class="memory-bubble-row ${it.me ? 'my' : 'other'}"><div class="msg ${it.me ? 'my' : 'other'} memory-bubble">${quote}${inner}</div></div>`;
                 }).join("");
                 const isExpanded = expandedMemoryIds.has(mem.id);
@@ -5565,7 +5566,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     if (m.proactive && !m.me) { const st = document.createElement("i"); st.className = "pro-star"; st.innerText = "★"; box.appendChild(st); }
                     if (m.replyTo) {
                         const q = document.createElement("div"); q.className = "reply-quote-block";
-                        q.innerHTML = `<div class="rq-a">↩ ${m.replyTo.author}</div><div class="rq-t">${m.replyTo.text}</div>`;
+                        q.innerHTML = `<div class="rq-a">${m.replyTo.author}</div><div class="rq-t">${m.replyTo.text}</div>`;
                         box.appendChild(q);
                     }
                     if (m.dcard) { const d = document.createElement("div"); d.innerHTML = chatCardHtml(m.dcard); box.appendChild(d.firstElementChild); } else if (m.text) { const txt = document.createElement("span"); txt.innerText = m.text; box.appendChild(txt); } else if (m.img) { const img = document.createElement("img"); img.src = m.img; img.className = "msg-img"; box.appendChild(img); }
@@ -5835,7 +5836,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             fan.innerHTML = s.order.map((v, k) => `<div class="fc" data-pos="${k}" style="width:${fw}px;height:${fch}px;left:calc(50% - ${fw / 2}px);top:26px;transform-origin:50% ${R}px;transform:rotate(0deg)"></div>`).join("");
             s.fanEls = {}; fan.querySelectorAll(".fc").forEach(e => s.fanEls[+e.dataset.pos] = e); fan.getBoundingClientRect();
             fan.onpointerdown = e => { if (s.busy || s.stage !== "fan") return; try { fan.setPointerCapture(e.pointerId); } catch (x) { } divHover(e); }; fan.onpointermove = e => { if (e.buttons || e.pointerType === "touch" || e.pointerType === "pen") divHover(e); else divHover(e); };
-            fan.onpointerup = e => { const k = s.hover; divHoverSet(-1); if (k >= 0 && !s.busy && s.stage === "fan") divDraw(false, s.left[k]); }; fan.onpointercancel = () => divHoverSet(-1); fan.style.touchAction = "none";
+            fan.onpointerup = e => { const k = s.hover; divHoverSet(-1); if (k >= 0 && !s.busy && s.stage === "fan") divDraw(false, s.left[k]); }; fan.onpointercancel = () => divHoverSet(-1); fan.style.touchAction = "pan-y";
             divSt(`牌铺成扇形了。手指在牌扇上滑动，牌会抬起，松手就抽这一张（共 ${s.total} 张）`); fanLayout(true); await wait(600);
         }
         function fanLayout(stagger) { const s = divS, n = s.left.length; s.left.forEach((pos, k) => { const e = s.fanEls[pos], a = n > 1 ? -s.span + 2 * s.span * k / (n - 1) : 0; e.dataset.a = a; e.style.zIndex = k; e.style.transition = `transform .45s cubic-bezier(.2,.8,.3,1) ${stagger ? Math.min(k * 8, 400) : 0}ms`; e.style.transform = `rotate(${a}deg)${s.hover === k ? " translateY(-26px)" : ""}`; }); }
@@ -6087,7 +6088,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         function chatCardHtml(c) {
             const E = escapeHtml;
-            if (c.kind === "ask") return `<div class="ccard"><div class="cc-sec"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-sec">${c.opts.map((o, i) => `<div class="cc-opt"><b>${i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
+            if (c.kind === "ask") return `<div class="ccard"><div class="cc-sec"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-sec">${c.opts.map((o, i) => `<div class="cc-opt"><b>${String.fromCharCode(65 + i)}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
             let h = `<div class="ccard">`;
             h += `<div class="cc-sec"><div class="cc-h">❓ 问题</div><div class="cc-q">${c.q ? E(c.q) : "（没有写问题）"}</div></div>`;
             if (c.cards && c.cards.length) h += `<div class="cc-sec"><div class="cc-h">🃏 牌面 · ${E(c.title)}</div>${recLayoutHtml(c.cards, 230)}</div>`;
@@ -8274,7 +8275,7 @@ treaty:条约`
         const frogVocab = k => ((k === "tem8" ? FROG_TEM8 : FROG_RAW[k]) || FROG_TEM8).split("\n").map(l => { const i = l.indexOf(":"); return [l.slice(0, i).trim(), l.slice(i + 1)]; }).filter(w => /^[a-z]+$/.test(w[0])).filter((w, i, a) => a.findIndex(v => v[0] === w[0]) === i);
         let frNoFocus = false;
         function gameFrog() {
-            if (!document.getElementById("frbankCss")) { const st = document.createElement("style"); st.id = "frbankCss"; st.textContent = `.frbank { margin:10px 16px 0; border:1px solid var(--border); border-radius:14px; background:var(--panel); overflow:hidden } .frbank summary { list-style:none; cursor:pointer; padding:9px 14px; font-size:13px; color:var(--text-sub); display:flex; align-items:center; justify-content:center; gap:2px } .frbank summary::-webkit-details-marker { display:none } .frbank summary b { color:var(--text-main) } .frbank summary span { font-size:11px; opacity:.7 } .frbank summary::after { content:"▾"; margin-left:8px; transition:transform .2s } .frbank[open] summary::after { transform:rotate(180deg) } .frb-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:4px 12px 12px } .frb { border:1.5px solid var(--border); background:transparent; color:var(--text-main); border-radius:12px; padding:8px 4px; display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer } .frb i { font-style:normal; font-size:13px; font-weight:600 } .frb em { font-style:normal; font-size:10.5px; opacity:.65 } .frb.on { border-color:var(--primary); background:var(--primary); color:var(--bg) } `; document.head.appendChild(st); }
+            if (!document.getElementById("frbankCss")) { const st = document.createElement("style"); st.id = "frbankCss"; st.textContent = `.frbank-btn { border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:20px; padding:8px 16px; font-size:13px; cursor:pointer } .frbank-btn span { font-size:11px; opacity:.65; margin:0 2px } .frbank { margin:10px 16px 0; border:1px solid var(--border); border-radius:14px; background:var(--panel); overflow:hidden } .frbank summary { list-style:none; cursor:pointer; padding:9px 14px; font-size:13px; color:var(--text-sub); display:flex; align-items:center; justify-content:center; gap:2px } .frbank summary::-webkit-details-marker { display:none } .frbank summary b { color:var(--text-main) } .frbank summary span { font-size:11px; opacity:.7 } .frbank summary::after { content:"▾"; margin-left:8px; transition:transform .2s } .frbank[open] summary::after { transform:rotate(180deg) } .frb-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:4px 12px 12px } .frb { border:1.5px solid var(--border); background:transparent; color:var(--text-main); border-radius:12px; padding:8px 4px; display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer } .frb i { font-style:normal; font-size:13px; font-weight:600 } .frb em { font-style:normal; font-size:10.5px; opacity:.65 } .frb.on { border-color:var(--primary); background:var(--primary); color:var(--bg) } `; document.head.appendChild(st); }
             const N = 8, body = document.getElementById("gameBody");
             const cfg = { easy: { time: 30000, show: 2, his: [11000, 16000], p: 0.75 }, normal: { time: 21000, show: 1, his: [8000, 12000], p: 0.85 }, hard: { time: 14000, show: 0, his: [5500, 8500], p: 0.93 } }[gameDiff] || { time: 21000, show: 1, his: [8000, 12000], p: 0.85 };
             body.innerHTML = `<div class="game-msg" id="gameMsg">在荷叶上拼出英文，小青蛙才会往前跳</div><canvas id="frCv" class="game-canvas"></canvas>
@@ -8283,7 +8284,7 @@ treaty:条约`
               <div id="frTime" style="height:5px;border-radius:3px;background:rgba(127,127,127,.25);margin:6px 20px"><div id="frBar" style="height:100%;width:100%;border-radius:3px;background:#6fcf6a"></div></div>
               <input id="frInp" type="text" inputmode="latin" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" style="position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:0">
               <div style="text-align:center;margin-top:6px"><button class="btn btn-outline" id="frDel" style="padding:4px 14px;font-size:13px">⌫ 退格</button> <button class="btn btn-outline" id="frSkip" style="padding:4px 14px;font-size:13px">不会，跳过（掉水里）</button></div>
-              <details class="frbank"><summary>📚 <b>${(FROG_BANK_NAMES.find(b => b[0] === (db.frogBank || "tem8")) || FROG_BANK_NAMES[0])[1]}</b>　<span>${frogVocab(db.frogBank || "tem8").length} 词</span></summary><div class="frb-grid">${FROG_BANK_NAMES.map(b => `<button class="frb${b[0] === (db.frogBank || "tem8") ? " on" : ""}" data-bank="${b[0]}"><i>${b[1]}</i><em>${frogVocab(b[0]).length} 词</em></button>`).join("")}</div></details><div id="gameEnd"></div>`;
+              <div style="text-align:center;margin-top:10px"><button class="frbank-btn" id="frBankBtn">📚 <b>${(FROG_BANK_NAMES.find(b => b[0] === (db.frogBank || "tem8")) || FROG_BANK_NAMES[0])[1]}</b> <span>${frogVocab(db.frogBank || "tem8").length} 词</span> ▾</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("frCv"), ctx = cv.getContext("2d"), inp = document.getElementById("frInp");
             const W = Math.min(body.clientWidth - 24, 420), H = Math.max(260, Math.min(330, body.clientHeight - 250)), dpr = window.devicePixelRatio || 1;
             cv.style.width = W + "px"; cv.style.height = H + "px"; cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
@@ -8329,9 +8330,15 @@ treaty:条约`
                 else { let p = 0; while (p < t.length && raw[p] === t[p]) p++; let q = 0; while (q < t.length - p && raw[raw.length - 1 - q] === t[t.length - 1 - q]) q++; t = (t + raw.slice(p, raw.length - q).replace(/[^a-z]/g, "")).slice(0, L); }
                 if (t.length > typed.length) gameSfx("type"); typed = t; sync(); check();
             });
-            { const dt = body.querySelector(".frbank"); dt.querySelector("summary").addEventListener("pointerdown", () => { try { inp.blur(); } catch (x) { } }); dt.addEventListener("toggle", () => { if (dt.open) { try { inp.blur(); } catch (x) { } setTimeout(() => { try { dt.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (x) { } }, 120); } }); }
+            document.getElementById("frBankBtn").onclick = () => {
+                try { inp.blur(); } catch (x) { } const old = document.getElementById("frBankOv"); if (old) old.remove();
+                const ov = document.createElement("div"); ov.id = "frBankOv"; ov.style.cssText = "position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box";
+                ov.innerHTML = `<div style="background:var(--panel);color:var(--text-main);border:1px solid var(--border);border-radius:18px;padding:16px 14px 14px;width:100%;max-width:340px"><div style="text-align:center;font-weight:700;margin-bottom:12px">选择词库</div><div class="frb-grid" style="padding:0">${FROG_BANK_NAMES.map(b => `<button class="frb${b[0] === (db.frogBank || "tem8") ? " on" : ""}" data-bank="${b[0]}"><i>${b[1]}</i><em>${frogVocab(b[0]).length} 词</em></button>`).join("")}</div></div>`;
+                ov.onclick = e => { if (e.target === ov) ov.remove(); };
+                ov.querySelectorAll("[data-bank]").forEach(bt => bt.onclick = () => { ov.remove(); if ((db.frogBank || "tem8") === bt.dataset.bank) return; db.frogBank = bt.dataset.bank; saveData(); frNoFocus = true; gameCleanup(); gameFrog(); });
+                document.body.appendChild(ov);
+            };
             document.getElementById("frDel").onclick = () => { if (over || locked || paused) return; typed = typed.slice(0, -1); sync(); focusIt(); };
-            body.querySelectorAll("[data-bank]").forEach(b => b.onclick = () => { db.frogBank = b.dataset.bank; saveData(); frNoFocus = true; try { inp.blur(); } catch (x) { } gameCleanup(); gameFrog(); });
             const focusIt = () => { try { inp.focus(); } catch (e) { } };
             body.addEventListener("click", e => { if (!e.target.closest("button, details")) focusIt(); });
             document.getElementById("frSkip").onclick = () => { if (over || locked || paused) return; fall("跳过了，答案：" + cur[0]); };
