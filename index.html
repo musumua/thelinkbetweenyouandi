@@ -191,7 +191,7 @@
         #divZoom { position:fixed; inset:0; z-index:4000; background:rgba(10,10,16,.86); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
         #divZoom .zc { position:relative; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6); } #divZoom .zt { color:#fff; font-size:17px; font-weight:bold; margin-top:14px; } #divZoom .zk { color:#d8d8e4; font-size:13px; margin-top:4px; text-align:center; max-width:340px; line-height:1.5; } #divZoom .zh { color:#9a9ab0; font-size:11px; margin-top:10px; }
         .ccard { min-width:200px; max-width:260px; font-size:13px; line-height:1.55; text-align:left; } .ccard .cc-sec + .cc-sec { margin-top:8px; padding-top:7px; border-top:1px dashed rgba(127,127,127,.45); } .ccard .cc-h { font-size:11.5px; font-weight:bold; opacity:.75; margin-bottom:3px; letter-spacing:.04em; }
-        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; align-items:baseline; gap:10px; padding:7px 2px; border-top:1px solid color-mix(in srgb, currentColor 14%, transparent); } .ccard .cc-opt b { flex:0 0 auto; width:16px; font-weight:800; opacity:.5; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
+        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; align-items:center; gap:8px; padding:5px 10px 5px 6px; margin:5px 0; border-radius:12px; background:color-mix(in srgb, var(--primary) 15%, transparent); border:1px solid color-mix(in srgb, var(--primary) 38%, transparent); } .ccard .cc-opt b { flex:0 0 auto; width:19px; height:19px; border-radius:50%; border:1.5px solid var(--primary); color:inherit; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
         .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
         .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
@@ -1405,6 +1405,7 @@
                     <h3>数据备份管理</h3>
                     <div class="responsive-backup-row">
                         <button class="btn btn-outline" onclick="exportDataBackup()">导出备份</button>
+                        <button class="btn btn-outline" onclick="exportDataBackup(true)">导出完整备份</button>
                         <button class="btn btn-outline" onclick="importDataBackup()">恢复备份</button>
                     </div>
                     <div class="responsive-backup-row" style="margin-top:8px;">
@@ -2042,7 +2043,7 @@
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
             // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
-            for (let i = 0; i < 1900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.22 + (1 - rr) * 0.45); parts.push({ r: rr, th, s: 1, a: 0.12 + Math.random() * 0.26 }); }
+            for (let i = 0; i < 1900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.3 + (1 - rr) * 0.5); parts.push({ r: rr, th, s: 1, a: 0.16 + Math.random() * 0.3 }); }
             for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
@@ -2097,10 +2098,11 @@
             };
             const br = 0.95, R = Math.max(W, H), lin = (c, a) => [[0, c[0], c[1], c[2], a], [1, c[0], c[1], c[2], 0]];
             splat(cx, cy, -0.36, 0.55, Math.min(W * 0.62, H * 1.4), [[0, 6, 10, 32, 0.88], [0.5, 6, 10, 32, 0.6], [1, 6, 10, 32, 0]], 2); // 群星罩在星云后面
-            splat(cx, cy, 0, 1, R * 0.55, lin([40, 62, 140], 0.26 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 96, 190], 0.12 * br), 0);
+            splat(cx, cy, 0, 1, R * 0.55, lin([40, 62, 140], 0.11 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 96, 190], 0.045 * br), 0);
             splat(W * 0.2, H * 0.15, 0, 1, R * 0.36, lin([40, 48, 110], 0.045), 0); splat(W * 0.85, H * 0.9, 0, 1, R * 0.4, lin([56, 40, 112], 0.05), 0);
-            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.38], [0.35, 128, 134, 184, 0.27], [0.7, 92, 102, 156, 0.11], [1, 60, 76, 140, 0]], 0);
-            splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.01], [0.8, 96, 108, 190, 0.022], [1, 80, 90, 180, 0]], 0);
+            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.34], [0.3, 128, 134, 184, 0.16], [0.65, 92, 102, 156, 0.05], [1, 60, 76, 140, 0]], 0);
+            splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.004], [0.8, 96, 108, 190, 0.01], [1, 80, 90, 180, 0]], 0);
+            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 90; k++) { const rr = 0.3 + k / 90 * 0.68, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.09, th = arm * Math.PI + rr * 4.2 + jit, [x, y] = pos(rr, th + omega(rr) * t), f = Math.pow(Math.max(0, 1 - rr * 0.85), 0.8), c = [214 - rr * 110, 180 - rr * 52, 140 + rr * 50]; splat(x, y, 0, 1, Rx * (0.06 + 0.03 * (1 - rr)), lin(c, 0.05 * f), 0); }
             gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), c = q.c.split(",").map(Number); splat(x, y, 0, 1, q.s * Rx, lin(c, q.a * Math.max(0, 1.05 - q.r) * 0.8), 0); });
             gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), fa = Math.pow(Math.max(0, 1 - q.r), 1.6); splat(x, y, 0, 1, q.s * 3, [[0, 255, 255, 255, 0.16 * fa], [0.4, 255, 255, 255, 0.04 * fa], [1, 255, 255, 255, 0]], 0); });
             splat(cx, cy, ph, 0.62, Rx * 0.27, [[0, 255, 244, 222, 0.95], [0.12, 255, 222, 170, 0.7], [0.45, 224, 176, 120, 0.2], [1, 210, 160, 110, 0]], 0);
@@ -3135,7 +3137,7 @@
             try { if (typeof closeGamesPage === "function") { gameStopCurrent(); herSpeakStop("game"); herSpeakStop("lib"); } } catch (e) {}
             openMainChatView();
         }
-        function gameDnd() { const g = document.getElementById("gamesFullPage"); return !!(g && g.classList.contains("open") && typeof gameCurrent !== "undefined" && gameCurrent); }
+        function gameDnd() { const g = document.getElementById("gamesFullPage"); return !!(g && g.classList.contains("open")); }
         function showInAppBanner(title, body, onTap) {
             if (gameDnd()) return;
             let banner = document.getElementById("inAppNotifBanner");
@@ -4417,15 +4419,16 @@
             syncProfileUI(); applyHomeWallpaperUI(); applyBgUI(); renderCardTabPanel(); renderChat();
             alert("压缩完成！建议刷新一下页面～");
         }
-        async function exportDataBackup() {
+        const BACKUP_SKIP = ["wishStars", "wishNote", "dateRecords", "dateGroups", "datePlaces", "datePlacesSeeded", "dateOngoing", "dateAutoDay", "gameStats", "frogBank", "pyqPosts", "pyqCover", "unreadPyq", "divRecords", "books"];
+        async function exportDataBackup(full) {
             await saveDataImmediate();
             try {
-                const jsonStr = JSON.stringify(db);
-                const blob = new Blob([jsonStr], { type: "application/json" });
+                let obj = db; if (!full) { obj = {}; Object.keys(db).forEach(k => { if (!BACKUP_SKIP.includes(k)) obj[k] = db[k]; }); }
+                const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
                 const url = URL.createObjectURL(blob);
                 const downloadAnchor = document.createElement('a');
                 downloadAnchor.href = url;
-                downloadAnchor.download = `交换日记_备份_${new Date().toLocaleDateString()}.json`;
+                downloadAnchor.download = `亲爱的TA_${full ? "完整备份" : "备份"}_${new Date().toLocaleDateString().replace(/\//g, "-")}.json`;
                 document.body.appendChild(downloadAnchor);
                 downloadAnchor.click();
                 downloadAnchor.remove();
@@ -4539,15 +4542,18 @@
         function openStatsPage() { toggleSidebar(false); renderStatsPage(); document.getElementById("statsFullPage").classList.add("open"); }
         function closeStatsPage() { document.getElementById("statsFullPage").classList.remove("open"); }
         function getOtherWordFrequency() {
-            const freq = {};
-            db.chat.forEach(m => {
-                if (m.me === false && m.text) {
-                    const sentence = m.text.trim();
-                    if (!sentence) return;
-                    freq[sentence] = (freq[sentence] || 0) + 1;
-                }
+            const STOP = new Set("的 了 我 你 他 她 它 是 在 不 有 就 也 都 吗 呢 吧 啊 呀 哦 嗯 哈 呃 和 与 或 但 而 这 那 个 一 么 什么 怎么 一个 没有 自己 我们 你们 他们 可以 因为 所以 如果 还是 已经 一下 一点 现在 今天 然后 觉得 知道 真的 好的 好吧 好呀 哈哈 哈哈哈".split(" "));
+            const msgs = db.chat.filter(m => m.me === false && m.text && !m.type && !m.isNudge).slice(-1200), freq = {};
+            const seg = (typeof Intl !== "undefined" && Intl.Segmenter) ? new Intl.Segmenter("zh", { granularity: "word" }) : null;
+            msgs.forEach(m => {
+                const t = String(m.text).replace(/[\s\d]+/g, " ");
+                let words = [];
+                if (seg) { for (const x of seg.segment(t)) if (x.isWordLike) words.push(x.segment); }
+                else { (t.match(/[\u4e00-\u9fa5]+/g) || []).forEach(r => { for (let i = 0; i + 2 <= r.length; i++) words.push(r.slice(i, i + 2)); }); }
+                const used = new Set();
+                words.forEach(w => { w = w.trim().toLowerCase(); if (w.length < 2 || STOP.has(w) || !/[\u4e00-\u9fa5a-z]/.test(w) || used.has(w)) return; used.add(w); freq[w] = (freq[w] || 0) + 1; });
             });
-            return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            return Object.entries(freq).sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).slice(0, 10);
         }
         function renderStatsPage() {
             // 总联络数：所有真实往来的气泡（排除系统提示/写信提示等）
@@ -4569,7 +4575,7 @@
 
             // 他的高频词 TOP10
             const titleEl = document.getElementById("statsWordTitle");
-            if (titleEl) titleEl.innerText = `高频词TOP10`;
+            if (titleEl) titleEl.innerText = `高频词TOP10（近期聊天）`;
             const words = getOtherWordFrequency();
             const listBox = document.getElementById("statsWordList");
             if (!listBox) return;
@@ -6088,7 +6094,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         function chatCardHtml(c) {
             const E = escapeHtml;
-            if (c.kind === "ask") return `<div class="ccard"><div class="cc-sec"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-sec">${c.opts.map((o, i) => `<div class="cc-opt"><b>${String.fromCharCode(65 + i)}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
+            if (c.kind === "ask") return `<div class="ccard"><div class="cc-sec"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-sec">${c.opts.map((o, i) => `<div class="cc-opt"><b>${i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
             let h = `<div class="ccard">`;
             h += `<div class="cc-sec"><div class="cc-h">❓ 问题</div><div class="cc-q">${c.q ? E(c.q) : "（没有写问题）"}</div></div>`;
             if (c.cards && c.cards.length) h += `<div class="cc-sec"><div class="cc-h">🃏 牌面 · ${E(c.title)}</div>${recLayoutHtml(c.cards, 230)}</div>`;
@@ -8303,9 +8309,9 @@ treaty:条约`
                 const lane = (col, pos, tgt, fall, isMe) => {
                     for (let i = 1; i < N; i++) { if (i === tgt) continue; const x = xOf(col, i), y = yOf(i), sc = scOf(i); ctx.fillStyle = "#3f9d56"; ctx.beginPath(); ctx.ellipse(x, y + 2, 17 * sc, 7.5 * sc, 0, 0.25, 6.0); ctx.lineTo(x, y + 2); ctx.fill(); ctx.fillStyle = "#58b86a"; ctx.beginPath(); ctx.ellipse(x, y, 15 * sc, 6 * sc, 0, 0.25, 6.0); ctx.lineTo(x, y); ctx.fill(); }
                     if (tgt <= N) { // 前方这片大荷叶：你要打的字就写在上面
-                        const cn = isMe ? cur[1].split(/[,，;；]/)[0].slice(0, 8) : "", pw = isMe ? Math.min(W * 0.24, Math.max(44, cur[0].length * 5.4 + 10, cn.length * 6.6 + 12)) : 34, ry = isMe ? 23 : 15, x = xOf(col, tgt) + (isMe && shake > 0 ? Math.sin(now / 25) * 4 : 0), y = yOf(tgt);
+                        const cn = isMe ? cur[1].split(/[,，;；]/)[0].slice(0, 8) : "", pw = isMe ? Math.min(W * 0.24, Math.max(44, cur[0].length * 5.4 + 10, cn.length * 6.6 + 12)) : 34, ry = isMe ? 23 : 15, x = xOf(col, tgt) + (isMe && shake > 0 ? Math.sin(now / 25) * 4 : 0), y = yOf(tgt) - (isMe ? 12 : 0);
                         ctx.fillStyle = "#3f9d56"; ctx.beginPath(); ctx.ellipse(x, y + 3, pw, ry + 2, 0, 0.12, 6.16); ctx.lineTo(x, y + 3); ctx.fill(); ctx.fillStyle = "#6fcf7e"; ctx.beginPath(); ctx.ellipse(x, y, pw - 2, ry, 0, 0.12, 6.16); ctx.lineTo(x, y); ctx.fill();
-                        if (isMe) { ctx.font = "bold 13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#14391f"; ctx.fillText(cn, x, y - 5); ctx.font = "bold 16px 'Courier New',monospace"; const sw2 = 10, hk = Math.min(cfg.show, cur[0].length - 2), x0 = x - (cur[0].length * sw2) / 2 + sw2 / 2; for (let i = 0; i < cur[0].length; i++) { const ch = reveal ? cur[0][i] : typed[i]; if (ch) { ctx.fillStyle = reveal ? "#e0405a" : "#1c4a2a"; ctx.fillText(ch, x0 + i * sw2, y + 14); } else { if (i < hk) { ctx.fillStyle = "rgba(28,74,42,.35)"; ctx.fillText(cur[0][i], x0 + i * sw2, y + 14); } else { ctx.fillStyle = "rgba(28,74,42,.45)"; ctx.fillRect(x0 + i * sw2 - 3, y + 16, 6, 1.5); } } } }
+                        if (isMe) { ctx.font = "bold 13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#14391f"; ctx.fillText(cn, x, y - 6); ctx.font = "bold 16px 'Courier New',monospace"; const sw2 = 10, hk = Math.min(cfg.show, cur[0].length - 2), x0 = x - (cur[0].length * sw2) / 2 + sw2 / 2; for (let i = 0; i < cur[0].length; i++) { const ch = reveal ? cur[0][i] : typed[i]; if (ch) { ctx.fillStyle = reveal ? "#e0405a" : "#1c4a2a"; ctx.fillText(ch, x0 + i * sw2, y + 11); } else { if (i < hk) { ctx.fillStyle = "rgba(28,74,42,.35)"; ctx.fillText(cur[0][i], x0 + i * sw2, y + 11); } else { ctx.fillStyle = "rgba(28,74,42,.45)"; ctx.fillRect(x0 + i * sw2 - 3, y + 13, 6, 1.5); } } } }
                         else { ctx.font = "13px sans-serif"; ctx.fillStyle = "rgba(28,74,42,.6)"; ctx.textAlign = "center"; ctx.fillText("···", x, y + 4); }
                     }
                     const f0 = Math.floor(pos), fr = pos - f0, f1 = Math.min(N, f0 + 1), x = xOf(col, f0) + (xOf(col, f1) - xOf(col, f0)) * fr, y = yOf(f0) + (yOf(f1) - yOf(f0)) * fr - Math.sin(fr * Math.PI) * 16, sc = scOf(f0);
