@@ -192,7 +192,7 @@
         #divZoom { position:fixed; inset:0; z-index:4000; background:rgba(10,10,16,.86); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
         #divZoom .zc { position:relative; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6); } #divZoom .zt { color:#fff; font-size:17px; font-weight:bold; margin-top:14px; } #divZoom .zk { color:#d8d8e4; font-size:13px; margin-top:4px; text-align:center; max-width:340px; line-height:1.5; } #divZoom .zh { color:#9a9ab0; font-size:11px; margin-top:10px; }
         .ccard { min-width:200px; max-width:260px; font-size:13px; line-height:1.55; text-align:left; } .ccard .cc-sec + .cc-sec { margin-top:8px; padding-top:7px; border-top:1px dashed rgba(127,127,127,.45); } .ccard .cc-h { font-size:11.5px; font-weight:bold; opacity:.75; margin-bottom:3px; letter-spacing:.04em; }
-        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard.ask { min-width:0; max-width:260px; } .ccard.ask .cc-qbox { padding:0; color:inherit; } .ccard.ask .cc-q { font-size:15px; font-weight:700; line-height:1.5; } .ccard.ask .cc-opts { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; padding-top:9px; border-top:1px solid color-mix(in srgb, currentColor 16%, transparent); } .ccard.ask .cc-opt { display:inline-flex; align-items:center; gap:5px; padding:4px 12px 4px 8px; border-radius:999px; background:color-mix(in srgb, var(--primary) 24%, transparent); font-size:13.5px; line-height:1.4; } .ccard.ask .cc-opt b { font-size:11px; opacity:.55; font-weight:800; width:auto; height:auto; border:none; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
+        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard.ask { min-width:0; max-width:260px; } .ccard.ask .cc-qbox { padding:0; color:inherit; } .ccard.ask .cc-q { font-size:15px; font-weight:700; line-height:1.5; } .ccard.ask .cc-opts { display:flex; flex-direction:column; gap:6px; margin-top:10px; } .ccard.ask .cc-opt { display:flex; align-items:baseline; gap:8px; padding:6px 12px 6px 10px; border-left:3px solid var(--primary); border-radius:3px 12px 12px 3px; background:color-mix(in srgb,var(--primary) 16%,transparent); font-size:14px; line-height:1.45; } .ccard.ask .cc-opt b { font-size:12px; font-weight:800; opacity:.6; flex:none; border:none; width:auto; height:auto; background:none; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
         .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
         .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
@@ -2046,7 +2046,7 @@
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
             // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
-            for (let i = 0; i < 1900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.2) * 0.66, th = arm * Math.PI + rr * 4.2 + galG() * (0.3 + (1 - rr) * 0.5); parts.push({ r: rr, th, s: 1, a: 0.16 + Math.random() * 0.3 }); }
+            for (let i = 0; i < 2600; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.2) * 0.66, th = arm * Math.PI + rr * 4.2 + galG() * (0.5 + (1 - rr) * 0.75); parts.push({ r: rr, th, s: 1, a: 0.16 + Math.random() * 0.3 }); }
             for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.4) * 0.6, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
@@ -2075,7 +2075,7 @@
                 for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) { const dx = ix + 0.5 - x0, dy = iy + 0.5 - y0, d2 = (dx * dx + dy * dy) / (r * r); if (d2 >= 1) continue; const w = 1 - d2, a = a0 * w * w, i = iy * n + ix; P[i * 3] = P[i * 3] * (1 - a) + col[0] * a; P[i * 3 + 1] = P[i * 3 + 1] * (1 - a) + col[1] * a; P[i * 3 + 2] = P[i * 3 + 2] * (1 - a) + col[2] * a; A[i] = A[i] + a * (1 - A[i]); } };
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.2 + ((i * 37) % 100) / 100 * 0.42, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7 + galOm(rr) * age; blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [86, 108, 205] : [120, 112, 196], 0.05); }
             for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.16 + k / 110 * 0.5, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galOm(rr) * age, f = Math.pow(Math.max(0, 1 - rr * 1.15), 0.9);
-                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.07 + 0.03 * (1 - rr)), [190 - rr * 120, 172 - rr * 58, 150 + rr * 85], 0.09 * f); }
+                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.115 + 0.04 * (1 - rr)), [190 - rr * 120, 172 - rr * 58, 150 + rr * 85], 0.1 * f); }
             const d = B.im.data; for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { d[i * 4] = P[i * 3] / a; d[i * 4 + 1] = P[i * 3 + 1] / a; d[i * 4 + 2] = P[i * 3 + 2] / a; d[i * 4 + 3] = Math.min(255, a * 255); } else d[i * 4 + 3] = 0; }
             B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv;
         }
@@ -2239,11 +2239,11 @@
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
                 if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8");
-                    // 落地灯：灯罩向下撒出宽大的光锥 + 地面光池 + 灯罩光晕（光能照到沙发和墙面）
-                    for (let y = 12; y < 47; y++) { const half = 4 + (y - 12) * 0.62; R(6 - half, y, half * 2, 1, "rgba(255,214,130,.16)"); R(6 - half * 0.55, y, half * 1.1, 1, "rgba(255,226,150,.16)"); }
-                    E(12, 46, 26, 4, "rgba(255,220,140,.24)"); E(12, 46, 14, 2, "rgba(255,236,180,.22)"); E(26, 36, 20, 6, "rgba(255,220,140,.08)");
-                    for (let k = 1; k <= 4; k++) E(6, 9, 4 + k * 2.4, 3 + k * 1.6, "rgba(255,226,150,.11)");
-                    for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); R(x - 2, y + 1, 5, 5, "rgba(255,235,170,.10)"); R(x - 1, y + 2, 3, 8, "rgba(255,235,170,.05)"); }
+                    // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
+                    const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
+                    R(3, 7, 7, 4, "#fff2c4"); sp(6, 9, "#fffbe8", 1);
+                    for (let k = 4; k >= 1; k--) gE(6, 12, 3 + k * 3, 2 + k * 2.4, "rgba(255,226,150,.09)");
+                    gE(8, 44, 10, 2, "rgba(255,222,140,.12)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -6128,7 +6128,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         function chatCardHtml(c) {
             const E = escapeHtml;
-            if (c.kind === "ask") return `<div class="ccard ask"><div class="cc-qbox"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-opts">${c.opts.map((o, i) => `<div class="cc-opt"><b>${"①②③④⑤⑥⑦⑧⑨"[i] || i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
+            if (c.kind === "ask") return `<div class="ccard ask"><div class="cc-qbox"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-opts">${c.opts.map((o, i) => `<div class="cc-opt"><b>${"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[i] || i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
             let h = `<div class="ccard">`;
             h += `<div class="cc-sec"><div class="cc-h">❓ 问题</div><div class="cc-q">${c.q ? E(c.q) : "（没有写问题）"}</div></div>`;
             if (c.cards && c.cards.length) h += `<div class="cc-sec"><div class="cc-h">🃏 牌面 · ${E(c.title)}</div>${recLayoutHtml(c.cards, 230)}</div>`;
