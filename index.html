@@ -191,7 +191,7 @@
         #divZoom { position:fixed; inset:0; z-index:4000; background:rgba(10,10,16,.86); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
         #divZoom .zc { position:relative; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6); } #divZoom .zt { color:#fff; font-size:17px; font-weight:bold; margin-top:14px; } #divZoom .zk { color:#d8d8e4; font-size:13px; margin-top:4px; text-align:center; max-width:340px; line-height:1.5; } #divZoom .zh { color:#9a9ab0; font-size:11px; margin-top:10px; }
         .ccard { min-width:200px; max-width:260px; font-size:13px; line-height:1.55; text-align:left; } .ccard .cc-sec + .cc-sec { margin-top:8px; padding-top:7px; border-top:1px dashed rgba(127,127,127,.45); } .ccard .cc-h { font-size:11.5px; font-weight:bold; opacity:.75; margin-bottom:3px; letter-spacing:.04em; }
-        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-opt { display:flex; align-items:center; gap:8px; padding:5px 10px 5px 6px; margin:5px 0; border-radius:12px; background:color-mix(in srgb, var(--primary) 15%, transparent); border:1px solid color-mix(in srgb, var(--primary) 38%, transparent); } .ccard .cc-opt b { flex:0 0 auto; width:19px; height:19px; border-radius:50%; border:1.5px solid var(--primary); color:inherit; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
+        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard .cc-qbox { background:rgba(255,255,255,.26); border-radius:14px; padding:9px 12px; box-shadow:0 1px 2px rgba(0,0,0,.06); } .ccard .cc-opts { display:flex; flex-direction:column; gap:6px; margin-top:8px; } .ccard .cc-opt { display:flex; align-items:center; gap:9px; padding:7px 12px 7px 8px; border-radius:14px; background:rgba(255,255,255,.4); box-shadow:0 1px 2px rgba(0,0,0,.08); } .ccard .cc-opt b { flex:0 0 auto; width:21px; height:21px; border-radius:50%; background:var(--primary); color:var(--bg); font-weight:800; font-size:11px; display:flex; align-items:center; justify-content:center; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
         .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
         .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
@@ -2062,6 +2062,19 @@
             const w = { a: Math.random() * 6.283, r: Math.min(0.99, 0.35 + Math.pow(Math.random(), 0.5) * 0.65), ts: Date.now() };
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
+        // 旋转的星系盘：在“盘面坐标”里一次画好（旋臂光带 + 蓝色光晕 + 大片云），每帧只转角度再压扁成斜视图
+        function galBuildDisc(Rx) {
+            const S = 3, n = Math.ceil(2 * Rx / S), P = new Float32Array(n * n * 3), A = new Float32Array(n * n), u = Rx / S, c0 = n / 2;
+            const blob = (x0, y0, r, col, a0) => { const ix0 = Math.max(0, Math.floor(x0 - r)), ix1 = Math.min(n - 1, Math.ceil(x0 + r)), iy0 = Math.max(0, Math.floor(y0 - r)), iy1 = Math.min(n - 1, Math.ceil(y0 + r));
+                for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) { const d = Math.hypot(ix + 0.5 - x0, iy + 0.5 - y0) / r; if (d >= 1) continue; const w = 1 - d * d, a = a0 * w * w, i = iy * n + ix; P[i * 3] = P[i * 3] * (1 - a) + col[0] * a; P[i * 3 + 1] = P[i * 3 + 1] * (1 - a) + col[1] * a; P[i * 3 + 2] = P[i * 3 + 2] * (1 - a) + col[2] * a; A[i] = A[i] + a * (1 - A[i]); } };
+            blob(c0, c0, u * 0.98, [58, 90, 200], 0.2);
+            for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.25 + ((i * 37) % 100) / 100 * 0.75, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7; blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [86, 108, 205] : [120, 112, 196], 0.05); }
+            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.2 + k / 110 * 0.78, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit, f = Math.pow(Math.max(0, 1 - rr * 0.8), 0.9);
+                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.065 + 0.03 * (1 - rr)), [190 - rr * 120, 172 - rr * 58, 150 + rr * 85], 0.075 * f); }
+            const cv = document.createElement("canvas"); cv.width = cv.height = n; const im = new ImageData(n, n);
+            for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { im.data[i * 4] = P[i * 3] / a; im.data[i * 4 + 1] = P[i * 3 + 1] / a; im.data[i * 4 + 2] = P[i * 3 + 2] / a; im.data[i * 4 + 3] = Math.min(255, a * 255); } }
+            cv.getContext("2d").putImageData(im, 0, 0); return cv;
+        }
         function galLayer(ctx, W, H, t) {
             ctx.fillStyle = "#070a18"; ctx.fillRect(0, 0, W, H);
             if (!galSpr) { galSpr = document.createElement("canvas"); galSpr.width = galSpr.height = 24; const sc2 = galSpr.getContext("2d"), sg = sc2.createRadialGradient(12, 12, 0, 12, 12, 12); sg.addColorStop(0, "rgba(255,255,255,1)"); sg.addColorStop(0.3, "rgba(255,255,255,.85)"); sg.addColorStop(0.65, "rgba(255,255,255,.22)"); sg.addColorStop(1, "rgba(255,255,255,0)"); sc2.fillStyle = sg; sc2.fillRect(0, 0, 24, 24); }
@@ -2071,15 +2084,7 @@
               ctx.globalAlpha = 1; }
             const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.55, _Ry = _Rx * 0.4, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
-            const omega = r => 0.000017 / (0.22 + r);
-            // 愿望星
-            const nowMs = Date.now();
-            (db.wishStars || []).forEach(w => {
-                if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t); const tw = (0.75 + 0.25 * Math.sin(t / 1100 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.3);
-                const g = ctx.createRadialGradient(x, y, 0, x, y, 0.9); g.addColorStop(0, `rgba(235,240,255,${0.1 * tw})`); g.addColorStop(1, "rgba(235,240,255,0)"); ctx.fillStyle = g; ctx.fillRect(x - 1.5, y - 1.5, 3, 3);
-                ctx.fillStyle = "#b9c6f2"; ctx.globalAlpha = tw * 0.45; ctx.beginPath(); ctx.arc(x, y, 0.26, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1;
-
-            });
+            const omega = r => 0.000028;
             // 光雾/星云光晕：逐像素直接算（不用 Chrome 的渐变，渐变自带抖动点阵会成“纹路”），低分辨率算好再平滑放大
             const S = 3, gw = Math.ceil(W / S), gh = Math.ceil(H / S), N = gw * gh, add = new Float32Array(N * 3), vl = new Float32Array(N);
             const cx = W * 0.5, cy = H * 0.5, Rx = Math.min(W * 0.5, H * 1.25) * 1.55, Ry = Rx * 0.4, ph = -0.36, cph = Math.cos(ph), sph = Math.sin(ph);
@@ -2098,13 +2103,10 @@
             };
             const br = 0.95, R = Math.max(W, H), lin = (c, a) => [[0, c[0], c[1], c[2], a], [1, c[0], c[1], c[2], 0]];
             splat(cx, cy, -0.36, 0.55, Math.min(W * 0.62, H * 1.4), [[0, 6, 10, 32, 0.88], [0.5, 6, 10, 32, 0.6], [1, 6, 10, 32, 0]], 2); // 群星罩在星云后面
-            splat(cx, cy, 0, 1, R * 0.55, lin([40, 62, 140], 0.11 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 96, 190], 0.045 * br), 0);
+            splat(cx, cy, 0, 1, R * 0.55, lin([40, 66, 160], 0.17 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 100, 205], 0.08 * br), 0);
             splat(W * 0.2, H * 0.15, 0, 1, R * 0.36, lin([40, 48, 110], 0.045), 0); splat(W * 0.85, H * 0.9, 0, 1, R * 0.4, lin([56, 40, 112], 0.05), 0);
             splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.34], [0.3, 128, 134, 184, 0.16], [0.65, 92, 102, 156, 0.05], [1, 60, 76, 140, 0]], 0);
             splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.004], [0.8, 96, 108, 190, 0.01], [1, 80, 90, 180, 0]], 0);
-            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 90; k++) { const rr = 0.3 + k / 90 * 0.68, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.09, th = arm * Math.PI + rr * 4.2 + jit, [x, y] = pos(rr, th + omega(rr) * t), f = Math.pow(Math.max(0, 1 - rr * 0.85), 0.8), c = [214 - rr * 110, 180 - rr * 52, 140 + rr * 50]; splat(x, y, 0, 1, Rx * (0.06 + 0.03 * (1 - rr)), lin(c, 0.05 * f), 0); }
-            gal.cloud.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), c = q.c.split(",").map(Number); splat(x, y, 0, 1, q.s * Rx, lin(c, q.a * Math.max(0, 1.05 - q.r) * 0.8), 0); });
-            gal.pink.forEach(q => { const [x, y] = pos(q.r, q.th + omega(q.r) * t), fa = Math.pow(Math.max(0, 1 - q.r), 1.6); splat(x, y, 0, 1, q.s * 3, [[0, 255, 255, 255, 0.16 * fa], [0.4, 255, 255, 255, 0.04 * fa], [1, 255, 255, 255, 0]], 0); });
             splat(cx, cy, ph, 0.62, Rx * 0.27, [[0, 255, 244, 222, 0.95], [0.12, 255, 222, 170, 0.7], [0.45, 224, 176, 120, 0.2], [1, 210, 160, 110, 0]], 0);
             for (let i = 0; i < N; i++) { const lum = (add[i * 3] + add[i * 3 + 1] + add[i * 3 + 2]) / 3; vl[i] = 1 - (1 - vl[i]) * (1 - Math.min(0.93, lum / 45)); }
             const gcv = gal.glow || (gal.glow = document.createElement("canvas")), vcv = gal.veil || (gal.veil = document.createElement("canvas")); gcv.width = vcv.width = gw; gcv.height = vcv.height = gh;
@@ -2122,10 +2124,13 @@
                 const oc = cc.cv.getContext("2d"); oc.setTransform(dpr, 0, 0, dpr, 0, 0); galLayer(oc, W, H, t);
             }
             ctx.drawImage(cc.cv, 0, 0, W, H);
+            { const Rx0 = Math.min(W * 0.5, H * 1.25) * 1.55; if (!gal.disc || gal.discRx !== Rx0) { gal.disc = galBuildDisc(Rx0); gal.discRx = Rx0; }
+              ctx.save(); ctx.translate(W * 0.5, H * 0.5); ctx.rotate(-0.36); ctx.scale(1, 0.4); ctx.rotate(0.000028 * t); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high"; ctx.drawImage(gal.disc, -Rx0, -Rx0, Rx0 * 2, Rx0 * 2); ctx.restore(); }
             const _cx = W * 0.5, _cy = H * 0.5, _Rx = Math.min(W * 0.5, H * 1.25) * 1.55, _Ry = _Rx * 0.4, _ph = -0.36, _c = Math.cos(_ph), _s = Math.sin(_ph);
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
-            const omega = r => 0.000017 / (0.22 + r);
+            const omega = r => 0.000028;
             ctx.globalCompositeOperation = "lighter";
+            (db.wishStars || []).forEach(w => { if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t), tw = (0.75 + 0.25 * Math.sin(t / 1100 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.4); ctx.fillStyle = "#cfd9ff"; ctx.globalAlpha = tw * 0.22; ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 6.283); ctx.fill(); ctx.globalAlpha = tw * 0.85; ctx.beginPath(); ctx.arc(x, y, 0.8, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1; });
                         { const TAU = 6.2832, bk = Array.from({ length: 21 }, () => []), PC = ["#ffeedd", "#ffffff", "#d6e4ff"];
               gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + omega(p.r) * t), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25), ci = p.r < 0.22 ? 0 : p.r < 0.55 ? 1 : 2; bk[ci * 7 + Math.min(6, Math.floor(a * 9))].push(x, y); });
               bk.forEach((arr, bi) => { if (!arr.length ) return; ctx.fillStyle = PC[Math.floor(bi / 7)]; ctx.globalAlpha = ((bi % 7) + 0.5) / 9; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.5, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.5, 0, TAU); } ctx.fill(); }); ctx.globalAlpha = 1; }
@@ -4542,18 +4547,15 @@
         function openStatsPage() { toggleSidebar(false); renderStatsPage(); document.getElementById("statsFullPage").classList.add("open"); }
         function closeStatsPage() { document.getElementById("statsFullPage").classList.remove("open"); }
         function getOtherWordFrequency() {
-            const STOP = new Set("的 了 我 你 他 她 它 是 在 不 有 就 也 都 吗 呢 吧 啊 呀 哦 嗯 哈 呃 和 与 或 但 而 这 那 个 一 么 什么 怎么 一个 没有 自己 我们 你们 他们 可以 因为 所以 如果 还是 已经 一下 一点 现在 今天 然后 觉得 知道 真的 好的 好吧 好呀 哈哈 哈哈哈".split(" "));
-            const msgs = db.chat.filter(m => m.me === false && m.text && !m.type && !m.isNudge).slice(-1200), freq = {};
-            const seg = (typeof Intl !== "undefined" && Intl.Segmenter) ? new Intl.Segmenter("zh", { granularity: "word" }) : null;
-            msgs.forEach(m => {
-                const t = String(m.text).replace(/[\s\d]+/g, " ");
-                let words = [];
-                if (seg) { for (const x of seg.segment(t)) if (x.isWordLike) words.push(x.segment); }
-                else { (t.match(/[\u4e00-\u9fa5]+/g) || []).forEach(r => { for (let i = 0; i + 2 <= r.length; i++) words.push(r.slice(i, i + 2)); }); }
-                const used = new Set();
-                words.forEach(w => { w = w.trim().toLowerCase(); if (w.length < 2 || STOP.has(w) || !/[\u4e00-\u9fa5a-z]/.test(w) || used.has(w)) return; used.add(w); freq[w] = (freq[w] || 0) + 1; });
+            const freq = {};
+            db.chat.forEach(m => {
+                if (m.me === false && m.text) {
+                    const sentence = m.text.trim();
+                    if (!sentence) return;
+                    freq[sentence] = (freq[sentence] || 0) + 1;
+                }
             });
-            return Object.entries(freq).sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).slice(0, 10);
+            return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
         }
         function renderStatsPage() {
             // 总联络数：所有真实往来的气泡（排除系统提示/写信提示等）
@@ -4575,7 +4577,7 @@
 
             // 他的高频词 TOP10
             const titleEl = document.getElementById("statsWordTitle");
-            if (titleEl) titleEl.innerText = `高频词TOP10（近期聊天）`;
+            if (titleEl) titleEl.innerText = `高频词TOP10`;
             const words = getOtherWordFrequency();
             const listBox = document.getElementById("statsWordList");
             if (!listBox) return;
@@ -6094,7 +6096,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         function chatCardHtml(c) {
             const E = escapeHtml;
-            if (c.kind === "ask") return `<div class="ccard"><div class="cc-sec"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-sec">${c.opts.map((o, i) => `<div class="cc-opt"><b>${i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
+            if (c.kind === "ask") return `<div class="ccard"><div class="cc-qbox"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-opts">${c.opts.map((o, i) => `<div class="cc-opt"><b>${i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
             let h = `<div class="ccard">`;
             h += `<div class="cc-sec"><div class="cc-h">❓ 问题</div><div class="cc-q">${c.q ? E(c.q) : "（没有写问题）"}</div></div>`;
             if (c.cards && c.cards.length) h += `<div class="cc-sec"><div class="cc-h">🃏 牌面 · ${E(c.title)}</div>${recLayoutHtml(c.cards, 230)}</div>`;
