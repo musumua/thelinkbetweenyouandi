@@ -166,6 +166,7 @@
         .msg-foot.other-foot { justify-content: flex-start; }
         .msg-img { max-width: 200px; max-height: 200px; border-radius: 12px; display: block; margin-top: 2px; }
         .reply-quote-block { display:block; padding:0 0 0 9px; margin:0 0 8px; border-left:2px solid color-mix(in srgb, currentColor 40%, transparent); background:none; color:inherit; font-size:12px; line-height:1.45; text-align:left; white-space:normal; }
+        .reply-quote-block .rq-i { display:block; max-width:64px; max-height:64px; border-radius:6px; margin-top:3px; opacity:.92; }
         .reply-quote-block .rq-a { font-weight:700; font-size:11px; opacity:.6; margin-bottom:1px; } .reply-quote-block .rq-t { opacity:.7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
 
         .reply-preview-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12px; }
@@ -191,7 +192,7 @@
         #divZoom { position:fixed; inset:0; z-index:4000; background:rgba(10,10,16,.86); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; }
         #divZoom .zc { position:relative; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,.6); } #divZoom .zt { color:#fff; font-size:17px; font-weight:bold; margin-top:14px; } #divZoom .zk { color:#d8d8e4; font-size:13px; margin-top:4px; text-align:center; max-width:340px; line-height:1.5; } #divZoom .zh { color:#9a9ab0; font-size:11px; margin-top:10px; }
         .ccard { min-width:200px; max-width:260px; font-size:13px; line-height:1.55; text-align:left; } .ccard .cc-sec + .cc-sec { margin-top:8px; padding-top:7px; border-top:1px dashed rgba(127,127,127,.45); } .ccard .cc-h { font-size:11.5px; font-weight:bold; opacity:.75; margin-bottom:3px; letter-spacing:.04em; }
-        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .msg:has(.ccard.ask) { padding:0; overflow:hidden; background:var(--panel); border:1px solid var(--border); } .ccard.ask { min-width:220px; max-width:270px; } .ccard.ask .cc-qbox { background:linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 62%, #fff)); color:var(--bg); padding:12px 14px; } .ccard.ask .cc-q { font-size:15px; font-weight:700; line-height:1.5; } .ccard.ask .cc-opts { padding:10px 12px 12px; display:flex; flex-direction:column; gap:7px; color:var(--text-main); } .ccard.ask .cc-opt { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:12px; border:1.5px solid color-mix(in srgb, var(--text-main) 22%, transparent); font-size:14px; } .ccard.ask .cc-opt b { flex:0 0 auto; width:17px; height:17px; border-radius:50%; border:2px solid var(--primary); font-size:0; box-sizing:border-box; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
+        .ccard .cc-q { font-weight:600; font-size:14px; white-space:pre-wrap; } .ccard.ask { min-width:0; max-width:260px; } .ccard.ask .cc-qbox { padding:0; color:inherit; } .ccard.ask .cc-q { font-size:15px; font-weight:700; line-height:1.5; } .ccard.ask .cc-opts { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; padding-top:9px; border-top:1px solid color-mix(in srgb, currentColor 16%, transparent); } .ccard.ask .cc-opt { display:inline-flex; align-items:center; gap:5px; padding:4px 12px 4px 8px; border-radius:999px; background:color-mix(in srgb, var(--primary) 24%, transparent); font-size:13.5px; line-height:1.4; } .ccard.ask .cc-opt b { font-size:11px; opacity:.55; font-weight:800; width:auto; height:auto; border:none; } .ccard .cc-strip { display:flex; gap:6px; flex-wrap:wrap; } .ccard .cc-c { text-align:center; font-size:10px; opacity:.9; width:54px; } .ccard .cc-c .cc-f { position:relative; width:54px; height:81px; margin-bottom:2px; cursor:pointer; } .ccard .cc-body { white-space:pre-wrap; font-size:12.5px; max-height:220px; overflow-y:auto; }
         .cardx { position:absolute; perspective:600px; z-index:2; } .cardx .cin { position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .55s; } .cardx.flip .cin { transform:rotateY(180deg); }
         .cardx .cb, .cardx .cf { position:absolute; inset:0; border-radius:8px; backface-visibility:hidden; -webkit-backface-visibility:hidden; box-sizing:border-box; } .cb, .div-deck .dk { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); border-radius:8px; box-sizing:border-box; }
         .cardx .cb { background:repeating-linear-gradient(45deg, var(--primary) 0 3px, transparent 3px 7px), var(--bg); border:2px solid var(--primary); }
@@ -328,6 +329,8 @@
         .game-diff { display:flex; gap:8px; width:100%; }
         .game-diff button { flex:1; padding:9px 0; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:13px; cursor:pointer; }
         .game-diff button.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; }
+        .game-grid { width:100%; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .game-grid .game-card { padding:12px 12px; display:flex; flex-direction:column; min-width:0; } .game-grid .gc-t { font-size:15px; } .game-grid .gc-r { margin-top:auto; padding-top:8px; }
         .game-card { width:100%; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow-sm); cursor:pointer; }
         .gc-t { font-size:16px; font-weight:600; } .gc-d { font-size:12px; color:var(--text-sub); margin-top:4px; } .gc-r { font-size:11px; color:var(--text-sub); margin-top:8px; opacity:.8; }
         .game-msg { font-size:13px; color:var(--text-sub); min-height:18px; text-align:center; }
@@ -2043,8 +2046,8 @@
         function galInit() {
             if (gal) return; const parts = [], bg = [], dust = [], pink = [];
             // 星系本身的“星点”要克制：数量少、偏暗、带颜色，这样许愿后变成的白点才看得出来
-            for (let i = 0; i < 1900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.35) * 0.98, th = arm * Math.PI + rr * 4.2 + galG() * (0.3 + (1 - rr) * 0.5); parts.push({ r: rr, th, s: 1, a: 0.16 + Math.random() * 0.3 }); }
-            for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.5) * 0.94, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
+            for (let i = 0; i < 1900; i++) { const arm = i % 2, rr = Math.pow(Math.random(), 1.2) * 0.66, th = arm * Math.PI + rr * 4.2 + galG() * (0.3 + (1 - rr) * 0.5); parts.push({ r: rr, th, s: 1, a: 0.16 + Math.random() * 0.3 }); }
+            for (let i = 0; i < 700; i++) { const rr = Math.pow(Math.random(), 1.4) * 0.6, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.05 + Math.random() * 0.16 }); }
             for (let i = 0; i < 260; i++) { const rr = Math.abs(galG()) * 0.2, th = Math.random() * 6.283; parts.push({ r: rr, th, s: 1, a: 0.2 + Math.random() * 0.26 }); }
             for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
@@ -2063,20 +2066,20 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 420000, GAL_F = 9000, galOm = r => 0.0000323 / (0.22 + r);
-        function galCycle(tt) { const P = GAL_T - GAL_F, ci = Math.floor(tt / P), a = tt - ci * P, fo = a > P - GAL_F ? (a - (P - GAL_F)) / GAL_F : 0, e = fo * fo * (3 - 2 * fo), L = [{ age: a + GAL_F, al: 1 - e }]; if (fo > 0) L.push({ age: a - (P - GAL_F), al: e }); return L; }
+        const GAL_T = 800000, GAL_F = 9000, GAL_A0 = 532000, galOm = r => 0.000026 / (0.6 + r);
+        function galCycle(tt) { const P = GAL_T - GAL_F, ci = Math.floor(tt / P), a = tt - ci * P, fo = a > P - GAL_F ? (a - (P - GAL_F)) / GAL_F : 0, e = fo * fo * (3 - 2 * fo), L = [{ age: GAL_A0 + GAL_F + a, al: 1 - e }]; if (fo > 0) L.push({ age: GAL_A0 + a - (P - GAL_F), al: e }); return L; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
             const { n, P, A } = B, u = Rx / B.S, c0 = n / 2; P.fill(0); A.fill(0);
             const blob = (x0, y0, r, col, a0) => { const ix0 = Math.max(0, Math.floor(x0 - r)), ix1 = Math.min(n - 1, Math.ceil(x0 + r)), iy0 = Math.max(0, Math.floor(y0 - r)), iy1 = Math.min(n - 1, Math.ceil(y0 + r));
                 for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) { const dx = ix + 0.5 - x0, dy = iy + 0.5 - y0, d2 = (dx * dx + dy * dy) / (r * r); if (d2 >= 1) continue; const w = 1 - d2, a = a0 * w * w, i = iy * n + ix; P[i * 3] = P[i * 3] * (1 - a) + col[0] * a; P[i * 3 + 1] = P[i * 3 + 1] * (1 - a) + col[1] * a; P[i * 3 + 2] = P[i * 3 + 2] * (1 - a) + col[2] * a; A[i] = A[i] + a * (1 - A[i]); } };
-            for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.25 + ((i * 37) % 100) / 100 * 0.75, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7 + galOm(rr) * age; blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [86, 108, 205] : [120, 112, 196], 0.05); }
-            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.2 + k / 110 * 0.78, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galOm(rr) * age, f = Math.pow(Math.max(0, 1 - rr * 0.8), 0.9);
-                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.065 + 0.03 * (1 - rr)), [190 - rr * 120, 172 - rr * 58, 150 + rr * 85], 0.075 * f); }
+            for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.2 + ((i * 37) % 100) / 100 * 0.42, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7 + galOm(rr) * age; blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [86, 108, 205] : [120, 112, 196], 0.05); }
+            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.16 + k / 110 * 0.5, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galOm(rr) * age, f = Math.pow(Math.max(0, 1 - rr * 1.15), 0.9);
+                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.07 + 0.03 * (1 - rr)), [190 - rr * 120, 172 - rr * 58, 150 + rr * 85], 0.09 * f); }
             const d = B.im.data; for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { d[i * 4] = P[i * 3] / a; d[i * 4 + 1] = P[i * 3 + 1] / a; d[i * 4 + 2] = P[i * 3 + 2] / a; d[i * 4 + 3] = Math.min(255, a * 255); } else d[i * 4 + 3] = 0; }
             B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv;
         }
-        function galBuildBase(Rx) { const B = galDiscBuf(Rx), { n, P, A } = B, u = Rx / B.S, c0 = n / 2; const d = B.im.data; for (let iy = 0; iy < n; iy++) for (let ix = 0; ix < n; ix++) { const dd = Math.hypot(ix + 0.5 - c0, iy + 0.5 - c0) / (u * 0.98); if (dd >= 1) continue; const w = 1 - dd * dd, a = 0.2 * w * w, i = iy * n + ix; d[i * 4] = 58; d[i * 4 + 1] = 90; d[i * 4 + 2] = 200; d[i * 4 + 3] = a * 255; } B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv; }
+        function galBuildBase(Rx) { const B = galDiscBuf(Rx), { n, P, A } = B, u = Rx / B.S, c0 = n / 2; const d = B.im.data; for (let iy = 0; iy < n; iy++) for (let ix = 0; ix < n; ix++) { const dd = Math.hypot(ix + 0.5 - c0, iy + 0.5 - c0) / (u * 0.8); if (dd >= 1) continue; const w = 1 - dd * dd, a = 0.2 * w * w, i = iy * n + ix; d[i * 4] = 58; d[i * 4 + 1] = 90; d[i * 4 + 2] = 200; d[i * 4 + 3] = a * 255; } B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv; }
         function galLayer(ctx, W, H, t) {
             ctx.fillStyle = "#070a18"; ctx.fillRect(0, 0, W, H);
             if (!galSpr) { galSpr = document.createElement("canvas"); galSpr.width = galSpr.height = 24; const sc2 = galSpr.getContext("2d"), sg = sc2.createRadialGradient(12, 12, 0, 12, 12, 12); sg.addColorStop(0, "rgba(255,255,255,1)"); sg.addColorStop(0.3, "rgba(255,255,255,.85)"); sg.addColorStop(0.65, "rgba(255,255,255,.22)"); sg.addColorStop(1, "rgba(255,255,255,0)"); sc2.fillStyle = sg; sc2.fillRect(0, 0, 24, 24); }
@@ -2134,21 +2137,21 @@
             const pos = (r, th) => { const x = r * _Rx * Math.cos(th), y = r * _Ry * Math.sin(th); return [_cx + x * _c - y * _s, _cy + x * _s + y * _c]; };
             const omega = r => 0.000028;
             ctx.globalCompositeOperation = "lighter";
-            (db.wishStars || []).forEach(w => { if (w.arrive && nowMs < w.arrive) return; const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t), tw = (0.75 + 0.25 * Math.sin(t / 1100 + w.ts % 9)) * Math.min(1, (wr - 0.38) / 0.3 + 0.4); ctx.fillStyle = "#cfd9ff"; ctx.globalAlpha = tw * 0.22; ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 6.283); ctx.fill(); ctx.globalAlpha = tw * 0.85; ctx.beginPath(); ctx.arc(x, y, 0.8, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1; });
+            layers.forEach(L => (db.wishStars || []).forEach(w => { if (w.arrive && nowMs < w.arrive) return; const wr = 0.12 + w.r * 0.5, [x, y] = pos(wr, w.a + galOm(wr) * L.age), tw = (0.7 + 0.3 * Math.sin(t / 1100 + w.ts % 9)) * Math.pow(Math.max(0, 1 - wr * 0.9), 0.8) * L.al; ctx.fillStyle = "#a9c4ff"; ctx.globalAlpha = tw * 0.12; ctx.beginPath(); ctx.arc(x, y, 1.8, 0, 6.283); ctx.fill(); ctx.globalAlpha = tw * 0.5; ctx.beginPath(); ctx.arc(x, y, 0.65, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1; }));
             { const TAU = 6.2832, PC = ["#ffeedd", "#ffffff", "#d6e4ff"];
               layers.forEach(L => { const bk = Array.from({ length: 21 }, () => []);
                 gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + galOm(p.r) * L.age), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25), ci = p.r < 0.22 ? 0 : p.r < 0.55 ? 1 : 2; bk[ci * 7 + Math.min(6, Math.floor(a * 9))].push(x, y); });
                 bk.forEach((arr, bi) => { if (!arr.length) return; ctx.fillStyle = PC[Math.floor(bi / 7)]; ctx.globalAlpha = ((bi % 7) + 0.5) / 9 * L.al; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.5, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.5, 0, TAU); } ctx.fill(); }); }); ctx.globalAlpha = 1; }
             { ctx.fillStyle = "#fff"; if (!gal.tw) gal.tw = gal.bg.filter(q => q.s < 0.6 && Math.hypot((q.x - 0.5) * 1.0, (q.y - 0.5) * 1.7) / 0.62 > 1.1).slice(0, 90); gal.tw.forEach(q => { const a = 0.25 + 0.55 * Math.max(0, Math.sin(t / 900 + q.p * 3)); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(q.x * W, q.y * H, 0.5 + q.s * 0.6, 0, 6.283); ctx.fill(); }); ctx.globalAlpha = 1; }
             ctx.globalCompositeOperation = "source-over";
-            (db.wishStars || []).forEach(w => { if (w.arrive && nowMs - w.arrive < 600 && nowMs >= w.arrive) { const wr = 0.38 + w.r * 0.62, [x, y] = pos(wr, w.a + omega(wr) * t), k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); } });
+            (db.wishStars || []).forEach(w => { if (w.arrive && nowMs - w.arrive < 600 && nowMs >= w.arrive) { const wr = 0.12 + w.r * 0.5, [x, y] = pos(wr, w.a + omega(wr) * t), k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); } });
             // 流星
             if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
             if (gal.shoot) { const k = (t - gal.shoot.t0) / 700; if (k > 1) gal.shoot = null; else { const x = gal.shoot.x + gal.shoot.dx * k * 90, y = gal.shoot.y + gal.shoot.dy * k * 90; const g = ctx.createLinearGradient(x, y, x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); g.addColorStop(0, `rgba(255,255,255,${(1 - k) * 0.7})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); ctx.stroke(); } }
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             // 一颗星星从下方飞进去
             if (galFly) {
-                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.38 + w.r * 0.62, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
+                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.12 + w.r * 0.5, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
                 if (k < 1500) { const q = k / 1500, e = q * q * (3 - 2 * q), bx = sx + (tx - sx) * e, by = sy + (ty - sy) * e - Math.sin(e * Math.PI) * 30; const g = ctx.createRadialGradient(bx, by, 0, bx, by, 10); g.addColorStop(0, "rgba(255,255,255,.85)"); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.fillStyle = g; ctx.fillRect(bx - 10, by - 10, 20, 20); ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(bx, by, 2.4 * (1 - q * 0.4), 0, 6.283); ctx.fill(); }
                 else galFly = null;
             }
@@ -2235,7 +2238,13 @@
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8"); }
+                if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8");
+                    // 落地灯：灯罩向下撒出宽大的光锥 + 地面光池 + 灯罩光晕（光能照到沙发和墙面）
+                    for (let y = 12; y < 47; y++) { const half = 4 + (y - 12) * 0.62; R(6 - half, y, half * 2, 1, "rgba(255,214,130,.16)"); R(6 - half * 0.55, y, half * 1.1, 1, "rgba(255,226,150,.16)"); }
+                    E(12, 46, 26, 4, "rgba(255,220,140,.24)"); E(12, 46, 14, 2, "rgba(255,236,180,.22)"); E(26, 36, 20, 6, "rgba(255,220,140,.08)");
+                    for (let k = 1; k <= 4; k++) E(6, 9, 4 + k * 2.4, 3 + k * 1.6, "rgba(255,226,150,.11)");
+                    for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); R(x - 2, y + 1, 5, 5, "rgba(255,235,170,.10)"); R(x - 1, y + 2, 3, 8, "rgba(255,235,170,.05)"); }
+                }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
                 // 家：开放式厨房+客厅，深灰/酒红/暖木色（参考图1）。沙发占画面大头
@@ -3109,6 +3118,7 @@
         }
 
         function goHome() {
+            try { closeBottomEmojiModal(); } catch(e) {}
             const h = document.getElementById("homeScreen"), m = document.getElementById("mainAppView"); chatTransit = -1; setTimeout(() => { chatTransit = 0; }, 520);
             m.style.transition = "opacity .2s ease, transform .2s ease"; m.style.opacity = "0"; m.style.transform = "translateY(10px)";
             setTimeout(() => { m.style.display = "none"; m.style.transition = ""; m.style.opacity = ""; m.style.transform = ""; h.style.transition = "none"; h.style.opacity = "0"; h.style.display = "flex"; h.getBoundingClientRect(); h.style.transition = "opacity .26s ease"; h.style.opacity = "1"; setTimeout(() => { h.style.transition = ""; }, 280); }, 200);
@@ -3148,7 +3158,6 @@
             openMainChatView();
         }
         function gameDnd() { const g = document.getElementById("gamesFullPage"); return !!(g && g.classList.contains("open")); }
-        setInterval(() => { try { if (gameDnd()) { const sc = document.getElementById("incomingCallScreen"); if (sc && sc.style.display === "flex") declineIncomingCall(); } } catch (e) { } }, 800);
         function showInAppBanner(title, body, onTap) {
             if (gameDnd()) return;
             let banner = document.getElementById("inAppNotifBanner");
@@ -3730,7 +3739,6 @@
         }
 
         function triggerIncomingCallMock() {
-            if (gameDnd()) return;
             if (document.getElementById("callBannerBar").style.display === "flex" || document.getElementById("incomingCallScreen").style.display === "flex") return;
             initAudio();
             document.getElementById("incomingCallAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
@@ -3838,7 +3846,7 @@
                     let ts = m.ts; if (!ts && m.timeLabel && m.time) { const mm = /(\d+)年(\d+)月(\d+)日/.exec(m.timeLabel), tt = /(\d+):(\d+)/.exec(m.time); if (mm && tt) ts = new Date(+mm[1], +mm[2] - 1, +mm[3], +tt[1], +tt[2]).getTime(); }
                     if (ts && ts >= cutoff) cand.push(m);
                 }
-                if (cand.length) { const m = cand[Math.floor(Math.random() * cand.length)]; replyTo = { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]" }; }
+                if (cand.length) { const m = cand[Math.floor(Math.random() * cand.length)]; replyTo = { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]" }; if (!m.text && m.img) { const rt = replyTo; qThumb(m.img, t => { if (t) rt.img = t; }); } }
             }
             const cards = getSignalCards();
             const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100, freeP = (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100;
@@ -3909,6 +3917,25 @@
             reader.readAsDataURL(file);
         };
 
+        function openImgView(src) {
+            if (!src) return; const old = document.getElementById("imgViewMask"); if (old) old.remove();
+            const mk = document.createElement("div"); mk.id = "imgViewMask"; mk.style.cssText = "position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box";
+            mk.innerHTML = '<img style="max-width:100%;max-height:100%;object-fit:contain;border-radius:6px"><div style="position:absolute;top:14px;right:18px;color:#fff;font-size:26px;opacity:.8">✕</div>';
+            mk.firstChild.src = src; mk.onclick = () => mk.remove(); document.body.appendChild(mk);
+        }
+        function deletePyqPost(postId) {
+            const p = db.pyqPosts.find(x => x.id == postId); if (!p) return;
+            if (!confirm("删除这条朋友圈吗？")) return;
+            db.pyqPosts = db.pyqPosts.filter(x => x.id != postId); saveData(); renderPyqStream();
+        }
+        function hisReactToMyPost(post) {
+            if (!post || !db.other) return; const nm = db.other.name, cards = getSignalCards(); if (!post.likes) post.likes = []; if (!post.comments) post.comments = [];
+            let like = Math.random() < 0.8, cmt = Math.random() < 0.6 && cards.length; if (!like && !cmt) like = true;
+            let msg = "";
+            if (like && !post.likes.includes(nm)) { post.likes.push(nm); msg = "赞了你的朋友圈"; }
+            if (cmt) { const arr = [], n = 1 + Math.floor(Math.random() * 2); for (let k = 0; k < n; k++) arr.push(cards[Math.floor(Math.random() * cards.length)].text); const tx = arr.join(" "); post.comments.push({ name: nm, text: tx }); msg = "评论了你的朋友圈：" + tx.slice(0, 24); }
+            post.hisAt = 0; saveData(); renderPyqStream(); if (msg) notifyIncomingOther2("moments", msg);
+        }
         function openPyqPage() { toggleSidebar(false); document.getElementById("pyqFullPage").classList.add("open"); renderPyqStream(); if (db.unreadPyq) { db.unreadPyq = 0; saveData(); renderHomeScreen(); } }
         function closePyqPage() { document.getElementById("pyqFullPage").classList.remove("open"); }
 
@@ -3939,23 +3966,8 @@
             saveData(); 
             renderPyqStream();
 
-            const pMin = parseFloat(db.freq.pyqReplyMin) || 1;
-            const pMax = parseFloat(db.freq.pyqReplyMax) || 5;
-            const delayLike = (pMin + Math.random() * (pMax - pMin)) * 1000;
-
-            setTimeout(() => {
-                if(Math.random() < 0.85) { postLikesTrigger(targetPost.id, db.other.name); }
-                const delayComment = (pMin + Math.random() * (pMax - pMin)) * 1000;
-                setTimeout(() => {
-                    const _sigCards2 = getSignalCards();
-                    if(Math.random() < 0.75 && _sigCards2.length) {
-                        let linesCount = Math.floor(1 + Math.random() * 2);
-                        let subArr = [];
-                        for(let k=0; k<linesCount; k++) { subArr.push(_sigCards2[Math.floor(Math.random() * _sigCards2.length)].text); }
-                        postCommentDirectly(targetPost.id, db.other.name, subArr.join(" "));
-                    }
-                }, delayComment);
-            }, delayLike);
+            const pMin = parseFloat(db.freq.pyqReplyMin) || 1, pMax = Math.max(pMin, parseFloat(db.freq.pyqReplyMax) || 5);
+            targetPost.hisAt = Date.now() + (pMin + Math.random() * (pMax - pMin)) * 1000 + 2000; saveData();
         }
 
         function postLikesTrigger(postId, name) {
@@ -4048,12 +4060,12 @@
                 let interactionZone = (likeHtml || commentHtml) ? `<div class="pyq-comment-zone">${likeHtml}${commentHtml}</div>` : '';
 
                 return `
-                    <div class="pyq-item">
+                    <div class="pyq-item" data-pid="${p.id}">
                         <img src="${p.avatar || DEFAULT_SVG_AVATAR}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
                         <div class="pyq-item-right">
                             <span class="pyq-item-name">${p.name}</span>
                             ${p.text ? `<span class="pyq-item-text">${p.text}</span>` : ''}
-                            ${p.img ? `<img src="${p.img}" class="pyq-item-img">` : ''}
+                            ${p.img ? `<img src="${p.img}" class="pyq-item-img" onclick="openImgView(this.src)">` : ''}
                             <div class="pyq-meta-row">
                                 <span class="pyq-item-time">${p.time}</span>
                                 <div style="display:flex; gap:8px;">
@@ -4066,6 +4078,7 @@
                     </div>`;
             });
             box.innerHTML = htmlParts.join("");
+            box.querySelectorAll(".pyq-item").forEach(el => attachLongPressDelete(el, () => deletePyqPost(el.dataset.pid)));
             const scr = document.getElementById("pyqScrollContainer");
             if(scr) { scr.style.transform = 'translateZ(0)'; }
         }
@@ -4153,10 +4166,13 @@
             toggleChatCollectMode();
             alert("已收藏到「记忆」～可以点标题旁的✎给它命名");
         }
+        let pendingReplyThumb = "";
+        function qThumb(src, cb) { try { const im = new Image(); im.onload = () => { const k = Math.min(1, 96 / Math.max(im.width, im.height, 1)), c = document.createElement("canvas"); c.width = Math.max(1, Math.round(im.width * k)); c.height = Math.max(1, Math.round(im.height * k)); c.getContext("2d").drawImage(im, 0, 0, c.width, c.height); cb(c.toDataURL("image/webp", 0.7)); }; im.onerror = () => cb(""); im.src = src; } catch (e) { cb(""); } }
         function startReplyTo(idx) {
             const m = db.chat[idx];
             if (!m || (!m.text && !m.img)) return;
-            pendingReplyIndex = idx;
+            pendingReplyIndex = idx; pendingReplyThumb = "";
+            if (m.img) qThumb(m.img, t => { if (pendingReplyIndex === idx) pendingReplyThumb = t; });
             renderReplyPreview();
         }
         function cancelReply() { pendingReplyIndex = null; renderReplyPreview(); }
@@ -4166,7 +4182,7 @@
             if (pendingReplyIndex === null || !db.chat[pendingReplyIndex]) { bar.style.display = "none"; bar.innerHTML = ""; return; }
             const m = db.chat[pendingReplyIndex];
             const authorName = m.me ? (db.me.name || "我") : (db.other.name || "他");
-            const preview = m.text ? m.text.slice(0, 40) : "[图片]";
+            const preview = m.text ? m.text.slice(0, 40) : (m.img ? `<img src="${m.img}" style="height:26px;max-width:60px;object-fit:cover;vertical-align:middle;border-radius:4px">` : "[图片]");
             bar.style.display = "flex";
             bar.innerHTML = `<div style="flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;"><b style="color:var(--primary);">回复 ${authorName}：</b><span style="color:var(--text-sub);">${preview}</span></div><button class="rp-close" onclick="cancelReply()">✕</button>`;
         }
@@ -4177,7 +4193,7 @@
             const now = new Date();
             const replySnapshot = (pendingReplyIndex !== null && db.chat[pendingReplyIndex]) ? (() => {
                 const m = db.chat[pendingReplyIndex];
-                return { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]" };
+                return { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]", img: (!m.text && m.img && pendingReplyThumb) ? pendingReplyThumb : undefined };
             })() : null;
             db.chat.push({
                 me: true, text: text,
@@ -4280,6 +4296,7 @@
                 return false;
             };
             runReply();
+            (db.pyqPosts || []).forEach(pp => { if (pp.hisAt && now >= pp.hisAt) hisReactToMyPost(pp); });
             if (db.autoMessageEnabled && !replyRunning && !db.replyDue && due("auto", () => rnd(f.randMin || 15, f.randMax || 45) * 60000)) triggerRandomStarAction();
             if (due("pyq", () => rnd(f.pyqMin || 2, f.pyqMax || 6) * 3600000)) postHisPyq();
             if (due("status", () => (parseFloat(f.statusEvery) || 10) * 60000)) rollOtherStatus();
@@ -5580,7 +5597,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     if (m.proactive && !m.me) { const st = document.createElement("i"); st.className = "pro-star"; st.innerText = "★"; box.appendChild(st); }
                     if (m.replyTo) {
                         const q = document.createElement("div"); q.className = "reply-quote-block";
-                        q.innerHTML = `<div class="rq-a">${m.replyTo.author}</div><div class="rq-t">${m.replyTo.text}</div>`;
+                        q.innerHTML = `<div class="rq-a">${m.replyTo.author}</div>` + (m.replyTo.img ? `<img class="rq-i" src="${m.replyTo.img}">` : `<div class="rq-t">${m.replyTo.text}</div>`);
                         box.appendChild(q);
                     }
                     if (m.dcard) { const d = document.createElement("div"); d.innerHTML = chatCardHtml(m.dcard); box.appendChild(d.firstElementChild); } else if (m.text) { const txt = document.createElement("span"); txt.innerText = m.text; box.appendChild(txt); } else if (m.img) { const img = document.createElement("img"); img.src = m.img; img.className = "msg-img"; box.appendChild(img); }
@@ -6106,12 +6123,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const cw = Math.min(300, Math.floor(window.innerWidth * 0.74)), ch = Math.round(cw * (tab === "tarot" ? 1.7 : 1.42));
             const data = tab === "tarot" ? TAROT[idx] : LENO[idx], nm = tab === "tarot" ? tarotName(idx) : data[0] + "（" + (idx + 1) + "）";
             const kw = tab === "tarot" ? (rev ? data[2] : data[1]) : data[1];
-            z.innerHTML = `<div class="zc cf${tab === "tarot" ? " has-img" : ""}" style="width:${cw}px;height:${ch}px;font-size:${Math.round(cw / 11)}px;background:${tab === "tarot" ? "#efe3c4" : "transparent"}">${cardFaceInner(tab, idx, rev, 500)}</div><div class="zt">${label ? label + "　" : ""}${nm}${tab === "tarot" ? (rev ? "（逆位）" : "（正位）") : ""}</div><div class="zk">${kw}</div><div class="zh">点任意处关闭</div>`;
+            z.innerHTML = `<div class="zc cf${tab === "tarot" ? " has-img" : ""}" style="width:${cw}px;height:${ch}px;font-size:${Math.round(cw / 11)}px;background:${tab === "tarot" ? "#efe3c4" : "transparent"}">${cardFaceInner(tab, idx, rev, 500)}</div><div class="zt">${label ? label + "　" : ""}${nm}${tab === "tarot" ? (rev ? "（逆位）" : "（正位）") : ""}</div><div class="zh">点任意处关闭</div>`;
             document.body.appendChild(z);
         }
         function chatCardHtml(c) {
             const E = escapeHtml;
-            if (c.kind === "ask") return `<div class="ccard ask"><div class="cc-qbox"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-opts">${c.opts.map((o, i) => `<div class="cc-opt"><b>${i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
+            if (c.kind === "ask") return `<div class="ccard ask"><div class="cc-qbox"><div class="cc-q">❓ ${E(c.q)}</div></div><div class="cc-opts">${c.opts.map((o, i) => `<div class="cc-opt"><b>${"①②③④⑤⑥⑦⑧⑨"[i] || i + 1}</b><span>${E(o)}</span></div>`).join("")}</div></div>`;
             let h = `<div class="ccard">`;
             h += `<div class="cc-sec"><div class="cc-h">❓ 问题</div><div class="cc-q">${c.q ? E(c.q) : "（没有写问题）"}</div></div>`;
             if (c.cards && c.cards.length) h += `<div class="cc-sec"><div class="cc-h">🃏 牌面 · ${E(c.title)}</div>${recLayoutHtml(c.cards, 230)}</div>`;
@@ -6345,8 +6362,8 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const st = db.gameStats || {};
             const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div>` +
-                list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("");
+            body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
+                list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
         }
         function startGame(k, fresh) {
             gameStopCurrent(); gameCurrent = k;
