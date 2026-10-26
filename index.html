@@ -774,24 +774,26 @@
         /* ==================== 📔 交换日记（复古四边花纹边框） ==================== */
         /* ==================== 📔 交换日记（摊开的书本样式） ==================== */
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
-        .diary-book-wrap { flex: 1; display: flex; padding: 16px 14px calc(12px + env(safe-area-inset-bottom)) 14px; min-height: 0; box-sizing: border-box; }
-        .diary-book { flex: 1; display: flex; border-radius: 6px 14px 14px 6px; position: relative; min-height: 0; background: color-mix(in srgb, var(--primary) 14%, transparent); box-shadow: 0 12px 28px rgba(0,0,0,0.38), 0 2px 0 color-mix(in srgb, var(--primary) 30%, transparent) inset; padding: 0 0 5px 0; }
-        .diary-book::after { content: ""; position: absolute; left: 14px; top: -9px; width: 64px; height: 20px; background: color-mix(in srgb, var(--primary) 55%, transparent); opacity: .75; transform: rotate(-3deg); border-radius: 2px; z-index: 3; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
-        .diary-book-spine { width: 12px; flex-shrink: 0; background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--primary) 70%, #000) 0 10px, transparent 10px 22px); opacity: .55; border-radius: 6px 0 0 6px; }
-        .diary-page { flex: 1; min-width: 0; margin: 5px 5px 0 0; border-radius: 3px 12px 12px 3px; background-color: color-mix(in srgb, var(--panel) 86%, #f3e6c4); background-image: repeating-linear-gradient(180deg, transparent 0 27px, color-mix(in srgb, var(--text-sub) 22%, transparent) 27px 28px); padding: 14px 16px 0 22px; display: flex; flex-direction: column; min-height: 0; position: relative; color: var(--text-main); overflow: hidden; }
-        .diary-page::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; background: linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0)); pointer-events: none; }
-        .diary-page::after { content: ""; position: absolute; left: 34px; top: 0; bottom: 0; width: 1px; background: color-mix(in srgb, #e0405a 55%, transparent); pointer-events: none; }
-        .diary-page-content { flex: 1; display: flex; flex-direction: column; gap: 16px; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 0 10px 18px; }
-        .diary-entry-block { flex-shrink: 0; }
-        .diary-entry-author { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--bg); background: var(--primary); padding: 2px 10px; border-radius: 10px; margin-bottom: 6px; letter-spacing: .5px; }
-        .diary-entry-text { font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size: 14px; line-height: 28px; color: var(--text-main); white-space: pre-wrap; word-break: break-word; }
-        .diary-page-time { font-size: 10.5px; color: var(--text-sub); margin-top: 4px; text-align: right; font-style: italic; }
-        .diary-page-empty { font-size: 12.5px; color: var(--text-sub); text-align: center; margin-top: 40px; font-style: italic; }
-        .diary-page-footer { flex-shrink: 0; padding: 8px 0 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: color-mix(in srgb, var(--panel) 86%, #f3e6c4); }
-        .diary-inline-area { width:100%; min-height:220px; border:none; outline:none; resize:none; background:transparent; font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size:14px; line-height:28px; color:var(--text-main); margin-top:2px; }
-        .diary-write-btn { padding: 8px 28px; border-radius: 22px; border: none; background: var(--primary); color: var(--bg, #fff); font-size: 13.5px; font-weight: 600; box-shadow: var(--shadow-md); cursor: pointer; }
-        .diary-pager { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--text-sub); }
-        .diary-pager button { background: none; border: none; color: var(--text-main); font-size: 19px; cursor: pointer; padding: 2px 10px; line-height: 1; }
+        .diary-book-wrap { flex: 1; display: flex; padding: 0 0 calc(8px + env(safe-area-inset-bottom)) 0; min-height: 0; box-sizing: border-box; }
+        .diary-book { flex: 1; display: flex; position: relative; min-height: 0; background-image: radial-gradient(circle, color-mix(in srgb, var(--text-sub) 38%, transparent) 1.1px, transparent 1.4px); background-size: 18px 18px; }
+        .diary-book-spine { display: none; }
+        .diary-page { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; position: relative; color: var(--text-main); }
+        .diary-page-content { flex: 1; display: flex; flex-direction: column; gap: 22px; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 22px 18px 18px; }
+        .diary-entry-block { flex-shrink: 0; position: relative; width: 84%; padding: 16px 16px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 4px 14px 14px 14px; box-shadow: 0 6px 16px rgba(0,0,0,.28); }
+        .diary-entry-block.me { align-self: flex-start; transform: rotate(-0.7deg); }
+        .diary-entry-block.his { align-self: flex-end; transform: rotate(0.8deg); border-radius: 14px 4px 14px 14px; }
+        .diary-entry-block::before { content: ""; position: absolute; top: -9px; width: 58px; height: 17px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
+        .diary-entry-block.me::before { left: 18px; background: color-mix(in srgb, var(--primary) 60%, transparent); transform: rotate(-4deg); }
+        .diary-entry-block.his::before { right: 18px; background: color-mix(in srgb, #8fb8ff 55%, transparent); transform: rotate(3deg); }
+        .diary-entry-author { font-size: 11px; font-weight: 700; color: var(--text-sub); margin-bottom: 8px; letter-spacing: .6px; }
+        .diary-entry-text { font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size: 14.5px; line-height: 1.9; color: var(--text-main); white-space: pre-wrap; word-break: break-word; }
+        .diary-page-time { font-size: 10.5px; color: var(--text-sub); margin-top: 6px; text-align: right; font-style: italic; }
+        .diary-page-empty { font-size: 12.5px; color: var(--text-sub); text-align: center; margin-top: 60px; font-style: italic; }
+        .diary-page-footer { flex-shrink: 0; margin: 0 18px; padding: 10px 14px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; background: var(--panel); border: 1px solid var(--border); border-radius: 26px; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+        .diary-inline-area { width:100%; min-height:220px; border:none; outline:none; resize:none; background:transparent; font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size:14.5px; line-height:1.9; color:var(--text-main); margin-top:2px; }
+        .diary-write-btn { padding: 8px 24px; border-radius: 20px; border: none; background: var(--primary); color: var(--bg, #fff); font-size: 13.5px; font-weight: 600; cursor: pointer; }
+        .diary-pager { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-sub); }
+        .diary-pager button { background: none; border: none; color: var(--text-main); font-size: 19px; cursor: pointer; padding: 2px 8px; line-height: 1; }
         .diary-pager button:disabled { opacity: 0.3; cursor: default; }
             html, body { overscroll-behavior: none; }
     </style>
@@ -2068,7 +2070,7 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 3 * Math.PI / 360000, galK = age => 25.13 + 37.7 * Math.max(0, Math.min(1, (age - GAL_F) / (GAL_T - GAL_F))), galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
+        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 3 * Math.PI / 360000, galK = age => 12.57 + 18.85 * Math.max(0, Math.min(1, (age - GAL_F) / (GAL_T - GAL_F))), galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
         function galCycle(tt) { const P = GAL_T - GAL_F, ci = Math.floor(tt / P), a = tt - ci * P, fo = a > P - GAL_F ? (a - (P - GAL_F)) / GAL_F : 0, e = fo * fo * (3 - 2 * fo), L = [{ age: GAL_A0 + GAL_F + a, al: 1 - e }]; if (fo > 0) L.push({ age: GAL_A0 + a - (P - GAL_F), al: e }); return L; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
@@ -2498,12 +2500,12 @@
         }
         function petTick() {
             const p = db.pet; if (!p) return; const now = Date.now(); let dt = (now - p.lastTs) / 60000; if (dt <= 0) return; dt = Math.min(dt, 600); p.lastTs = now;
-            p.full = Math.max(0, p.full - dt * 0.22); p.water = Math.max(0, p.water - dt * 0.3);
+            { const hk = p.sleeping ? 0.3 : 1; p.full = Math.max(0, p.full - dt * 0.22 * hk); p.water = Math.max(0, p.water - dt * 0.3 * hk); }
             if (p.sleeping) { p.energy = Math.min(100, p.energy + dt * 1.1); if (p.energy >= 100) p.sleeping = false; } else p.energy = Math.max(0, p.energy - dt * 0.1);
             if (p.digest > 0) { p.digest -= dt; if (p.digest <= 0) { p.digest = 0; p.poops = Math.min(4, p.poops + 1); } }
             // 会变脏、会生病：身上的脏污随时间和便便累积；太脏/太饿/太渴/便便多了就可能生病
-            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.05 : 0.14) + p.poops * dt * 0.06);
-            if (!p.sick && (p.dirt > 75 || p.poops >= 3 || p.full < 8 || p.water < 8) && Math.random() < Math.min(0.5, dt * 0.03)) { p.sick = true; saveData(); }
+            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.02 : 0.08) + p.poops * dt * 0.03);
+            if (!p.sick && (p.dirt > 88 || p.poops >= 4 || p.full < 4 || p.water < 4) && Math.random() < Math.min(0.25, dt * 0.01)) { p.sick = true; saveData(); }
             const base = (Math.min(p.full, 100) + Math.min(p.water, 100) + p.energy) / 3, target = Math.max(0, Math.min(100, base - p.poops * 9 - (p.dirt > 50 ? (p.dirt - 50) * 0.3 : 0) - (p.sick ? 25 : 0)));
             p.mood += (target - p.mood) * Math.min(1, dt * 0.05);
             if (Math.random() < 0.02) saveData();
@@ -2521,7 +2523,7 @@
             if (p.sleeping) { petMsg(p.name + "睡着了"); return; }
             if (f.drink ? p.water > 96 : p.full > 96) { petMsg(f.drink ? "喝饱了～" : "吃不下啦～"); return; }
             if (f.full) p.full = Math.min(100, p.full + f.full); if (f.water) p.water = Math.min(100, p.water + f.water); if (f.mood) p.mood = Math.min(100, p.mood + f.mood);
-            if (f.digest) p.digest = Math.max(p.digest, 1) + f.digest * 0.5;
+            if (f.digest) p.digest = Math.max(p.digest, 1) + f.digest * 0.9;
             petAnim = { kind: "eat", until: Date.now() + 2400, food: f.spr }; saveData(); closeModal("petFoodModal"); { const tr = document.getElementById("petTray"); if (tr) tr.classList.remove("on"); } petBars(); petMsg(f.drink ? "咕嘟咕嘟～" : "好吃！");
         }
         function petClean() { const p = db.pet; if (!p.poops) { petMsg("很干净呢"); return; } p.poops = 0; p.mood = Math.min(100, p.mood + 6); petAnim = { kind: "happy", until: Date.now() + 1500 }; saveData(); petBars(); petMsg("清理干净啦"); }
@@ -5415,13 +5417,13 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             if (!page) return;
             let html = "";
             if (round && round.mine) {
-                html += `<div class="diary-entry-block">
+                html += `<div class="diary-entry-block me">
                     <div class="diary-entry-author">${escapeHtml(db.me.name || "我")} · ${escapeHtml(round.mine.time)}</div>
                     <div class="diary-entry-text">${escapeHtml(round.mine.content)}</div>
                 </div>`;
             }
             if (round && round.his) {
-                html += `<div class="diary-entry-block">
+                html += `<div class="diary-entry-block his">
                     <div class="diary-entry-author">${escapeHtml(db.other.name || "他")} · ${escapeHtml(round.his.time)}</div>
                     <div class="diary-entry-text">${escapeHtml(round.his.content)}</div>
                 </div>`;
@@ -6367,11 +6369,10 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             requestAnimationFrame(frame);
         }
         function renderGameMenu() {
-            sokLv = null;
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "拖动挡板接球，把砖块全部打光"], ["sokoban", "推箱子", "把箱子推到圆点上，只能推不能拉，一共7关"]];
+            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你和他各一个球、各一块挡板，互相接不到；砖块有硬砖、铁砖和道具，得分高的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -6386,9 +6387,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", othello: "黑白棋", breakout: "打砖块", sokoban: "推箱子" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", othello: "黑白棋", breakout: "打砖块" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, othello: gameOthello, breakout: gameBreakout, sokoban: gameSokoban })[k]();
+            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, othello: gameOthello, breakout: gameBreakout })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
@@ -8851,79 +8852,67 @@ treaty:条约`
                 const f = flips(B, x, y, 1); if (!f.length) return; apply(B, { x, y, f }, 1); last = [x, y]; gameSfx("tap"); draw(); hisTurn(); });
             draw(); gameCleanup = () => clearTimeout(timer);
         }
-        // ---------- 打砖块 ----------
+        // ---------- 打砖块（双球：你和他各打各的球，互相接不到） ----------
         function gameBreakout() {
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">按住屏幕左右拖动挡板，接住小球</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
-            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), w = Math.min(body.clientWidth - 24, 380), h = Math.round(w * 1.35), dpr = window.devicePixelRatio || 1;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">拖动下面那块挡板接你的球，他的球你接不到</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), w = Math.min(body.clientWidth - 24, 380), h = Math.round(w * 1.4), dpr = window.devicePixelRatio || 1;
             cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
-            const COLS = 8, ROWS = 6, bw = w / COLS, bh = 16, top = 46, colr = ["#e0405a", "#e8845a", "#f2c94c", "#7fd08a", "#5fb0e8", "#a98be8"];
-            const spd = { easy: 190, normal: 250, hard: 320 }[gameDiff] || 250, padW = { easy: 96, normal: 78, hard: 62 }[gameDiff] || 78;
-            let bricks = [], px = w / 2, ball, lives = 3, score = 0, over = false, paused = false, raf = 0, lastT = performance.now(), serve = true;
-            for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) bricks.push({ x: c * bw, y: top + r * (bh + 3), c: colr[r], alive: true, pts: (ROWS - r) * 10 });
-            const reset = () => { ball = { x: px, y: h - 40, vx: 0, vy: 0 }; serve = true; };
-            reset();
-            const setPx = e => { const r = cv.getBoundingClientRect(); px = Math.max(padW / 2, Math.min(w - padW / 2, e.clientX - r.left)); if (serve) ball.x = px; };
-            cv.addEventListener("pointerdown", e => { setPx(e); if (serve && !over) { const a = (Math.random() * 0.8 - 0.4); ball.vx = Math.sin(a) * spd; ball.vy = -Math.cos(a) * spd; serve = false; } });
+            const COLS = 8, ROWS = 6, bw = w / COLS, bh = 16, top = 40, cs = getComputedStyle(document.body);
+            const CM = "#ff6b8b", CH = "#5fb0ff", D = gameDiff, spd0 = { easy: 190, normal: 235, hard: 285 }[D] || 235, padBase = { easy: 92, normal: 80, hard: 68 }[D] || 80, hp0 = { easy: 2, normal: 2, hard: 3 }[D] || 2;
+            const HPC = { 1: ["#7fd08a", "#5fb0e8", "#a98be8"], 2: "#e8845a", 3: "#e0405a" };
+            const bricks = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { let hp = 1, iron = false; if (r < 2) hp = hp0; else if (r === 2 && (c === 0 || c === COLS - 1)) iron = true; else if (r === 3 && (c === 3 || c === 4) && D !== "easy") hp = 2;
+                bricks.push({ x: c * bw, y: top + r * (bh + 3), hp, iron, item: !iron && Math.random() < 0.16, base: HPC[1][r % 3] }); }
+            const mk = (col, y, human) => ({ col, y, human, px: w / 2, padW: padBase, balls: [], lives: 3, score: 0, serve: true, serveAt: performance.now() + 900, wide: 0, pierce: 0, slow: 0 });
+            const me = mk(CM, h - 22, true), him = mk(CH, h - 42, false), sides = [me, him], drops = [];
+            const newBall = s => ({ x: s.px, y: s.y - 8, vx: 0, vy: 0 });
+            sides.forEach(s => s.balls.push(newBall(s)));
+            let over = false, paused = false, raf = 0, lastT = performance.now(), tgtX = w / 2;
+            const setPx = e => { const r = cv.getBoundingClientRect(); me.px = Math.max(me.padW / 2, Math.min(w - me.padW / 2, e.clientX - r.left)); };
+            const launch = s => { s.serve = false; const a = Math.random() * 0.8 - 0.4, sp = spd0; s.balls.forEach(b => { b.vx = Math.sin(a) * sp; b.vy = -Math.cos(a) * sp; }); };
+            cv.addEventListener("pointerdown", e => { setPx(e); if (me.serve && !over) launch(me); });
             cv.addEventListener("pointermove", e => { if (e.buttons || e.pointerType === "touch") setPx(e); });
-            const key = e => { if (e.key === "ArrowLeft") { px = Math.max(padW / 2, px - 24); if (serve) ball.x = px; } else if (e.key === "ArrowRight") { px = Math.min(w - padW / 2, px + 24); if (serve) ball.x = px; } else if (e.key === " " && serve) { ball.vx = 40; ball.vy = -spd; serve = false; } };
+            const key = e => { if (e.key === "ArrowLeft") me.px = Math.max(me.padW / 2, me.px - 26); else if (e.key === "ArrowRight") me.px = Math.min(w - me.padW / 2, me.px + 26); else if (e.key === " " && me.serve) launch(me); };
             document.addEventListener("keydown", key);
-            function finish(win) { over = true; cancelAnimationFrame(raf); gameResultBar(win ? `全部打光啦 🎉 ${score} 分` : `游戏结束 ${score} 分`); gameStat("breakout", win ? "w" : "l"); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            const remaining = () => bricks.some(b => b.hp > 0 && !b.iron);
+            function finish() { over = true; cancelAnimationFrame(raf); draw(); const a = me.score, b2 = him.score; if (a > b2) { gameResultBar(`你赢了 🎉 ${a} : ${b2}`); gameStat("breakout", "w"); } else if (a < b2) { gameResultBar(`${hisName()}赢了 ${a} : ${b2}`); gameStat("breakout", "l"); } else { gameResultBar(`平局 ${a} : ${b2}`); gameStat("breakout", "d"); } document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function power(s, t) { if (t === "multi") { const src = s.balls[0]; if (src) for (let k = -1; k <= 1; k += 2) { const sp = Math.hypot(src.vx, src.vy) || spd0, a = Math.atan2(src.vx, -src.vy) + k * 0.4; s.balls.push({ x: src.x, y: src.y, vx: Math.sin(a) * sp, vy: -Math.cos(a) * sp }); } } else if (t === "wide") s.wide = 12; else if (t === "pierce") s.pierce = 8; else if (t === "slow") s.slow = 10; else if (t === "life") s.lives = Math.min(5, s.lives + 1); gameSfx("tap"); }
+            const PT = { multi: ["多", "#ffd36b"], wide: ["宽", "#7dffa5"], pierce: ["穿", "#ff9bd0"], slow: ["慢", "#9be0ff"], life: ["♥", "#ff6b8b"] };
+            function hitBrick(s, b) { if (b.iron) return; b.hp--; if (b.hp <= 0) { s.score += 10 + (b.item ? 10 : 0); if (b.item) { const ks = Object.keys(PT); drops.push({ x: b.x + bw / 2, y: b.y + bh, t: ks[Math.floor(Math.random() * ks.length)], s }); } } else s.score += 3; }
+            function stepSide(s, dt) {
+                s.wide = Math.max(0, s.wide - dt); s.pierce = Math.max(0, s.pierce - dt); s.slow = Math.max(0, s.slow - dt); s.padW = s.wide > 0 ? padBase * 1.6 : padBase; s.px = Math.max(s.padW / 2, Math.min(w - s.padW / 2, s.px));
+                if (!s.human) { // 他的挡板：追着自己最低的球（或掉落的道具）
+                    let tx = s.px; const bl = s.balls.slice().sort((a, b) => b.y - a.y)[0], own = drops.filter(d => d.s === s).sort((a, b) => b.y - a.y)[0];
+                    if (s.serve) tx = s.px; else if (bl && (bl.vy > 0 || !own)) tx = bl.x + (s.err || 0); else if (own) tx = own.x;
+                    const sp = { easy: 120, normal: 190, hard: 300 }[D] * dt; s.px += Math.max(-sp, Math.min(sp, tx - s.px)); s.px = Math.max(s.padW / 2, Math.min(w - s.padW / 2, s.px));
+                    if (s.serve && performance.now() > s.serveAt) launch(s); }
+                if (s.serve) { s.balls.forEach(b => { b.x = s.px; b.y = s.y - 8; }); return; }
+                const R = 5, k = s.slow > 0 ? 0.6 : 1;
+                for (let i = s.balls.length - 1; i >= 0; i--) { const b = s.balls[i]; b.x += b.vx * dt * k; b.y += b.vy * dt * k;
+                    if (b.x < R) { b.x = R; b.vx = Math.abs(b.vx); } if (b.x > w - R) { b.x = w - R; b.vx = -Math.abs(b.vx); } if (b.y < R) { b.y = R; b.vy = Math.abs(b.vy); }
+                    if (b.vy > 0 && b.y + R >= s.y && b.y + R <= s.y + 12 && Math.abs(b.x - s.px) <= s.padW / 2 + R) { const q = (b.x - s.px) / (s.padW / 2), sp = Math.min(spd0 * 1.6, Math.hypot(b.vx, b.vy) * 1.012); b.vx = q * sp * 0.8; b.vy = -Math.sqrt(Math.max(sp * sp - b.vx * b.vx, 1)); b.y = s.y - R; if (s.human) gameSfx("tap"); if (!s.human) s.err = (Math.random() - 0.5) * { easy: 70, normal: 36, hard: 14 }[D]; }
+                    for (const br of bricks) { if (br.hp <= 0) continue; if (b.x + R > br.x && b.x - R < br.x + bw && b.y + R > br.y && b.y - R < br.y + bh) { hitBrick(s, br); if (br.iron || s.pierce <= 0) { const ox = Math.min(b.x + R - br.x, br.x + bw - (b.x - R)), oy = Math.min(b.y + R - br.y, br.y + bh - (b.y - R)); if (ox < oy) b.vx = -b.vx; else b.vy = -b.vy; } if (s.human) gameSfx("his"); break; } }
+                    if (b.y > h + 10) s.balls.splice(i, 1); }
+                if (!s.balls.length) { s.lives--; if (s.lives > 0) { s.serve = true; s.serveAt = performance.now() + 900; s.balls.push(newBall(s)); } }
+            }
             function step(dt) {
-                if (serve) return; ball.x += ball.vx * dt; ball.y += ball.vy * dt; const R = 5;
-                if (ball.x < R) { ball.x = R; ball.vx = Math.abs(ball.vx); } if (ball.x > w - R) { ball.x = w - R; ball.vx = -Math.abs(ball.vx); } if (ball.y < R) { ball.y = R; ball.vy = Math.abs(ball.vy); }
-                const py = h - 24;
-                if (ball.vy > 0 && ball.y + R >= py && ball.y + R <= py + 12 && Math.abs(ball.x - px) <= padW / 2 + R) { const k = (ball.x - px) / (padW / 2), sp = Math.min(spd * 1.7, Math.hypot(ball.vx, ball.vy) * 1.012); ball.vx = k * sp * 0.8; ball.vy = -Math.sqrt(Math.max(sp * sp - ball.vx * ball.vx, 1)); ball.y = py - R; gameSfx("tap"); }
-                for (const b of bricks) { if (!b.alive) continue; if (ball.x + R > b.x && ball.x - R < b.x + bw && ball.y + R > b.y && ball.y - R < b.y + bh) { b.alive = false; score += b.pts; const ox = Math.min(ball.x + R - b.x, b.x + bw - (ball.x - R)), oy = Math.min(ball.y + R - b.y, b.y + bh - (ball.y - R)); if (ox < oy) ball.vx = -ball.vx; else ball.vy = -ball.vy; gameSfx("his"); break; } }
-                if (!bricks.some(b => b.alive)) return finish(true);
-                if (ball.y > h + 10) { lives--; if (lives <= 0) return finish(false); reset(); }
+                sides.forEach(s => { if (s.lives > 0) stepSide(s, dt); });
+                for (let i = drops.length - 1; i >= 0; i--) { const d = drops[i]; d.y += 90 * dt; const s = d.s; if (s.lives <= 0) { drops.splice(i, 1); continue; } if (d.y >= s.y - 4 && d.y <= s.y + 12 && Math.abs(d.x - s.px) <= s.padW / 2 + 8) { power(s, d.t); drops.splice(i, 1); } else if (d.y > h + 10) drops.splice(i, 1); }
+                if (!remaining() || sides.every(s => s.lives <= 0)) finish();
             }
             function draw() {
                 ctx.fillStyle = "#14162a"; ctx.fillRect(0, 0, w, h);
-                bricks.forEach(b => { if (b.alive) { ctx.fillStyle = b.c; ctx.fillRect(b.x + 1, b.y, bw - 2, bh); ctx.fillStyle = "rgba(255,255,255,.22)"; ctx.fillRect(b.x + 1, b.y, bw - 2, 3); } });
-                ctx.fillStyle = "#e9eef8"; ctx.fillRect(px - padW / 2, h - 24, padW, 8); ctx.beginPath(); ctx.arc(ball.x, ball.y, 5, 0, 7); ctx.fillStyle = "#fff"; ctx.fill();
-                document.getElementById("gameScore").innerText = `得分 ${score}　　${"♥".repeat(lives)}`;
+                bricks.forEach(b => { if (b.hp <= 0) return; ctx.fillStyle = b.iron ? "#6b6f80" : b.hp >= 3 ? HPC[3] : b.hp === 2 ? HPC[2] : b.base; ctx.fillRect(b.x + 1, b.y, bw - 2, bh); ctx.fillStyle = "rgba(255,255,255,.22)"; ctx.fillRect(b.x + 1, b.y, bw - 2, 3);
+                    if (b.iron) { ctx.fillStyle = "rgba(0,0,0,.3)"; for (let q = 6; q < bw - 4; q += 9) ctx.fillRect(b.x + q, b.y + 4, 2, bh - 8); } else if (b.hp > 1) { ctx.fillStyle = "rgba(0,0,0,.28)"; ctx.fillRect(b.x + bw / 2 - 1, b.y + 4, 2, bh - 8); }
+                    if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText("?", b.x + bw / 2, b.y + 12); } });
+                sides.forEach(s => { if (s.lives <= 0) return; ctx.fillStyle = s.col; ctx.globalAlpha = s.human ? 1 : .85; ctx.fillRect(s.px - s.padW / 2, s.y, s.padW, 8); ctx.globalAlpha = 1; s.balls.forEach(b => { ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fillStyle = s.pierce > 0 ? "#fff" : s.col; ctx.fill(); ctx.strokeStyle = s.col; ctx.lineWidth = 2; ctx.stroke(); }); });
+                drops.forEach(d => { const p = PT[d.t]; ctx.beginPath(); ctx.arc(d.x, d.y, 9, 0, 7); ctx.fillStyle = p[1]; ctx.fill(); ctx.strokeStyle = d.s.col; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = "#222"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText(p[0], d.x, d.y + 4); });
+                document.getElementById("gameScore").innerHTML = `<span style="color:${CM}">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
             }
-            function loop(t) { if (over) return; const dt = Math.min(0.03, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); draw(); } raf = requestAnimationFrame(loop); }
+            function loop(t) { if (over) return; const dt = Math.min(0.03, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); if (!over) draw(); } raf = requestAnimationFrame(loop); }
             draw(); raf = requestAnimationFrame(loop);
             gamePause = () => { paused = true; document.removeEventListener("keydown", key); }; gameResume = () => { paused = false; lastT = performance.now(); document.addEventListener("keydown", key); };
             gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
-        }
-        // ---------- 推箱子 ----------
-        const SOK_LV = [["#######", "#     #", "# .$@ #", "#     #", "#######"], ["####", "# .#", "#  ###", "#*@  #", "#  $ #", "#  ###", "####"], ["######", "#    #", "# #@ #", "# $* #", "# .* #", "#    #", "######"], ["  ####", "###  ####", "#     $ #", "# #  #$ #", "# . .#@ #", "#########"], ["########", "#      #", "# .**$@#", "#      #", "#####  #", "    ####"], ["######  ", "#    ###", "# $$ . #", "# .# @ #", "#  $.  #", "########"], ["#######", "#     #", "# .$. #", "## $$ #", " #.@  #", " #   ##", " #####"]];
-        let sokLv = null;
-        function gameSokoban() {
-            const body = document.getElementById("gameBody"); if (sokLv === null) sokLv = { easy: 0, normal: 2, hard: 4 }[gameDiff] || 0; const lv = Math.min(sokLv, SOK_LV.length - 1), rows = SOK_LV[lv];
-            const H = rows.length, Wd = Math.max(...rows.map(r => r.length)), cs = getComputedStyle(document.body), th = n => cs.getPropertyValue(n).trim() || "#888";
-            body.innerHTML = `<div class="game-msg" id="gameMsg">第 ${lv + 1} / ${SOK_LV.length} 关：把箱子推到圆点上（不能拉）</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div class="game-btns" style="margin-top:10px"><button class="btn btn-outline" id="skUndo">撤销</button><button class="btn btn-outline" id="skReset">重来</button></div><div id="skPad" style="display:grid;grid-template-columns:repeat(3,56px);grid-template-rows:repeat(2,48px);gap:6px;margin-top:8px;justify-content:center"></div><div id="gameEnd"></div>`;
-            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), cell = Math.floor(Math.min((body.clientWidth - 24) / Wd, 52, 340 / H)), w = cell * Wd, h = cell * H, dpr = window.devicePixelRatio || 1;
-            cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
-            const walls = new Set(), goals = new Set(); let boxes = [], pl = 0;
-            rows.forEach((r, y) => { for (let x = 0; x < Wd; x++) { const c = r[x] || " ", i = y * Wd + x; if (c === "#") walls.add(i); if (c === "." || c === "*" || c === "+") goals.add(i); if (c === "$" || c === "*") boxes.push(i); if (c === "@" || c === "+") pl = i; } });
-            let hist = [], moves = 0, done = false; const floor = new Set([pl]); { const st = [pl]; while (st.length) { const c = st.pop(), cx = c % Wd; for (const d of [1, -1, Wd, -Wd]) { if ((d === 1 && cx === Wd - 1) || (d === -1 && cx === 0)) continue; const n = c + d; if (n < 0 || n >= Wd * H || walls.has(n) || floor.has(n)) continue; floor.add(n); st.push(n); } } }
-            function draw() {
-                ctx.clearRect(0, 0, w, h);
-                for (let y = 0; y < H; y++) for (let x = 0; x < Wd; x++) { const i = y * Wd + x, px = x * cell, py = y * cell;
-                    if (walls.has(i)) { ctx.fillStyle = th("--border"); ctx.fillRect(px, py, cell, cell); ctx.fillStyle = "rgba(255,255,255,.08)"; ctx.fillRect(px, py, cell, 3); }
-                    else if (floor.has(i)) { ctx.fillStyle = "rgba(127,127,127,.12)"; ctx.fillRect(px + .5, py + .5, cell - 1, cell - 1); } }
-                goals.forEach(i => { const x = i % Wd, y = Math.floor(i / Wd); ctx.beginPath(); ctx.arc((x + .5) * cell, (y + .5) * cell, cell * .16, 0, 7); ctx.fillStyle = th("--primary"); ctx.globalAlpha = .6; ctx.fill(); ctx.globalAlpha = 1; });
-                boxes.forEach(i => { const x = i % Wd, y = Math.floor(i / Wd), on = goals.has(i), m = cell * .12; ctx.fillStyle = on ? th("--primary") : th("--text-sub"); ctx.beginPath(); ctx.roundRect(x * cell + m, y * cell + m, cell - m * 2, cell - m * 2, 5); ctx.fill(); ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(x * cell + m + 4, y * cell + m + 4); ctx.lineTo((x + 1) * cell - m - 4, (y + 1) * cell - m - 4); ctx.moveTo((x + 1) * cell - m - 4, y * cell + m + 4); ctx.lineTo(x * cell + m + 4, (y + 1) * cell - m - 4); ctx.stroke(); });
-                { const x = pl % Wd, y = Math.floor(pl / Wd); ctx.beginPath(); ctx.arc((x + .5) * cell, (y + .5) * cell, cell * .33, 0, 7); ctx.fillStyle = th("--text-main"); ctx.fill(); ctx.fillStyle = th("--bg"); ctx.beginPath(); ctx.arc((x + .5) * cell - cell * .1, (y + .5) * cell - cell * .05, cell * .045, 0, 7); ctx.arc((x + .5) * cell + cell * .1, (y + .5) * cell - cell * .05, cell * .045, 0, 7); ctx.fill(); }
-                document.getElementById("gameScore").innerText = `步数 ${moves}`;
-            }
-            function mv(d) { if (done) return; const np = pl + d; if (walls.has(np)) return; const bi = boxes.indexOf(np); const snap = { pl, boxes: boxes.slice() };
-                if (bi >= 0) { const t = np + d; if (walls.has(t) || boxes.includes(t)) return; boxes[bi] = t; gameSfx("tap"); }
-                hist.push(snap); pl = np; moves++; draw();
-                if (boxes.every(b => goals.has(b))) { done = true; gameResultBar(`第 ${lv + 1} 关完成 🎉 用了 ${moves} 步`); gameStat("sokoban", "w"); const last = lv >= SOK_LV.length - 1; document.getElementById("gameEnd").innerHTML = `<div class="game-btns">${last ? "" : `<button class="btn" onclick="sokLv=${lv + 1};startGame('sokoban',true)">下一关</button>`}<button class="btn btn-outline" onclick="sokLv=${lv};startGame('sokoban',true)">再玩一次</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; } }
-            const DIR = { up: -Wd, down: Wd, left: -1, right: 1 };
-            [["", ""], ["up", "▲"], ["", ""], ["left", "◀"], ["down", "▼"], ["right", "▶"]].forEach(([k, t]) => { const b = document.createElement("button"); if (!k) { b.style.visibility = "hidden"; } else { b.className = "btn btn-outline"; b.innerText = t; b.onclick = () => mv(DIR[k]); } document.getElementById("skPad").appendChild(b); });
-            document.getElementById("skUndo").onclick = () => { if (done || !hist.length) return; const s = hist.pop(); pl = s.pl; boxes = s.boxes; moves = Math.max(0, moves - 1); draw(); };
-            document.getElementById("skReset").onclick = () => { sokLv = lv; startGame("sokoban", true); };
-            let sx = 0, sy = 0; cv.addEventListener("pointerdown", e => { sx = e.clientX; sy = e.clientY; });
-            cv.addEventListener("pointerup", e => { const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return; mv(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : -1) : (dy > 0 ? Wd : -Wd)); });
-            const key = e => { const m = { ArrowUp: -Wd, ArrowDown: Wd, ArrowLeft: -1, ArrowRight: 1 }[e.key]; if (m) { e.preventDefault(); mv(m); } };
-            document.addEventListener("keydown", key); draw();
-            gamePause = () => document.removeEventListener("keydown", key); gameResume = () => document.addEventListener("keydown", key); gameCleanup = () => document.removeEventListener("keydown", key);
         }
         function gameArrow() {
             const cfg = { easy: [14, 14, 8], normal: [22, 22, 14], hard: [30, 30, 26] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
