@@ -774,22 +774,22 @@
         /* ==================== 📔 交换日记（复古四边花纹边框） ==================== */
         /* ==================== 📔 交换日记（摊开的书本样式） ==================== */
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
-        .diary-book-wrap { flex: 1; display: flex; padding: 14px 14px calc(10px + env(safe-area-inset-bottom)) 14px; min-height: 0; box-sizing: border-box; }
-        .diary-book { flex: 1; display: flex; border-radius: 10px 10px 5px 5px; box-shadow: 0 10px 26px rgba(0,0,0,0.35); position: relative; min-height: 0; overflow: hidden; }
-        .diary-book-spine { width: 6px; flex-shrink: 0; background: linear-gradient(90deg, #C7B996, #E2D6B4); box-shadow: 1px 0 3px rgba(0,0,0,0.2); position: relative; }
-        .diary-page { flex: 1; min-width: 0; background-color: #FFFDF7; background-image: radial-gradient(circle, rgba(120,100,70,0.16) 1px, transparent 1.2px); background-size: 15px 15px; padding: 16px 16px 0 22px; display: flex; flex-direction: column; min-height: 0; position: relative; }
-        .diary-page::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 22px; background: linear-gradient(90deg, rgba(70,55,30,0.28), rgba(70,55,30,0.1) 55%, rgba(70,55,30,0) 100%); pointer-events: none; }
-        .diary-page-content { flex: 1; display: flex; flex-direction: column; gap: 16px; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
-        .diary-entry-block { flex-shrink: 0; }
-        .diary-entry-author { font-size: 12px; font-weight: 700; color: #8A6A44; margin-bottom: 5px; border-bottom: 1px dashed rgba(120,100,70,0.3); padding-bottom: 5px; }
-        .diary-entry-text { font-family: Georgia, "Songti SC", serif; font-size: 13.5px; line-height: 1.8; color: #4A3D2A; white-space: pre-wrap; word-break: break-word; }
-        .diary-page-time { font-size: 10px; color: #A6976F; margin-top: 6px; }
-        .diary-page-empty { font-size: 12px; color: #B5A67F; text-align: center; margin-top: 24px; font-style: italic; }
-        .diary-page-footer { flex-shrink: 0; padding: 8px 0 14px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; border-top: 1px dashed rgba(120,100,70,0.25); }
-        .diary-inline-area { width:100%; min-height:220px; border:none; outline:none; resize:none; background:transparent; font-family: Georgia, "Songti SC", serif; font-size:13.5px; line-height:1.8; color:#4A3D2A; margin-top:6px; }
-        .diary-write-btn { padding: 9px 28px; border-radius: 22px; border: none; background: var(--primary); color: #FFF; font-size: 13.5px; font-weight: 600; box-shadow: var(--shadow-md); cursor: pointer; }
-        .diary-pager { display: flex; align-items: center; gap: 16px; font-size: 12px; color: #8A6A44; }
-        .diary-pager button { background: none; border: none; color: #6B5335; font-size: 19px; cursor: pointer; padding: 2px 10px; line-height: 1; }
+        .diary-book-wrap { flex: 1; display: flex; padding: 10px 14px calc(12px + env(safe-area-inset-bottom)) 14px; min-height: 0; box-sizing: border-box; }
+        .diary-book { flex: 1; display: flex; border-radius: 20px; background: var(--panel); border: 1px solid var(--border); box-shadow: var(--shadow-sm); position: relative; min-height: 0; overflow: hidden; }
+        .diary-book-spine { display: none; }
+        .diary-page { flex: 1; min-width: 0; padding: 18px 18px 0 18px; display: flex; flex-direction: column; min-height: 0; position: relative; color: var(--text-main); }
+        .diary-page-content { flex: 1; display: flex; flex-direction: column; gap: 14px; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+        .diary-entry-block { flex-shrink: 0; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--primary) 8%, transparent); border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent); }
+        .diary-entry-author { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; letter-spacing: .5px; }
+        .diary-entry-author::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+        .diary-entry-text { font-size: 14px; line-height: 1.85; color: var(--text-main); white-space: pre-wrap; word-break: break-word; }
+        .diary-page-time { font-size: 10.5px; color: var(--text-sub); margin-top: 8px; text-align: right; }
+        .diary-page-empty { font-size: 12.5px; color: var(--text-sub); text-align: center; margin-top: 40px; }
+        .diary-page-footer { flex-shrink: 0; padding: 10px 0 14px 0; display: flex; flex-direction: column; align-items: center; gap: 10px; border-top: 1px solid var(--border); }
+        .diary-inline-area { width:100%; min-height:220px; border:none; outline:none; resize:none; background:transparent; font-size:14px; line-height:1.85; color:var(--text-main); margin-top:6px; font-family:inherit; }
+        .diary-write-btn { padding: 9px 30px; border-radius: 22px; border: none; background: var(--primary); color: var(--bg, #fff); font-size: 13.5px; font-weight: 600; box-shadow: var(--shadow-md); cursor: pointer; }
+        .diary-pager { display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--text-sub); }
+        .diary-pager button { background: none; border: none; color: var(--text-main); font-size: 19px; cursor: pointer; padding: 2px 10px; line-height: 1; }
         .diary-pager button:disabled { opacity: 0.3; cursor: default; }
             html, body { overscroll-behavior: none; }
     </style>
@@ -948,7 +948,7 @@
                     </div>
                 </div>
                 <input type="file" id="chat_photo_file" class="file" accept="image/*">
-                <button onclick="openBottomEmojiModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8 14c.47 1.25 1.5 2.5 4 2.5s3.53-1.25 4-2.5"/></svg></button>
+                <button onclick="toggleBottomEmojiModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8 14c.47 1.25 1.5 2.5 4 2.5s3.53-1.25 4-2.5"/></svg></button>
                 <input placeholder="输入消息..." id="msg" onkeydown="if(event.key==='Enter'){event.preventDefault();send()}">
                 <button class="btn-send" onclick="send()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
             </div>
@@ -2066,7 +2066,7 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 800000, GAL_F = 9000, GAL_A0 = 532000, galOm = r => 0.000026 / (0.6 + r);
+        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 240000, galOm = r => 0.0000262 + 0.000115 * (1 / (0.6 + r) - 1 / 0.95);
         function galCycle(tt) { const P = GAL_T - GAL_F, ci = Math.floor(tt / P), a = tt - ci * P, fo = a > P - GAL_F ? (a - (P - GAL_F)) / GAL_F : 0, e = fo * fo * (3 - 2 * fo), L = [{ age: GAL_A0 + GAL_F + a, al: 1 - e }]; if (fo > 0) L.push({ age: GAL_A0 + a - (P - GAL_F), al: e }); return L; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
@@ -2079,7 +2079,7 @@
             const d = B.im.data; for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { d[i * 4] = P[i * 3] / a; d[i * 4 + 1] = P[i * 3 + 1] / a; d[i * 4 + 2] = P[i * 3 + 2] / a; d[i * 4 + 3] = Math.min(255, a * 255); } else d[i * 4 + 3] = 0; }
             B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv;
         }
-        function galBuildBase(Rx) { const B = galDiscBuf(Rx), { n, P, A } = B, u = Rx / B.S, c0 = n / 2; const d = B.im.data; for (let iy = 0; iy < n; iy++) for (let ix = 0; ix < n; ix++) { const dd = Math.hypot(ix + 0.5 - c0, iy + 0.5 - c0) / (u * 0.8); if (dd >= 1) continue; const w = 1 - dd * dd, a = 0.2 * w * w, i = iy * n + ix; d[i * 4] = 58; d[i * 4 + 1] = 90; d[i * 4 + 2] = 200; d[i * 4 + 3] = a * 255; } B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv; }
+        function galBuildBase(Rx) { const B = galDiscBuf(Rx), { n, P, A } = B, u = Rx / B.S, c0 = n / 2; const d = B.im.data; for (let iy = 0; iy < n; iy++) for (let ix = 0; ix < n; ix++) { const dd = Math.hypot(ix + 0.5 - c0, iy + 0.5 - c0) / (u * 0.8); if (dd >= 1) continue; const w = 1 - dd * dd, a = 0.12 * w * w, i = iy * n + ix; d[i * 4] = 58; d[i * 4 + 1] = 90; d[i * 4 + 2] = 200; d[i * 4 + 3] = a * 255; } B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv; }
         function galLayer(ctx, W, H, t) {
             ctx.fillStyle = "#070a18"; ctx.fillRect(0, 0, W, H);
             if (!galSpr) { galSpr = document.createElement("canvas"); galSpr.width = galSpr.height = 24; const sc2 = galSpr.getContext("2d"), sg = sc2.createRadialGradient(12, 12, 0, 12, 12, 12); sg.addColorStop(0, "rgba(255,255,255,1)"); sg.addColorStop(0.3, "rgba(255,255,255,.85)"); sg.addColorStop(0.65, "rgba(255,255,255,.22)"); sg.addColorStop(1, "rgba(255,255,255,0)"); sc2.fillStyle = sg; sc2.fillRect(0, 0, 24, 24); }
@@ -2108,9 +2108,9 @@
             };
             const br = 0.95, R = Math.max(W, H), lin = (c, a) => [[0, c[0], c[1], c[2], a], [1, c[0], c[1], c[2], 0]];
             splat(cx, cy, -0.36, 0.55, Math.min(W * 0.62, H * 1.4), [[0, 6, 10, 32, 0.88], [0.5, 6, 10, 32, 0.6], [1, 6, 10, 32, 0]], 2); // 群星罩在星云后面
-            splat(cx, cy, 0, 1, R * 0.55, lin([40, 66, 160], 0.17 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 100, 205], 0.08 * br), 0);
+            splat(cx, cy, 0, 1, R * 0.55, lin([40, 66, 160], 0.1 * br), 0); splat(cx, cy, 0, 1, R * 0.3, lin([70, 100, 205], 0.05 * br), 0);
             splat(W * 0.2, H * 0.15, 0, 1, R * 0.36, lin([40, 48, 110], 0.045), 0); splat(W * 0.85, H * 0.9, 0, 1, R * 0.4, lin([56, 40, 112], 0.05), 0);
-            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.34], [0.3, 128, 134, 184, 0.16], [0.65, 92, 102, 156, 0.05], [1, 60, 76, 140, 0]], 0);
+            splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.34], [0.3, 128, 134, 184, 0.1], [0.65, 92, 102, 156, 0.03], [1, 60, 76, 140, 0]], 0);
             splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.004], [0.8, 96, 108, 190, 0.01], [1, 80, 90, 180, 0]], 0);
             splat(cx, cy, ph, 0.62, Rx * 0.27, [[0, 255, 244, 222, 0.95], [0.12, 255, 222, 170, 0.7], [0.45, 224, 176, 120, 0.2], [1, 210, 160, 110, 0]], 0);
             for (let i = 0; i < N; i++) { const lum = (add[i * 3] + add[i * 3 + 1] + add[i * 3 + 2]) / 3; vl[i] = 1 - (1 - vl[i]) * (1 - Math.min(0.93, lum / 45)); }
@@ -2225,8 +2225,8 @@
                 R(0, 0, 90, 34, D("#e6ecf3", "#3d3a55")); R(0, 31, 90, 3, D("#f3f5f9", "#4a4666")); floor(34);
                 B(56, 3, 31, 29, D("#f6f7fa", "#8a87aa")); R(58, 5, 27, 25, D("#a8d8ff", "#121846")); skyline(58, 85, 30, 1); R(70, 5, 2, 25, D("#f6f7fa", "#8a87aa")); R(58, 16, 27, 2, D("#f6f7fa", "#8a87aa"));
                 if (night) { sp(62, 8, "#fff", 1); sp(78, 9, "#fff"); sp(73, 12, "#fff", 1); } else { sp(62, 9, "#fff", 1); sp(80, 20, "#fff"); }
-                B(14, 5, 10, 13, D("#f7f3ea", "#8d869c")); R(16, 7, 6, 9, D("#dce8d4", "#5d6d62")); R(18, 10, 2, 5, D("#5fae60", "#3d6c4a")); E(19, 9, 2, 2, D("#6fbf6a", "#4a7e58"));
-                B(27, 8, 8, 10, D("#f7f3ea", "#8d869c")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
+                R(14, 5, 10, 13, D("#e9e1d2", "#5e5876")); R(16, 7, 6, 9, D("#dce8d4", "#5d6d62")); R(18, 10, 2, 5, D("#5fae60", "#3d6c4a")); E(19, 9, 2, 2, D("#6fbf6a", "#4a7e58"));
+                R(27, 8, 8, 10, D("#e9e1d2", "#5e5876")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
                 L(6, 12, 6, 44, D("#cfd2d8", "#8e90a0")); B(2, 6, 9, 6, D("#f6e1b8", "#e8c98a")); E(6, 46, 5, 1, D("#cfd2d8", "#8e90a0")); sp(6, 9, "#ffe9a8", 1);
                 B(40, 25, 8, 9, D("#e0d9cd", "#8e8884")); leaf(44, 23, 0, -3, 4, D("#58a85a", "#2f5a3a")); leaf(44, 24, -2, -2, 3, D("#6fbf6a", "#38704a")); leaf(44, 24, 2, -2, 3, D("#6fbf6a", "#38704a"));
                 B(13, 23, 40, 14, D("#f4e8d6", "#a5979f")); B(11, 30, 44, 9, D("#f8ecdb", "#b0a2ab")); B(9, 26, 7, 14, D("#efe0cc", "#9a8c96")); B(52, 26, 6, 14, D("#efe0cc", "#9a8c96"));
@@ -2500,8 +2500,8 @@
             if (p.sleeping) { p.energy = Math.min(100, p.energy + dt * 1.1); if (p.energy >= 100) p.sleeping = false; } else p.energy = Math.max(0, p.energy - dt * 0.1);
             if (p.digest > 0) { p.digest -= dt; if (p.digest <= 0) { p.digest = 0; p.poops = Math.min(4, p.poops + 1); } }
             // 会变脏、会生病：身上的脏污随时间和便便累积；太脏/太饿/太渴/便便多了就可能生病
-            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.05 : 0.14) + p.poops * dt * 0.06);
-            if (!p.sick && (p.dirt > 75 || p.poops >= 3 || p.full < 8 || p.water < 8) && Math.random() < Math.min(0.5, dt * 0.03)) { p.sick = true; saveData(); }
+            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.12 : 0.22) + p.poops * dt * 0.1);
+            if (!p.sick && (p.dirt > 55 || p.poops >= 2 || p.full < 18 || p.water < 18) && Math.random() < Math.min(0.8, dt * 0.06 + (p.dirt > 55 ? 0.01 : 0))) { p.sick = true; saveData(); }
             const base = (Math.min(p.full, 100) + Math.min(p.water, 100) + p.energy) / 3, target = Math.max(0, Math.min(100, base - p.poops * 9 - (p.dirt > 50 ? (p.dirt - 50) * 0.3 : 0) - (p.sick ? 25 : 0)));
             p.mood += (target - p.mood) * Math.min(1, dt * 0.05);
             if (Math.random() < 0.02) saveData();
@@ -2519,7 +2519,7 @@
             if (p.sleeping) { petMsg(p.name + "睡着了"); return; }
             if (f.drink ? p.water > 96 : p.full > 96) { petMsg(f.drink ? "喝饱了～" : "吃不下啦～"); return; }
             if (f.full) p.full = Math.min(100, p.full + f.full); if (f.water) p.water = Math.min(100, p.water + f.water); if (f.mood) p.mood = Math.min(100, p.mood + f.mood);
-            if (f.digest) p.digest = Math.max(p.digest, 1) + f.digest * 0.5;
+            if (f.digest) p.digest = Math.max(p.digest, 1) + f.digest * 0.3;
             petAnim = { kind: "eat", until: Date.now() + 2400, food: f.spr }; saveData(); closeModal("petFoodModal"); { const tr = document.getElementById("petTray"); if (tr) tr.classList.remove("on"); } petBars(); petMsg(f.drink ? "咕嘟咕嘟～" : "好吃！");
         }
         function petClean() { const p = db.pet; if (!p.poops) { petMsg("很干净呢"); return; } p.poops = 0; p.mood = Math.min(100, p.mood + 6); petAnim = { kind: "happy", until: Date.now() + 1500 }; saveData(); petBars(); petMsg("清理干净啦"); }
@@ -3006,6 +3006,7 @@
             let lastBack = 0, toastEl = null;
             const toast = (t) => { if (!toastEl) { toastEl = document.createElement("div"); toastEl.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:9px 18px;border-radius:18px;font-size:13px;z-index:3000;pointer-events:none;transition:opacity .25s;opacity:0"; document.body.appendChild(toastEl); } toastEl.innerText = t; toastEl.style.opacity = "1"; clearTimeout(toast._t); toast._t = setTimeout(() => toastEl.style.opacity = "0", 1800); };
             function handleBack() {
+                for (const oid of ["imgViewMask", "divZoom", "frBankOv"]) { const oe = document.getElementById(oid); if (oe) { oe.remove(); return true; } }
                 const bem = document.getElementById("bubbleEditMask"); if (bem) { bem.remove(); return true; }
                 if (document.getElementById("bubblePop")) { closeBubblePop(); return true; }
                 const mm = document.querySelector(".more-menu-popup.open"); if (mm) { mm.classList.remove("open"); return true; }
@@ -3020,7 +3021,7 @@
             // 守卫记录用同一个网址（不带 #g1 这类后缀），层号 i 存在 state 里：
             // 刷新/页面被系统回收重载（比如选完相册图片回来）时，沿用已有的守卫层，不再往历史里追加记录。
             // 层数 depth 一律以当前所在记录的 state.i 为准，不自己累加：浏览器跳过了没有用户操作时塞进去的记录，也能自动校正。
-            let depth = 0; const TARGET = 2; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
+            let depth = 0; const TARGET = 4; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
             const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, ""); depth++; } catch (e) { } };
             { const hs = history.state;
               if (hs && hs.guard) depth = hs.i || 1;
@@ -4755,7 +4756,13 @@
             });
         }
         
-        function openBottomEmojiModal() { document.getElementById("bottomEmojiModal").style.display = "block"; switchBottomTab(0); }
+        function toggleBottomEmojiModal() { const m = document.getElementById("bottomEmojiModal"); if (m && m.style.display === "block") closeBottomEmojiModal(); else openBottomEmojiModal(); }
+        function openBottomEmojiModal() {
+            const m = document.getElementById("bottomEmojiModal"), plus = document.getElementById("moreMenuPopup");
+            try { closeMoreMenu(); } catch (e) {}
+            const w = plus && plus.parentElement && plus.parentElement.getBoundingClientRect(); if (w && w.height) m.style.bottom = Math.max(0, Math.round(window.innerHeight - (w.bottom - 50))) + "px";
+            m.style.display = "block"; switchBottomTab(0);
+        }
         function closeBottomEmojiModal() { document.getElementById("bottomEmojiModal").style.display = "none"; }
         
         function switchBottomTab(tab) {
@@ -6360,7 +6367,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"]];
+            const list = [["snake", "贪吃蛇", "90年代经典，两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "90年代经典，你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "90年代 Windows 经典，夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "90年代掌机经典，拖动挡板接球，把砖块全部打光"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -6375,9 +6382,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", othello: "黑白棋", breakout: "打砖块" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow })[k]();
+            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, othello: gameOthello, breakout: gameBreakout })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
@@ -8796,6 +8803,87 @@ treaty:条约`
         }
 
         // ---------- 箭头消除（轮流消除：箭头指向的前方没有别的箭头挡着才能消掉） ----------
+        // ---------- 黑白棋（90年代 Windows 经典） ----------
+        function gameOthello() {
+            const N = 8, body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你执黑先手，点亮点落子</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d");
+            const w = Math.min(body.clientWidth - 24, 400), cell = w / N, dpr = window.devicePixelRatio || 1;
+            cv.style.width = w + "px"; cv.style.height = w + "px"; cv.width = w * dpr; cv.height = w * dpr; ctx.scale(dpr, dpr);
+            const B = Array.from({ length: N }, () => new Array(N).fill(0)); B[3][3] = 2; B[4][4] = 2; B[3][4] = 1; B[4][3] = 1;
+            const W8 = [[100, -20, 10, 5, 5, 10, -20, 100], [-20, -50, -2, -2, -2, -2, -50, -20], [10, -2, 1, 1, 1, 1, -2, 10], [5, -2, 1, 0, 0, 1, -2, 5], [5, -2, 1, 0, 0, 1, -2, 5], [10, -2, 1, 1, 1, 1, -2, 10], [-20, -50, -2, -2, -2, -2, -50, -20], [100, -20, 10, 5, 5, 10, -20, 100]];
+            const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+            let over = false, thinking = false, timer = null, last = null;
+            function flips(b, x, y, p) { if (b[y][x]) return []; const out = []; for (const [dx, dy] of DIRS) { const t = []; let nx = x + dx, ny = y + dy; while (nx >= 0 && ny >= 0 && nx < N && ny < N && b[ny][nx] === 3 - p) { t.push([nx, ny]); nx += dx; ny += dy; } if (t.length && nx >= 0 && ny >= 0 && nx < N && ny < N && b[ny][nx] === p) out.push(...t); } return out; }
+            function moves(b, p) { const m = []; for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { const f = flips(b, x, y, p); if (f.length) m.push({ x, y, f }); } return m; }
+            const cnt = (b, p) => { let c = 0; b.forEach(r => r.forEach(v => { if (v === p) c++; })); return c; };
+            function draw() {
+                ctx.clearRect(0, 0, w, w); ctx.fillStyle = "#2f7d4f"; ctx.fillRect(0, 0, w, w); ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 1;
+                for (let i = 0; i <= N; i++) { ctx.beginPath(); ctx.moveTo(i * cell, 0); ctx.lineTo(i * cell, w); ctx.moveTo(0, i * cell); ctx.lineTo(w, i * cell); ctx.stroke(); }
+                const my = !over && !thinking ? moves(B, 1) : [];
+                for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) { const v = B[y][x], cx = (x + .5) * cell, cy = (y + .5) * cell;
+                    if (v) { ctx.beginPath(); ctx.arc(cx, cy, cell * .4, 0, 7); ctx.fillStyle = v === 1 ? "#161616" : "#f4f4f0"; ctx.fill(); if (last && last[0] === x && last[1] === y) { ctx.strokeStyle = "#f2c94c"; ctx.lineWidth = 2.5; ctx.stroke(); } }
+                    else if (my.some(m => m.x === x && m.y === y)) { ctx.beginPath(); ctx.arc(cx, cy, cell * .1, 0, 7); ctx.fillStyle = "rgba(255,255,255,.55)"; ctx.fill(); } }
+                const a = cnt(B, 1), b2 = cnt(B, 2); document.getElementById("gameScore").innerText = `● ${a}　　○ ${b2}`;
+            }
+            function apply(b, m, p) { b[m.y][m.x] = p; m.f.forEach(([x, y]) => { b[y][x] = p; }); }
+            function search(b, d, p, al, be) { const ms = moves(b, p); if (d === 0) { let s = 0; for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) s += (b[y][x] === 2 ? W8[y][x] : b[y][x] === 1 ? -W8[y][x] : 0); return s; }
+                if (!ms.length) { if (!moves(b, 3 - p).length) return (cnt(b, 2) - cnt(b, 1)) * 100; return search(b, d - 1, 3 - p, al, be); }
+                let best = p === 2 ? -1e9 : 1e9; for (const m of ms) { const nb = b.map(r => r.slice()); apply(nb, m, p); const v = search(nb, d - 1, 3 - p, al, be); if (p === 2) { best = Math.max(best, v); al = Math.max(al, v); } else { best = Math.min(best, v); be = Math.min(be, v); } if (be <= al) break; } return best; }
+            function aiPick(ms) { if (gameDiff === "easy") return ms[Math.floor(Math.random() * ms.length)]; if (gameDiff === "normal") { return ms.map(m => ({ m, s: W8[m.y][m.x] + m.f.length * 0.5 + Math.random() })).sort((a, b) => b.s - a.s)[0].m; }
+                let best = ms[0], bv = -1e9; for (const m of ms) { const nb = B.map(r => r.slice()); apply(nb, m, 2); const v = search(nb, 4, 1, -1e9, 1e9); if (v > bv) { bv = v; best = m; } } return best; }
+            function finish() { over = true; const a = cnt(B, 1), b2 = cnt(B, 2); draw(); if (a > b2) { gameResultBar(`你赢了 🎉 ${a} : ${b2}`); gameStat("othello", "w"); } else if (a < b2) { gameResultBar(`${hisName()}赢了 ${a} : ${b2}`); gameStat("othello", "l"); } else { gameResultBar("平局"); gameStat("othello", "d"); } document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function hisTurn() {
+                if (!moves(B, 1).length && !moves(B, 2).length) return finish();
+                const ms = moves(B, 2);
+                if (!ms.length) { thinking = false; gameResultBar(hisName() + "没地方下，轮到你"); draw(); return; }
+                thinking = true; draw(); gameResultBar(hisName() + "在想…");
+                timer = setTimeout(() => { const m = aiPick(ms); apply(B, m, 2); last = [m.x, m.y]; gameSfx("his"); thinking = false;
+                    if (!moves(B, 1).length) { if (!moves(B, 2).length) return finish(); gameResultBar("你没地方下，" + hisName() + "继续"); draw(); return timer = setTimeout(hisTurn, 700); }
+                    gameResultBar("轮到你了"); draw(); }, 600 + Math.random() * 500);
+            }
+            cv.addEventListener("click", e => { if (over || thinking) return; const r = cv.getBoundingClientRect(), x = Math.floor((e.clientX - r.left) / cell), y = Math.floor((e.clientY - r.top) / cell); if (x < 0 || y < 0 || x >= N || y >= N) return;
+                const f = flips(B, x, y, 1); if (!f.length) return; apply(B, { x, y, f }, 1); last = [x, y]; gameSfx("tap"); draw(); hisTurn(); });
+            draw(); gameCleanup = () => clearTimeout(timer);
+        }
+        // ---------- 打砖块（90年代掌机/红白机经典） ----------
+        function gameBreakout() {
+            const body = document.getElementById("gameBody");
+            body.innerHTML = `<div class="game-msg" id="gameMsg">按住屏幕左右拖动挡板，接住小球</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), w = Math.min(body.clientWidth - 24, 380), h = Math.round(w * 1.35), dpr = window.devicePixelRatio || 1;
+            cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
+            const COLS = 8, ROWS = 6, bw = w / COLS, bh = 16, top = 46, colr = ["#e0405a", "#e8845a", "#f2c94c", "#7fd08a", "#5fb0e8", "#a98be8"];
+            const spd = { easy: 190, normal: 250, hard: 320 }[gameDiff] || 250, padW = { easy: 96, normal: 78, hard: 62 }[gameDiff] || 78;
+            let bricks = [], px = w / 2, ball, lives = 3, score = 0, over = false, paused = false, raf = 0, lastT = performance.now(), serve = true;
+            for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) bricks.push({ x: c * bw, y: top + r * (bh + 3), c: colr[r], alive: true, pts: (ROWS - r) * 10 });
+            const reset = () => { ball = { x: px, y: h - 40, vx: 0, vy: 0 }; serve = true; };
+            reset();
+            const setPx = e => { const r = cv.getBoundingClientRect(); px = Math.max(padW / 2, Math.min(w - padW / 2, e.clientX - r.left)); if (serve) ball.x = px; };
+            cv.addEventListener("pointerdown", e => { setPx(e); if (serve && !over) { const a = (Math.random() * 0.8 - 0.4); ball.vx = Math.sin(a) * spd; ball.vy = -Math.cos(a) * spd; serve = false; } });
+            cv.addEventListener("pointermove", e => { if (e.buttons || e.pointerType === "touch") setPx(e); });
+            const key = e => { if (e.key === "ArrowLeft") { px = Math.max(padW / 2, px - 24); if (serve) ball.x = px; } else if (e.key === "ArrowRight") { px = Math.min(w - padW / 2, px + 24); if (serve) ball.x = px; } else if (e.key === " " && serve) { ball.vx = 40; ball.vy = -spd; serve = false; } };
+            document.addEventListener("keydown", key);
+            function finish(win) { over = true; cancelAnimationFrame(raf); gameResultBar(win ? `全部打光啦 🎉 ${score} 分` : `游戏结束 ${score} 分`); gameStat("breakout", win ? "w" : "l"); document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function step(dt) {
+                if (serve) return; ball.x += ball.vx * dt; ball.y += ball.vy * dt; const R = 5;
+                if (ball.x < R) { ball.x = R; ball.vx = Math.abs(ball.vx); } if (ball.x > w - R) { ball.x = w - R; ball.vx = -Math.abs(ball.vx); } if (ball.y < R) { ball.y = R; ball.vy = Math.abs(ball.vy); }
+                const py = h - 24;
+                if (ball.vy > 0 && ball.y + R >= py && ball.y + R <= py + 12 && Math.abs(ball.x - px) <= padW / 2 + R) { const k = (ball.x - px) / (padW / 2), sp = Math.min(spd * 1.7, Math.hypot(ball.vx, ball.vy) * 1.012); ball.vx = k * sp * 0.8; ball.vy = -Math.sqrt(Math.max(sp * sp - ball.vx * ball.vx, 1)); ball.y = py - R; gameSfx("tap"); }
+                for (const b of bricks) { if (!b.alive) continue; if (ball.x + R > b.x && ball.x - R < b.x + bw && ball.y + R > b.y && ball.y - R < b.y + bh) { b.alive = false; score += b.pts; const ox = Math.min(ball.x + R - b.x, b.x + bw - (ball.x - R)), oy = Math.min(ball.y + R - b.y, b.y + bh - (ball.y - R)); if (ox < oy) ball.vx = -ball.vx; else ball.vy = -ball.vy; gameSfx("his"); break; } }
+                if (!bricks.some(b => b.alive)) return finish(true);
+                if (ball.y > h + 10) { lives--; if (lives <= 0) return finish(false); reset(); }
+            }
+            function draw() {
+                ctx.fillStyle = "#14162a"; ctx.fillRect(0, 0, w, h);
+                bricks.forEach(b => { if (b.alive) { ctx.fillStyle = b.c; ctx.fillRect(b.x + 1, b.y, bw - 2, bh); ctx.fillStyle = "rgba(255,255,255,.22)"; ctx.fillRect(b.x + 1, b.y, bw - 2, 3); } });
+                ctx.fillStyle = "#e9eef8"; ctx.fillRect(px - padW / 2, h - 24, padW, 8); ctx.beginPath(); ctx.arc(ball.x, ball.y, 5, 0, 7); ctx.fillStyle = "#fff"; ctx.fill();
+                document.getElementById("gameScore").innerText = `得分 ${score}　　${"♥".repeat(lives)}`;
+            }
+            function loop(t) { if (over) return; const dt = Math.min(0.03, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); draw(); } raf = requestAnimationFrame(loop); }
+            draw(); raf = requestAnimationFrame(loop);
+            gamePause = () => { paused = true; document.removeEventListener("keydown", key); }; gameResume = () => { paused = false; lastT = performance.now(); document.addEventListener("keydown", key); };
+            gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
+        }
         function gameArrow() {
             const cfg = { easy: [14, 14, 8], normal: [22, 22, 14], hard: [30, 30, 26] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
             const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // 0上 1右 2下 3左
