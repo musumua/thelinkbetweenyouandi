@@ -783,11 +783,13 @@
         .diary-entry-block:not(:last-of-type)::after { content: ""; position: absolute; left: 17px; top: 40px; bottom: 4px; width: 2px; border-radius: 2px; background: var(--border); }
         .diary-ava { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--border); background: var(--panel); }
         .diary-entry-block.me .diary-ava { border-color: var(--primary); }
-        .diary-card { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; padding: 12px 15px 11px; }
-        .diary-entry-block.me .diary-card { background: color-mix(in srgb, var(--primary) 11%, var(--panel)); border-color: color-mix(in srgb, var(--primary) 28%, var(--border)); }
-        .diary-entry-author { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--text-main); }
-        .diary-entry-author small { font-size: 11px; font-weight: 400; color: var(--text-sub); }
-        .diary-entry-text { font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size: 15px; line-height: 1.95; color: var(--text-main); white-space: pre-wrap; word-break: break-word; }
+        .diary-card { flex: 1; min-width: 0; position: relative; color: #4a3d2a; border-radius: 3px; padding: 0 15px 2px; background-color: #fbf5e4; background-image: repeating-linear-gradient(180deg, transparent 0 29px, rgba(120,100,70,.2) 29px 30px), radial-gradient(circle at 20% 15%, rgba(255,255,255,.5), transparent 55%); box-shadow: 0 5px 14px rgba(0,0,0,.4), 0 0 0 1px rgba(120,100,70,.18) inset; }
+        .diary-entry-block.me .diary-card { transform: rotate(-0.35deg); }
+        .diary-entry-block.his .diary-card { transform: rotate(0.35deg); background-color: #eef1f4; background-image: repeating-linear-gradient(180deg, transparent 0 29px, rgba(90,110,140,.2) 29px 30px), radial-gradient(circle at 20% 15%, rgba(255,255,255,.55), transparent 55%); }
+        .diary-card::after { content: ""; position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,.14) 50%, rgba(255,255,255,.6) 100%); }
+        .diary-entry-author { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #7a5c34; line-height: 30px; margin-bottom: 0; }
+        .diary-entry-author small { font-size: 11px; font-weight: 400; color: #a08a62; }
+        .diary-entry-text { font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size: 15px; line-height: 30px; color: #4a3d2a; white-space: pre-wrap; word-break: break-word; }
         .diary-page-empty { font-size: 12.5px; color: var(--text-sub); text-align: center; margin-top: 30px; }
         .diary-page-footer { flex-shrink: 0; padding: 10px 16px 12px; display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border); background: var(--bg); }
         .diary-inline-area { width:100%; min-height:220px; border:1px dashed var(--border); border-radius: 14px; padding: 12px; box-sizing: border-box; outline:none; resize:none; background:transparent; font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size:15px; line-height:1.95; color:var(--text-main); }
@@ -2070,7 +2072,7 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.000022, galK = age => 8.4 + 12.6 * (1 - Math.cos(6.2832 * age / 420000)) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
+        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00003, galK = age => 8.4 + 12.6 * (1 - Math.cos(6.2832 * age / 720000)) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
         function galCycle(tt) { return [{ age: tt, al: 1 }]; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
@@ -2079,9 +2081,7 @@
                 for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) { const dx = ix + 0.5 - x0, dy = iy + 0.5 - y0, d2 = (dx * dx + dy * dy) / (r * r); if (d2 >= 1) continue; const w = 1 - d2, a = a0 * w * w, i = iy * n + ix; P[i * 3] = P[i * 3] * (1 - a) + col[0] * a; P[i * 3 + 1] = P[i * 3 + 1] * (1 - a) + col[1] * a; P[i * 3 + 2] = P[i * 3 + 2] * (1 - a) + col[2] * a; A[i] = A[i] + a * (1 - A[i]); } };
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.2 + ((i * 37) % 100) / 100 * 0.42, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7 + galTh(rr, age); blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [64, 98, 232] : [112, 104, 205], 0.05); }
             for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.16 + k / 110 * 0.5, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galTh(rr, age), f = Math.pow(Math.max(0, 1 - rr * 1.15), 0.9);
-                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.115 + 0.04 * (1 - rr)), [190 - rr * 120, 172 - rr * 58, 150 + rr * 85], 0.1 * f); }
-            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 90; k++) { const rr = 0.14 + k / 90 * 0.5, jit = (((k * 6151 + arm * 90001) % 1000) / 1000 - 0.5) * 0.08, th = arm * Math.PI + rr * 4.2 + jit - 0.34 + galTh(rr, age), f = Math.pow(Math.max(0, 1 - rr * 1.2), 0.9);
-                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.04 + 0.035 * (1 - rr)), [150, 78, 38], 0.12 * f); }
+                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.115 + 0.04 * (1 - rr)), [170 - rr * 110, 168 - rr * 58, 190 + rr * 55], 0.05 * f); }
             const d = B.im.data; for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { d[i * 4] = P[i * 3] / a; d[i * 4 + 1] = P[i * 3 + 1] / a; d[i * 4 + 2] = P[i * 3 + 2] / a; d[i * 4 + 3] = Math.min(255, a * 255); } else d[i * 4 + 3] = 0; }
             B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv;
         }
@@ -2247,8 +2247,7 @@
                 if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8");
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
-                    R(3, 7, 7, 4, "#fff2c4"); sp(6, 9, "#fffbe8", 1);
-                    for (let k = 4; k >= 1; k--) gE(6, 12, 3 + k * 3, 2 + k * 2.4, "rgba(255,226,150,.09)");
+                                        for (let k = 4; k >= 1; k--) gE(6, 11, 2 + k * 1.5, 2 + k * 1.6, "rgba(255,226,150,.09)");
                     gE(8, 44, 10, 2, "rgba(255,222,140,.12)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
@@ -6374,7 +6373,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你白他紫，同一行各一块挡板各一个球，接到对方的球就输；砖块有硬砖、铁砖和道具"]];
+            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你白他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -8857,9 +8856,9 @@ treaty:条约`
         // ---------- 打砖块（双球：你和他各打各的球，互相接不到） ----------
         function gameBreakout() {
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你是白色，他是紫色。只能接自己颜色的球，接到对方的球就输！</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div class="game-msg" style="font-size:11.5px;line-height:1.6;margin-top:6px">道具：<b>多</b>＝球一分三　<b>宽</b>＝挡板变宽　<b>穿</b>＝球穿过砖块　<b>慢</b>＝球变慢　<b>+1</b>＝加一条命<br>两块挡板重叠时，掉下的道具两边都能吃到</div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你是白色，他是紫色，各接各的球</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), w = Math.min(body.clientWidth - 24, 380), h = Math.round(w * 1.4), dpr = window.devicePixelRatio || 1;
-            cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
+            cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "pan-y"; ctx.scale(dpr, dpr);
             const COLS = 8, ROWS = 6, bw = w / COLS, bh = 16, top = 40, cs = getComputedStyle(document.body);
             const CM = "#ffffff", CH = "#a98be8", D = gameDiff, spd0 = { easy: 190, normal: 235, hard: 285 }[D] || 235, padBase = { easy: 92, normal: 80, hard: 68 }[D] || 80, hp0 = { easy: 2, normal: 2, hard: 3 }[D] || 2;
             const HPC = { 1: ["#7fd08a", "#5fb0e8", "#a98be8"], 2: "#e8845a", 3: "#e0405a" };
@@ -8894,7 +8893,7 @@ treaty:条约`
                     if (b.x < R) { b.x = R; b.vx = Math.abs(b.vx); } if (b.x > w - R) { b.x = w - R; b.vx = -Math.abs(b.vx); } if (b.y < R) { b.y = R; b.vy = Math.abs(b.vy); }
                     if (b.vy > 0 && b.y + R >= s.y && b.y + R <= s.y + 12) { const cov = q => Math.abs(b.x - q.px) <= q.padW / 2 + R && q.lives > 0, oth = sides[0] === s ? sides[1] : sides[0];
                         if (cov(s)) { const q = (b.x - s.px) / (s.padW / 2), sp = Math.min(spd0 * 1.6, Math.hypot(b.vx, b.vy) * 1.012); b.vx = q * sp * 0.8; b.vy = -Math.sqrt(Math.max(sp * sp - b.vx * b.vx, 1)); b.y = s.y - R; if (s.human) gameSfx("tap"); if (!s.human) s.err = (Math.random() - 0.5) * { easy: 70, normal: 36, hard: 14 }[D]; }
-                        else if (cov(oth)) { finish(oth); return; } }
+                    }
                     for (const br of bricks) { if (br.hp <= 0) continue; if (b.x + R > br.x && b.x - R < br.x + bw && b.y + R > br.y && b.y - R < br.y + bh) { hitBrick(s, br); if (br.iron || s.pierce <= 0) { const ox = Math.min(b.x + R - br.x, br.x + bw - (b.x - R)), oy = Math.min(b.y + R - br.y, br.y + bh - (b.y - R)); if (ox < oy) b.vx = -b.vx; else b.vy = -b.vy; } if (s.human) gameSfx("his"); break; } }
                     if (b.y > h + 10) s.balls.splice(i, 1); }
                 if (!s.balls.length) { s.lives--; if (s.lives > 0) { s.serve = true; s.serveAt = performance.now() + 900; s.balls.push(newBall(s)); } }
