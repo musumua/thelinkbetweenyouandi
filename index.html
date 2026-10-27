@@ -774,27 +774,46 @@
         /* ==================== 📔 交换日记（复古四边花纹边框） ==================== */
         /* ==================== 📔 交换日记（摊开的书本样式） ==================== */
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
-        .diary-book-wrap { flex: 1; display: flex; padding: 12px 14px calc(10px + env(safe-area-inset-bottom)) 14px; min-height: 0; box-sizing: border-box; }
-        .diary-book { flex: 1; display: flex; min-height: 0; position: relative; }
-        .diary-book-spine { display: none; }
-        .diary-page { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; position: relative; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .34 0 0 0 0 .2 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .02' numOctaves='2' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .45 0 0 0 0 .22 0 0 0 .28 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23f)'/%3E%3C/svg%3E"), #f7efdb; border-radius: 4px 12px 12px 4px; box-shadow: 0 10px 26px rgba(0,0,0,.45); overflow: hidden; color: #4a3d2a; }
-        .diary-page::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; background: linear-gradient(90deg, rgba(70,55,30,.32), rgba(70,55,30,0)); pointer-events: none; z-index: 2; }
-        .diary-page::after { content: ""; position: absolute; left: 44px; top: 0; bottom: 0; width: 1px; background: rgba(214,84,84,.5); pointer-events: none; z-index: 1; }
-        .diary-page-content { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 16px 0 58px; background-image: repeating-linear-gradient(180deg, transparent 0 31px, rgba(120,100,70,.26) 31px 32px); background-attachment: local; line-height: 32px; }
-        .diary-entry-block { margin-bottom: 64px; }
-        .diary-entry-author { height: 32px; line-height: 32px; font-size: 11.5px; color: #a08a62; letter-spacing: .5px; }
-        .diary-entry-text { font-size: 21px; line-height: 32px; white-space: pre-wrap; word-break: break-word; }
-        .diary-entry-block.me .diary-entry-text { font-family: "American Typewriter", "Courier New", Courier, "Songti SC", "SimSun", monospace; color: #2d3f68; }
-        .diary-entry-block.his .diary-entry-text { font-family: "American Typewriter", "Courier New", Courier, "Songti SC", "SimSun", monospace; color: #7a2e2e; }
-        .diary-tw { position: absolute; bottom: 62px; left: 58px; z-index: 4; width: 44px; height: 36px; pointer-events: none; transition: left .09s linear, opacity .4s; opacity: 0; }
-        .diary-tw.on { opacity: .95; } .diary-tw.hit svg { transform: translateY(2px); }
-        .diary-page-empty { height: 32px; line-height: 32px; font-size: 13px; color: #a08a62; font-style: italic; }
-        .diary-page-footer { flex-shrink: 0; position: relative; z-index: 3; padding: 8px 16px 10px 58px; display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid rgba(120,100,70,.3); background: rgba(120,100,70,.08); }
-        .diary-inline-area { display: block; width: 100%; min-height: 224px; border: none; outline: none; resize: none; background: transparent; padding: 0; margin: 0; font-family: "American Typewriter", "Courier New", Courier, "Songti SC", "SimSun", monospace; font-size: 21px; line-height: 32px; color: #2d3f68; }
-        .diary-write-btn { padding: 8px 24px; border-radius: 20px; border: none; background: #5b4630; color: #fbf5e4; font-size: 13.5px; font-weight: 600; cursor: pointer; }
-        .diary-pager { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a6a44; }
-        .diary-pager button { background: none; border: none; color: #5b4630; font-size: 20px; cursor: pointer; padding: 2px 10px; line-height: 1; }
-        .diary-pager button:disabled { opacity: 0.3; cursor: default; }
+        #letterFullPage .pyq-scroll-content { position: relative; }
+        .dj-back { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 14px; z-index: 30; width: 36px; height: 36px; border-radius: 50%; background: var(--panel); border: 1px solid var(--border); }
+        .dj-stage { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 56px 0 calc(16px + env(safe-area-inset-bottom)); position: relative; }
+        .dj-book { position: relative; width: min(80vw, 340px); height: min(64vh, 520px); perspective: 1700px; flex-shrink: 0; }
+        .dj-paper { position: absolute; inset: 0; background: #fff; border-radius: 3px 9px 9px 3px; box-shadow: 0 12px 30px rgba(0,0,0,.4), 4px 0 0 -1px #efece6, 6px 0 0 -2px #e2ded6, 8px 0 0 -3px #d4cfc4; overflow: hidden; }
+        .dj-paper::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(90deg, rgba(0,0,0,.12), rgba(0,0,0,0)); z-index: 3; pointer-events: none; }
+        .dj-sheet, .dj-leaf { position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 26px 20px 26px 28px; background: #fff; color: #33322e; font-size: 15px; line-height: 1.9; box-sizing: border-box; }
+        .dj-leaf { z-index: 4; transform-origin: left center; overflow: hidden; box-shadow: -6px 0 16px rgba(0,0,0,.18); backface-visibility: hidden; }
+        .dj-ent { margin-bottom: 3.8em; } .dj-ent:last-of-type { margin-bottom: 1.2em; }
+        .dj-au { font-size: 11px; line-height: 1.6; color: #aaa59a; margin-bottom: 2px; }
+        .dj-tx { white-space: pre-wrap; word-break: break-word; }
+        .dj-ent.me .dj-tx { color: #2f3b5c; } .dj-ent.his .dj-tx { color: #7b3b3b; }
+        .dj-wait { font-size: 12.5px; color: #aaa59a; }
+        .dj-area { display: block; width: 100%; min-height: 52vh; border: none; outline: none; resize: none; background: transparent; padding: 0; font: inherit; color: #2f3b5c; line-height: 1.9; }
+        .dj-cover { position: absolute; inset: 0; z-index: 10; transform-origin: left center; transition: transform 1s cubic-bezier(.5,.05,.25,1); backface-visibility: hidden; border-radius: 3px 10px 10px 3px; cursor: pointer; background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.12), rgba(0,0,0,0) 55%), linear-gradient(135deg, #6a3d3a, #4a2626); box-shadow: 0 14px 32px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.08), inset 12px 0 14px -8px rgba(0,0,0,.5); }
+        .dj-cover::before { content: ""; position: absolute; inset: 12px; border: 1.5px dashed rgba(240,215,170,.4); border-radius: 3px 8px 8px 3px; pointer-events: none; }
+        .dj-cover::after { content: ""; position: absolute; left: 22px; top: 0; bottom: 0; width: 6px; background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.07), rgba(0,0,0,0)); pointer-events: none; }
+        .dj-book.open .dj-cover { transform: rotateY(-172deg); pointer-events: none; }
+        .dj-strap { position: absolute; right: -9px; top: 44%; width: 64px; height: 26px; background: linear-gradient(180deg, #7b4a44, #4f2a27); border-radius: 4px 6px 6px 4px; box-shadow: 0 3px 8px rgba(0,0,0,.45); transition: transform .3s ease, opacity .3s ease; }
+        .dj-lock { position: absolute; left: 6px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff3c4, #d9a93e 55%, #8c6a1c); box-shadow: 0 1px 3px rgba(0,0,0,.5); }
+        .dj-lock::after { content: ""; position: absolute; left: 8px; top: 5px; width: 4px; height: 8px; border-radius: 2px; background: #5b3f10; }
+        .dj-book.unlatch .dj-strap { transform: translateX(20px) rotate(10deg); opacity: 0; }
+        .dj-ctrl { display: flex; align-items: center; gap: 14px; opacity: 0; pointer-events: none; transition: opacity .4s; min-height: 44px; }
+        .dj-stage.opened .dj-ctrl { opacity: 1; pointer-events: auto; transition-delay: .7s; }
+        .dj-pager { display: flex; align-items: center; gap: 4px; font-size: 12.5px; color: var(--text-sub); }
+        .dj-pager button { background: none; border: none; color: var(--text-main); font-size: 22px; padding: 2px 10px; cursor: pointer; line-height: 1; }
+        .dj-pager button:disabled { opacity: .25; }
+        .dj-tp { display: none; padding: 10px 22px; border-radius: 22px; border: 1px solid rgba(255,255,255,.2); background: linear-gradient(135deg, #7a5cf0, #4b8df0); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 0 18px rgba(110,130,255,.55); }
+        .dj-tp.show { display: block; }
+        .dj-hint { font-size: 12px; color: var(--text-sub); transition: opacity .3s; }
+        .dj-stage.opened .dj-hint { opacity: 0; }
+        .dj-book.tp { animation: djTp 1.4s ease-in forwards; }
+        @keyframes djTp { 0% { transform: scale(1) rotate(0); opacity: 1; filter: none; } 35% { transform: scale(1.04) rotate(-3deg); filter: drop-shadow(0 0 22px #8fa8ff); } 100% { transform: scale(.04) rotate(520deg) translateY(-30px); opacity: 0; filter: drop-shadow(0 0 30px #b4c4ff); } }
+        .dj-portal { position: absolute; left: 50%; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 3px solid rgba(160,185,255,.9); box-shadow: 0 0 30px 6px rgba(120,150,255,.7), inset 0 0 20px rgba(160,185,255,.6); animation: djPortal 1.5s ease-out forwards; pointer-events: none; z-index: 20; }
+        @keyframes djPortal { 0% { transform: scale(.3); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(7); opacity: 0; } }
+        .dj-given { display: none; flex-direction: column; align-items: center; gap: 10px; text-align: center; animation: djFade .8s ease both; }
+        .dj-given .big { font-size: 18px; color: var(--text-main); letter-spacing: 1px; } .dj-given .sub { font-size: 12.5px; color: var(--text-sub); }
+        .dj-given button { margin-top: 10px; background: none; border: none; color: var(--text-sub); text-decoration: underline; font-size: 12.5px; cursor: pointer; }
+        @keyframes djFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        .dj-stage.given .dj-book, .dj-stage.given .dj-ctrl, .dj-stage.given .dj-hint { display: none; } .dj-stage.given .dj-given { display: flex; }
             html, body { overscroll-behavior: none; }
     </style>
 </head>
@@ -993,25 +1012,17 @@
 
     <div class="pyq-full-page" id="letterFullPage">
         <div class="pyq-scroll-content">
-            <div class="app-page-header">
-                <button class="pyq-back-pure-symbol" onclick="closeLetterPage()"></button>
-                <div class="app-page-title">交换日记</div>
-                <button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button>
-            </div>
-            <div class="diary-book-wrap">
-                <div class="diary-book">
-                    <div class="diary-book-spine"></div>
-                    <div class="diary-page">
-                        <div class="diary-page-content" id="diaryPageContent"></div>
-                        <div class="diary-page-footer">
-                            <button class="diary-write-btn" id="diaryWriteBtn" onclick="diaryToggleWrite()">提笔</button>
-                            <div class="diary-pager">
-                                <button id="diaryPrevBtn" onclick="diaryPrevRound()">‹</button>
-                                <span id="diaryPagerLabel">第 1 / 1 页</span>
-                                <button id="diaryNextBtn" onclick="diaryNextRound()">›</button>
-                            </div>
-                        </div>
-                    </div>
+            <button class="pyq-back-pure-symbol dj-back" onclick="closeLetterPage()"></button>
+            <div class="dj-stage" id="djStage">
+                <div class="dj-given"><div class="big">✦ 日记本已经给他啦</div><div class="sub">等他写完，会把日记本交还到你手上</div><button id="djOldBtn" onclick="djReadOld()">翻看以前的日记</button></div>
+                <div class="dj-book" id="djBook">
+                    <div class="dj-paper" id="djPaper"><div class="dj-sheet" id="djSheet"></div></div>
+                    <div class="dj-cover" id="djCover" onclick="djOpenBook()"><div class="dj-strap"><div class="dj-lock"></div></div></div>
+                </div>
+                <div class="dj-hint">轻触搭扣，打开日记本</div>
+                <div class="dj-ctrl">
+                    <div class="dj-pager"><button id="djPrev" onclick="djFlip(-1)">‹</button><span id="djPageLab"></span><button id="djNext" onclick="djFlip(1)">›</button></div>
+                    <button class="dj-tp" id="djTp" onclick="djTeleport()">✦ 传送给他</button>
                 </div>
             </div>
         </div>
@@ -2070,7 +2081,7 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00003, galK = age => 8.4 + 12.6 * (1 - Math.cos(6.2832 * age / 720000)) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
+        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00009, galK = age => 8.4 + 12.6 * (Math.asin(0.96 * Math.sin(6.2832 * age / 480000 - 1.5708)) / Math.asin(0.96) + 1) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
         function galCycle(tt) { return [{ age: tt, al: 1 }]; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
@@ -2080,12 +2091,10 @@
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.2 + ((i * 37) % 100) / 100 * 0.42, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7 + galTh(rr, age); blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [64, 98, 232] : [112, 104, 205], 0.05); }
             for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.06 + k / 110 * 0.6, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galTh(rr, age), f = Math.pow(Math.max(0, 1 - rr * 1.15), 0.9);
                 blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.115 + 0.04 * (1 - rr)), [170 - rr * 110, 168 - rr * 58, 190 + rr * 55], 0.035 * f); }
-            { const ba = -0.00011 * age + 0.4; for (let j = -4; j <= 4; j++) blob(c0 + Math.cos(ba) * j * 0.028 * u, c0 + Math.sin(ba) * j * 0.028 * u, u * 0.05, [236, 208, 164], 0.07);
-              for (let q = 0; q < 6; q++) { const qa = -0.00007 * age + q * 1.0472, qr = 0.12 + (q % 2) * 0.05; blob(c0 + Math.cos(qa) * qr * u, c0 + Math.sin(qa) * qr * u, u * 0.06, [212, 186, 190], 0.05); } }
             const d = B.im.data; for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { d[i * 4] = P[i * 3] / a; d[i * 4 + 1] = P[i * 3 + 1] / a; d[i * 4 + 2] = P[i * 3 + 2] / a; d[i * 4 + 3] = Math.min(255, a * 255); } else d[i * 4 + 3] = 0; }
             B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv;
         }
-        function galBuildBase(Rx) { const B = galDiscBuf(Rx), { n, P, A } = B, u = Rx / B.S, c0 = n / 2; const d = B.im.data; for (let iy = 0; iy < n; iy++) for (let ix = 0; ix < n; ix++) { const dd = Math.hypot(ix + 0.5 - c0, iy + 0.5 - c0) / (u * 0.8); if (dd >= 1) continue; const w = 1 - dd * dd, a = 0.12 * w * w, i = iy * n + ix; d[i * 4] = 44; d[i * 4 + 1] = 84; d[i * 4 + 2] = 225; d[i * 4 + 3] = a * 255; } B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv; }
+        function galBuildBase(Rx) { const B = galDiscBuf(Rx), { n, P, A } = B, u = Rx / B.S, c0 = n / 2; const d = B.im.data; for (let iy = 0; iy < n; iy++) for (let ix = 0; ix < n; ix++) { const dd = Math.hypot(ix + 0.5 - c0, iy + 0.5 - c0) / (u * 0.8); if (dd >= 1) continue; const w = 1 - dd * dd, a = 0.12 * w * w, i = iy * n + ix; d[i * 4] = 70 + 120 * w; d[i * 4 + 1] = 100 + 110 * w; d[i * 4 + 2] = 228 + 20 * w; d[i * 4 + 3] = a * 255; } B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv; }
         function galLayer(ctx, W, H, t) {
             ctx.fillStyle = "#070a18"; ctx.fillRect(0, 0, W, H);
             if (!galSpr) { galSpr = document.createElement("canvas"); galSpr.width = galSpr.height = 24; const sc2 = galSpr.getContext("2d"), sg = sc2.createRadialGradient(12, 12, 0, 12, 12, 12); sg.addColorStop(0, "rgba(255,255,255,1)"); sg.addColorStop(0.3, "rgba(255,255,255,.85)"); sg.addColorStop(0.65, "rgba(255,255,255,.22)"); sg.addColorStop(1, "rgba(255,255,255,0)"); sc2.fillStyle = sg; sc2.fillRect(0, 0, 24, 24); }
@@ -2171,7 +2180,7 @@
             const K = {
                 c, sparks: [],
                 R: (x, y, w, h, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); },
-                B: (x, y, w, h, col, o) => { x = Math.round(x); y = Math.round(y); w = Math.round(w); h = Math.round(h); const oc = o || K.out || PX_OUT; c.fillStyle = oc; c.fillRect(x, y, w, h); if (!o) { c.clearRect(x, y, 1, 1); c.clearRect(x + w - 1, y, 1, 1); c.clearRect(x, y + h - 1, 1, 1); c.clearRect(x + w - 1, y + h - 1, 1, 1); } c.fillStyle = col; c.fillRect(x + 1, y + 1, w - 2, h - 2); if (h >= 5 && w >= 4) { c.fillStyle = pxMix(col, "#ffffff", 0.35); c.fillRect(x + 1, y + 1, w - 2, 1); c.fillStyle = pxMix(col, "#1b1230", 0.22); c.fillRect(x + 1, y + h - 2, w - 2, 1); } },
+                B: (x, y, w, h, col, o) => { x = Math.round(x); y = Math.round(y); w = Math.round(w); h = Math.round(h); const oc = o || K.out || PX_OUT; c.fillStyle = oc; c.fillRect(x, y, w, h); if (!o) { c.clearRect(x, y, 1, 1); c.clearRect(x + w - 1, y, 1, 1); c.clearRect(x, y + h - 1, 1, 1); c.clearRect(x + w - 1, y + h - 1, 1, 1); } c.fillStyle = col; c.fillRect(x + 1, y + 1, w - 2, h - 2); if (h >= 5 && w >= 4 && !o) { c.fillStyle = pxMix(col, "#ffffff", 0.35); c.fillRect(x + 1, y + 1, w - 2, 1); c.fillStyle = pxMix(col, "#1b1230", 0.22); c.fillRect(x + 1, y + h - 2, w - 2, 1); } },
                 E: (cx, cy, rx, ry, col, o) => { const oc = o || K.out || PX_OUT; for (let y = -ry - 1; y <= ry + 1; y++) for (let x = -rx - 1; x <= rx + 1; x++) { const d = (x * x) / (rx * rx) + (y * y) / (ry * ry); const e = (x * x) / ((rx + 1) * (rx + 1)) + (y * y) / ((ry + 1) * (ry + 1)); if (d <= 1.02) { c.fillStyle = (y < -ry * 0.35 && x < rx * 0.1) ? pxMix(col, "#ffffff", 0.3) : (y > ry * 0.45 ? pxMix(col, "#1b1230", 0.2) : col); c.fillRect(Math.round(cx + x), Math.round(cy + y), 1, 1); } else if (e <= 1.05) { c.fillStyle = oc; c.fillRect(Math.round(cx + x), Math.round(cy + y), 1, 1); } } },
                 L: (x1, y1, x2, y2, col) => { x1 = Math.round(x1); y1 = Math.round(y1); x2 = Math.round(x2); y2 = Math.round(y2); const dx = Math.abs(x2 - x1), dy = -Math.abs(y2 - y1), sx = x1 < x2 ? 1 : -1, sy = y1 < y2 ? 1 : -1; let err = dx + dy; c.fillStyle = col; for (;;) { c.fillRect(x1, y1, 1, 1); if (x1 === x2 && y1 === y2) break; const e2 = 2 * err; if (e2 >= dy) { err += dy; x1 += sx; } if (e2 <= dx) { err += dx; y1 += sy; } } },
                 P: (x, y, col) => { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), 1, 1); },
@@ -2244,12 +2253,12 @@
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); 
+                if (night) { R(66, 31, 2, 2, "#fff3c8"); R(70, 31, 2, 2, "#fff3c8"); P(66, 30, "#ffb040"); P(70, 30, "#ffb040"); P(66, 29, "#fff0a8"); P(70, 29, "#fff0a8"); sp(66, 29, "#ffd98a"); sp(70, 29, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
                                         for (let k = 6; k >= 1; k--) gE(8, 18, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
                     for (let y = 13; y < 46; y++) { const half = 3 + (y - 13) * 0.55; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(6 - half), y, Math.round(half * 2), 1); }
-                    gE(14, 45, 26, 4, "rgba(255,222,140,.11)"); gE(14, 45, 14, 2, "rgba(255,236,180,.1)");
+                    gE(67, 29, 4, 4, "rgba(255,190,90,.09)"); gE(71, 29, 4, 4, "rgba(255,190,90,.09)"); gE(14, 45, 26, 4, "rgba(255,222,140,.11)"); gE(14, 45, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -4557,8 +4566,7 @@
         function openCardModal() { toggleSidebar(false); switchCardTab(activeCardTab); openModalBox("cardLargeModal"); }
 
         // ✉️ 全屏日记核心驱动
-        let diaryTyped = {}, diaryTok = 0;
-        function openLetterPage() { diaryTyped = {}; toggleSidebar(false); renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
+        function openLetterPage() { toggleSidebar(false); djOpen = false; djRead = false; djBusy = false; djPageIdx = djPages().length - 1; renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
         function closeLetterPage() { document.getElementById("letterFullPage").classList.remove("open"); }
 
         // ==================== 🗂️ 记忆（聊天记录收藏） ====================
@@ -5403,78 +5411,57 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             }
             return rounds;
         }
-        function renderDiaryTimeline() {
-            const rounds = getDiaryRounds();
-            if (currentDiaryRound >= rounds.length) currentDiaryRound = rounds.length - 1;
-            if (currentDiaryRound < 0) currentDiaryRound = 0;
-            renderDiaryRound(rounds[currentDiaryRound], currentDiaryRound, rounds.length);
-        }
-        function diaryTypeIn(page, idx) {
-            const pg = page.closest(".diary-page"); let tw = pg && pg.querySelector(".diary-tw");
-            if (pg && !tw) { tw = document.createElement("div"); tw.className = "diary-tw"; tw.innerHTML = '<svg viewBox="0 0 44 36" width="44" height="36" style="transition:transform .05s"><rect x="8" y="2" width="28" height="8" fill="#f3ecd8" stroke="#3b3329" stroke-width="2"/><rect x="2" y="12" width="40" height="14" rx="3" fill="#5b5a62" stroke="#2b2a30" stroke-width="2"/><rect x="8" y="16" width="28" height="3" fill="#8c8a94"/><rect x="6" y="26" width="32" height="8" rx="2" fill="#3f3e46" stroke="#2b2a30" stroke-width="2"/><circle cx="12" cy="30" r="1.5" fill="#d8d4c8"/><circle cx="22" cy="30" r="1.5" fill="#d8d4c8"/><circle cx="32" cy="30" r="1.5" fill="#d8d4c8"/></svg>'; pg.appendChild(tw); }
-            const tok = ++diaryTok; if (!tw) return; tw.classList.remove("on");
-            if (diaryWriting || diaryTyped[idx]) return; diaryTyped[idx] = 1;
-            const els = [...page.querySelectorAll(".diary-entry-text")]; if (!els.length) return;
-            const items = els.map(el => ({ el, t: el.textContent })); const total = items.reduce((a, b) => a + b.t.length, 0), step = Math.max(1, Math.ceil(total / 150));
-            items.forEach(it => { it.el.innerHTML = '<span></span><span style="visibility:hidden">' + escapeHtml(it.t) + "</span>"; });
-            tw.classList.add("on"); let ii = 0, pos = 0, cnt = 0; const W = () => Math.max(60, (pg.clientWidth || 300) - 58 - 70);
-            (function tick() {
-                if (tok !== diaryTok || !document.body.contains(tw)) return;
-                const it = items[ii]; if (!it) { tw.classList.remove("on"); return; }
-                pos = Math.min(it.t.length, pos + step); cnt += step;
-                const sp = it.el.children; sp[0].textContent = it.t.slice(0, pos); sp[1].textContent = it.t.slice(pos);
-                tw.style.left = (58 + ((cnt % 18) / 18) * W()) + "px"; tw.classList.add("hit"); setTimeout(() => tw.classList.remove("hit"), 45);
-                if (pos >= it.t.length) { ii++; pos = 0; setTimeout(tick, 380); } else setTimeout(tick, 42);
-            })();
-        }
-        function renderDiaryRound(round, idx, total) {
-            const page = document.getElementById("diaryPageContent");
-            if (!page) return;
-            let html = "";
-            if (round && round.mine) {
-                html += `<div class="diary-entry-block me"><div class="diary-entry-author">${escapeHtml(db.me.name || "我")} · ${escapeHtml(round.mine.time)}</div><div class="diary-entry-text">${escapeHtml(round.mine.content)}</div></div>`;
-            }
-            if (round && round.his) {
-                html += `<div class="diary-entry-block his"><div class="diary-entry-author">${escapeHtml(db.other.name || "他")} · ${escapeHtml(round.his.time)}</div><div class="diary-entry-text">${escapeHtml(round.his.content)}</div></div>`;
-            } else if (round && round.mine) {
-                html += `<div class="diary-page-empty">等待 ${escapeHtml(db.other.name || "他")} 回信中…</div>`;
-            }
-            if (diaryWriting && idx === diaryTargetIdx) {
-                const hint = round && round.mine ? "补充几句…（他回信之前还能继续写）" : "在这页写点什么…";
-                html = html.replace(/<div class="diary-page-empty">.*?<\/div>/, "") + `<textarea id="diaryInlineArea" class="diary-inline-area" placeholder="${hint}" oninput="diaryDraftText=this.value"></textarea>`;
-            } else if (!html) html = `<div class="diary-page-empty">这页还空着，提笔写点什么吧</div>`;
-            page.innerHTML = html;
-            { const ta = document.getElementById("diaryInlineArea"); if (ta) ta.value = diaryDraftText; }
-            diaryTypeIn(page, idx);
-            const label = document.getElementById("diaryPagerLabel");
-            if (label) label.innerText = `第 ${idx + 1} / ${total} 页`;
-            const prevBtn = document.getElementById("diaryPrevBtn"), nextBtn = document.getElementById("diaryNextBtn");
-            if (prevBtn) prevBtn.disabled = idx <= 0;
-            if (nextBtn) nextBtn.disabled = idx >= total - 1;
-        }
-        function diaryPrevRound() { if (currentDiaryRound > 0) { currentDiaryRound--; renderDiaryTimeline(); } }
-        function diaryNextRound() {
-            const rounds = getDiaryRounds();
-            if (currentDiaryRound < rounds.length - 1) { currentDiaryRound++; renderDiaryTimeline(); }
-        }
-        let diaryWriting = false, diaryTargetIdx = -1, diaryDraftText = "";
+        let djOpen = false, djRead = false, djBusy = false, djPageIdx = 0, diaryWriting = false, diaryTargetIdx = -1, diaryDraftText = "";
         function diaryHasPending() { return db.sentLetters.length > db.receivedLetters.length; }
-        function diaryToggleWrite() {
-            const btn = document.getElementById("diaryWriteBtn");
-            if (!diaryWriting) {
-                diaryMonthFilter = ""; const mb = document.getElementById("diaryMonthBtn"); if (mb) mb.innerText = "全部";
-                diaryWriting = true; diaryDraftText = "";
-                diaryTargetIdx = diaryHasPending() ? db.sentLetters.length - 1 : db.sentLetters.length;
-                currentDiaryRound = diaryTargetIdx; renderDiaryTimeline();
-                setTimeout(() => { const t = document.getElementById("diaryInlineArea"); if (t) t.focus(); }, 60);
-            } else {
-                const t = document.getElementById("diaryInlineArea");
-                const text = t ? t.value.trim() : "";
-                diaryWriting = false;
-                if (text) commitDiaryText(text);
-                renderDiaryTimeline();
-            }
-            if (btn) btn.innerText = diaryWriting ? "搁笔" : "提笔";
+        function djPages() {
+            const n = Math.max(db.sentLetters.length, db.receivedLetters.length), r = [];
+            for (let i = 0; i < n; i++) r.push({ mine: db.sentLetters[i] || null, his: db.receivedLetters[i] || null });
+            if (!diaryHasPending()) r.push({ mine: null, his: null, blank: true });
+            return r;
+        }
+        function djPageHtml(pg) {
+            const me = escapeHtml(db.me.name || "我"), ot = escapeHtml(db.other.name || "他"); let h = "";
+            if (pg.mine) h += `<div class="dj-ent me"><div class="dj-au">${me} · ${escapeHtml(pg.mine.time)}</div><div class="dj-tx">${escapeHtml(pg.mine.content)}</div></div>`;
+            if (pg.his) h += `<div class="dj-ent his"><div class="dj-au">${ot} · ${escapeHtml(pg.his.time)}</div><div class="dj-tx">${escapeHtml(pg.his.content)}</div></div>`;
+            else if (pg.mine) h += `<div class="dj-wait">等待 ${ot} 回信中…</div>`;
+            if (pg.blank) h += `<textarea id="djArea" class="dj-area" placeholder="在这页写点什么…" oninput="diaryDraftText=this.value"></textarea>`;
+            return h;
+        }
+        function renderDiaryTimeline() {
+            const st = document.getElementById("djStage"); if (!st) return;
+            const pages = djPages(); if (djPageIdx >= pages.length) djPageIdx = pages.length - 1; if (djPageIdx < 0) djPageIdx = 0;
+            const pg = pages[djPageIdx], given = diaryHasPending() && !djRead;
+            st.classList.toggle("given", given); st.classList.toggle("opened", djOpen);
+            const book = document.getElementById("djBook"); if (!djBusy) { book.classList.toggle("open", djOpen); book.classList.toggle("unlatch", djOpen); }
+            document.getElementById("djSheet").innerHTML = djPageHtml(pg);
+            const ta = document.getElementById("djArea"); if (ta) ta.value = diaryDraftText;
+            document.getElementById("djPageLab").innerText = `${djPageIdx + 1} / ${pages.length}`;
+            document.getElementById("djPrev").disabled = djPageIdx <= 0; document.getElementById("djNext").disabled = djPageIdx >= pages.length - 1;
+            document.getElementById("djTp").classList.toggle("show", !!pg.blank);
+            document.getElementById("djOldBtn").style.display = db.sentLetters.length ? "" : "none";
+        }
+        function djReadOld() { djRead = true; djOpen = false; djPageIdx = djPages().length - 1; renderDiaryTimeline(); }
+        function djOpenBook() {
+            if (djOpen || djBusy) return; djBusy = true; const book = document.getElementById("djBook"), st = document.getElementById("djStage");
+            book.classList.add("unlatch"); setTimeout(() => { book.classList.add("open"); djOpen = true; st.classList.add("opened"); }, 300);
+            setTimeout(() => { djBusy = false; }, 1300);
+        }
+        function djFlip(dir) {
+            if (djBusy || !djOpen) return; const pages = djPages(), ni = djPageIdx + dir; if (ni < 0 || ni >= pages.length) return;
+            djBusy = true; const sheet = document.getElementById("djSheet"), paper = document.getElementById("djPaper");
+            const mk = () => { const l = sheet.cloneNode(true); l.removeAttribute("id"); l.className = "dj-leaf"; l.querySelectorAll("[id]").forEach(e => e.removeAttribute("id")); paper.appendChild(l); return l; };
+            const done = l => () => { l.remove(); djBusy = false; };
+            if (dir > 0) { const l = mk(); djPageIdx = ni; renderDiaryTimeline(); l.animate([{ transform: "rotateY(0)", opacity: 1 }, { transform: "rotateY(-150deg)", opacity: 0 }], { duration: 650, easing: "ease-in-out" }).onfinish = done(l); }
+            else { djPageIdx = ni; renderDiaryTimeline(); const l = mk(); l.animate([{ transform: "rotateY(-150deg)", opacity: 0 }, { transform: "rotateY(0)", opacity: 1 }], { duration: 650, easing: "ease-in-out" }).onfinish = done(l); }
+        }
+        function djTeleport() {
+            if (djBusy || !djOpen) return; const ta = document.getElementById("djArea"), text = ta ? ta.value.trim() : "";
+            if (!text) { if (ta) { ta.focus(); ta.animate([{ transform: "translateX(0)" }, { transform: "translateX(-6px)" }, { transform: "translateX(6px)" }, { transform: "translateX(0)" }], { duration: 260 }); } return; }
+            djBusy = true; if (ta) ta.blur();
+            diaryTargetIdx = db.sentLetters.length; commitDiaryText(text); diaryDraftText = "";
+            const book = document.getElementById("djBook"), st = document.getElementById("djStage"); djOpen = false; st.classList.remove("opened"); book.classList.remove("open", "unlatch");
+            setTimeout(() => { book.classList.add("tp"); const r = document.createElement("div"); r.className = "dj-portal"; st.appendChild(r); setTimeout(() => r.remove(), 1600); }, 1100);
+            setTimeout(() => { book.classList.remove("tp"); djBusy = false; renderDiaryTimeline(); }, 2600);
         }
         function commitDiaryText(text) {
             const idx = diaryTargetIdx;
@@ -8920,7 +8907,7 @@ treaty:条约`
                     if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText("?", b.x + bw / 2, b.y + 12); } });
                 sides.forEach(s => { if (s.lives <= 0) return; ctx.fillStyle = s.col; ctx.globalAlpha = s.human ? 1 : .85; ctx.fillRect(s.px - s.padW / 2, s.y, s.padW, 8); ctx.globalAlpha = 1; s.balls.forEach(b => { ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fillStyle = s.col; ctx.fill(); ctx.strokeStyle = s.col; ctx.lineWidth = 2; ctx.stroke(); }); });
                 drops.forEach(d => { const p = PT[d.t]; ctx.beginPath(); ctx.arc(d.x, d.y, 9, 0, 7); ctx.fillStyle = p[1]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = "#222"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText(p[0], d.x, d.y + 4); });
-                document.getElementById("gameScore").innerHTML = `<span style="color:#cdb857">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
+                document.getElementById("gameScore").innerHTML = `<span style="color:#fff4b8">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
             }
             function loop(t) { if (over) return; const dt = Math.min(0.03, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); if (!over) draw(); } raf = requestAnimationFrame(loop); }
             draw(); raf = requestAnimationFrame(loop);
