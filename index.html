@@ -180,7 +180,7 @@
         .div-board { position:relative; margin:6px auto 8px; } .div-board .slot { position:absolute; border:1px dashed var(--border); border-radius:8px; box-sizing:border-box; display:flex; align-items:flex-end; justify-content:center; } .div-board .slot span { font-size:9px; color:var(--text-sub); padding-bottom:2px; text-align:center; line-height:1.1; }
 
         /* 占卜牌面 / 聊天卡片 */
-        .cf.has-img { padding:0; overflow:hidden; background:#efe3c4; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#4a3228; } .cf.has-img .cn { color:#8a6a4a; } .cf.has-img .cm { font-size:1.3em; } .cf .rws { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:inherit; } .cf .rws.rv { transform:rotate(180deg); }
+        .cardx .cf.has-img, .cc-f.cf.has-img { background:#efe3c4; color:#4a3228; } .cf.has-img { padding:0; overflow:hidden; background:#efe3c4; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#4a3228; } .cf.has-img .cn { color:#8a6a4a; } .cf.has-img .cm { font-size:1.3em; } .cf .rws { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:inherit; } .cf .rws.rv { transform:rotate(180deg); }
         .cardx.tr .cb, .tcb { background: radial-gradient(circle at 50% 50%, #3a4a92 0 12%, transparent 13%), repeating-conic-gradient(from 0deg at 50% 50%, #26336f 0 10deg, #1b2556 10deg 20deg); border:2px solid #d9b86a; box-shadow: inset 0 0 0 3px #1b2556, inset 0 0 0 4px #d9b86a; border-radius:6px; }
         .cardx.ln .cb, .lcb { background: repeating-linear-gradient(45deg, rgba(150,60,50,.55) 0 1px, transparent 1px 6px), repeating-linear-gradient(-45deg, rgba(150,60,50,.55) 0 1px, transparent 1px 6px), #f1e4c3; border:2px solid #8a3d34; box-shadow: inset 0 0 0 3px #f1e4c3, inset 0 0 0 4px #8a3d34; border-radius:5px; }
         .lf { position:absolute; inset:0; background:#f3e7c9; border:1.5px solid #8a3d34; box-shadow: inset 0 0 0 2px #f3e7c9, inset 0 0 0 3px #b78b6a; border-radius:5px; font-family:Georgia,'Times New Roman',serif; color:#4a3228; display:flex; flex-direction:column; align-items:center; justify-content:center; box-sizing:border-box; overflow:hidden; }
@@ -774,28 +774,24 @@
         /* ==================== 📔 交换日记（复古四边花纹边框） ==================== */
         /* ==================== 📔 交换日记（摊开的书本样式） ==================== */
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
-        .diary-book-wrap { flex: 1; display: flex; padding: 0 0 env(safe-area-inset-bottom) 0; min-height: 0; box-sizing: border-box; }
-        .diary-book { flex: 1; display: flex; min-height: 0; }
+        .diary-book-wrap { flex: 1; display: flex; padding: 12px 14px calc(10px + env(safe-area-inset-bottom)) 14px; min-height: 0; box-sizing: border-box; }
+        .diary-book { flex: 1; display: flex; min-height: 0; position: relative; }
         .diary-book-spine { display: none; }
-        .diary-page { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; color: var(--text-main); }
-        .diary-page-content { flex: 1; display: flex; flex-direction: column; gap: 0; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 18px 16px 16px; }
-        .diary-entry-block { flex-shrink: 0; position: relative; display: flex; gap: 12px; padding-bottom: 18px; }
-        .diary-entry-block:not(:last-of-type)::after { content: ""; position: absolute; left: 17px; top: 40px; bottom: 4px; width: 2px; border-radius: 2px; background: var(--border); }
-        .diary-ava { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--border); background: var(--panel); }
-        .diary-entry-block.me .diary-ava { border-color: var(--primary); }
-        .diary-card { flex: 1; min-width: 0; position: relative; color: #4a3d2a; border-radius: 3px; padding: 0 15px 2px; background-color: #fbf5e4; background-image: repeating-linear-gradient(180deg, transparent 0 29px, rgba(120,100,70,.2) 29px 30px), radial-gradient(circle at 20% 15%, rgba(255,255,255,.5), transparent 55%); box-shadow: 0 5px 14px rgba(0,0,0,.4), 0 0 0 1px rgba(120,100,70,.18) inset; }
-        .diary-entry-block.me .diary-card { transform: rotate(-0.35deg); }
-        .diary-entry-block.his .diary-card { transform: rotate(0.35deg); background-color: #eef1f4; background-image: repeating-linear-gradient(180deg, transparent 0 29px, rgba(90,110,140,.2) 29px 30px), radial-gradient(circle at 20% 15%, rgba(255,255,255,.55), transparent 55%); }
-        .diary-card::after { content: ""; position: absolute; right: 0; bottom: 0; width: 18px; height: 18px; background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,.14) 50%, rgba(255,255,255,.6) 100%); }
-        .diary-entry-author { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #7a5c34; line-height: 30px; margin-bottom: 0; }
-        .diary-entry-author small { font-size: 11px; font-weight: 400; color: #a08a62; }
-        .diary-entry-text { font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size: 15px; line-height: 30px; color: #4a3d2a; white-space: pre-wrap; word-break: break-word; }
-        .diary-page-empty { font-size: 12.5px; color: var(--text-sub); text-align: center; margin-top: 30px; }
-        .diary-page-footer { flex-shrink: 0; padding: 10px 16px 12px; display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border); background: var(--bg); }
-        .diary-inline-area { width:100%; min-height:220px; border:1px dashed var(--border); border-radius: 14px; padding: 12px; box-sizing: border-box; outline:none; resize:none; background:transparent; font-family: Georgia, "Songti SC", "Noto Serif SC", serif; font-size:15px; line-height:1.95; color:var(--text-main); }
-        .diary-write-btn { padding: 9px 26px; border-radius: 20px; border: none; background: var(--primary); color: var(--bg, #fff); font-size: 13.5px; font-weight: 600; cursor: pointer; }
-        .diary-pager { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-sub); }
-        .diary-pager button { background: none; border: none; color: var(--text-main); font-size: 20px; cursor: pointer; padding: 2px 10px; line-height: 1; }
+        .diary-page { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; position: relative; background: #fbf5e4; border-radius: 4px 12px 12px 4px; box-shadow: 0 10px 26px rgba(0,0,0,.45); overflow: hidden; color: #4a3d2a; }
+        .diary-page::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; background: linear-gradient(90deg, rgba(70,55,30,.32), rgba(70,55,30,0)); pointer-events: none; z-index: 2; }
+        .diary-page::after { content: ""; position: absolute; left: 44px; top: 0; bottom: 0; width: 1px; background: rgba(214,84,84,.5); pointer-events: none; z-index: 1; }
+        .diary-page-content { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 16px 0 58px; background-image: repeating-linear-gradient(180deg, transparent 0 31px, rgba(120,100,70,.26) 31px 32px); background-attachment: local; line-height: 32px; }
+        .diary-entry-block { margin-bottom: 64px; }
+        .diary-entry-author { height: 32px; line-height: 32px; font-size: 11.5px; color: #a08a62; letter-spacing: .5px; }
+        .diary-entry-text { font-size: 21px; line-height: 32px; white-space: pre-wrap; word-break: break-word; }
+        .diary-entry-block.me .diary-entry-text { font-family: "Long Cang", "Kaiti SC", "STKaiti", "KaiTi", cursive; color: #2d3f68; }
+        .diary-entry-block.his .diary-entry-text { font-family: "Ma Shan Zheng", "Kaiti SC", "STKaiti", "KaiTi", cursive; color: #7a2e2e; }
+        .diary-page-empty { height: 32px; line-height: 32px; font-size: 13px; color: #a08a62; font-style: italic; }
+        .diary-page-footer { flex-shrink: 0; position: relative; z-index: 3; padding: 8px 16px 10px 58px; display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid rgba(120,100,70,.3); background: rgba(120,100,70,.08); }
+        .diary-inline-area { display: block; width: 100%; min-height: 224px; border: none; outline: none; resize: none; background: transparent; padding: 0; margin: 0; font-family: "Long Cang", "Kaiti SC", "STKaiti", "KaiTi", cursive; font-size: 21px; line-height: 32px; color: #2d3f68; }
+        .diary-write-btn { padding: 8px 24px; border-radius: 20px; border: none; background: #5b4630; color: #fbf5e4; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+        .diary-pager { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a6a44; }
+        .diary-pager button { background: none; border: none; color: #5b4630; font-size: 20px; cursor: pointer; padding: 2px 10px; line-height: 1; }
         .diary-pager button:disabled { opacity: 0.3; cursor: default; }
             html, body { overscroll-behavior: none; }
     </style>
@@ -2058,7 +2054,7 @@
             for (let i = 0; i < 45; i++) { const arm = i % 2, rr = 0.16 + Math.random() * 0.62; dust.push({ r: rr, th: arm * Math.PI + rr * 4.2 - 0.32 + galG() * 0.06, s: 1.5 + Math.random() * 3 }); }
             for (let i = 0; i < 26; i++) { const arm = i % 2, rr = 0.35 + Math.random() * 0.55; pink.push({ r: rr, th: arm * Math.PI + rr * 4.2 + 0.22 + galG() * 0.1, s: 1.1 + Math.random() * 1.2 }); }
             // 远处的群星：很多、很小；星云中间少，四周多（拒绝采样）
-            for (let n = 0, tries = 0; n < 4200 && tries < 70000; tries++) { const x = Math.random(), y = Math.random(), d = Math.hypot((x - 0.5) * 1.0, (y - 0.5) * 1.7) / 0.62, acc = 0.07 + 0.93 * Math.min(1, Math.pow(d, 1.6)); if (Math.random() > acc) continue; n++; const q = Math.pow(Math.random(), 3.2), cr = Math.random(); bg.push({ x, y, s: q * 0.9, p: Math.random() * 6.283, a: Math.min(0.95, 0.16 + Math.random() * 0.34 + q * 0.4), k: cr < 0.62 ? 0 : cr < 0.82 ? 1 : 2 }); }
+            for (let n = 0, tries = 0; n < 1700 && tries < 40000; tries++) { const x = Math.random(), y = Math.random(), d = Math.hypot((x - 0.5) * 1.0, (y - 0.5) * 1.7) / 0.62, acc = 0.07 + 0.93 * Math.min(1, Math.pow(d, 1.6)); if (Math.random() > acc) continue; n++; const q = Math.pow(Math.random(), 3.2), cr = Math.random(); bg.push({ x, y, s: q * 0.9, p: Math.random() * 6.283, a: Math.min(0.95, 0.16 + Math.random() * 0.34 + q * 0.4), k: cr < 0.62 ? 0 : cr < 0.82 ? 1 : 2 }); }
             const halo = []; for (let i = 0; i < 0; i++) halo.push({ x: Math.random(), y: Math.random(), r: 2.5 + Math.random() * 2.5, c: ["255,255,255", "214,228,255", "190,208,255", "236,242,255"][i % 4] });
             const cloud = []; for (let i = 0; i < 150; i++) { const arm = i % 2, rr = 0.42 + Math.pow(Math.random(), 0.8) * 0.62; cloud.push({ r: rr, th: arm * Math.PI + rr * 4.2 + galG() * 0.55, s: 0.16 + Math.random() * 0.22, a: 0.012 + Math.random() * 0.016, c: Math.random() < 0.7 ? "96,118,200" : "120,110,190" }); }
             gal = { parts, bg, dust, pink, halo, cloud, shoot: null, nextShoot: 3000 };
@@ -2080,8 +2076,8 @@
             const blob = (x0, y0, r, col, a0) => { const ix0 = Math.max(0, Math.floor(x0 - r)), ix1 = Math.min(n - 1, Math.ceil(x0 + r)), iy0 = Math.max(0, Math.floor(y0 - r)), iy1 = Math.min(n - 1, Math.ceil(y0 + r));
                 for (let iy = iy0; iy <= iy1; iy++) for (let ix = ix0; ix <= ix1; ix++) { const dx = ix + 0.5 - x0, dy = iy + 0.5 - y0, d2 = (dx * dx + dy * dy) / (r * r); if (d2 >= 1) continue; const w = 1 - d2, a = a0 * w * w, i = iy * n + ix; P[i * 3] = P[i * 3] * (1 - a) + col[0] * a; P[i * 3 + 1] = P[i * 3 + 1] * (1 - a) + col[1] * a; P[i * 3 + 2] = P[i * 3 + 2] * (1 - a) + col[2] * a; A[i] = A[i] + a * (1 - A[i]); } };
             for (let i = 0; i < 70; i++) { const arm = i % 2, rr = 0.2 + ((i * 37) % 100) / 100 * 0.42, th = arm * Math.PI + rr * 4.2 + (((i * 7919) % 1000) / 1000 - 0.5) * 0.7 + galTh(rr, age); blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.2 + (i % 5) * 0.04), i % 3 ? [64, 98, 232] : [112, 104, 205], 0.05); }
-            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.16 + k / 110 * 0.5, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galTh(rr, age), f = Math.pow(Math.max(0, 1 - rr * 1.15), 0.9);
-                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.115 + 0.04 * (1 - rr)), [170 - rr * 110, 168 - rr * 58, 190 + rr * 55], 0.05 * f); }
+            for (let arm = 0; arm < 2; arm++) for (let k = 0; k < 110; k++) { const rr = 0.06 + k / 110 * 0.6, jit = (((k * 7919 + arm * 104729) % 1000) / 1000 - 0.5) * 0.1, th = arm * Math.PI + rr * 4.2 + jit + galTh(rr, age), f = Math.pow(Math.max(0, 1 - rr * 1.15), 0.9);
+                blob(c0 + Math.cos(th) * rr * u, c0 + Math.sin(th) * rr * u, u * (0.115 + 0.04 * (1 - rr)), [170 - rr * 110, 168 - rr * 58, 190 + rr * 55], 0.035 * f); }
             const d = B.im.data; for (let i = 0; i < n * n; i++) { const a = A[i]; if (a > 0.001) { d[i * 4] = P[i * 3] / a; d[i * 4 + 1] = P[i * 3 + 1] / a; d[i * 4 + 2] = P[i * 3 + 2] / a; d[i * 4 + 3] = Math.min(255, a * 255); } else d[i * 4 + 3] = 0; }
             B.cv.getContext("2d").putImageData(B.im, 0, 0); return B.cv;
         }
@@ -2146,7 +2142,7 @@
             layers.forEach(L => (db.wishStars || []).forEach(w => { if (w.arrive && nowMs < w.arrive) return; const wr = 0.12 + w.r * 0.5, [x, y] = pos(wr, w.a + galTh(wr, L.age)), tw = (0.7 + 0.3 * Math.sin(t / 1100 + w.ts % 9)) * Math.pow(Math.max(0, 1 - wr * 0.9), 0.8) * L.al; ctx.fillStyle = "#a9c4ff"; ctx.globalAlpha = tw * 0.12; ctx.beginPath(); ctx.arc(x, y, 1.8, 0, 6.283); ctx.fill(); ctx.globalAlpha = tw * 0.5; ctx.beginPath(); ctx.arc(x, y, 0.65, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1; }));
             { const TAU = 6.2832, PC = ["#ffeedd", "#ffffff", "#d6e4ff"];
               layers.forEach(L => { const bk = Array.from({ length: 21 }, () => []);
-                gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + galTh(p.r, L.age)), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 1.25), ci = p.r < 0.22 ? 0 : p.r < 0.55 ? 1 : 2; bk[ci * 7 + Math.min(6, Math.floor(a * 9))].push(x, y); });
+                gal.parts.forEach(p => { const [x, y] = pos(p.r, p.th + galTh(p.r, L.age)), a = Math.min(1, p.a * Math.pow(Math.max(0, 1 - p.r * 0.85), 1.05) * 0.8), ci = p.r < 0.22 ? 0 : p.r < 0.55 ? 1 : 2; bk[ci * 7 + Math.min(6, Math.floor(a * 9))].push(x, y); });
                 bk.forEach((arr, bi) => { if (!arr.length) return; ctx.fillStyle = PC[Math.floor(bi / 7)]; ctx.globalAlpha = ((bi % 7) + 0.5) / 9 * L.al; ctx.beginPath(); for (let q = 0; q < arr.length; q += 2) { ctx.moveTo(arr[q] + 0.5, arr[q + 1]); ctx.arc(arr[q], arr[q + 1], 0.5, 0, TAU); } ctx.fill(); }); }); ctx.globalAlpha = 1; }
             { ctx.fillStyle = "#fff"; if (!gal.tw) gal.tw = gal.bg.filter(q => q.s < 0.6 && Math.hypot((q.x - 0.5) * 1.0, (q.y - 0.5) * 1.7) / 0.62 > 1.1).slice(0, 90); gal.tw.forEach(q => { const a = 0.25 + 0.55 * Math.max(0, Math.sin(t / 900 + q.p * 3)); ctx.globalAlpha = a; ctx.beginPath(); ctx.arc(q.x * W, q.y * H, 0.5 + q.s * 0.6, 0, 6.283); ctx.fill(); }); ctx.globalAlpha = 1; }
             ctx.globalCompositeOperation = "source-over";
@@ -2231,9 +2227,9 @@
                 R(0, 0, 90, 34, D("#e6ecf3", "#3d3a55")); R(0, 31, 90, 3, D("#f3f5f9", "#4a4666")); floor(34);
                 B(56, 3, 31, 29, D("#f6f7fa", "#8a87aa")); R(58, 5, 27, 25, D("#a8d8ff", "#121846")); skyline(58, 85, 30, 1); R(70, 5, 2, 25, D("#f6f7fa", "#8a87aa")); R(58, 16, 27, 2, D("#f6f7fa", "#8a87aa"));
                 if (night) { sp(62, 8, "#fff", 1); sp(78, 9, "#fff"); sp(73, 12, "#fff", 1); } else { sp(62, 9, "#fff", 1); sp(80, 20, "#fff"); }
-                B(14, 5, 10, 13, D("#f7f3ea", "#8d869c")); R(16, 7, 6, 9, D("#dce8d4", "#5d6d62")); R(19, 11, 1, 4, D("#a9cfa4", "#4e7a62")); R(17, 9, 5, 2, D("#bddcb8", "#58886c")); R(18, 8, 3, 1, D("#c8e4c2", "#62927a")); R(18, 11, 1, 1, D("#bddcb8", "#58886c")); R(20, 11, 1, 1, D("#bddcb8", "#58886c"));
-                B(27, 8, 8, 10, D("#f7f3ea", "#8d869c")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
-                L(6, 12, 6, 44, D("#cfd2d8", "#8e90a0")); B(2, 6, 9, 6, D("#f6e1b8", "#e8c98a")); E(6, 46, 5, 1, D("#cfd2d8", "#8e90a0")); sp(6, 9, "#ffe9a8", 1);
+                B(14, 5, 10, 13, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(16, 7, 6, 9, D("#dce8d4", "#5d6d62")); R(19, 11, 1, 4, D("#a9cfa4", "#4e7a62")); R(17, 9, 5, 2, D("#bddcb8", "#58886c")); R(18, 8, 3, 1, D("#c8e4c2", "#62927a")); R(18, 11, 1, 1, D("#bddcb8", "#58886c")); R(20, 11, 1, 1, D("#bddcb8", "#58886c"));
+                B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
+                L(6, 12, 6, 44, D("#cfd2d8", "#8e90a0")); B(2, 6, 9, 6, D("#f6e1b8", "#f3dc9e"), D("#e3cfa0", "#fff0c0")); E(6, 46, 5, 1, D("#cfd2d8", "#8e90a0"));
                 B(40, 25, 8, 9, D("#e0d9cd", "#8e8884")); leaf(44, 23, 0, -3, 4, D("#58a85a", "#2f5a3a")); leaf(44, 24, -2, -2, 3, D("#6fbf6a", "#38704a")); leaf(44, 24, 2, -2, 3, D("#6fbf6a", "#38704a"));
                 B(13, 23, 40, 14, D("#f4e8d6", "#a5979f")); B(11, 30, 44, 9, D("#f8ecdb", "#b0a2ab")); B(9, 26, 7, 14, D("#efe0cc", "#9a8c96")); B(52, 26, 6, 14, D("#efe0cc", "#9a8c96"));
                 B(8, 29, 8, 10, D("#d9d3cc", "#8a828e")); E(23, 28, 4, 4, D("#f3c8a4", "#c9a08a")); B(30, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(31 + i * 2, 25 + (i % 2) * 2, 32 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97")); B(40, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(41 + i * 2, 25 + (i % 2) * 2, 42 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97"));
@@ -2244,11 +2240,12 @@
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); sp(2, 8, "#ffe9a8"); sp(10, 8, "#ffe9a8");
+                if (night) { B(66, 30, 2, 3, "#fff3c8"); B(70, 30, 2, 3, "#fff3c8"); sp(67, 29, "#ffd98a", 1); sp(71, 29, "#ffd98a", 1); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
-                                        for (let k = 4; k >= 1; k--) gE(6, 11, 2 + k * 1.5, 2 + k * 1.6, "rgba(255,226,150,.09)");
-                    gE(8, 44, 10, 2, "rgba(255,222,140,.12)");
+                                        for (let k = 6; k >= 1; k--) gE(8, 18, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
+                    for (let y = 13; y < 46; y++) { const half = 3 + (y - 13) * 0.55; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(6 - half), y, Math.round(half * 2), 1); }
+                    gE(14, 45, 26, 4, "rgba(255,222,140,.11)"); gE(14, 45, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -3423,6 +3420,7 @@
 
             // 聊天记录自动上限：避免长期使用后消息越积越多，拖慢每次存档速度
             if (db.chat.length > 600) {
+                wfArchive(db.chat.slice(0, db.chat.length - 400));
                 db.chat = db.chat.slice(db.chat.length - 400);
             }
 
@@ -4561,7 +4559,8 @@
         function openCardModal() { toggleSidebar(false); switchCardTab(activeCardTab); openModalBox("cardLargeModal"); }
 
         // ✉️ 全屏日记核心驱动
-        function openLetterPage() { toggleSidebar(false); renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
+        function diaryLoadFonts() { if (window.__dfont) return; window.__dfont = 1; setTimeout(() => ["long-cang", "ma-shan-zheng"].forEach(n => { const l = document.createElement("link"); l.rel = "stylesheet"; l.href = "https://cdn.jsdelivr.net/npm/@fontsource/" + n + "@5/index.css"; l.media = "print"; l.onload = () => { l.media = "all"; }; document.head.appendChild(l); }), 300); }
+        function openLetterPage() { diaryLoadFonts(); toggleSidebar(false); renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
         function closeLetterPage() { document.getElementById("letterFullPage").classList.remove("open"); }
 
         // ==================== 🗂️ 记忆（聊天记录收藏） ====================
@@ -4576,14 +4575,12 @@
         // ==================== 📊 数据统计页 ====================
         function openStatsPage() { toggleSidebar(false); renderStatsPage(); document.getElementById("statsFullPage").classList.add("open"); }
         function closeStatsPage() { document.getElementById("statsFullPage").classList.remove("open"); }
+        function wfArchive(list) { if (!db.wordFreqAll) db.wordFreqAll = {}; (list || []).forEach(m => { if (m && m.me === false && m.text && !m.type) String(m.text).split("\n").forEach(l => { l = l.trim(); if (l) db.wordFreqAll[l] = (db.wordFreqAll[l] || 0) + 1; }); }); }
         function getOtherWordFrequency() {
-            const freq = {};
+            // 累计统计：已经被聊天上限清掉的旧消息（存在 db.wordFreqAll 里）+ 现在聊天记录里的，按字卡/句子一行一行数
+            const freq = Object.assign({}, db.wordFreqAll || {});
             db.chat.forEach(m => {
-                if (m.me === false && m.text) {
-                    const sentence = m.text.trim();
-                    if (!sentence) return;
-                    freq[sentence] = (freq[sentence] || 0) + 1;
-                }
+                if (m.me === false && m.text && !m.type) m.text.split("\n").forEach(l => { l = l.trim(); if (l) freq[l] = (freq[l] || 0) + 1; });
             });
             return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
         }
@@ -4762,6 +4759,7 @@
             });
         }
         
+        document.addEventListener("focusin", e => { if (e.target && e.target.id === "msg") { try { closeBottomEmojiModal(); closeMoreMenu(); } catch (x) {} } });
         function toggleBottomEmojiModal() { const m = document.getElementById("bottomEmojiModal"); if (m && m.style.display === "block") closeBottomEmojiModal(); else openBottomEmojiModal(); }
         function openBottomEmojiModal() {
             const m = document.getElementById("bottomEmojiModal"), plus = document.getElementById("moreMenuPopup");
@@ -5418,18 +5416,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             if (!page) return;
             let html = "";
             if (round && round.mine) {
-                html += `<div class="diary-entry-block me"><img class="diary-ava" src="${db.me.avatar || DEFAULT_SVG_AVATAR}"><div class="diary-card">
-                    <div class="diary-entry-author"><span>${escapeHtml(db.me.name || "我")}</span><small>${escapeHtml(round.mine.time)}</small></div>
-                    <div class="diary-entry-text">${escapeHtml(round.mine.content)}</div>
-                </div></div>`;
+                html += `<div class="diary-entry-block me"><div class="diary-entry-author">${escapeHtml(db.me.name || "我")} · ${escapeHtml(round.mine.time)}</div><div class="diary-entry-text">${escapeHtml(round.mine.content)}</div></div>`;
             }
             if (round && round.his) {
-                html += `<div class="diary-entry-block his"><img class="diary-ava" src="${db.other.avatar || DEFAULT_SVG_AVATAR}"><div class="diary-card">
-                    <div class="diary-entry-author"><span>${escapeHtml(db.other.name || "他")}</span><small>${escapeHtml(round.his.time)}</small></div>
-                    <div class="diary-entry-text">${escapeHtml(round.his.content)}</div>
-                </div></div>`;
+                html += `<div class="diary-entry-block his"><div class="diary-entry-author">${escapeHtml(db.other.name || "他")} · ${escapeHtml(round.his.time)}</div><div class="diary-entry-text">${escapeHtml(round.his.content)}</div></div>`;
             } else if (round && round.mine) {
-                html += `<div class="diary-page-empty">等待 ${escapeHtml(db.other.name || "他")} 回信中...</div>`;
+                html += `<div class="diary-page-empty">等待 ${escapeHtml(db.other.name || "他")} 回信中…</div>`;
             }
             if (diaryWriting && idx === diaryTargetIdx) {
                 const hint = round && round.mine ? "补充几句…（他回信之前还能继续写）" : "在这页写点什么…";
@@ -6122,10 +6114,11 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         const LENO_PC = ["9♥", "6♦", "10♠", "K♥", "7♥", "K♣", "Q♣", "9♦", "Q♠", "J♦", "J♣", "7♦", "J♠", "9♣", "10♣", "6♥", "Q♥", "10♥", "6♠", "8♠", "8♣", "Q♦", "7♣", "J♥", "A♣", "10♦", "7♠", "A♥", "A♠", "K♠", "A♦", "8♥", "8♦", "K♦", "9♠", "6♣"];
         function tarotName(idx) { return idx < 22 ? TAROT[idx][0] : SUIT_NAMES[Math.floor((idx - 22) / 14)] + RANK_NAMES[(idx - 22) % 14]; }
         // 牌面内部 html（要放进 position:relative 的容器里）；w=请求的图片宽度
+        function rwsNext(im) { const n = +im.dataset.s + 1, base = rwsUrl(+im.dataset.i, +im.dataset.w); im.dataset.s = n; if (n === 1) im.src = "https://wsrv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else if (n === 2) im.src = "https://images.weserv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else im.remove(); }
         function cardFaceInner(tab, idx, rev, w) {
             if (tab === "tarot") {
                 const nm = tarotName(idx), fb = `<div class="cn">${idx < 22 ? ROM[idx] : ""}</div><div class="cm">${nm}</div>`;
-                return fb + `<img class="rws${rev ? " rv" : ""}" src="${rwsUrl(idx, w || 400)}" referrerpolicy="no-referrer" onerror="this.remove()" alt="">`;
+                return fb + `<img class="rws${rev ? " rv" : ""}" src="${rwsUrl(idx, w || 400)}" referrerpolicy="no-referrer" data-i="${idx}" data-w="${w || 400}" data-s="0" onerror="rwsNext(this)" alt="">`;
             }
             const pc = LENO_PC[idx], red = /[♥♦]/.test(pc);
             return `<div class="lf${red ? " rd" : ""}"><div class="li">${pc.replace(/(.)$/, "<br>$1")}</div><div class="li li2">${pc.replace(/(.)$/, "<br>$1")}</div><div class="le" style="${rev ? "" : ""}">${LENO_EMO[idx]}</div><div class="ln">${LENO[idx][0]}</div><div class="lnn">${idx + 1}</div></div>`;
@@ -6373,7 +6366,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你白他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"]];
+            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -8856,11 +8849,11 @@ treaty:条约`
         // ---------- 打砖块（双球：你和他各打各的球，互相接不到） ----------
         function gameBreakout() {
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你是白色，他是紫色，各接各的球</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">你是黄色，他是紫色，各接各的球</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), w = Math.min(body.clientWidth - 24, 380), h = Math.round(w * 1.4), dpr = window.devicePixelRatio || 1;
             cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "pan-y"; ctx.scale(dpr, dpr);
             const COLS = 8, ROWS = 6, bw = w / COLS, bh = 16, top = 40, cs = getComputedStyle(document.body);
-            const CM = "#ffffff", CH = "#a98be8", D = gameDiff, spd0 = { easy: 190, normal: 235, hard: 285 }[D] || 235, padBase = { easy: 92, normal: 80, hard: 68 }[D] || 80, hp0 = { easy: 2, normal: 2, hard: 3 }[D] || 2;
+            const CM = "#ffe873", CH = "#c9b8f4", D = gameDiff, spd0 = { easy: 190, normal: 235, hard: 285 }[D] || 235, padBase = { easy: 92, normal: 80, hard: 68 }[D] || 80, hp0 = { easy: 2, normal: 2, hard: 3 }[D] || 2;
             const HPC = { 1: ["#7fd08a", "#5fb0e8", "#a98be8"], 2: "#e8845a", 3: "#e0405a" };
             const bricks = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { let hp = 1, iron = false; if (r < 2) hp = hp0; else if (r === 2 && (c === 0 || c === COLS - 1)) iron = true; else if (r === 3 && (c === 3 || c === 4) && D !== "easy") hp = 2;
                 bricks.push({ x: c * bw, y: top + r * (bh + 3), hp, iron, item: !iron && Math.random() < 0.16, base: HPC[1][r % 3] }); }
