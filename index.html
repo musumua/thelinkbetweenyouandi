@@ -180,6 +180,7 @@
         .div-board { position:relative; margin:6px auto 8px; } .div-board .slot { position:absolute; border:1px dashed var(--border); border-radius:8px; box-sizing:border-box; display:flex; align-items:flex-end; justify-content:center; } .div-board .slot span { font-size:9px; color:var(--text-sub); padding-bottom:2px; text-align:center; line-height:1.1; }
 
         /* 占卜牌面 / 聊天卡片 */
+.tart { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:7% 6%; box-sizing:border-box; border-radius:inherit; background:radial-gradient(circle at 50% 45%, #f8efd5, #e4d09f); box-shadow:inset 0 0 0 3px #efe3c4, inset 0 0 0 4px #c9a878; color:#4a3228; text-align:center; font-family:Georgia,"Times New Roman",serif; } .tart.rv { transform:rotate(180deg); } .tart .tn { font-size:1.15em; letter-spacing:.12em; min-height:1.2em; color:#8a6a4a; } .tart .tmid { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; } .tart .te { font-size:3.8em; line-height:1.1; filter:sepia(.7) saturate(.9); } .tart .tp1 { font-size:1.4em; filter:sepia(.7); } .tart .tp { display:flex; flex-wrap:wrap; justify-content:center; align-content:center; gap:.15em .25em; width:85%; filter:sepia(.7) saturate(.9); } .tart .tm { font-size:1.05em; font-weight:bold; min-height:1.2em; }
         .cardx .cf.has-img, .cc-f.cf.has-img { background:#efe3c4; color:#4a3228; } .cf.has-img { padding:0; overflow:hidden; background:#efe3c4; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#4a3228; } .cf.has-img .cn { color:#8a6a4a; } .cf.has-img .cm { font-size:1.3em; } .cf .rws { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:inherit; } .cf .rws.rv { transform:rotate(180deg); }
         .cardx.tr .cb, .tcb { background: radial-gradient(circle at 50% 50%, #3a4a92 0 12%, transparent 13%), repeating-conic-gradient(from 0deg at 50% 50%, #26336f 0 10deg, #1b2556 10deg 20deg); border:2px solid #d9b86a; box-shadow: inset 0 0 0 3px #1b2556, inset 0 0 0 4px #d9b86a; border-radius:6px; }
         .cardx.ln .cb, .lcb { background: repeating-linear-gradient(45deg, rgba(150,60,50,.55) 0 1px, transparent 1px 6px), repeating-linear-gradient(-45deg, rgba(150,60,50,.55) 0 1px, transparent 1px 6px), #f1e4c3; border:2px solid #8a3d34; box-shadow: inset 0 0 0 3px #f1e4c3, inset 0 0 0 4px #8a3d34; border-radius:5px; }
@@ -428,8 +429,8 @@
         [data-theme="eye-care"] .modal-input, [data-theme="eye-care"] .modal-textarea, [data-theme="eye-care"] .search-input, [data-theme="eye-care"] .search-select, [data-theme="eye-care"] .flex-row-between input, [data-theme="light-green"] .modal-input, [data-theme="light-green"] .modal-textarea, [data-theme="light-green"] .search-input, [data-theme="light-green"] .search-select, [data-theme="light-green"] .flex-row-between input { background: #FFFFFF !important; color: var(--input-text); }
         .modal-textarea { min-height: 100px; resize: none; }
 
-        .pyq-full-page { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: var(--bg); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column; overflow: hidden; }
-        .pyq-full-page.open { right: 0; }
+        .pyq-full-page { position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: var(--bg); z-index: 1000; transform: translate3d(100%, 0, 0); transition: transform 0.3s ease; display: flex; flex-direction: column; overflow: hidden; }
+        .pyq-full-page.open { transform: none; }
         .pyq-scroll-content { flex: 1; overflow-y: auto; width: 100%; -webkit-overflow-scrolling: touch; background: var(--bg); }
         
         .pyq-cover-section { width: 100%; height: 32vh; min-height: 240px; background-color: #524269; background-size: cover; background-position: center; position: relative; }
@@ -968,6 +969,10 @@
                             <div class="more-menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg></div>
                             <span>提问</span>
                         </div>
+                        <div class="more-menu-item" onclick="closeMoreMenu(); openChatSearch();">
+                            <div class="more-menu-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></div>
+                            <span>搜索</span>
+                        </div>
                     </div>
                 </div>
                 <input type="file" id="chat_photo_file" class="file" accept="image/*">
@@ -1025,6 +1030,19 @@
                     <button class="dj-tp" id="djTp" onclick="djTeleport()">✦ 传送给他</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="pyq-full-page" id="chatSearchPage">
+        <div class="pyq-scroll-content" style="display:flex; flex-direction:column; overflow:hidden;">
+            <div class="app-page-header">
+                <button class="pyq-back-pure-symbol" onclick="closeChatSearch()"></button>
+                <div class="app-page-title">搜索聊天记录</div>
+                <div class="app-page-header-spacer"></div>
+            </div>
+            <div style="padding:10px 14px 6px;"><input id="chatSearchInput" type="search" placeholder="输入关键词" oninput="runChatSearch()" style="width:100%;box-sizing:border-box;margin:0;"></div>
+            <div id="chatSearchInfo" style="padding:0 16px 6px;font-size:12px;color:var(--text-sub);"></div>
+            <div id="chatSearchRes" style="flex:1;overflow-y:auto;padding:0 14px 24px;-webkit-overflow-scrolling:touch;"></div>
         </div>
     </div>
 
@@ -2240,25 +2258,29 @@
                 R(0, 0, 90, 34, D("#e6ecf3", "#3d3a55")); R(0, 31, 90, 3, D("#f3f5f9", "#4a4666")); floor(34);
                 B(56, 3, 31, 29, D("#f6f7fa", "#8a87aa")); R(58, 5, 27, 25, D("#a8d8ff", "#121846")); skyline(58, 85, 30, 1); R(70, 5, 2, 25, D("#f6f7fa", "#8a87aa")); R(58, 16, 27, 2, D("#f6f7fa", "#8a87aa"));
                 if (night) { sp(62, 8, "#fff", 1); sp(78, 9, "#fff"); sp(73, 12, "#fff", 1); } else { sp(62, 9, "#fff", 1); sp(80, 20, "#fff"); }
+                c.save(); c.translate(10, 0);
                 B(14, 5, 10, 13, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(16, 7, 6, 9, D("#dce8d4", "#5d6d62")); R(19, 11, 1, 4, D("#a9cfa4", "#4e7a62")); R(17, 9, 5, 2, D("#bddcb8", "#58886c")); R(18, 8, 3, 1, D("#c8e4c2", "#62927a")); R(18, 11, 1, 1, D("#bddcb8", "#58886c")); R(20, 11, 1, 1, D("#bddcb8", "#58886c"));
+                c.restore(); c.save(); c.translate(9, -1);
                 B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
-                L(6, 12, 6, 44, D("#cfd2d8", "#8e90a0")); B(2, 6, 9, 6, D("#f6e1b8", "#f3dc9e"), D("#e3cfa0", "#fff0c0")); E(6, 46, 5, 1, D("#cfd2d8", "#8e90a0"));
+                c.restore();
+                { const LP = D("#cfd2d8", "#8e90a0"); L(5, 12, 5, 44, LP); L(5, 12, 6, 8, LP); L(6, 8, 8, 6, LP); L(8, 6, 12, 5, LP); L(12, 5, 15, 6, LP); E(5, 46, 5, 1, LP);
+                  for (let y = 0; y < 6; y++) { const half = 2 + y * 0.9; R(Math.round(16 - half), 6 + y, Math.round(half * 2 + 1), 1, y < 5 ? D("#f6e1b8", "#f3dc9e") : D("#e8cf98", "#fff0c0")); } }
                 B(40, 25, 8, 9, D("#e0d9cd", "#8e8884")); leaf(44, 23, 0, -3, 4, D("#58a85a", "#2f5a3a")); leaf(44, 24, -2, -2, 3, D("#6fbf6a", "#38704a")); leaf(44, 24, 2, -2, 3, D("#6fbf6a", "#38704a"));
                 B(13, 23, 40, 14, D("#f4e8d6", "#a5979f")); B(11, 30, 44, 9, D("#f8ecdb", "#b0a2ab")); B(9, 26, 7, 14, D("#efe0cc", "#9a8c96")); B(52, 26, 6, 14, D("#efe0cc", "#9a8c96"));
                 B(8, 29, 8, 10, D("#d9d3cc", "#8a828e")); E(23, 28, 4, 4, D("#f3c8a4", "#c9a08a")); B(30, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(31 + i * 2, 25 + (i % 2) * 2, 32 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97")); B(40, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(41 + i * 2, 25 + (i % 2) * 2, 42 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97"));
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
-                B(12, 43, 52, 7, D("#f4efe6", "#8c8494")); for (let x = 14; x < 62; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
-                B(48, 36, 32, 5, D("#dfae70", "#a8764a")); B(48, 41, 32, 3, D("#c7915a", "#8d5e3a")); B(50, 44, 3, 6, "#9a6c40"); B(76, 44, 3, 6, "#9a6c40"); B(56, 41, 12, 3, D("#b9824d", "#7a5232"));
-                B(58, 33, 6, 3, "#fffdf4"); B(66, 34, 10, 2, D("#e8e1d4", "#b8b0a6")); B(70, 32, 8, 2, D("#e7ebf2", "#a9b0c8")); E(74, 32, 3, 1, "#2a2a34");
+                B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
+                E(20, 47, 4, 2, D("#f3ece0", "#b8aebc")); E(27, 48, 4, 2, D("#f3ece0", "#a8a0b0"));
+                B(34, 41, 22, 3, D("#dfae70", "#a8764a")); B(36, 44, 2, 5, "#9a6c40"); B(52, 44, 2, 5, "#9a6c40");
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { R(66, 31, 2, 2, "#fff3c8"); R(70, 31, 2, 2, "#fff3c8"); P(66, 30, "#ffb040"); P(70, 30, "#ffb040"); P(66, 29, "#fff0a8"); P(70, 29, "#fff0a8"); sp(66, 29, "#ffd98a"); sp(70, 29, "#ffd98a"); 
+                if (night) { R(41, 39, 2, 2, "#fff3c8"); R(47, 39, 2, 2, "#fff3c8"); P(41, 38, "#ffb040"); P(47, 38, "#ffb040"); P(41, 37, "#fff0a8"); P(47, 37, "#fff0a8"); sp(41, 37, "#ffd98a"); sp(47, 37, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
-                                        for (let k = 6; k >= 1; k--) gE(8, 18, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
-                    for (let y = 13; y < 46; y++) { const half = 3 + (y - 13) * 0.55; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(6 - half), y, Math.round(half * 2), 1); }
-                    gE(67, 29, 4, 4, "rgba(255,190,90,.09)"); gE(71, 29, 4, 4, "rgba(255,190,90,.09)"); gE(14, 45, 26, 4, "rgba(255,222,140,.11)"); gE(14, 45, 14, 2, "rgba(255,236,180,.1)");
+                                        for (let k = 6; k >= 1; k--) gE(16, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
+                    for (let y = 11; y < 46; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(16 - half), y, Math.round(half * 2), 1); }
+                    gE(42, 38, 4, 4, "rgba(255,190,90,.09)"); gE(48, 38, 4, 4, "rgba(255,190,90,.09)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -3036,7 +3058,7 @@
             // 守卫记录用同一个网址（不带 #g1 这类后缀），层号 i 存在 state 里：
             // 刷新/页面被系统回收重载（比如选完相册图片回来）时，沿用已有的守卫层，不再往历史里追加记录。
             // 层数 depth 一律以当前所在记录的 state.i 为准，不自己累加：浏览器跳过了没有用户操作时塞进去的记录，也能自动校正。
-            let depth = 0; const TARGET = 4; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
+            let depth = 0; const TARGET = 5; // 守卫层数：每次真正的用户操作（抬手/点击）后补到 3 层
             const pushGuard = () => { try { history.pushState({ guard: 1, i: depth + 1 }, ""); depth++; } catch (e) { } };
             { const hs = history.state;
               if (hs && hs.guard) depth = hs.i || 1;
@@ -3047,13 +3069,13 @@
             let exiting = false, touched = false, exitN = 0, exitT = 0;
             const ensureGuard = () => { touched = true; while (depth < TARGET) pushGuard(); };
             
-            ["pointerdown", "touchstart", "pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true }));
+            ["pointerup", "touchend", "click", "keydown"].forEach(ev => document.addEventListener(ev, ensureGuard, { capture: true, passive: true })); // 只在“算用户操作”的事件里加守卫记录（touchstart/pointerdown 里加的记录会被浏览器当作无操作记录而跳过）
             const topUp = () => { const hs = history.state; depth = hs && hs.guard ? (hs.i || 1) : 0; if (touched || hasActivation()) { while (depth < TARGET) pushGuard(); } };
             window.addEventListener("pageshow", topUp); document.addEventListener("visibilitychange", () => { if (!document.hidden) topUp(); });
             window.addEventListener("popstate", (e) => {
                 const st = e.state; depth = st && st.guard ? (st.i || 1) : 0;
                 // 补守卫：有过用户操作时补满；还没有时只补一层（连塞多层会被浏览器当成“无操作记录”一次跳过）
-                const refill = () => { if (hasActivation()) { while (depth < TARGET) pushGuard(); } else pushGuard(); };
+                const refill = () => { if (!hasActivation()) pushGuard(); }; // 返回手势本身不算用户操作，这里不再补记录，等下一次点击/抬手时再补满
                 if (handleBack()) { refill(); return; }
                 lastBack = Date.now();
                 if (Date.now() - exitT > 5000) exitN = 0; exitT = Date.now(); exitN++;
@@ -4566,6 +4588,20 @@
         function openCardModal() { toggleSidebar(false); switchCardTab(activeCardTab); openModalBox("cardLargeModal"); }
 
         // ✉️ 全屏日记核心驱动
+        function openChatSearch() { const pg = document.getElementById("chatSearchPage"); pg.classList.add("open"); const i = document.getElementById("chatSearchInput"); i.value = ""; runChatSearch(); setTimeout(() => i.focus(), 340); }
+        function closeChatSearch() { document.getElementById("chatSearchPage").classList.remove("open"); }
+        function runChatSearch() {
+            const kw = document.getElementById("chatSearchInput").value.trim().toLowerCase(), box = document.getElementById("chatSearchRes"), info = document.getElementById("chatSearchInfo");
+            if (!kw) { box.innerHTML = ""; info.innerText = `共 ${db.chat.length} 条聊天记录，输入关键词开始搜索`; return; }
+            const hits = []; for (let i = db.chat.length - 1; i >= 0 && hits.length < 300; i--) { const m = db.chat[i]; if (m && typeof m.text === "string" && m.text.toLowerCase().includes(kw)) hits.push(i); }
+            info.innerText = hits.length ? `找到 ${hits.length}${hits.length >= 300 ? "+" : ""} 条（最新的在前）` : "没有找到相关记录";
+            const hl = t => { const lo = t.toLowerCase(), at = lo.indexOf(kw), a = Math.max(0, at - 18), seg = t.slice(a, at + kw.length + 40); const e = escapeHtml(seg), re = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "ig"); return (a > 0 ? "…" : "") + e.replace(re, x => `<mark style="background:rgba(255,220,100,.55);color:inherit;border-radius:2px">${x}</mark>`) + (at + kw.length + 40 < t.length ? "…" : ""); };
+            box.innerHTML = hits.map(i => { const m = db.chat[i], who = m.me ? (db.me.name || "我") : (m.type ? "系统" : (db.other.name || "他")); return `<div onclick="chatSearchGo(${i})" style="padding:10px 12px;margin-bottom:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;cursor:pointer;"><div style="font-size:11.5px;color:var(--text-sub);margin-bottom:4px;">${escapeHtml(who)} · ${escapeHtml((m.timeLabel || "") + " " + (m.time || ""))}</div><div style="font-size:14px;line-height:1.5;word-break:break-all;white-space:pre-wrap;">${hl(String(m.text))}</div></div>`; }).join("");
+        }
+        function chatSearchGo(idx) {
+            closeChatSearch(); if (typeof showMainApp === "function") { try { document.getElementById("mainAppView") && document.getElementById("mainAppView").style.display === "none" && showMainApp(); } catch (e) { } }
+            setTimeout(() => { const el = document.querySelector(`#chat [data-idx="${idx}"]`); if (!el) return; el.scrollIntoView({ block: "center" }); el.animate([{ outline: "3px solid #ffd36b", outlineOffset: "3px" }, { outline: "3px solid rgba(255,211,107,0)", outlineOffset: "3px" }], { duration: 1800 }); }, 340);
+        }
         function openLetterPage() { toggleSidebar(false); djOpen = false; djRead = false; djBusy = false; djPageIdx = djPages().length - 1; renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
         function closeLetterPage() { document.getElementById("letterFullPage").classList.remove("open"); }
 
@@ -6116,12 +6152,19 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function rwsUrl(idx, w) { let f; if (idx < 22) f = "RWS_Tarot_" + RWS_MAJ[idx] + ".jpg"; else { const si = Math.floor((idx - 22) / 14), r = (idx - 22) % 14 + 1; f = ["Wands", "Cups", "Swords", "Pents"][si] + String(r).padStart(2, "0") + ".jpg"; } return "https://commons.wikimedia.org/wiki/Special:FilePath/" + f + "?width=" + w; }
         const LENO_EMO = ["🏇", "☘️", "⛵", "🏠", "🌳", "☁️", "🐍", "⚰️", "💐", "🌾", "🪢", "🐦", "👶", "🦊", "🐻", "✨", "🦢", "🐕", "🏰", "🌷", "⛰️", "🔀", "🐭", "❤️", "💍", "📖", "✉️", "🧔", "👩", "🪷", "☀️", "🌙", "🗝️", "🐟", "⚓", "✝️"];
         const LENO_PC = ["9♥", "6♦", "10♠", "K♥", "7♥", "K♣", "Q♣", "9♦", "Q♠", "J♦", "J♣", "7♦", "J♠", "9♣", "10♣", "6♥", "Q♥", "10♥", "6♠", "8♠", "8♣", "Q♦", "7♣", "J♥", "A♣", "10♦", "7♠", "A♥", "A♠", "K♠", "A♦", "8♥", "8♦", "K♦", "9♠", "6♣"];
+        const MAJ_EMO = ["🎒", "🪄", "🌙", "👑", "🏛️", "🗝️", "💞", "🛞", "🦁", "🏮", "☸️", "⚖️", "🙃", "🦋", "🏺", "⛓️", "⚡", "⭐", "🌕", "☀️", "📯", "🌍"], SUIT_EMO = ["🪄", "🏆", "⚔️", "🪙"], COURT_EMO = ["🧒", "🏇", "👸", "🤴"];
+        function tarotArt(idx, rev) {
+            let top, mid, nm = tarotName(idx);
+            if (idx < 22) { top = ROM[idx] || "0"; mid = `<div class="te">${MAJ_EMO[idx]}</div>`; }
+            else { const si = Math.floor((idx - 22) / 14), r = (idx - 22) % 14 + 1, se = SUIT_EMO[si]; top = r <= 10 ? String(r) : ""; mid = r > 10 ? `<div class="te">${COURT_EMO[r - 11]}</div><div class="tp1">${se}</div>` : r === 1 ? `<div class="te">${se}</div>` : `<div class="tp" style="font-size:${r > 6 ? 1.25 : 1.6}em">${Array(r).fill(`<span>${se}</span>`).join("")}</div>`; }
+            return `<div class="tart${rev ? " rv" : ""}"><div class="tn">${top}</div><div class="tmid">${mid}</div><div class="tm">${nm}</div></div>`;
+        }
         function tarotName(idx) { return idx < 22 ? TAROT[idx][0] : SUIT_NAMES[Math.floor((idx - 22) / 14)] + RANK_NAMES[(idx - 22) % 14]; }
         // 牌面内部 html（要放进 position:relative 的容器里）；w=请求的图片宽度
         function rwsNext(im) { const n = +im.dataset.s + 1, base = rwsUrl(+im.dataset.i, +im.dataset.w); im.dataset.s = n; if (n === 1) im.src = "https://wsrv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else if (n === 2) im.src = "https://images.weserv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else im.remove(); }
         function cardFaceInner(tab, idx, rev, w) {
             if (tab === "tarot") {
-                const nm = tarotName(idx), fb = `<div class="cn">${idx < 22 ? ROM[idx] : ""}</div><div class="cm">${nm}</div>`;
+                const nm = tarotName(idx), fb = tarotArt(idx, rev);
                 return fb + `<img class="rws${rev ? " rv" : ""}" src="${rwsUrl(idx, w || 400)}" referrerpolicy="no-referrer" data-i="${idx}" data-w="${w || 400}" data-s="0" onerror="rwsNext(this)" alt="">`;
             }
             const pc = LENO_PC[idx], red = /[♥♦]/.test(pc);
@@ -6370,7 +6413,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"]];
+            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"], ["pacman", "吃豆人", "大迷宫里你和他各一个吃豆人，四只鬼在追；大力丸能反吃鬼，还有樱桃、加速、冰冻道具，得分高的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -6385,9 +6428,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 try { gameResume && gameResume(); } catch (e) { } return;
             }
             if (st) gameDropStash(k);
-            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", othello: "黑白棋", breakout: "打砖块" };
+            const names = { snake: "贪吃蛇", gomoku: "五子棋", connect4: "四子棋", memory: "记忆翻牌", frog: "小青蛙过河", mine: "扫雷", link: "连连看", tetris: "俄罗斯方块", arrow: "箭头消除", othello: "黑白棋", breakout: "打砖块", pacman: "吃豆人" };
             document.getElementById("gameTitle").innerText = names[k] + " · " + GAME_DIFF_NAMES[gameDiff];
-            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, othello: gameOthello, breakout: gameBreakout })[k]();
+            ({ snake: gameSnake, gomoku: gameGomoku, connect4: gameConnect4, memory: gameMemory, frog: gameFrog, mine: gameMine, link: gameLink, tetris: gameTetris, arrow: gameArrow, othello: gameOthello, breakout: gameBreakout, pacman: gamePacman })[k]();
         }
         function gameResultBar(msg) { const e = document.getElementById("gameMsg"); if (e) e.innerText = msg; }
         function gameEndButtons() { return `<div class="game-btns"><button class="btn" onclick="startGame(gameCurrent,true)">再来一局</button><button class="btn btn-outline" onclick="gameBack()">返回</button></div>`; }
@@ -8907,9 +8950,107 @@ treaty:条约`
                     if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText("?", b.x + bw / 2, b.y + 12); } });
                 sides.forEach(s => { if (s.lives <= 0) return; ctx.fillStyle = s.col; ctx.globalAlpha = s.human ? 1 : .85; ctx.fillRect(s.px - s.padW / 2, s.y, s.padW, 8); ctx.globalAlpha = 1; s.balls.forEach(b => { ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fillStyle = s.col; ctx.fill(); ctx.strokeStyle = s.col; ctx.lineWidth = 2; ctx.stroke(); }); });
                 drops.forEach(d => { const p = PT[d.t]; ctx.beginPath(); ctx.arc(d.x, d.y, 9, 0, 7); ctx.fillStyle = p[1]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = "#222"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText(p[0], d.x, d.y + 4); });
-                document.getElementById("gameScore").innerHTML = `<span style="color:#fff4b8">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
+                document.getElementById("gameScore").innerHTML = `<span style="color:#e6dc9c">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
             }
             function loop(t) { if (over) return; const dt = Math.min(0.03, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); if (!over) draw(); } raf = requestAnimationFrame(loop); }
+            draw(); raf = requestAnimationFrame(loop);
+            gamePause = () => { paused = true; document.removeEventListener("keydown", key); }; gameResume = () => { paused = false; lastT = performance.now(); document.addEventListener("keydown", key); };
+            gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
+        }
+        function gamePacman() {
+            const body = document.getElementById("gameBody"), C = 19, R = 25, D = gameDiff, cs = Math.floor(Math.min(body.clientWidth - 24, 380) / C), w = cs * C, h = cs * R, dpr = window.devicePixelRatio || 1;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">滑动屏幕或点方向键吃豆；大力丸能反吃鬼</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="pmPad" style="display:grid;grid-template-columns:repeat(3,58px);gap:6px;justify-content:center;margin:10px 0 4px"><span></span><button class="btn btn-outline" data-d="0">▲</button><span></span><button class="btn btn-outline" data-d="3">◀</button><button class="btn btn-outline" data-d="2">▼</button><button class="btn btn-outline" data-d="1">▶</button></div><div id="gameEnd"></div>`;
+            const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"); cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
+            const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0], CM = "#ffe873", CH = "#c9b8f4";
+            // ---- 迷宫：深度优先挖通道 + 随机打通几堵墙成环 + 补掉死胡同 + 中央空地
+            const g = Array.from({ length: R }, () => new Array(C).fill(1)), st = [[1, 1]]; g[1][1] = 0;
+            while (st.length) { const [x, y] = st[st.length - 1], nb = [[2, 0], [-2, 0], [0, 2], [0, -2]].map(([dx, dy]) => [x + dx, y + dy, dx, dy]).filter(([nx, ny]) => nx > 0 && ny > 0 && nx < C - 1 && ny < R - 1 && g[ny][nx] === 1); if (!nb.length) { st.pop(); continue; } const [nx, ny, dx, dy] = nb[Math.floor(Math.random() * nb.length)]; g[y + dy / 2][x + dx / 2] = 0; g[ny][nx] = 0; st.push([nx, ny]); }
+            const inb = (x, y) => x > 0 && y > 0 && x < C - 1 && y < R - 1, free = (x, y) => x >= 0 && y >= 0 && x < C && y < R && g[y][x] === 0;
+            for (let y = 1; y < R - 1; y++) for (let x = 1; x < C - 1; x++) if (g[y][x] === 1 && ((x % 2 === 0) !== (y % 2 === 0)) && free(x - 1, y) + free(x + 1, y) + free(x, y - 1) + free(x, y + 1) >= 2 && ((free(x - 1, y) && free(x + 1, y)) || (free(x, y - 1) && free(x, y + 1))) && Math.random() < 0.3) g[y][x] = 0;
+            for (let y = 11; y <= 13; y++) for (let x = 7; x <= 11; x++) g[y][x] = 0;
+            for (let pass = 0; pass < 2; pass++) for (let y = 1; y < R - 1; y++) for (let x = 1; x < C - 1; x++) if (g[y][x] === 0) { const open = [0, 1, 2, 3].filter(d => free(x + DX[d], y + DY[d])); if (open.length <= 1) { const cand = [0, 1, 2, 3].filter(d => !free(x + DX[d], y + DY[d]) && inb(x + DX[d], y + DY[d]) && free(x + 2 * DX[d], y + 2 * DY[d])); if (cand.length) { const d = cand[Math.floor(Math.random() * cand.length)]; g[y + DY[d]][x + DX[d]] = 0; } } }
+            const dots = Array.from({ length: R }, (_, y) => Array.from({ length: C }, (_, x) => g[y][x] === 0 ? 1 : 0)); let left = 0;
+            const mkP = (col, sx, sy, human) => ({ col, sx, sy, human, gx: sx, gy: sy, tx: sx, ty: sy, p: 1, dir: null, face: 1, want: null, score: 0, lives: 3, inv: 0, boost: 0 });
+            const me = mkP(CM, 1, R - 2, true), him = mkP(CH, C - 2, R - 2, false), pacs = [me, him];
+            const homes = [[7, 12], [11, 12], [9, 11], [9, 13]], GC = ["#ff5a5a", "#ffa0d0", "#5fe0f0", "#ffb04a"];
+            const ghosts = homes.map((hm, i) => ({ col: GC[i], hx: hm[0], hy: hm[1], gx: hm[0], gy: hm[1], tx: hm[0], ty: hm[1], p: 1, dir: null, eaten: 0, i }));
+            pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); dots[1][1] = 2; dots[1][C - 2] = 2; dots[R - 2][1] = dots[R - 2][1]; dots[7][9] = g[7][9] === 0 ? 2 : dots[7][9]; dots[17][9] = g[17][9] === 0 ? 2 : dots[17][9]; dots[R - 2][C - 2] = 0;
+            for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (dots[y][x]) left++;
+            const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 1.4, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
+            const pacSp = 5.4, gSp = pacSp * { easy: 0.7, normal: 0.84, hard: 0.95 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D];
+            const IT = { cherry: ["🍒", 100], speed: ["⚡", 0], ice: ["❄️", 0] };
+            // ---- 预渲染墙
+            const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#10132a"; c2.fillRect(0, 0, w, h);
+                for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (g[y][x] === 1) { c2.fillStyle = "#1d2670"; c2.fillRect(x * cs, y * cs, cs, cs); c2.strokeStyle = "#6b7cf0"; c2.lineWidth = 2; c2.beginPath(); for (let d = 0; d < 4; d++) if (free(x + DX[d], y + DY[d])) { const X = x * cs, Y = y * cs; if (d === 0) { c2.moveTo(X, Y + 1); c2.lineTo(X + cs, Y + 1); } else if (d === 2) { c2.moveTo(X, Y + cs - 1); c2.lineTo(X + cs, Y + cs - 1); } else if (d === 3) { c2.moveTo(X + 1, Y); c2.lineTo(X + 1, Y + cs); } else { c2.moveTo(X + cs - 1, Y); c2.lineTo(X + cs - 1, Y + cs); } } c2.stroke(); } }
+            // ---- 输入
+            const setWant = d => { if (!over) me.want = d; };
+            document.querySelectorAll("#pmPad button").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); setWant(+b.dataset.d); }));
+            let sx0 = 0, sy0 = 0, sw = false; cv.addEventListener("pointerdown", e => { sx0 = e.clientX; sy0 = e.clientY; sw = true; try { cv.setPointerCapture(e.pointerId); } catch (x) { } });
+            cv.addEventListener("pointermove", e => { if (!sw) return; const dx = e.clientX - sx0, dy = e.clientY - sy0; if (Math.hypot(dx, dy) < 14) return; setWant(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0)); sx0 = e.clientX; sy0 = e.clientY; });
+            cv.addEventListener("pointerup", () => { sw = false; });
+            const KM = { ArrowUp: 0, ArrowRight: 1, ArrowDown: 2, ArrowLeft: 3, w: 0, d: 1, s: 2, a: 3 }, key = e => { if (e.key in KM) { setWant(KM[e.key]); e.preventDefault(); } };
+            document.addEventListener("keydown", key);
+            // ---- 移动
+            function advance(e, sp, dt, choose, arrive) {
+                let rem = sp * dt;
+                while (rem > 0) {
+                    if (e.p >= 1) { e.gx = e.tx; e.gy = e.ty; arrive && arrive(e); const d = choose(e); if (d == null) { e.dir = null; e.p = 1; return; } e.dir = d; e.face = d; e.tx = e.gx + DX[d]; e.ty = e.gy + DY[d]; e.p = 0; }
+                    const s2 = Math.min(rem, 1 - e.p); e.p += s2; rem -= s2;
+                }
+            }
+            const pos = e => [e.gx + (e.tx - e.gx) * e.p, e.gy + (e.ty - e.gy) * e.p];
+            const flipIf = e => { if (e.want != null && e.dir != null && e.p < 1 && e.want === (e.dir + 2) % 4) { [e.gx, e.tx] = [e.tx, e.gx]; [e.gy, e.ty] = [e.ty, e.gy]; e.p = 1 - e.p; e.dir = e.want; e.face = e.want; } };
+            function bfsPick(e) {
+                const danger = []; ghosts.forEach(q => { if (q.eaten <= 0 && fr <= 0) { const [x, y] = pos(q); danger.push([Math.round(x), Math.round(y)]); } });
+                const bad = (x, y) => e.inv <= 0 && danger.some(q => Math.abs(q[0] - x) + Math.abs(q[1] - y) <= 2);
+                const prev = new Map(), q = [[e.gx, e.gy]]; prev.set(e.gx + "," + e.gy, null); const order = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
+                const tgt = (x, y) => dots[y][x] > 0 || items.some(t => t.x === x && t.y === y) || (fr > 1.5 && ghosts.some(gg => gg.eaten <= 0 && Math.round(pos(gg)[0]) === x && Math.round(pos(gg)[1]) === y));
+                for (let qi = 0; qi < q.length; qi++) { const [x, y] = q[qi]; if ((x !== e.gx || y !== e.gy) && tgt(x, y)) { let k = x + "," + y, p0 = prev.get(k); while (p0 && prev.get(p0.join(","))) { k = p0.join(","); p0 = prev.get(k); } const [kx, ky] = k.split(",").map(Number); return [0, 1, 2, 3].find(d => e.gx + DX[d] === kx && e.gy + DY[d] === ky); }
+                    for (const d of order) { const nx = x + DX[d], ny = y + DY[d], kk = nx + "," + ny; if (free(nx, ny) && !prev.has(kk) && !bad(nx, ny)) { prev.set(kk, [x, y]); q.push([nx, ny]); } } }
+                return null;
+            }
+            const optsOf = (e, noRev) => [0, 1, 2, 3].filter(d => free(e.gx + DX[d], e.gy + DY[d]) && !(noRev && e.dir != null && d === (e.dir + 2) % 4));
+            function chooseP(e) {
+                if (!e.human && e.lives > 0) { const opts = optsOf(e, false); if (Math.random() < aiErr && opts.length) e.want = opts[Math.floor(Math.random() * opts.length)]; else { const d = bfsPick(e); e.want = d != null ? d : (opts.length ? opts[Math.floor(Math.random() * opts.length)] : null); } }
+                if (e.want != null && free(e.gx + DX[e.want], e.gy + DY[e.want])) return e.want;
+                if (e.dir != null && free(e.gx + DX[e.dir], e.gy + DY[e.dir])) return e.dir; return null;
+            }
+            function arriveP(e) {
+                if (dots[e.gy][e.gx] === 1) { dots[e.gy][e.gx] = 0; e.score += 10; left--; } else if (dots[e.gy][e.gx] === 2) { dots[e.gy][e.gx] = 0; e.score += 50; left--; fr = 7; gameSfx(e.human ? "tap" : "his"); }
+                const k = items.findIndex(t => t.x === e.gx && t.y === e.gy); if (k >= 0) { const t = items.splice(k, 1)[0]; if (t.t === "cherry") e.score += 100; else if (t.t === "speed") e.boost = 6; else freeze = 4; if (e.human) gameSfx("match"); }
+            }
+            function chooseG(e) {
+                if (freeze > 0) return null; let opts = optsOf(e, true); if (!opts.length) opts = optsOf(e, false); if (!opts.length) return null;
+                const tg = pacs.filter(q => q.lives > 0); if (!tg.length) return opts[0];
+                const near = tg.slice().sort((a, b) => Math.abs(a.gx - e.gx) + Math.abs(a.gy - e.gy) - Math.abs(b.gx - e.gx) - Math.abs(b.gy - e.gy)); const t = e.i % 2 ? near[near.length - 1] : near[0], dist = (d) => Math.abs(e.gx + DX[d] - t.gx) + Math.abs(e.gy + DY[d] - t.gy);
+                if (fr > 0) return opts.sort((a, b) => dist(b) - dist(a))[Math.random() < 0.8 ? 0 : opts.length - 1];
+                if (Math.random() < chase) return opts.sort((a, b) => dist(a) - dist(b))[0]; return opts[Math.floor(Math.random() * opts.length)];
+            }
+            const respawn = q => { q.gx = q.tx = q.sx; q.gy = q.ty = q.sy; q.p = 1; q.dir = null; q.want = null; };
+            function step(dt) {
+                clock += dt; if (ready > 0) { ready -= dt; return; }
+                fr = Math.max(0, fr - dt); freeze = Math.max(0, freeze - dt); itemT -= dt;
+                if (itemT <= 0) { itemT = 7 + Math.random() * 4; if (items.length < 2) { for (let k = 0; k < 30; k++) { const x = 1 + Math.floor(Math.random() * (C - 2)), y = 1 + Math.floor(Math.random() * (R - 2)); if (free(x, y) && !items.some(t => t.x === x && t.y === y)) { items.push({ x, y, t: ["cherry", "speed", "ice"][Math.floor(Math.random() * 3)], ttl: 12 }); break; } } } }
+                for (let i = items.length - 1; i >= 0; i--) { items[i].ttl -= dt; if (items[i].ttl <= 0) items.splice(i, 1); }
+                pacs.forEach(q => { if (q.lives <= 0) return; q.inv = Math.max(0, q.inv - dt); q.boost = Math.max(0, q.boost - dt); if (q.human) flipIf(q); else { q.want = q.want; flipIf(q); } advance(q, pacSp * (q.boost > 0 ? 1.35 : 1) * (q.human ? 1 : { easy: 0.78, normal: 0.9, hard: 1 }[D]), dt, chooseP, arriveP); });
+                ghosts.forEach(q => { if (q.eaten > 0) { q.eaten -= dt; if (q.eaten <= 0) { q.gx = q.tx = q.hx; q.gy = q.ty = q.hy; q.p = 1; q.dir = null; } return; } advance(q, freeze > 0 ? 0 : gSp * (fr > 0 ? 0.62 : 1), dt, chooseG); });
+                pacs.forEach(q => { if (q.lives <= 0) return; const [px, py] = pos(q); ghosts.forEach(gh => { if (gh.eaten > 0) return; const [x, y] = pos(gh); if (Math.hypot(px - x, py - y) < 0.62) { if (fr > 0) { q.score += 200; gh.eaten = 3; gh.gx = gh.tx = gh.hx; gh.gy = gh.ty = gh.hy; gh.p = 1; if (q.human) gameSfx("match"); } else if (q.inv <= 0) { q.lives--; q.score = Math.max(0, q.score - 30); q.inv = 2.5; respawn(q); } } }); });
+                if (left <= 0 || pacs.every(q => q.lives <= 0)) finish();
+            }
+            function finish() { if (over) return; over = true; cancelAnimationFrame(raf); draw(); const a = me.score, b2 = him.score; if (a > b2) { gameResultBar(`你赢了 🎉 ${a} : ${b2}`); gameStat("pacman", "w"); } else if (a < b2) { gameResultBar(`${hisName()}赢了 ${a} : ${b2}`); gameStat("pacman", "l"); } else { gameResultBar(`平局 ${a} : ${b2}`); gameStat("pacman", "d"); } document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
+            function draw() {
+                ctx.drawImage(wc, 0, 0, w, h); const r = cs * 0.42;
+                for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { const v = dots[y][x]; if (!v) continue; ctx.fillStyle = v === 2 ? "#fff" : "#ffe9c0"; ctx.beginPath(); ctx.arc((x + 0.5) * cs, (y + 0.5) * cs, v === 2 ? cs * 0.3 * (0.85 + 0.15 * Math.sin(clock * 8)) : cs * 0.11, 0, 7); ctx.fill(); }
+                ctx.font = Math.round(cs * 0.85) + "px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; items.forEach(t => { if (t.ttl < 3 && Math.floor(clock * 6) % 2) return; ctx.fillText(IT[t.t][0], (t.x + 0.5) * cs, (t.y + 0.55) * cs); });
+                pacs.forEach(q => { if (q.lives <= 0) return; if (q.inv > 0 && Math.floor(clock * 10) % 2) return; const [x, y] = pos(q), cx = (x + 0.5) * cs, cy = (y + 0.5) * cs, ang = [-1.5708, 0, 1.5708, 3.1416][q.face], m = q.dir == null ? 0.12 : 0.08 + 0.3 * Math.abs(Math.sin(clock * 12));
+                    ctx.fillStyle = q.col; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r + 1, ang + m, ang + 6.283 - m); ctx.closePath(); ctx.fill(); if (q.boost > 0) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, r + 3, 0, 7); ctx.stroke(); } });
+                ghosts.forEach(q => { if (q.eaten > 0) return; const [x, y] = pos(q), cx = (x + 0.5) * cs, cy = (y + 0.5) * cs; let col = q.col; if (freeze > 0) col = "#9be0ff"; else if (fr > 0) col = fr < 2 && Math.floor(clock * 6) % 2 ? "#fff" : "#3c4bd6";
+                    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy - 1, r, 3.1416, 0); ctx.lineTo(cx + r, cy + r); for (let k = 0; k < 3; k++) { ctx.lineTo(cx + r - (k + 0.5) * (2 * r / 3), cy + r - 3); ctx.lineTo(cx + r - (k + 1) * (2 * r / 3), cy + r); } ctx.closePath(); ctx.fill();
+                    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(cx - r * 0.38, cy - 2, r * 0.26, 0, 7); ctx.arc(cx + r * 0.38, cy - 2, r * 0.26, 0, 7); ctx.fill(); ctx.fillStyle = fr > 0 ? "#fff" : "#1a2a6a"; const ex = (q.dir === 1 ? 1 : q.dir === 3 ? -1 : 0) * 1.5, ey = (q.dir === 0 ? -1 : q.dir === 2 ? 1 : 0) * 1.5; ctx.beginPath(); ctx.arc(cx - r * 0.38 + ex, cy - 2 + ey, r * 0.12, 0, 7); ctx.arc(cx + r * 0.38 + ex, cy - 2 + ey, r * 0.12, 0, 7); ctx.fill(); });
+                if (ready > 0) { ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fillRect(0, h / 2 - 22, w, 44); ctx.fillStyle = "#fff"; ctx.font = "bold 20px sans-serif"; ctx.fillText("准备…", w / 2, h / 2); }
+                const hs = n => "♥".repeat(Math.max(0, n)); document.getElementById("gameScore").innerHTML = `<span style="color:#e6dc9c">你 ${me.score} ${hs(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${hs(him.lives)}</span>`;
+            }
+            function loop(t) { if (over) return; const dt = Math.min(0.033, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); if (!over) draw(); } raf = requestAnimationFrame(loop); }
             draw(); raf = requestAnimationFrame(loop);
             gamePause = () => { paused = true; document.removeEventListener("keydown", key); }; gameResume = () => { paused = false; lastT = performance.now(); document.addEventListener("keydown", key); };
             gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
