@@ -775,46 +775,54 @@
         /* ==================== 📔 交换日记（复古四边花纹边框） ==================== */
         /* ==================== 📔 交换日记（摊开的书本样式） ==================== */
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
-        #letterFullPage .pyq-scroll-content { position: relative; }
-        .dj-back { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 14px; z-index: 30; width: 36px; height: 36px; border-radius: 50%; background: var(--panel); border: 1px solid var(--border); }
-        .dj-stage { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 56px 0 calc(16px + env(safe-area-inset-bottom)); position: relative; }
-        .dj-book { position: relative; width: min(80vw, 340px); height: min(64vh, 520px); perspective: 1700px; flex-shrink: 0; }
-        .dj-paper { position: absolute; inset: 0; background: #fff; border-radius: 3px 9px 9px 3px; box-shadow: 0 12px 30px rgba(0,0,0,.4), 4px 0 0 -1px #efece6, 6px 0 0 -2px #e2ded6, 8px 0 0 -3px #d4cfc4; overflow: hidden; }
-        .dj-paper::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(90deg, rgba(0,0,0,.12), rgba(0,0,0,0)); z-index: 3; pointer-events: none; }
-        .dj-sheet, .dj-leaf { position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 26px 20px 26px 28px; background: #fff; color: #33322e; font-size: 15px; line-height: 1.9; box-sizing: border-box; }
-        .dj-leaf { z-index: 4; transform-origin: left center; overflow: hidden; box-shadow: -6px 0 16px rgba(0,0,0,.18); backface-visibility: hidden; }
-        .dj-ent { margin-bottom: 3.8em; } .dj-ent:last-of-type { margin-bottom: 1.2em; }
-        .dj-au { font-size: 11px; line-height: 1.6; color: #aaa59a; margin-bottom: 2px; }
-        .dj-tx { white-space: pre-wrap; word-break: break-word; }
-        .dj-ent.me .dj-tx { color: #2f3b5c; } .dj-ent.his .dj-tx { color: #7b3b3b; }
-        .dj-wait { font-size: 12.5px; color: #aaa59a; }
-        .dj-area { display: block; width: 100%; min-height: 52vh; border: none; outline: none; resize: none; background: transparent; padding: 0; font: inherit; color: #2f3b5c; line-height: 1.9; }
-        .dj-cover { position: absolute; inset: 0; z-index: 10; transform-origin: left center; transition: transform 1s cubic-bezier(.5,.05,.25,1); backface-visibility: hidden; border-radius: 3px 10px 10px 3px; cursor: pointer; background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.12), rgba(0,0,0,0) 55%), linear-gradient(135deg, #6a3d3a, #4a2626); box-shadow: 0 14px 32px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.08), inset 12px 0 14px -8px rgba(0,0,0,.5); }
-        .dj-cover::before { content: ""; position: absolute; inset: 12px; border: 1.5px dashed rgba(240,215,170,.4); border-radius: 3px 8px 8px 3px; pointer-events: none; }
-        .dj-cover::after { content: ""; position: absolute; left: 22px; top: 0; bottom: 0; width: 6px; background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.07), rgba(0,0,0,0)); pointer-events: none; }
-        .dj-book.open .dj-cover { transform: rotateY(-172deg); pointer-events: none; }
-        .dj-strap { position: absolute; right: -9px; top: 44%; width: 64px; height: 26px; background: linear-gradient(180deg, #7b4a44, #4f2a27); border-radius: 4px 6px 6px 4px; box-shadow: 0 3px 8px rgba(0,0,0,.45); transition: transform .3s ease, opacity .3s ease; }
-        .dj-lock { position: absolute; left: 6px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff3c4, #d9a93e 55%, #8c6a1c); box-shadow: 0 1px 3px rgba(0,0,0,.5); }
-        .dj-lock::after { content: ""; position: absolute; left: 8px; top: 5px; width: 4px; height: 8px; border-radius: 2px; background: #5b3f10; }
-        .dj-book.unlatch .dj-strap { transform: translateX(20px) rotate(10deg); opacity: 0; }
-        .dj-ctrl { display: flex; align-items: center; gap: 14px; opacity: 0; pointer-events: none; transition: opacity .4s; min-height: 44px; }
-        .dj-stage.opened .dj-ctrl { opacity: 1; pointer-events: auto; transition-delay: .7s; }
-        .dj-pager { display: flex; align-items: center; gap: 4px; font-size: 12.5px; color: var(--text-sub); }
-        .dj-pager button { background: none; border: none; color: var(--text-main); font-size: 22px; padding: 2px 10px; cursor: pointer; line-height: 1; }
-        .dj-pager button:disabled { opacity: .25; }
-        .dj-tp { display: none; padding: 10px 22px; border-radius: 22px; border: 1px solid rgba(255,255,255,.2); background: linear-gradient(135deg, #7a5cf0, #4b8df0); color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 0 18px rgba(110,130,255,.55); }
-        .dj-tp.show { display: block; }
-        .dj-hint { font-size: 12px; color: var(--text-sub); transition: opacity .3s; }
-        .dj-stage.opened .dj-hint { opacity: 0; }
-        .dj-book.tp { animation: djTp 1.4s ease-in forwards; }
-        @keyframes djTp { 0% { transform: scale(1) rotate(0); opacity: 1; filter: none; } 35% { transform: scale(1.04) rotate(-3deg); filter: drop-shadow(0 0 22px #8fa8ff); } 100% { transform: scale(.04) rotate(520deg) translateY(-30px); opacity: 0; filter: drop-shadow(0 0 30px #b4c4ff); } }
-        .dj-portal { position: absolute; left: 50%; top: 50%; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 3px solid rgba(160,185,255,.9); box-shadow: 0 0 30px 6px rgba(120,150,255,.7), inset 0 0 20px rgba(160,185,255,.6); animation: djPortal 1.5s ease-out forwards; pointer-events: none; z-index: 20; }
-        @keyframes djPortal { 0% { transform: scale(.3); opacity: 0; } 30% { opacity: 1; } 100% { transform: scale(7); opacity: 0; } }
-        .dj-given { display: none; flex-direction: column; align-items: center; gap: 10px; text-align: center; animation: djFade .8s ease both; }
-        .dj-given .big { font-size: 18px; color: var(--text-main); letter-spacing: 1px; } .dj-given .sub { font-size: 12.5px; color: var(--text-sub); }
-        .dj-given button { margin-top: 10px; background: none; border: none; color: var(--text-sub); text-decoration: underline; font-size: 12.5px; cursor: pointer; }
-        @keyframes djFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-        .dj-stage.given .dj-book, .dj-stage.given .dj-ctrl, .dj-stage.given .dj-hint { display: none; } .dj-stage.given .dj-given { display: flex; }
+        #letterFullPage .pyq-scroll-content { position: relative; display: flex; flex-direction: column; overflow: hidden; }
+        .mb-head { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top)) 12px 6px; flex-shrink: 0; }
+        .mb-write-btn { padding: 7px 16px; border-radius: 16px; border: 1px solid var(--primary); background: transparent; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; }
+        .mb-box { flex-shrink: 0; display: flex; justify-content: center; padding: 2px 0 0; }
+        .mb-box svg { overflow: visible; filter: drop-shadow(0 6px 8px rgba(0,0,0,.35)); }
+        .mb-box.bump svg { animation: mbBump .6s ease; }
+        @keyframes mbBump { 0% { transform: scale(1); } 30% { transform: scale(1.1, .92); } 60% { transform: scale(.97, 1.04); } 100% { transform: scale(1); } }
+        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px calc(18px + env(safe-area-inset-bottom)); }
+        .mb-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 10px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; position: relative; }
+        .mb-item:active { transform: scale(.985); }
+        .mb-item.me { border-left: 4px solid #6f8fd0; } .mb-item.his { border-left: 4px solid #d9807a; }
+        .mb-item .mb-it { flex: 1; min-width: 0; } .mb-item .mb-ih { font-size: 12px; color: var(--text-sub); margin-bottom: 3px; } .mb-item .mb-ip { font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mb-item .mb-dot { position: absolute; right: 12px; top: 12px; width: 9px; height: 9px; border-radius: 50%; background: #e0524a; }
+        .mb-wait, .mb-empty { text-align: center; font-size: 13px; color: var(--text-sub); padding: 18px 0; }
+        .mb-ov { position: absolute; inset: 0; z-index: 50; background: rgba(0,0,0,0); transition: background .4s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .mb-ov.show { background: rgba(0,0,0,.62); }
+        .mb-stage { position: relative; width: 300px; height: 440px; flex-shrink: 0; perspective: 1100px; }
+        .mb-env-back { position: absolute; left: 10px; top: 250px; width: 280px; height: 180px; background: #e3d3b0; border-radius: 4px; z-index: 1; transition: transform .6s ease, opacity .6s ease; }
+        .mb-env-front { position: absolute; left: 10px; top: 250px; width: 280px; height: 180px; background: linear-gradient(180deg, #f3e8cf, #e9dbb9); border-radius: 4px; clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%); z-index: 3; transition: transform .6s ease, opacity .6s ease; }
+        .mb-flap { position: absolute; left: 10px; top: 250px; width: 280px; height: 108px; background: linear-gradient(180deg, #e6d6b0, #d9c79c); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; z-index: 4; transition: transform .6s ease, opacity .6s ease; display: flex; align-items: flex-end; justify-content: center; }
+        .mb-seal { width: 26px; height: 26px; border-radius: 50%; background: #c8453d; color: #fff; font-size: 14px; line-height: 26px; text-align: center; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,.35); }
+        .mb-stage.flap-open .mb-flap { transform: rotateX(180deg); z-index: 0; transition: transform .6s ease; }
+        .mb-stage.sink .mb-env-back, .mb-stage.sink .mb-env-front, .mb-stage.sink .mb-flap { transform: translateY(70px); opacity: 0; }
+        .mb-stage.sink.flap-open .mb-flap { transform: translateY(70px) rotateX(180deg); }
+        .mb-stage.noanim * { transition: none !important; }
+        .mb-paper { position: absolute; left: 22px; top: 12px; width: 256px; height: 140px; z-index: 2; transform-style: preserve-3d; transform: translateY(250px); transition: transform .7s cubic-bezier(.4,.1,.2,1); }
+        .mb-paper.out { transform: translateY(0); }
+        .mbn { position: absolute; left: 0; width: 100%; height: 140px; transform-style: preserve-3d; transform-origin: top center; transition: transform .8s ease; }
+        .mbn.mbp1 { top: 0; } .mbn.mbp2 { top: 140px; transform: rotateX(180deg); } .mbn.mbp3 { top: 140px; transform: rotateX(-180deg); }
+        .mb-paper.unfold .mbp2, .mb-paper.unfold .mbp3 { transform: rotateX(0); }
+        .mb-paper.unfold .mbp3 { transition-delay: .4s; } .mb-paper:not(.unfold) .mbp2 { transition-delay: .4s; }
+        .mbf, .mbb { position: absolute; inset: 0; box-shadow: 0 2px 8px rgba(0,0,0,.28); backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #fff; overflow: hidden; }
+        .mbb { transform: rotateX(180deg); background: #f4f0e6; }
+        .mbn::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(0,0,0,.1); }
+        .mb-paper:not(.unfold) .mbp3 .mbf { opacity: 0; } .mbp3 .mbf { transition: opacity .3s .1s; }
+        .mbc, .mb-real { box-sizing: border-box; padding: 14px 18px; font-size: 14px; line-height: 1.85; color: #3a3a36; white-space: pre-wrap; word-break: break-word; }
+        .mbc { position: absolute; left: 0; width: 100%; }
+        .mb-from { font-size: 11px; color: #a8a398; margin-bottom: 4px; }
+        .mb-real { position: absolute; left: 22px; top: 12px; width: 256px; height: 420px; background: #fff; overflow-y: auto; -webkit-overflow-scrolling: touch; z-index: 6; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+        .mb-real.me .mb-bd { color: #2f3b5c; } .mb-real.his .mb-bd { color: #7b3b3b; }
+        .mb-wp { width: min(88vw, 360px); height: min(66vh, 500px); background: #fff; border-radius: 3px; box-shadow: 0 10px 30px rgba(0,0,0,.5); display: flex; flex-direction: column; padding: 10px 16px 14px; box-sizing: border-box; animation: mbRise .45s ease both; }
+        @keyframes mbRise { from { opacity: 0; transform: translateY(60px) rotate(-1.5deg); } to { opacity: 1; transform: none; } }
+        .mb-wp-h { display: flex; align-items: center; gap: 10px; color: #8a867b; font-size: 12.5px; padding-bottom: 6px; border-bottom: 1px solid #eee9dc; }
+        .mb-wp-h button { background: none; border: none; font-size: 18px; color: #8a867b; cursor: pointer; padding: 2px 6px; }
+        .mb-wp textarea { flex: 1; border: none; outline: none; resize: none; background: transparent; font: inherit; font-size: 15px; line-height: 1.9; color: #2f3b5c; padding: 10px 0; }
+        .mb-send { align-self: flex-end; padding: 9px 22px; border-radius: 20px; border: none; background: #c8453d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .mb-toast { position: absolute; left: 50%; bottom: 80px; transform: translateX(-50%); background: rgba(30,30,30,.88); color: #fff; padding: 9px 18px; border-radius: 18px; font-size: 13px; z-index: 80; animation: djFade .3s ease both; }
+        @keyframes djFade { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
             html, body { overscroll-behavior: none; }
     </style>
 </head>
@@ -1017,32 +1025,16 @@
 
     <div class="pyq-full-page" id="letterFullPage">
         <div class="pyq-scroll-content">
-            <button class="pyq-back-pure-symbol dj-back" onclick="closeLetterPage()"></button>
-            <div class="dj-stage" id="djStage">
-                <div class="dj-given"><div class="big">✦ 日记本已经给他啦</div><div class="sub">等他写完，会把日记本交还到你手上</div><button id="djOldBtn" onclick="djReadOld()">翻看以前的日记</button></div>
-                <div class="dj-book" id="djBook">
-                    <div class="dj-paper" id="djPaper"><div class="dj-sheet" id="djSheet"></div></div>
-                    <div class="dj-cover" id="djCover" onclick="djOpenBook()"><div class="dj-strap"><div class="dj-lock"></div></div></div>
-                </div>
-                <div class="dj-hint">轻触搭扣，打开日记本</div>
-                <div class="dj-ctrl">
-                    <div class="dj-pager"><button id="djPrev" onclick="djFlip(-1)">‹</button><span id="djPageLab"></span><button id="djNext" onclick="djFlip(1)">›</button></div>
-                    <button class="dj-tp" id="djTp" onclick="djTeleport()">✦ 传送给他</button>
-                </div>
+            <div class="mb-head">
+                <button class="pyq-back-pure-symbol" onclick="closeLetterPage()"></button>
+                <button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button>
+                <div style="flex:1"></div>
+                <button class="mb-write-btn" onclick="mbWrite()">✎ 写信</button>
             </div>
-        </div>
-    </div>
-
-    <div class="pyq-full-page" id="chatSearchPage">
-        <div class="pyq-scroll-content" style="display:flex; flex-direction:column; overflow:hidden;">
-            <div class="app-page-header">
-                <button class="pyq-back-pure-symbol" onclick="closeChatSearch()"></button>
-                <div class="app-page-title">搜索聊天记录</div>
-                <div class="app-page-header-spacer"></div>
+            <div class="mb-box" id="mbBox">
+                <svg id="mbSvg" viewBox="0 0 170 104" width="150" height="92"><rect x="80" y="70" width="10" height="34" fill="#7a5a3a"/><rect x="62" y="98" width="46" height="6" rx="3" fill="#5c4228"/><rect x="18" y="22" width="130" height="54" rx="24" fill="#c8453d"/><rect x="18" y="52" width="130" height="24" fill="#b43a33"/><rect x="18" y="22" width="130" height="12" rx="6" fill="rgba(255,255,255,.18)"/><rect x="42" y="38" width="82" height="8" rx="4" fill="#3a1512" id="mbSlot"/><rect x="150" y="26" width="4" height="30" fill="#8a2a24"/><rect x="154" y="26" width="14" height="10" rx="2" fill="#ffd36b"/><text x="83" y="68" text-anchor="middle" font-size="10" fill="#ffe9e6" font-family="sans-serif" letter-spacing="3">MAIL</text></svg>
             </div>
-            <div style="padding:10px 14px 6px;"><input id="chatSearchInput" type="search" placeholder="输入关键词" oninput="runChatSearch()" style="width:100%;box-sizing:border-box;margin:0;"></div>
-            <div id="chatSearchInfo" style="padding:0 16px 6px;font-size:12px;color:var(--text-sub);"></div>
-            <div id="chatSearchRes" style="flex:1;overflow-y:auto;padding:0 14px 24px;-webkit-overflow-scrolling:touch;"></div>
+            <div class="mb-list" id="mbList"></div>
         </div>
     </div>
 
@@ -2263,24 +2255,26 @@
                 c.restore(); c.save(); c.translate(9, -1);
                 B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
                 c.restore();
-                { const LP = D("#cfd2d8", "#8e90a0"); L(5, 12, 5, 44, LP); L(5, 12, 6, 8, LP); L(6, 8, 8, 6, LP); L(8, 6, 12, 5, LP); L(12, 5, 15, 6, LP); E(5, 46, 5, 1, LP);
-                  for (let y = 0; y < 6; y++) { const half = 2 + y * 0.9; R(Math.round(16 - half), 6 + y, Math.round(half * 2 + 1), 1, y < 5 ? D("#f6e1b8", "#f3dc9e") : D("#e8cf98", "#fff0c0")); } }
+                { const LP = D("#cfd2d8", "#8e90a0"), SH1 = D("#f6e6c0", "#f3dc9e"), SH2 = D("#e6d2a2", "#e6c880");
+                  R(5, 11, 1, 36, LP); L(5, 11, 5, 8, LP); L(5, 8, 7, 5, LP); L(7, 5, 11, 4, LP); L(11, 4, 15, 4, LP); L(15, 4, 17, 5, LP); R(3, 47, 5, 1, LP); R(2, 48, 7, 1, LP);
+                  for (let y = 0; y < 6; y++) { const x0 = 17 - 2 - y * 1, x1 = 17 + 2 + y * 1.2; R(Math.round(x0), 5 + y, Math.round(x1 - x0) + 1, 1, y < 3 ? SH1 : SH2); }
+                  R(12, 11, 11, 1, D("#fff4cc", "#fff8d8")); P(17, 12, D("#fff1b0", "#fff6c8")); }
                 B(40, 25, 8, 9, D("#e0d9cd", "#8e8884")); leaf(44, 23, 0, -3, 4, D("#58a85a", "#2f5a3a")); leaf(44, 24, -2, -2, 3, D("#6fbf6a", "#38704a")); leaf(44, 24, 2, -2, 3, D("#6fbf6a", "#38704a"));
                 B(13, 23, 40, 14, D("#f4e8d6", "#a5979f")); B(11, 30, 44, 9, D("#f8ecdb", "#b0a2ab")); B(9, 26, 7, 14, D("#efe0cc", "#9a8c96")); B(52, 26, 6, 14, D("#efe0cc", "#9a8c96"));
                 B(8, 29, 8, 10, D("#d9d3cc", "#8a828e")); E(23, 28, 4, 4, D("#f3c8a4", "#c9a08a")); B(30, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(31 + i * 2, 25 + (i % 2) * 2, 32 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97")); B(40, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(41 + i * 2, 25 + (i % 2) * 2, 42 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97"));
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
-                E(20, 47, 4, 2, D("#f3ece0", "#b8aebc")); E(27, 48, 4, 2, D("#f3ece0", "#a8a0b0"));
-                B(34, 41, 22, 3, D("#dfae70", "#a8764a")); B(36, 44, 2, 5, "#9a6c40"); B(52, 44, 2, 5, "#9a6c40");
+                E(21, 47, 4, 2, D("#f3ece0", "#b8aebc")); E(45, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
+                B(60, 34, 15, 3, D("#f1e6d2", "#b9aa98")); B(62, 37, 2, 7, D("#e2d3b8", "#9a8c7c")); B(71, 37, 2, 7, D("#e2d3b8", "#9a8c7c"));
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { R(41, 39, 2, 2, "#fff3c8"); R(47, 39, 2, 2, "#fff3c8"); P(41, 38, "#ffb040"); P(47, 38, "#ffb040"); P(41, 37, "#fff0a8"); P(47, 37, "#fff0a8"); sp(41, 37, "#ffd98a"); sp(47, 37, "#ffd98a"); 
+                if (night) { R(64, 32, 2, 2, "#fff3c8"); R(70, 32, 2, 2, "#fff3c8"); P(64, 31, "#ffb040"); P(70, 31, "#ffb040"); P(64, 30, "#fff0a8"); P(70, 30, "#fff0a8"); sp(64, 30, "#ffd98a"); sp(70, 30, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
-                                        for (let k = 6; k >= 1; k--) gE(16, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
-                    for (let y = 11; y < 46; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(16 - half), y, Math.round(half * 2), 1); }
-                    gE(42, 38, 4, 4, "rgba(255,190,90,.09)"); gE(48, 38, 4, 4, "rgba(255,190,90,.09)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
+                                        for (let k = 6; k >= 1; k--) gE(17, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
+                    for (let y = 11; y < 46; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(17 - half), y, Math.round(half * 2), 1); }
+                    gE(65, 31, 4, 4, "rgba(255,190,90,.1)"); gE(71, 31, 4, 4, "rgba(255,190,90,.1)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -3043,7 +3037,8 @@
             let lastBack = 0, toastEl = null;
             const toast = (t) => { if (!toastEl) { toastEl = document.createElement("div"); toastEl.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:9px 18px;border-radius:18px;font-size:13px;z-index:3000;pointer-events:none;transition:opacity .25s;opacity:0"; document.body.appendChild(toastEl); } toastEl.innerText = t; toastEl.style.opacity = "1"; clearTimeout(toast._t); toast._t = setTimeout(() => toastEl.style.opacity = "0", 1800); };
             function handleBack() {
-                for (const oid of ["imgViewMask", "divZoom", "frBankOv"]) { const oe = document.getElementById(oid); if (oe) { oe.remove(); return true; } }
+                if (document.getElementById("mbOv")) { mbBackOv(); return true; }
+            for (const oid of ["imgViewMask", "divZoom", "frBankOv"]) { const oe = document.getElementById(oid); if (oe) { oe.remove(); return true; } }
                 const bem = document.getElementById("bubbleEditMask"); if (bem) { bem.remove(); return true; }
                 if (document.getElementById("bubblePop")) { closeBubblePop(); return true; }
                 const mm = document.querySelector(".more-menu-popup.open"); if (mm) { mm.classList.remove("open"); return true; }
@@ -4602,7 +4597,7 @@
             closeChatSearch(); if (typeof showMainApp === "function") { try { document.getElementById("mainAppView") && document.getElementById("mainAppView").style.display === "none" && showMainApp(); } catch (e) { } }
             setTimeout(() => { const el = document.querySelector(`#chat [data-idx="${idx}"]`); if (!el) return; el.scrollIntoView({ block: "center" }); el.animate([{ outline: "3px solid #ffd36b", outlineOffset: "3px" }, { outline: "3px solid rgba(255,211,107,0)", outlineOffset: "3px" }], { duration: 1800 }); }, 340);
         }
-        function openLetterPage() { toggleSidebar(false); djOpen = false; djRead = false; djBusy = false; djPageIdx = djPages().length - 1; renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
+        function openLetterPage() { toggleSidebar(false); mbBusy = false; { const o = document.getElementById("mbOv"); if (o) o.remove(); } renderDiaryTimeline(); document.getElementById("letterFullPage").classList.add("open"); if (db.unreadLetters) { db.unreadLetters = 0; saveData(); renderHomeScreen(); } }
         function closeLetterPage() { document.getElementById("letterFullPage").classList.remove("open"); }
 
         // ==================== 🗂️ 记忆（聊天记录收藏） ====================
@@ -5447,57 +5442,72 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             }
             return rounds;
         }
-        let djOpen = false, djRead = false, djBusy = false, djPageIdx = 0, diaryWriting = false, diaryTargetIdx = -1, diaryDraftText = "";
+        let mbBusy = false, diaryWriting = false, diaryTargetIdx = -1, diaryDraftText = "";
         function diaryHasPending() { return db.sentLetters.length > db.receivedLetters.length; }
-        function djPages() {
+        const mbSleep = ms => new Promise(r => setTimeout(r, ms));
+        const mbWho = w => w === "me" ? (db.me.name || "我") : (db.other.name || "他");
+        const mbEnvSvg = c => `<svg viewBox="0 0 40 28" width="40" height="28" style="flex-shrink:0"><rect x="1" y="1" width="38" height="26" rx="3" fill="#fbf6ea" stroke="${c}" stroke-width="1.8"/><path d="M2 3l18 13L38 3" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+        function mbItems() {
             const n = Math.max(db.sentLetters.length, db.receivedLetters.length), r = [];
-            for (let i = 0; i < n; i++) r.push({ mine: db.sentLetters[i] || null, his: db.receivedLetters[i] || null });
-            if (!diaryHasPending()) r.push({ mine: null, his: null, blank: true });
-            return r;
-        }
-        function djPageHtml(pg) {
-            const me = escapeHtml(db.me.name || "我"), ot = escapeHtml(db.other.name || "他"); let h = "";
-            if (pg.mine) h += `<div class="dj-ent me"><div class="dj-au">${me} · ${escapeHtml(pg.mine.time)}</div><div class="dj-tx">${escapeHtml(pg.mine.content)}</div></div>`;
-            if (pg.his) h += `<div class="dj-ent his"><div class="dj-au">${ot} · ${escapeHtml(pg.his.time)}</div><div class="dj-tx">${escapeHtml(pg.his.content)}</div></div>`;
-            else if (pg.mine) h += `<div class="dj-wait">等待 ${ot} 回信中…</div>`;
-            if (pg.blank) h += `<textarea id="djArea" class="dj-area" placeholder="在这页写点什么…" oninput="diaryDraftText=this.value"></textarea>`;
-            return h;
+            for (let i = 0; i < n; i++) { if (db.sentLetters[i]) r.push({ who: "me", i, l: db.sentLetters[i] }); if (db.receivedLetters[i]) r.push({ who: "his", i, l: db.receivedLetters[i] }); }
+            return diaryMonthFilter ? r.filter(x => tsMonthKey(itemTs(x.l)) === diaryMonthFilter) : r;
         }
         function renderDiaryTimeline() {
-            const st = document.getElementById("djStage"); if (!st) return;
-            const pages = djPages(); if (djPageIdx >= pages.length) djPageIdx = pages.length - 1; if (djPageIdx < 0) djPageIdx = 0;
-            const pg = pages[djPageIdx], given = diaryHasPending() && !djRead;
-            st.classList.toggle("given", given); st.classList.toggle("opened", djOpen);
-            const book = document.getElementById("djBook"); if (!djBusy) { book.classList.toggle("open", djOpen); book.classList.toggle("unlatch", djOpen); }
-            document.getElementById("djSheet").innerHTML = djPageHtml(pg);
-            const ta = document.getElementById("djArea"); if (ta) ta.value = diaryDraftText;
-            document.getElementById("djPageLab").innerText = `${djPageIdx + 1} / ${pages.length}`;
-            document.getElementById("djPrev").disabled = djPageIdx <= 0; document.getElementById("djNext").disabled = djPageIdx >= pages.length - 1;
-            document.getElementById("djTp").classList.toggle("show", !!pg.blank);
-            document.getElementById("djOldBtn").style.display = db.sentLetters.length ? "" : "none";
+            const box = document.getElementById("mbList"); if (!box) return;
+            const items = mbItems(), pend = diaryHasPending();
+            let h = items.map(x => { const un = x.who === "his" && x.l.read === false, pre = String(x.l.content).replace(/\s+/g, " ").slice(0, 30);
+                return `<div class="mb-item ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${mbEnvSvg(x.who === "me" ? "#6f8fd0" : "#d9807a")}<div class="mb-it"><div class="mb-ih">${escapeHtml(mbWho(x.who))}${x.who === "me" ? " 寄出的信" : " 的来信"} · ${escapeHtml(x.l.time || "")}</div><div class="mb-ip">${escapeHtml(pre)}</div></div>${un ? '<span class="mb-dot"></span>' : ""}</div>`; }).join("");
+            if (pend && !diaryMonthFilter) h += `<div class="mb-wait">✉ 信已经寄出，正在飞往${escapeHtml(mbWho("his"))}那里…</div>`;
+            if (!h) h = `<div class="mb-empty">信箱还是空的<br>点右上角「写信」寄出第一封吧</div>`;
+            box.innerHTML = h;
         }
-        function djReadOld() { djRead = true; djOpen = false; djPageIdx = djPages().length - 1; renderDiaryTimeline(); }
-        function djOpenBook() {
-            if (djOpen || djBusy) return; djBusy = true; const book = document.getElementById("djBook"), st = document.getElementById("djStage");
-            book.classList.add("unlatch"); setTimeout(() => { book.classList.add("open"); djOpen = true; st.classList.add("opened"); }, 300);
-            setTimeout(() => { djBusy = false; }, 1300);
+        function mbToast(t) { const host = document.querySelector("#letterFullPage .pyq-scroll-content"); if (!host) return; const d = document.createElement("div"); d.className = "mb-toast"; d.innerText = t; host.appendChild(d); setTimeout(() => d.remove(), 2200); }
+        function mbOv() { const old = document.getElementById("mbOv"); if (old) old.remove(); const ov = document.createElement("div"); ov.id = "mbOv"; ov.className = "mb-ov"; ov.onclick = mbOvTap; document.querySelector("#letterFullPage .pyq-scroll-content").appendChild(ov); return ov; }
+        function mbStageHtml(who, time, text, cls) {
+            const C = `<div class="mb-from">${escapeHtml(mbWho(who))}　${escapeHtml(time || "")}</div><div class="mb-bd">${escapeHtml(text)}</div>`, col = who === "me" ? "#2f3b5c" : "#7b3b3b", pc = k => `<div class="mbc" style="top:${-140 * k}px;color:${col}">${C}</div>`;
+            return `<div class="mb-stage ${cls || ""}" id="mbStage"><div class="mb-env-back"></div><div class="mb-paper" id="mbPaper"><div class="mbn mbp1"><div class="mbf">${pc(0)}</div></div><div class="mbn mbp2"><div class="mbf">${pc(1)}</div><div class="mbb"></div><div class="mbn mbp3"><div class="mbf">${pc(2)}</div><div class="mbb"></div></div></div></div><div class="mb-env-front"></div><div class="mb-flap"><div class="mb-seal">♥</div></div></div>`;
         }
-        function djFlip(dir) {
-            if (djBusy || !djOpen) return; const pages = djPages(), ni = djPageIdx + dir; if (ni < 0 || ni >= pages.length) return;
-            djBusy = true; const sheet = document.getElementById("djSheet"), paper = document.getElementById("djPaper");
-            const mk = () => { const l = sheet.cloneNode(true); l.removeAttribute("id"); l.className = "dj-leaf"; l.querySelectorAll("[id]").forEach(e => e.removeAttribute("id")); paper.appendChild(l); return l; };
-            const done = l => () => { l.remove(); djBusy = false; };
-            if (dir > 0) { const l = mk(); djPageIdx = ni; renderDiaryTimeline(); l.animate([{ transform: "rotateY(0)", opacity: 1 }, { transform: "rotateY(-150deg)", opacity: 0 }], { duration: 650, easing: "ease-in-out" }).onfinish = done(l); }
-            else { djPageIdx = ni; renderDiaryTimeline(); const l = mk(); l.animate([{ transform: "rotateY(-150deg)", opacity: 0 }, { transform: "rotateY(0)", opacity: 1 }], { duration: 650, easing: "ease-in-out" }).onfinish = done(l); }
+        async function mbOpen(who, i) {
+            if (mbBusy) return; const l = (who === "me" ? db.sentLetters : db.receivedLetters)[i]; if (!l) return;
+            mbBusy = true; if (l.read === false) { l.read = true; saveData(); renderDiaryTimeline(); }
+            const ov = mbOv(); ov.dataset.state = "read"; ov.dataset.who = who; ov.dataset.text = l.content; ov.dataset.time = l.time || "";
+            ov.innerHTML = mbStageHtml(who, l.time, l.content, ""); const st = ov.firstChild, pp = st.querySelector("#mbPaper");
+            await mbSleep(30); ov.classList.add("show"); await mbSleep(350);
+            st.classList.add("flap-open"); await mbSleep(750);
+            pp.classList.add("out"); await mbSleep(800);
+            st.classList.add("sink"); pp.classList.add("unfold"); await mbSleep(1500);
+            const real = document.createElement("div"); real.className = "mb-real " + who; real.innerHTML = `<div class="mb-from">${escapeHtml(mbWho(who))}　${escapeHtml(l.time || "")}</div><div class="mb-bd">${escapeHtml(l.content)}</div>`; st.appendChild(real); pp.style.display = "none";
+            ov.dataset.state = "reading"; mbBusy = false;
         }
-        function djTeleport() {
-            if (djBusy || !djOpen) return; const ta = document.getElementById("djArea"), text = ta ? ta.value.trim() : "";
+        async function mbCloseRead() {
+            const ov = document.getElementById("mbOv"); if (!ov || mbBusy) return; mbBusy = true; const st = ov.firstChild, pp = st.querySelector("#mbPaper"), real = st.querySelector(".mb-real");
+            pp.style.display = ""; if (real) real.remove(); await mbSleep(60);
+            st.classList.remove("sink"); pp.classList.remove("unfold"); await mbSleep(1250);
+            pp.classList.remove("out"); await mbSleep(800);
+            st.classList.remove("flap-open"); await mbSleep(750);
+            ov.classList.remove("show"); await mbSleep(420); ov.remove(); mbBusy = false;
+        }
+        function mbOvTap(e) { const ov = document.getElementById("mbOv"); if (!ov || mbBusy) return; if (ov.dataset.state === "reading" && !e.target.closest(".mb-real")) mbCloseRead(); }
+        function mbBackOv() { const ov = document.getElementById("mbOv"); if (!ov) return; if (ov.dataset.state === "reading") mbCloseRead(); else if (ov.dataset.state === "write" && !mbBusy) mbWClose(); }
+        function mbWrite() {
+            if (mbBusy) return; if (diaryHasPending()) { mbToast("上一封信还在路上，等他回信再写吧"); return; }
+            const ov = mbOv(); ov.dataset.state = "write"; ov.innerHTML = `<div class="mb-wp"><div class="mb-wp-h"><button onclick="mbWClose()">✕</button><span>写给 ${escapeHtml(mbWho("his"))}</span></div><textarea id="mbTa" placeholder="亲爱的${escapeHtml(mbWho("his"))}…" oninput="diaryDraftText=this.value"></textarea><button class="mb-send" onclick="mbSend()">折好寄出 ✉</button></div>`;
+            ov.classList.add("show"); document.getElementById("mbTa").value = diaryDraftText; setTimeout(() => { const t = document.getElementById("mbTa"); if (t) t.focus(); }, 480);
+        }
+        function mbWClose() { const ov = document.getElementById("mbOv"); if (!ov || mbBusy) return; const t = document.getElementById("mbTa"); if (t) t.blur(); ov.classList.remove("show"); setTimeout(() => ov.remove(), 400); }
+        async function mbSend() {
+            if (mbBusy) return; const ta = document.getElementById("mbTa"), text = ta ? ta.value.trim() : "";
             if (!text) { if (ta) { ta.focus(); ta.animate([{ transform: "translateX(0)" }, { transform: "translateX(-6px)" }, { transform: "translateX(6px)" }, { transform: "translateX(0)" }], { duration: 260 }); } return; }
-            djBusy = true; if (ta) ta.blur();
-            diaryTargetIdx = db.sentLetters.length; commitDiaryText(text); diaryDraftText = "";
-            const book = document.getElementById("djBook"), st = document.getElementById("djStage"); djOpen = false; st.classList.remove("opened"); book.classList.remove("open", "unlatch");
-            setTimeout(() => { book.classList.add("tp"); const r = document.createElement("div"); r.className = "dj-portal"; st.appendChild(r); setTimeout(() => r.remove(), 1600); }, 1100);
-            setTimeout(() => { book.classList.remove("tp"); djBusy = false; renderDiaryTimeline(); }, 2600);
+            mbBusy = true; ta.blur(); const ov = document.getElementById("mbOv"); ov.dataset.state = "sending";
+            ov.innerHTML = mbStageHtml("me", "刚刚", text, "noanim flap-open"); const st = ov.firstChild, pp = st.querySelector("#mbPaper"); pp.classList.add("out", "unfold");
+            void st.offsetWidth; st.classList.remove("noanim"); await mbSleep(450);
+            pp.classList.remove("unfold"); await mbSleep(1500);
+            pp.classList.remove("out"); await mbSleep(850);
+            st.classList.remove("flap-open"); await mbSleep(800);
+            const slot = document.getElementById("mbSlot").getBoundingClientRect(), r = st.getBoundingClientRect(), dx = slot.left + slot.width / 2 - (r.left + 150), dy = slot.top + slot.height / 2 - (r.top + 340);
+            st.style.transformOrigin = "150px 340px"; st.style.transition = "transform 1s cubic-bezier(.5,0,.8,.5), opacity .3s .75s"; st.style.transform = `translate(${dx}px,${dy}px) scale(.13) rotate(-14deg)`; st.style.opacity = "0"; ov.classList.remove("show"); await mbSleep(1050);
+            ov.remove(); const bx = document.getElementById("mbBox"); bx.classList.add("bump"); setTimeout(() => bx.classList.remove("bump"), 700);
+            diaryTargetIdx = db.sentLetters.length; commitDiaryText(text); diaryDraftText = ""; renderDiaryTimeline(); mbToast("信已投进信箱 ✉"); mbBusy = false;
         }
         function commitDiaryText(text) {
             const idx = diaryTargetIdx;
@@ -5524,7 +5534,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 for (let i = 0; i < n; i++) lines.push(cards[Math.floor(Math.random() * cards.length)].text);
                 body = lines.join("\n");
             }
-            db.receivedLetters.push({ content: body, time: new Date().toLocaleString(), ts: Date.now() });
+            db.receivedLetters.push({ content: body, time: new Date().toLocaleString(), ts: Date.now(), read: false });
             db.chat.push({ type: "diary-return", text: `📮 ${db.other.name || '他'}把交换日记交回${db.me.name || '我'}手上` });
             saveData(); renderChat();
             if (!diaryWriting) { currentDiaryRound = getDiaryRounds().length - 1; }
@@ -8950,7 +8960,7 @@ treaty:条约`
                     if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText("?", b.x + bw / 2, b.y + 12); } });
                 sides.forEach(s => { if (s.lives <= 0) return; ctx.fillStyle = s.col; ctx.globalAlpha = s.human ? 1 : .85; ctx.fillRect(s.px - s.padW / 2, s.y, s.padW, 8); ctx.globalAlpha = 1; s.balls.forEach(b => { ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fillStyle = s.col; ctx.fill(); ctx.strokeStyle = s.col; ctx.lineWidth = 2; ctx.stroke(); }); });
                 drops.forEach(d => { const p = PT[d.t]; ctx.beginPath(); ctx.arc(d.x, d.y, 9, 0, 7); ctx.fillStyle = p[1]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = "#222"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText(p[0], d.x, d.y + 4); });
-                document.getElementById("gameScore").innerHTML = `<span style="color:#e6dc9c">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
+                document.getElementById("gameScore").innerHTML = `<span style="color:#f3e8aa">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
             }
             function loop(t) { if (over) return; const dt = Math.min(0.03, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); if (!over) draw(); } raf = requestAnimationFrame(loop); }
             draw(); raf = requestAnimationFrame(loop);
@@ -8959,7 +8969,7 @@ treaty:条约`
         }
         function gamePacman() {
             const body = document.getElementById("gameBody"), C = 19, R = 25, D = gameDiff, cs = Math.floor(Math.min(body.clientWidth - 24, 380) / C), w = cs * C, h = cs * R, dpr = window.devicePixelRatio || 1;
-            body.innerHTML = `<div class="game-msg" id="gameMsg">滑动屏幕或点方向键吃豆；大力丸能反吃鬼</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="pmPad" style="display:grid;grid-template-columns:repeat(3,58px);gap:6px;justify-content:center;margin:10px 0 4px"><span></span><button class="btn btn-outline" data-d="0">▲</button><span></span><button class="btn btn-outline" data-d="3">◀</button><button class="btn btn-outline" data-d="2">▼</button><button class="btn btn-outline" data-d="1">▶</button></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">滑动屏幕或点方向键吃豆；大力丸能反吃鬼</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><button class="btn" id="pmStart" style="margin:2px auto 8px;display:block;padding:9px 38px;font-size:16px">开始</button><canvas id="gmCanvas" class="game-canvas"></canvas><div id="pmPad" style="display:grid;grid-template-columns:repeat(3,96px);grid-template-rows:68px 68px;gap:8px;justify-content:center;margin:12px 0 6px"><span></span><button class="btn btn-outline" style="font-size:28px;padding:0" data-d="0">▲</button><span></span><button class="btn btn-outline" style="font-size:28px;padding:0" data-d="3">◀</button><button class="btn btn-outline" style="font-size:28px;padding:0" data-d="2">▼</button><button class="btn btn-outline" style="font-size:28px;padding:0" data-d="1">▶</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"); cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
             const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0], CM = "#ffe873", CH = "#c9b8f4";
             // ---- 迷宫：深度优先挖通道 + 随机打通几堵墙成环 + 补掉死胡同 + 中央空地
@@ -8976,7 +8986,7 @@ treaty:条约`
             const ghosts = homes.map((hm, i) => ({ col: GC[i], hx: hm[0], hy: hm[1], gx: hm[0], gy: hm[1], tx: hm[0], ty: hm[1], p: 1, dir: null, eaten: 0, i }));
             pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); dots[1][1] = 2; dots[1][C - 2] = 2; dots[R - 2][1] = dots[R - 2][1]; dots[7][9] = g[7][9] === 0 ? 2 : dots[7][9]; dots[17][9] = g[17][9] === 0 ? 2 : dots[17][9]; dots[R - 2][C - 2] = 0;
             for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (dots[y][x]) left++;
-            const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 1.4, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
+            const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 0, started = false, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
             const pacSp = 5.4, gSp = pacSp * { easy: 0.7, normal: 0.84, hard: 0.95 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D];
             const IT = { cherry: ["🍒", 100], speed: ["⚡", 0], ice: ["❄️", 0] };
             // ---- 预渲染墙
@@ -8990,6 +9000,7 @@ treaty:条约`
             cv.addEventListener("pointerup", () => { sw = false; });
             const KM = { ArrowUp: 0, ArrowRight: 1, ArrowDown: 2, ArrowLeft: 3, w: 0, d: 1, s: 2, a: 3 }, key = e => { if (e.key in KM) { setWant(KM[e.key]); e.preventDefault(); } };
             document.addEventListener("keydown", key);
+            const startBtn = document.getElementById("pmStart"); const go = () => { if (started || over) return; started = true; ready = 1.2; startBtn.style.display = "none"; }; startBtn.onclick = go;
             // ---- 移动
             function advance(e, sp, dt, choose, arrive) {
                 let rem = sp * dt;
@@ -8999,7 +9010,7 @@ treaty:条约`
                 }
             }
             const pos = e => [e.gx + (e.tx - e.gx) * e.p, e.gy + (e.ty - e.gy) * e.p];
-            const flipIf = e => { if (e.want != null && e.dir != null && e.p < 1 && e.want === (e.dir + 2) % 4) { [e.gx, e.tx] = [e.tx, e.gx]; [e.gy, e.ty] = [e.ty, e.gy]; e.p = 1 - e.p; e.dir = e.want; e.face = e.want; } };
+            const flipIf = e => { if (e.human && e.want != null && e.dir != null && e.p > 0 && e.p < 0.32 && (e.want === (e.dir + 1) % 4 || e.want === (e.dir + 3) % 4) && free(e.gx + DX[e.want], e.gy + DY[e.want])) { e.p = 0; e.tx = e.gx + DX[e.want]; e.ty = e.gy + DY[e.want]; e.dir = e.want; e.face = e.want; return; } if (e.want != null && e.dir != null && e.p < 1 && e.want === (e.dir + 2) % 4) { [e.gx, e.tx] = [e.tx, e.gx]; [e.gy, e.ty] = [e.ty, e.gy]; e.p = 1 - e.p; e.dir = e.want; e.face = e.want; } };
             function bfsPick(e) {
                 const danger = []; ghosts.forEach(q => { if (q.eaten <= 0 && fr <= 0) { const [x, y] = pos(q); danger.push([Math.round(x), Math.round(y)]); } });
                 const bad = (x, y) => e.inv <= 0 && danger.some(q => Math.abs(q[0] - x) + Math.abs(q[1] - y) <= 2);
@@ -9013,7 +9024,8 @@ treaty:条约`
             function chooseP(e) {
                 if (!e.human && e.lives > 0) { const opts = optsOf(e, false); if (Math.random() < aiErr && opts.length) e.want = opts[Math.floor(Math.random() * opts.length)]; else { const d = bfsPick(e); e.want = d != null ? d : (opts.length ? opts[Math.floor(Math.random() * opts.length)] : null); } }
                 if (e.want != null && free(e.gx + DX[e.want], e.gy + DY[e.want])) return e.want;
-                if (e.dir != null && free(e.gx + DX[e.dir], e.gy + DY[e.dir])) return e.dir; return null;
+                if (e.dir != null && free(e.gx + DX[e.dir], e.gy + DY[e.dir])) return e.dir;
+                if (e.dir != null) { const o2 = optsOf(e, true); if (o2.length === 1) return o2[0]; } return null;
             }
             function arriveP(e) {
                 if (dots[e.gy][e.gx] === 1) { dots[e.gy][e.gx] = 0; e.score += 10; left--; } else if (dots[e.gy][e.gx] === 2) { dots[e.gy][e.gx] = 0; e.score += 50; left--; fr = 7; gameSfx(e.human ? "tap" : "his"); }
@@ -9028,7 +9040,7 @@ treaty:条约`
             }
             const respawn = q => { q.gx = q.tx = q.sx; q.gy = q.ty = q.sy; q.p = 1; q.dir = null; q.want = null; };
             function step(dt) {
-                clock += dt; if (ready > 0) { ready -= dt; return; }
+                if (!started) return; clock += dt; if (ready > 0) { ready -= dt; return; }
                 fr = Math.max(0, fr - dt); freeze = Math.max(0, freeze - dt); itemT -= dt;
                 if (itemT <= 0) { itemT = 7 + Math.random() * 4; if (items.length < 2) { for (let k = 0; k < 30; k++) { const x = 1 + Math.floor(Math.random() * (C - 2)), y = 1 + Math.floor(Math.random() * (R - 2)); if (free(x, y) && !items.some(t => t.x === x && t.y === y)) { items.push({ x, y, t: ["cherry", "speed", "ice"][Math.floor(Math.random() * 3)], ttl: 12 }); break; } } } }
                 for (let i = items.length - 1; i >= 0; i--) { items[i].ttl -= dt; if (items[i].ttl <= 0) items.splice(i, 1); }
@@ -9047,8 +9059,8 @@ treaty:条约`
                 ghosts.forEach(q => { if (q.eaten > 0) return; const [x, y] = pos(q), cx = (x + 0.5) * cs, cy = (y + 0.5) * cs; let col = q.col; if (freeze > 0) col = "#9be0ff"; else if (fr > 0) col = fr < 2 && Math.floor(clock * 6) % 2 ? "#fff" : "#3c4bd6";
                     ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy - 1, r, 3.1416, 0); ctx.lineTo(cx + r, cy + r); for (let k = 0; k < 3; k++) { ctx.lineTo(cx + r - (k + 0.5) * (2 * r / 3), cy + r - 3); ctx.lineTo(cx + r - (k + 1) * (2 * r / 3), cy + r); } ctx.closePath(); ctx.fill();
                     ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(cx - r * 0.38, cy - 2, r * 0.26, 0, 7); ctx.arc(cx + r * 0.38, cy - 2, r * 0.26, 0, 7); ctx.fill(); ctx.fillStyle = fr > 0 ? "#fff" : "#1a2a6a"; const ex = (q.dir === 1 ? 1 : q.dir === 3 ? -1 : 0) * 1.5, ey = (q.dir === 0 ? -1 : q.dir === 2 ? 1 : 0) * 1.5; ctx.beginPath(); ctx.arc(cx - r * 0.38 + ex, cy - 2 + ey, r * 0.12, 0, 7); ctx.arc(cx + r * 0.38 + ex, cy - 2 + ey, r * 0.12, 0, 7); ctx.fill(); });
-                if (ready > 0) { ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fillRect(0, h / 2 - 22, w, 44); ctx.fillStyle = "#fff"; ctx.font = "bold 20px sans-serif"; ctx.fillText("准备…", w / 2, h / 2); }
-                const hs = n => "♥".repeat(Math.max(0, n)); document.getElementById("gameScore").innerHTML = `<span style="color:#e6dc9c">你 ${me.score} ${hs(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${hs(him.lives)}</span>`;
+                if (!started || ready > 0) { ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fillRect(0, h / 2 - 22, w, 44); ctx.fillStyle = "#fff"; ctx.font = "bold 20px sans-serif"; ctx.fillText(started ? "准备…" : "点上方「开始」", w / 2, h / 2); }
+                const hs = n => "♥".repeat(Math.max(0, n)); document.getElementById("gameScore").innerHTML = `<span style="color:#f3e8aa">你 ${me.score} ${hs(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${hs(him.lives)}</span>　　<span style="color:var(--text-sub);font-weight:400">剩 ${left} 豆</span>`;
             }
             function loop(t) { if (over) return; const dt = Math.min(0.033, (t - lastT) / 1000); lastT = t; if (!paused) { step(dt); if (!over) draw(); } raf = requestAnimationFrame(loop); }
             draw(); raf = requestAnimationFrame(loop);
