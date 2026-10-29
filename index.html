@@ -779,7 +779,7 @@
         .mb-head { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top)) 12px 6px; flex-shrink: 0; }
         .mb-write-btn { padding: 7px 16px; border-radius: 16px; border: 1px solid var(--primary); background: transparent; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; }
         .mb-box { flex-shrink: 0; display: flex; justify-content: center; padding: 2px 0 0; }
-        .mb-box svg { overflow: visible; filter: drop-shadow(0 6px 8px rgba(0,0,0,.35)); }
+        .mb-box svg { overflow: visible; }
         .mb-box.bump svg { animation: mbBump .6s ease; }
         @keyframes mbBump { 0% { transform: scale(1); } 30% { transform: scale(1.1, .92); } 60% { transform: scale(.97, 1.04); } 100% { transform: scale(1); } }
         .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px calc(18px + env(safe-area-inset-bottom)); }
@@ -1032,22 +1032,18 @@
                 <button class="mb-write-btn" onclick="mbWrite()">✎ 写信</button>
             </div>
             <div class="mb-box" id="mbBox">
-                <svg id="mbSvg" viewBox="0 0 100 130" width="64" height="83"><defs><linearGradient id="mbG" x1="0" x2="1"><stop offset="0" stop-color="#e0574d"/><stop offset=".55" stop-color="#c8453d"/><stop offset="1" stop-color="#a5352f"/></linearGradient></defs><rect x="20" y="116" width="60" height="9" rx="3" fill="#7d2621"/><rect x="26" y="36" width="48" height="82" fill="url(#mbG)"/><path d="M24 38 Q24 14 50 14 Q76 14 76 38 Z" fill="url(#mbG)"/><circle cx="50" cy="10" r="4.5" fill="#8f2c26"/><rect x="24" y="36" width="52" height="5" fill="#8f2c26"/><rect x="34" y="50" width="32" height="7" rx="3.5" fill="#3a1512" id="mbSlot"/><rect x="26" y="68" width="48" height="3" fill="#8f2c26"/><rect x="34" y="78" width="32" height="30" rx="3" fill="none" stroke="#8f2c26" stroke-width="2"/><circle cx="60" cy="93" r="2" fill="#ffd36b"/><rect x="31" y="42" width="5" height="72" rx="2.5" fill="rgba(255,255,255,.2)"/></svg>
+                <svg id="mbSvg" viewBox="0 0 100 130" width="64" height="83"><rect x="20" y="116" width="60" height="9" rx="3" fill="#a5352f"/><rect x="26" y="36" width="48" height="82" fill="#d9483f"/><path d="M24 38 Q24 14 50 14 Q76 14 76 38 Z" fill="#d9483f"/><circle cx="50" cy="10" r="4.5" fill="#a5352f"/><rect x="24" y="36" width="52" height="5" fill="#a5352f"/><rect x="34" y="50" width="32" height="7" rx="3.5" fill="#7d2621" id="mbSlot"/><rect x="26" y="68" width="48" height="3" fill="#a5352f"/><rect x="34" y="78" width="32" height="30" rx="3" fill="none" stroke="#a5352f" stroke-width="2.5"/><circle cx="60" cy="93" r="2.2" fill="#fff"/></svg>
             </div>
             <div class="mb-list" id="mbList"></div>
         </div>
     </div>
 
-    <div class="pyq-full-page" id="chatSearchPage">
-        <div class="pyq-scroll-content" style="display:flex; flex-direction:column; overflow:hidden;">
-            <div class="app-page-header">
-                <button class="pyq-back-pure-symbol" onclick="closeChatSearch()"></button>
-                <div class="app-page-title">搜索聊天记录</div>
-                <div class="app-page-header-spacer"></div>
-            </div>
-            <div style="padding:10px 14px 6px;"><input id="chatSearchInput" type="search" placeholder="输入关键词" oninput="runChatSearch()" style="width:100%;box-sizing:border-box;margin:0;"></div>
-            <div id="chatSearchInfo" style="padding:0 16px 6px;font-size:12px;color:var(--text-sub);"></div>
-            <div id="chatSearchRes" style="flex:1;overflow-y:auto;padding:0 14px 24px;-webkit-overflow-scrolling:touch;"></div>
+    <div class="universal-modal" id="chatSearchModal" onclick="closeChatSearch()">
+        <div class="modal-box" onclick="event.stopPropagation()" style="display:flex; flex-direction:column; max-height:78vh; padding-bottom:12px;">
+            <h2 style="margin-bottom:10px;">搜索聊天记录</h2>
+            <input id="chatSearchInput" type="search" placeholder="输入关键词" oninput="runChatSearch()" style="width:100%;box-sizing:border-box;margin:0 0 6px;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text-main);font-size:15px;outline:none;">
+            <div id="chatSearchInfo" style="font-size:12px;color:var(--text-sub);margin-bottom:6px;"></div>
+            <div id="chatSearchRes" style="flex:1;min-height:120px;overflow-y:auto;-webkit-overflow-scrolling:touch;"></div>
         </div>
     </div>
 
@@ -2268,26 +2264,27 @@
                 c.restore(); c.save(); c.translate(9, -1);
                 B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
                 c.restore();
-                { const LP = D("#cfd2d8", "#8e90a0"), SH1 = D("#f6e6c0", "#f3dc9e"), SH2 = D("#e6d2a2", "#e6c880");
-                  R(5, 11, 1, 36, LP); L(5, 11, 5, 8, LP); L(5, 8, 7, 5, LP); L(7, 5, 11, 4, LP); L(11, 4, 15, 4, LP); L(15, 4, 17, 5, LP); R(3, 47, 5, 1, LP); R(2, 48, 7, 1, LP);
-                  for (let y = 0; y < 6; y++) { const x0 = 17 - 2 - y * 1, x1 = 17 + 2 + y * 1.2; R(Math.round(x0), 5 + y, Math.round(x1 - x0) + 1, 1, y < 3 ? SH1 : SH2); }
-                  R(12, 11, 11, 1, D("#fff4cc", "#fff8d8")); P(17, 12, D("#fff1b0", "#fff6c8")); }
+                { const LP = D("#e4e6ea", "#a0a2b2"), SH1 = D("#f7f4ee", "#f3e2b8"), SH2 = D("#e2ddd2", "#e6cf98"), CAP = D("#d9a066", "#d9a066");
+                  R(5, 12, 1, 35, LP); L(5, 12, 9, 9, LP); L(9, 9, 13, 6, LP); L(13, 6, 17, 4, LP); R(3, 47, 5, 1, LP); R(2, 48, 7, 1, LP); R(1, 49, 9, 1, LP);
+                  R(16, 3, 5, 1, CAP); R(17, 2, 3, 1, CAP);
+                  for (let y = 0; y < 7; y++) { const half = 1.6 + y * 0.9, x0 = Math.round(18.5 - half), x1 = Math.round(18.5 + half); R(x0, 4 + y, x1 - x0 + 1, 1, y < 4 ? SH1 : SH2); }
+                  R(12, 11, 13, 1, D("#fff4cc", "#fff8d8")); P(18, 12, D("#fff1b0", "#fff6c8")); }
                 B(40, 25, 8, 9, D("#e0d9cd", "#8e8884")); leaf(44, 23, 0, -3, 4, D("#58a85a", "#2f5a3a")); leaf(44, 24, -2, -2, 3, D("#6fbf6a", "#38704a")); leaf(44, 24, 2, -2, 3, D("#6fbf6a", "#38704a"));
                 B(13, 23, 40, 14, D("#f4e8d6", "#a5979f")); B(11, 30, 44, 9, D("#f8ecdb", "#b0a2ab")); B(9, 26, 7, 14, D("#efe0cc", "#9a8c96")); B(52, 26, 6, 14, D("#efe0cc", "#9a8c96"));
                 B(8, 29, 8, 10, D("#d9d3cc", "#8a828e")); E(23, 28, 4, 4, D("#f3c8a4", "#c9a08a")); B(30, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(31 + i * 2, 25 + (i % 2) * 2, 32 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97")); B(40, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(41 + i * 2, 25 + (i % 2) * 2, 42 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97"));
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
-                E(17, 46, 4, 2, D("#f3ece0", "#b8aebc")); E(37, 48, 3, 1, D("#f3ece0", "#a8a0b0"));
-                B(60, 34, 15, 3, D("#f1e6d2", "#b9aa98")); B(62, 37, 2, 7, D("#e2d3b8", "#9a8c7c")); B(71, 37, 2, 7, D("#e2d3b8", "#9a8c7c"));
+                E(48, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(67, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
+                B(60, 36, 15, 3, D("#f1e6d2", "#b9aa98")); R(62, 39, 2, 3, D("#e2d3b8", "#b9aa98")); R(71, 39, 2, 3, D("#e2d3b8", "#b9aa98")); R(64, 34, 2, 2, D("#f6ead0", "#ffe2a0")); R(70, 34, 2, 2, D("#f6ead0", "#ffe2a0"));
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { R(64, 32, 2, 2, "#fff3c8"); R(70, 32, 2, 2, "#fff3c8"); P(64, 31, "#ffb040"); P(70, 31, "#ffb040"); P(64, 30, "#fff0a8"); P(70, 30, "#fff0a8"); sp(64, 30, "#ffd98a"); sp(70, 30, "#ffd98a"); 
+                if (night) { R(64, 34, 2, 2, "#fff3c8"); R(70, 34, 2, 2, "#fff3c8"); P(64, 33, "#ffb040"); P(70, 33, "#ffb040"); P(64, 32, "#fff0a8"); P(70, 32, "#fff0a8"); sp(64, 32, "#ffd98a"); sp(70, 32, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
-                                        for (let k = 6; k >= 1; k--) gE(17, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
-                    for (let y = 11; y < 46; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(17 - half), y, Math.round(half * 2), 1); }
-                    gE(65, 31, 4, 4, "rgba(255,190,90,.1)"); gE(71, 31, 4, 4, "rgba(255,190,90,.1)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
+                                        for (let k = 6; k >= 1; k--) gE(18, 12, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
+                    for (let y = 11; y < 46; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(18 - half), y, Math.round(half * 2), 1); }
+                    gE(65, 33, 4, 4, "rgba(255,190,90,.1)"); gE(71, 33, 4, 4, "rgba(255,190,90,.1)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -4596,8 +4593,8 @@
         function openCardModal() { toggleSidebar(false); switchCardTab(activeCardTab); openModalBox("cardLargeModal"); }
 
         // ✉️ 全屏日记核心驱动
-        function openChatSearch() { const pg = document.getElementById("chatSearchPage"); pg.classList.add("open"); const i = document.getElementById("chatSearchInput"); i.value = ""; runChatSearch(); setTimeout(() => i.focus(), 340); }
-        function closeChatSearch() { document.getElementById("chatSearchPage").classList.remove("open"); }
+        function openChatSearch() { openModalBox("chatSearchModal"); const i = document.getElementById("chatSearchInput"); i.value = ""; runChatSearch(); setTimeout(() => i.focus(), 300); }
+        function closeChatSearch() { closeModal("chatSearchModal"); }
         function runChatSearch() {
             const kw = document.getElementById("chatSearchInput").value.trim().toLowerCase(), box = document.getElementById("chatSearchRes"), info = document.getElementById("chatSearchInfo");
             if (!kw) { box.innerHTML = ""; info.innerText = `共 ${db.chat.length} 条聊天记录，输入关键词开始搜索`; return; }
@@ -8926,7 +8923,7 @@ treaty:条约`
             const CM = "#ffe873", CH = "#c9b8f4", D = gameDiff, spd0 = { easy: 190, normal: 235, hard: 285 }[D] || 235, padBase = { easy: 92, normal: 80, hard: 68 }[D] || 80, hp0 = { easy: 2, normal: 2, hard: 3 }[D] || 2;
             const HPC = { 1: ["#7fd08a", "#5fb0e8", "#a98be8"], 2: "#e8845a", 3: "#e0405a" };
             const bricks = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { let hp = 1, iron = false; if (r < 2) hp = hp0; else if (r === 2 && (c === 0 || c === COLS - 1)) iron = true; else if (r === 3 && (c === 3 || c === 4) && D !== "easy") hp = 2;
-                bricks.push({ x: c * bw, y: top + r * (bh + 3), hp, iron, item: !iron && Math.random() < 0.16, base: HPC[1][r % 3] }); }
+                bricks.push({ x: c * bw, y: top + r * (bh + 3), hp, iron, item: !iron && Math.random() < 0.16, base: ["#f28b9b", "#f6b26b", "#f2d675", "#8fd3a5", "#7fc3ee", "#b79cf0"][r % 6] }); }
             const mk = (col, y, human) => ({ col, y, human, px: w / 2, padW: padBase, balls: [], lives: 3, score: 0, serve: true, serveAt: performance.now() + 900, wide: 0, pierce: 0, slow: 0 });
             const me = mk(CM, h - 24, true), him = mk(CH, h - 24, false), sides = [me, him], drops = [];
             const newBall = s => ({ x: s.px, y: s.y - 8, vx: 0, vy: 0 });
@@ -8968,15 +8965,12 @@ treaty:条约`
             }
             function draw() {
                 ctx.fillStyle = "#14162a"; ctx.fillRect(0, 0, w, h);
-                const rr = (x, y, w2, h2, r2) => { ctx.beginPath(); ctx.moveTo(x + r2, y); ctx.lineTo(x + w2 - r2, y); ctx.quadraticCurveTo(x + w2, y, x + w2, y + r2); ctx.lineTo(x + w2, y + h2 - r2); ctx.quadraticCurveTo(x + w2, y + h2, x + w2 - r2, y + h2); ctx.lineTo(x + r2, y + h2); ctx.quadraticCurveTo(x, y + h2, x, y + h2 - r2); ctx.lineTo(x, y + r2); ctx.quadraticCurveTo(x, y, x + r2, y); ctx.closePath(); };
-                bricks.forEach(b => { if (b.hp <= 0) return; const x = b.x + 1.5, y = b.y + 1, w2 = bw - 3, h2 = bh - 2, base = b.iron ? "#8a90a4" : b.hp >= 3 ? HPC[3] : b.hp === 2 ? HPC[2] : b.base;
-                    const g = ctx.createLinearGradient(0, y, 0, y + h2); g.addColorStop(0, b.iron ? "#c4c9d8" : "rgba(255,255,255,.55)"); g.addColorStop(0.45, base); g.addColorStop(1, b.iron ? "#5c6174" : "rgba(0,0,0,.35)");
-                    ctx.save(); ctx.shadowColor = "rgba(0,0,0,.45)"; ctx.shadowBlur = 3; ctx.shadowOffsetY = 1.5; rr(x, y, w2, h2, 4); ctx.fillStyle = base; ctx.fill(); ctx.restore();
-                    rr(x, y, w2, h2, 4); ctx.fillStyle = g; ctx.fill(); ctx.lineWidth = 1; ctx.strokeStyle = b.iron ? "#454a5c" : "rgba(0,0,0,.28)"; ctx.stroke();
-                    ctx.fillStyle = "rgba(255,255,255,.4)"; rr(x + 3, y + 2, w2 - 6, 2.5, 1.2); ctx.fill();
-                    if (b.iron) { ctx.fillStyle = "#e8ebf4"; [[x + 5, y + h2 / 2], [x + w2 - 5, y + h2 / 2]].forEach(q => { ctx.beginPath(); ctx.arc(q[0], q[1], 1.6, 0, 7); ctx.fill(); }); ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.beginPath(); ctx.moveTo(x + w2 * .3, y + h2 - 2); ctx.lineTo(x + w2 * .5, y + 2); ctx.stroke(); }
-                    else if (b.hp > 1) { ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + w2 * .5, y + 2); ctx.lineTo(x + w2 * .44, y + h2 / 2); ctx.lineTo(x + w2 * .56, y + h2 - 3); ctx.stroke(); }
-                    if (b.item) { ctx.save(); ctx.shadowColor = "#fff6a8"; ctx.shadowBlur = 6; ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText("★", b.x + bw / 2, b.y + 12.5); ctx.restore(); } });
+                bricks.forEach(b => { if (b.hp <= 0) return; const x = b.x + 1, y = b.y, w2 = bw - 2, h2 = bh;
+                    ctx.fillStyle = b.iron ? "#6b6f80" : b.base; ctx.fillRect(x, y, w2, h2);
+                    ctx.fillStyle = "rgba(255,255,255,.3)"; ctx.fillRect(x, y, w2, 3); ctx.fillStyle = "rgba(0,0,0,.16)"; ctx.fillRect(x, y + h2 - 2, w2, 2);
+                    if (b.iron) { ctx.fillStyle = "rgba(0,0,0,.3)"; for (let q = 6; q < w2 - 4; q += 9) ctx.fillRect(x + q, y + 4, 2, h2 - 8); }
+                    else if (b.hp > 1) { ctx.strokeStyle = "rgba(0,0,0,.38)"; ctx.lineWidth = 1.5; ctx.strokeRect(x + 3.5, y + 4.5, w2 - 7, h2 - 8); if (b.hp > 2) ctx.strokeRect(x + 6.5, y + 7.5, w2 - 13, h2 - 14); }
+                    if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText("?", b.x + bw / 2, b.y + 12); } });
                 sides.forEach(s => { if (s.lives <= 0) return; ctx.fillStyle = s.col; ctx.globalAlpha = s.human ? 1 : .85; ctx.fillRect(s.px - s.padW / 2, s.y, s.padW, 8); ctx.globalAlpha = 1; s.balls.forEach(b => { ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fillStyle = s.col; ctx.fill(); ctx.strokeStyle = s.col; ctx.lineWidth = 2; ctx.stroke(); }); });
                 drops.forEach(d => { const p = PT[d.t]; ctx.beginPath(); ctx.arc(d.x, d.y, 9, 0, 7); ctx.fillStyle = p[1]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = "#222"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText(p[0], d.x, d.y + 4); });
                 document.getElementById("gameScore").innerHTML = `<span style="color:#f3e8aa">你 ${me.score} ${"♥".repeat(me.lives)}</span>　　<span style="color:${CH}">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
@@ -8987,33 +8981,38 @@ treaty:条约`
             gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
         }
         function gamePacman() {
-            const body = document.getElementById("gameBody"), C = 13, R = 17, D = gameDiff, dpr = window.devicePixelRatio || 1;
-            const availH = window.innerHeight - body.getBoundingClientRect().top - 36 - 126, cs = Math.max(18, Math.floor(Math.min((body.clientWidth - 24) / C, availH / R, 34))), w = cs * C, h = cs * R;
+            const body = document.getElementById("gameBody"), C = 11, R = 15, D = gameDiff, dpr = window.devicePixelRatio || 1;
+            const availH = window.innerHeight - body.getBoundingClientRect().top - 36 - 126, cs = Math.max(18, Math.floor(Math.min((body.clientWidth - 24) / C, availH / R, 38))), w = cs * C, h = cs * R;
             body.innerHTML = `<div class="game-msg" id="gameScore" style="font-weight:700;font-size:17px;margin:2px 0 6px"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="pmPad" style="display:grid;grid-template-columns:repeat(3,86px);grid-template-rows:52px 52px;gap:6px;justify-content:center;margin:8px 0 2px"><button class="btn" id="pmStart" style="padding:0;font-size:16px">开始</button><button class="btn btn-outline" style="font-size:24px;padding:0" data-d="0">▲</button><span></span><button class="btn btn-outline" style="font-size:24px;padding:0" data-d="3">◀</button><button class="btn btn-outline" style="font-size:24px;padding:0" data-d="2">▼</button><button class="btn btn-outline" style="font-size:24px;padding:0" data-d="1">▶</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"); cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
             const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0], CM = "#ffe873", CH = "#c9b8f4";
             // ---- 迷宫：墙画在格子之间（细墙），每一格都是路；深度优先挖通 + 随机打通成环 + 补死胡同
+            const CX = 5, CY = 7, inCage = (x, y) => y === CY && x >= CX - 1 && x <= CX + 1;
             const wR = Array.from({ length: R }, () => new Array(C).fill(true)), wD = Array.from({ length: R }, () => new Array(C).fill(true));
             const can = (x, y, d) => d === 0 ? y > 0 && !wD[y - 1][x] : d === 1 ? x < C - 1 && !wR[y][x] : d === 2 ? y < R - 1 && !wD[y][x] : x > 0 && !wR[y][x - 1];
+            const canP = (x, y, d) => can(x, y, d) && !inCage(x + DX[d], y + DY[d]);
             const carve = (x, y, d) => { if (d === 0) wD[y - 1][x] = false; else if (d === 1) wR[y][x] = false; else if (d === 2) wD[y][x] = false; else wR[y][x - 1] = false; };
-            const inb = (x, y) => x >= 0 && y >= 0 && x < C && y < R, vis = Array.from({ length: R }, () => new Array(C).fill(false)), st = [[0, 0]]; vis[0][0] = true;
+            const inb = (x, y) => x >= 0 && y >= 0 && x < C && y < R, vis = Array.from({ length: R }, (_, y) => Array.from({ length: C }, (_, x) => inCage(x, y))), st = [[0, 0]]; vis[0][0] = true; carve(CX - 1, CY, 1); carve(CX, CY, 1);
             while (st.length) { const [x, y] = st[st.length - 1], nb = [0, 1, 2, 3].filter(d => inb(x + DX[d], y + DY[d]) && !vis[y + DY[d]][x + DX[d]]); if (!nb.length) { st.pop(); continue; } const d = nb[Math.floor(Math.random() * nb.length)]; carve(x, y, d); vis[y + DY[d]][x + DX[d]] = true; st.push([x + DX[d], y + DY[d]]); }
-            for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { if (x < C - 1 && wR[y][x] && Math.random() < 0.3) wR[y][x] = false; if (y < R - 1 && wD[y][x] && Math.random() < 0.3) wD[y][x] = false; }
-            for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { const open = [0, 1, 2, 3].filter(d => can(x, y, d)); if (open.length <= 1) { const cl = [0, 1, 2, 3].filter(d => inb(x + DX[d], y + DY[d]) && !can(x, y, d)); if (cl.length) carve(x, y, cl[Math.floor(Math.random() * cl.length)]); } }
-            const dots = Array.from({ length: R }, () => new Array(C).fill(1)); let left = 0;
-            const mkP = (col, sx, sy, human) => ({ col, sx, sy, human, gx: sx, gy: sy, tx: sx, ty: sy, p: 1, dir: null, face: 1, want: null, score: 0, lives: 3, inv: 0, boost: 0, pause: 0 });
+            for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { if (x < C - 1 && wR[y][x] && !inCage(x, y) && !inCage(x + 1, y) && Math.random() < 0.26) wR[y][x] = false; if (y < R - 1 && wD[y][x] && !inCage(x, y) && !inCage(x, y + 1) && Math.random() < 0.26) wD[y][x] = false; }
+            for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { if (inCage(x, y)) continue; const open = [0, 1, 2, 3].filter(d => can(x, y, d)); if (open.length <= 1) { const cl = [0, 1, 2, 3].filter(d => inb(x + DX[d], y + DY[d]) && !inCage(x + DX[d], y + DY[d]) && !can(x, y, d)); if (cl.length) carve(x, y, cl[Math.floor(Math.random() * cl.length)]); } }
+            carve(CX, CY, 0);
+            const dots = Array.from({ length: R }, () => new Array(C).fill(1)); let left = 0; for (let x = CX - 1; x <= CX + 1; x++) dots[CY][x] = 0; dots[CY - 1][CX] = 0;
+            const mkP = (col, sx, sy, human) => ({ col, sx, sy, human, gx: sx, gy: sy, tx: sx, ty: sy, p: 1, dir: null, face: 1, want: null, score: 0, lives: 3, inv: 0, boost: 0, pause: 0, at: false });
             const me = mkP(CM, 0, R - 1, true), him = mkP(CH, C - 1, R - 1, false), pacs = [me, him];
-            const homes = [[5, 8], [7, 8], [6, 7], [6, 9]], GC = ["#ff5a5a", "#ffa0d0", "#5fe0f0", "#ffb04a"];
-            const ghosts = homes.map((hm, i) => ({ col: GC[i], hx: hm[0], hy: hm[1], gx: hm[0], gy: hm[1], tx: hm[0], ty: hm[1], p: 1, dir: null, eaten: 0, i }));
-            pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); [[0, 0], [C - 1, 0], [1, 8], [C - 2, 8]].forEach(([x, y]) => dots[y][x] = 2);
+            const homes = [[CX - 1, CY], [CX, CY], [CX + 1, CY], [CX, CY - 1]], GC = ["#ff5a5a", "#ffa0d0", "#5fe0f0", "#ffb04a"];
+            const ghosts = homes.map((hm, i) => ({ col: GC[i], hx: hm[0], hy: hm[1], gx: hm[0], gy: hm[1], tx: hm[0], ty: hm[1], p: 1, dir: null, eaten: 0, i, caged: i < 3, rel: 2.5 * (i + 1), at: false }));
+            pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); [[0, 0], [C - 1, 0], [0, CY], [C - 1, CY]].forEach(([x, y]) => dots[y][x] = 2);
             for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (dots[y][x]) left++;
             const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 0, started = false, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
-            const pacSp = 6, effSp = 4.7, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
+            const pacSp = 6, effSp = 4.6, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
             const IT = { cherry: ["🍒", 100], speed: ["⚡", 0], ice: ["❄️", 0] };
             // ---- 预渲染墙
-            const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#10132a"; c2.fillRect(0, 0, w, h); c2.lineCap = "round";
-                const seg = (a, b, c, d) => { c2.moveTo(a * cs, b * cs); c2.lineTo(c * cs, d * cs); }, draw2 = (col, lw) => { c2.strokeStyle = col; c2.lineWidth = lw; c2.beginPath(); seg(0, 0, C, 0); seg(C, 0, C, R); seg(C, R, 0, R); seg(0, R, 0, 0); for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { if (x < C - 1 && wR[y][x]) seg(x + 1, y, x + 1, y + 1); if (y < R - 1 && wD[y][x]) seg(x, y + 1, x + 1, y + 1); } c2.stroke(); };
-                draw2("rgba(70,90,230,.35)", 6); draw2("#7b8cff", 2.4); }
+            const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#10132a"; c2.fillRect(0, 0, w, h); c2.lineCap = "round"; c2.lineJoin = "round";
+                const seg = (a, b, c, d) => { c2.moveTo(a * cs, b * cs); c2.lineTo(c * cs, d * cs); }, inner = (col, lw) => { c2.strokeStyle = col; c2.lineWidth = lw; c2.beginPath(); for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { if (x < C - 1 && wR[y][x]) seg(x + 1, y, x + 1, y + 1); if (y < R - 1 && wD[y][x]) seg(x, y + 1, x + 1, y + 1); } c2.stroke(); };
+                inner("#5468f0", Math.max(6, cs * 0.2)); inner("#10132a", Math.max(2.4, cs * 0.2 - 4));
+                c2.strokeStyle = "#5468f0"; c2.lineWidth = 9; c2.strokeRect(4.5, 4.5, w - 9, h - 9);
+                c2.strokeStyle = "#ffa0d0"; c2.lineWidth = 3; c2.beginPath(); seg(CX + 0.12, CY, CX + 0.88, CY); c2.stroke(); }
             // ---- 输入
             const setWant = d => { if (!over) me.want = d; };
             document.querySelectorAll("#pmPad button[data-d]").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); setWant(+b.dataset.d); }));
@@ -9027,33 +9026,41 @@ treaty:条约`
             function advance(e, sp, dt, choose, arrive) {
                 let rem = sp * dt;
                 while (rem > 0) {
-                    if (e.p >= 1) { e.gx = e.tx; e.gy = e.ty; arrive && arrive(e); if (e.pause > 0) return; const d = choose(e); if (d == null) { e.dir = null; e.p = 1; return; } e.dir = d; e.face = d; e.tx = e.gx + DX[d]; e.ty = e.gy + DY[d]; e.p = 0; }
+                    if (e.p >= 1) { if (!e.at) { e.gx = e.tx; e.gy = e.ty; e.at = true; arrive && arrive(e); if (e.pause > 0) return; } const d = choose(e); if (d == null) { e.dir = null; e.p = 1; return; } e.at = false; e.dir = d; e.face = d; e.tx = e.gx + DX[d]; e.ty = e.gy + DY[d]; e.p = 0; }
                     const s2 = Math.min(rem, 1 - e.p); e.p += s2; rem -= s2;
                 }
             }
             const pos = e => [e.gx + (e.tx - e.gx) * e.p, e.gy + (e.ty - e.gy) * e.p];
-            const flipIf = e => { if (e.human && e.want != null && e.dir != null && e.p > 0 && e.p < 0.3 && (e.want === (e.dir + 1) % 4 || e.want === (e.dir + 3) % 4) && can(e.gx, e.gy, e.want)) { e.p = 0; e.tx = e.gx + DX[e.want]; e.ty = e.gy + DY[e.want]; e.dir = e.want; e.face = e.want; return; } if (e.want != null && e.dir != null && e.p < 1 && e.want === (e.dir + 2) % 4) { [e.gx, e.tx] = [e.tx, e.gx]; [e.gy, e.ty] = [e.ty, e.gy]; e.p = 1 - e.p; e.dir = e.want; e.face = e.want; } };
+            const flipIf = e => { if (e.human && e.want != null && e.dir != null && e.p > 0 && e.p < 0.3 && (e.want === (e.dir + 1) % 4 || e.want === (e.dir + 3) % 4) && canP(e.gx, e.gy, e.want)) { e.p = 0; e.tx = e.gx + DX[e.want]; e.ty = e.gy + DY[e.want]; e.dir = e.want; e.face = e.want; return; } if (e.want != null && e.dir != null && e.p < 1 && e.want === (e.dir + 2) % 4) { [e.gx, e.tx] = [e.tx, e.gx]; [e.gy, e.ty] = [e.ty, e.gy]; e.p = 1 - e.p; e.dir = e.want; e.face = e.want; } };
             function bfsPick(e) {
                 const danger = []; ghosts.forEach(q => { if (q.eaten <= 0 && fr <= 0) { const [x, y] = pos(q); danger.push([Math.round(x), Math.round(y)]); } });
                 const bad = (x, y) => e.inv <= 0 && danger.some(q => Math.abs(q[0] - x) + Math.abs(q[1] - y) <= 2);
                 const prev = new Map(), q = [[e.gx, e.gy]]; prev.set(e.gx + "," + e.gy, null); const order = [0, 1, 2, 3].sort(() => Math.random() - 0.5);
                 const tgt = (x, y) => dots[y][x] > 0 || items.some(t => t.x === x && t.y === y) || (fr > 1.5 && ghosts.some(gg => gg.eaten <= 0 && Math.round(pos(gg)[0]) === x && Math.round(pos(gg)[1]) === y));
                 for (let qi = 0; qi < q.length; qi++) { const [x, y] = q[qi]; if ((x !== e.gx || y !== e.gy) && tgt(x, y)) { let k = x + "," + y, p0 = prev.get(k); while (p0 && prev.get(p0.join(","))) { k = p0.join(","); p0 = prev.get(k); } const [kx, ky] = k.split(",").map(Number); return [0, 1, 2, 3].find(d => e.gx + DX[d] === kx && e.gy + DY[d] === ky); }
-                    for (const d of order) { if (!can(x, y, d)) continue; const nx = x + DX[d], ny = y + DY[d], kk = nx + "," + ny; if (!prev.has(kk) && !bad(nx, ny)) { prev.set(kk, [x, y]); q.push([nx, ny]); } } }
+                    for (const d of order) { if (!canP(x, y, d)) continue; const nx = x + DX[d], ny = y + DY[d], kk = nx + "," + ny; if (!prev.has(kk) && !bad(nx, ny)) { prev.set(kk, [x, y]); q.push([nx, ny]); } } }
                 return null;
             }
-            const optsOf = (e, noRev) => [0, 1, 2, 3].filter(d => can(e.gx, e.gy, d) && !(noRev && e.dir != null && d === (e.dir + 2) % 4));
+            const optsOf = (e, noRev) => [0, 1, 2, 3].filter(d => (e.caged ? can : canP)(e.gx, e.gy, d) && !(noRev && e.dir != null && d === (e.dir + 2) % 4));
             function chooseP(e) {
                 if (!e.human && e.lives > 0) { const opts = optsOf(e, false); if (Math.random() < aiErr && opts.length) e.want = opts[Math.floor(Math.random() * opts.length)]; else { const d = bfsPick(e); e.want = d != null ? d : (opts.length ? opts[Math.floor(Math.random() * opts.length)] : null); } }
-                if (e.want != null && can(e.gx, e.gy, e.want)) return e.want;
-                if (e.dir != null && can(e.gx, e.gy, e.dir)) return e.dir; return null;
+                if (e.want != null && canP(e.gx, e.gy, e.want)) return e.want;
+                if (e.dir != null && canP(e.gx, e.gy, e.dir)) return e.dir; return null;
             }
             function arriveP(e) {
-                if (dots[e.gy][e.gx] === 1) { dots[e.gy][e.gx] = 0; e.score += 10; left--; e.pause = 0.045; } else if (dots[e.gy][e.gx] === 2) { dots[e.gy][e.gx] = 0; e.score += 50; left--; fr = 7; e.pause = 0.045; gameSfx(e.human ? "tap" : "his"); }
+                e.pause = 0.05;
+                if (dots[e.gy][e.gx] === 1) { dots[e.gy][e.gx] = 0; e.score += 10; left--; } else if (dots[e.gy][e.gx] === 2) { dots[e.gy][e.gx] = 0; e.score += 50; left--; fr = 7; gameSfx(e.human ? "tap" : "his"); }
                 const k = items.findIndex(t => t.x === e.gx && t.y === e.gy); if (k >= 0) { const t = items.splice(k, 1)[0]; if (t.t === "cherry") e.score += 100; else if (t.t === "speed") e.boost = 6; else freeze = 4; if (e.human) gameSfx("match"); }
             }
+            function bfsTo(e, tx, ty) {
+                const prev = new Map(), q = [[e.gx, e.gy]]; prev.set(e.gx + "," + e.gy, null);
+                for (let qi = 0; qi < q.length; qi++) { const [x, y] = q[qi]; if (x === tx && y === ty) { let k = x + "," + y, p0 = prev.get(k); while (p0 && prev.get(p0.join(","))) { k = p0.join(","); p0 = prev.get(k); } const [kx, ky] = k.split(",").map(Number); return [0, 1, 2, 3].find(d => e.gx + DX[d] === kx && e.gy + DY[d] === ky); } for (let d = 0; d < 4; d++) { if (!can(x, y, d)) continue; const kk = (x + DX[d]) + "," + (y + DY[d]); if (!prev.has(kk)) { prev.set(kk, [x, y]); q.push([x + DX[d], y + DY[d]]); } } }
+                return null;
+            }
             function chooseG(e) {
-                if (freeze > 0) return null; let opts = optsOf(e, true); if (!opts.length) opts = optsOf(e, false); if (!opts.length) return null;
+                if (freeze > 0) return null;
+                if (e.caged) { if (e.rel > 0) return null; if (e.gx === CX && e.gy === CY - 1) e.caged = false; else { const d0 = bfsTo(e, CX, CY - 1); return d0 == null ? null : d0; } }
+                let opts = optsOf(e, true); if (!opts.length) opts = optsOf(e, false); if (!opts.length) return null;
                 const tg = pacs.filter(q => q.lives > 0); if (!tg.length) return opts[0];
                 const near = tg.slice().sort((a, b) => Math.abs(a.gx - e.gx) + Math.abs(a.gy - e.gy) - Math.abs(b.gx - e.gx) - Math.abs(b.gy - e.gy)); const t = e.i % 2 ? near[near.length - 1] : near[0], dist = d => Math.abs(e.gx + DX[d] - t.gx) + Math.abs(e.gy + DY[d] - t.gy);
                 if (fr > 0) return opts.sort((a, b) => dist(b) - dist(a))[Math.random() < 0.8 ? 0 : opts.length - 1];
@@ -9063,11 +9070,11 @@ treaty:条约`
             function step(dt) {
                 if (!started) return; clock += dt; if (ready > 0) { ready -= dt; return; }
                 fr = Math.max(0, fr - dt); freeze = Math.max(0, freeze - dt); itemT -= dt;
-                if (itemT <= 0) { itemT = 7 + Math.random() * 4; if (items.length < 2) { const x = Math.floor(Math.random() * C), y = Math.floor(Math.random() * R); if (!items.some(t => t.x === x && t.y === y)) items.push({ x, y, t: ["cherry", "speed", "ice"][Math.floor(Math.random() * 3)], ttl: 12 }); } }
+                if (itemT <= 0) { itemT = 7 + Math.random() * 4; if (items.length < 2) { const x = Math.floor(Math.random() * C), y = Math.floor(Math.random() * R); if (!inCage(x, y) && !items.some(t => t.x === x && t.y === y)) items.push({ x, y, t: ["cherry", "speed", "ice"][Math.floor(Math.random() * 3)], ttl: 12 }); } }
                 for (let i = items.length - 1; i >= 0; i--) { items[i].ttl -= dt; if (items[i].ttl <= 0) items.splice(i, 1); }
                 pacs.forEach(q => { if (q.lives <= 0) return; q.inv = Math.max(0, q.inv - dt); q.boost = Math.max(0, q.boost - dt); if (q.pause > 0) { q.pause -= dt; return; } flipIf(q); advance(q, pacSp * (q.boost > 0 ? 1.35 : 1) * (q.human ? 1 : { easy: 0.8, normal: 0.92, hard: 1 }[D]), dt, chooseP, arriveP); });
-                ghosts.forEach(q => { if (q.eaten > 0) { q.eaten -= dt; if (q.eaten <= 0) { q.gx = q.tx = q.hx; q.gy = q.ty = q.hy; q.p = 1; q.dir = null; } return; } advance(q, freeze > 0 ? 0 : gSp * (fr > 0 ? 0.62 : 1), dt, chooseG); });
-                pacs.forEach(q => { if (q.lives <= 0) return; const [px, py] = pos(q); ghosts.forEach(gh => { if (gh.eaten > 0) return; const [x, y] = pos(gh); if (Math.hypot(px - x, py - y) < 0.6) { if (fr > 0) { q.score += 200; gh.eaten = 3; gh.gx = gh.tx = gh.hx; gh.gy = gh.ty = gh.hy; gh.p = 1; if (q.human) gameSfx("match"); } else if (q.inv <= 0) { q.lives--; q.score = Math.max(0, q.score - 30); q.inv = 2.5; respawn(q); } } }); });
+                ghosts.forEach(q => { if (q.eaten > 0) { q.eaten -= dt; if (q.eaten <= 0) { q.gx = q.tx = CX; q.gy = q.ty = CY; q.p = 1; q.dir = null; q.caged = true; q.rel = 0.4; q.at = false; } return; } if (q.caged && q.rel > 0) q.rel -= dt; advance(q, freeze > 0 ? 0 : gSp * (fr > 0 ? 0.62 : 1), dt, chooseG); });
+                pacs.forEach(q => { if (q.lives <= 0) return; const [px, py] = pos(q); ghosts.forEach(gh => { if (gh.eaten > 0) return; const [x, y] = pos(gh); if (Math.hypot(px - x, py - y) < 0.6) { if (fr > 0) { q.score += 200; gh.eaten = 3; gh.gx = gh.tx = CX; gh.gy = gh.ty = CY; gh.p = 1; gh.at = false; if (q.human) gameSfx("match"); } else if (q.inv <= 0) { q.lives--; q.score = Math.max(0, q.score - 30); q.inv = 2.5; respawn(q); } } }); });
                 if (left <= 0 || pacs.every(q => q.lives <= 0)) finish();
             }
             function finish() { if (over) return; over = true; cancelAnimationFrame(raf); draw(); const a = me.score, b2 = him.score; if (a > b2) { gameResultBar(`你赢了 🎉 ${a} : ${b2}`); gameStat("pacman", "w"); } else if (a < b2) { gameResultBar(`${hisName()}赢了 ${a} : ${b2}`); gameStat("pacman", "l"); } else { gameResultBar(`平局 ${a} : ${b2}`); gameStat("pacman", "d"); } document.getElementById("gameEnd").innerHTML = gameEndButtons(); }
@@ -9075,7 +9082,7 @@ treaty:条约`
                 ctx.drawImage(wc, 0, 0, w, h); const r = cs * 0.36;
                 for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { const v = dots[y][x]; if (!v) continue; ctx.fillStyle = v === 2 ? "#fff" : "#ffe9c0"; ctx.beginPath(); ctx.arc((x + 0.5) * cs, (y + 0.5) * cs, v === 2 ? cs * 0.22 * (0.85 + 0.15 * Math.sin(clock * 8)) : cs * 0.075, 0, 7); ctx.fill(); }
                 ctx.font = Math.round(cs * 0.7) + "px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; items.forEach(t => { if (t.ttl < 3 && Math.floor(clock * 6) % 2) return; ctx.fillText(IT[t.t][0], (t.x + 0.5) * cs, (t.y + 0.55) * cs); });
-                pacs.forEach(q => { if (q.lives <= 0) return; if (q.inv > 0 && Math.floor(clock * 10) % 2) return; const [x, y] = pos(q), cx = (x + 0.5) * cs, cy = (y + 0.5) * cs, ang = [-1.5708, 0, 1.5708, 3.1416][q.face], m = q.dir == null ? 0.12 : 0.08 + 0.3 * Math.abs(Math.sin(clock * 12));
+                pacs.forEach(q => { if (q.lives <= 0) return; if (q.inv > 0 && Math.floor(clock * 10) % 2) return; const [x, y] = pos(q), cx = (x + 0.5) * cs, cy = (y + 0.5) * cs, ang = [-1.5708, 0, 1.5708, 3.1416][q.face], m = q.dir == null ? 0.1 : 0.05 + 0.34 * Math.abs(Math.sin(q.p * 3.1416));
                     ctx.fillStyle = q.col; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r + 1, ang + m, ang + 6.283 - m); ctx.closePath(); ctx.fill(); if (q.boost > 0) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, r + 3, 0, 7); ctx.stroke(); } });
                 ghosts.forEach(q => { if (q.eaten > 0) return; const [x, y] = pos(q), cx = (x + 0.5) * cs, cy = (y + 0.5) * cs; let col = q.col; if (freeze > 0) col = "#9be0ff"; else if (fr > 0) col = fr < 2 && Math.floor(clock * 6) % 2 ? "#fff" : "#3c4bd6";
                     ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy - 1, r, 3.1416, 0); ctx.lineTo(cx + r, cy + r); for (let k = 0; k < 3; k++) { ctx.lineTo(cx + r - (k + 0.5) * (2 * r / 3), cy + r - 3); ctx.lineTo(cx + r - (k + 1) * (2 * r / 3), cy + r); } ctx.closePath(); ctx.fill();
