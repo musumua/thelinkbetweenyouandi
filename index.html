@@ -1413,7 +1413,7 @@
                     <div class="flex-row-between"><span>表情包概率</span><div><input id="cfg_emoji_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>自由造句概率</span><div><input id="cfg_free_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>主动通话概率</span><div><input id="cfg_call_pct" type="number"> %</div></div>
-                    <div class="flex-row-between"><span>他挂断我的通话概率</span><div><input id="cfg_hangup_pct" type="number"> %</div></div>
+                    <div class="flex-row-between"><span>他挂断通话概率</span><div><input id="cfg_hangup_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>已读不回概率</span><div><input id="cfg_rnr_pct" type="number"> %</div></div>
                 </div>
                 <button class="btn" style="width:100%; margin-top:14px;" onclick="saveFrequencies()">保存配置</button>
@@ -2269,32 +2269,36 @@
                 B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
                 c.restore();
                 { const LP = D("#7d8494", "#cfd2e2"), SH1 = D("#f7f4ee", "#f3e2b8"), SH2 = D("#e2ddd2", "#e6cf98"), CAP = D("#d9a066", "#d9a066");
-                  R(5, 12, 1, 30, LP); L(5, 12, 7, 10, LP); L(7, 10, 17, 6, LP); R(3, 41, 5, 1, LP); R(2, 42, 7, 1, LP); P(17, 5, LP);
+                  R(4, 12, 3, 30, PX_OUT); L(5, 11, 7, 9, PX_OUT); L(5, 13, 7, 11, PX_OUT); L(7, 9, 17, 5, PX_OUT); L(7, 11, 17, 7, PX_OUT); R(2, 40, 8, 3, PX_OUT); R(16, 3, 4, 2, PX_OUT);
+                  for (let y = 0; y < 5; y++) { const half = 1 + y * 0.8, x0 = Math.round(18 - half), x1 = Math.round(18 + half); R(x0 - 1, 5 + y, 1, 1, PX_OUT); R(x1 + 1, 5 + y, 1, 1, PX_OUT); }
+                  R(13, 10, 11, 2, PX_OUT);
+                  R(5, 12, 1, 30, LP); L(5, 12, 7, 10, LP); L(7, 10, 17, 6, LP); R(3, 41, 6, 1, LP); P(17, 5, LP);
                   R(17, 4, 2, 1, CAP);
                   for (let y = 0; y < 5; y++) { const half = 1 + y * 0.8, x0 = Math.round(18 - half), x1 = Math.round(18 + half); R(x0, 5 + y, x1 - x0 + 1, 1, y < 3 ? SH1 : SH2); }
-                  R(14, 10, 9, 1, D("#fff4cc", "#fff8d8")); P(18, 11, D("#fff1b0", "#fff6c8")); }
+                  R(14, 10, 9, 1, D("#fff4cc", "#fff8d8")); }
                 B(40, 25, 8, 9, D("#e0d9cd", "#8e8884")); leaf(44, 23, 0, -3, 4, D("#58a85a", "#2f5a3a")); leaf(44, 24, -2, -2, 3, D("#6fbf6a", "#38704a")); leaf(44, 24, 2, -2, 3, D("#6fbf6a", "#38704a"));
                 B(13, 23, 40, 14, D("#f4e8d6", "#a5979f")); B(11, 30, 44, 9, D("#f8ecdb", "#b0a2ab")); B(9, 26, 7, 14, D("#efe0cc", "#9a8c96")); B(52, 26, 6, 14, D("#efe0cc", "#9a8c96"));
                 B(8, 29, 8, 10, D("#d9d3cc", "#8a828e")); E(23, 28, 4, 4, D("#f3c8a4", "#c9a08a")); B(30, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(31 + i * 2, 25 + (i % 2) * 2, 32 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97")); B(40, 24, 8, 8, D("#ece6dc", "#b9aeb3")); for (let i = 0; i < 4; i++) L(41 + i * 2, 25 + (i % 2) * 2, 42 + i * 2, 27 + (i % 2) * 2, D("#c4bcae", "#9a8f97"));
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
                 E(21, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(43, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
-                { const TP = D("#d9ac66", "#a98a58"), BD = D("#b8864a", "#86693f"), OL = D("#f3dca8", "#d6bd8a"), LG = D("#a8773c", "#7a5f38"), PAP = D("#f6f1e6", "#d8d0c0");
-                  // 圆形小茶几：浅木色圆桌面 + 一条中间的粗腿 + 底座
-                  R(67, 34, 3, 7, LG); R(64, 41, 9, 1, LG); R(65, 40, 7, 1, BD);
-                  R(62, 30, 12, 1, OL); R(60, 31, 16, 1, TP); P(60, 31, OL); P(75, 31, OL); R(59, 32, 18, 1, TP); P(59, 32, OL); P(76, 32, OL); R(60, 33, 16, 1, BD); R(62, 34, 12, 1, OL);
-                  R(72, 28, 4, 1, D("#6fa0c9", "#4f7099")); R(72, 29, 4, 1, PAP);
+                { const OLN = D("#8f6a3e", PX_OUT), TP = D("#e0b878", "#8a6a48"), TPH = D("#efd29c", "#a98a60"), BD = D("#c49454", "#6e5238"), LG = D("#cfa468", "#7a5a3e");
+                  // 圆形小茶几：和家具一样的描边，木色桌面 + 一条中柱 + 底座
+                  R(65, 34, 5, 7, OLN); R(66, 34, 3, 6, LG); R(62, 40, 11, 3, OLN); R(63, 41, 9, 1, BD); R(66, 40, 3, 1, LG);
+                  R(61, 30, 14, 1, OLN); R(59, 31, 18, 1, OLN); R(59, 32, 18, 2, OLN); R(61, 34, 14, 1, OLN);
+                  R(60, 31, 16, 1, TPH); R(60, 32, 16, 1, TP); R(60, 33, 16, 1, BD);
+                  R(72, 27, 4, 3, PX_OUT); R(73, 28, 2, 1, D("#6fa0c9", "#4f7099")); R(73, 29, 2, 1, D("#f6f1e6", "#d8d0c0"));
                   // 香薰蜡烛：玻璃罐 + 罐盖 + 灯芯
-                  R(63, 27, 5, 3, D("#e9d8c0", "#c9b8a0")); R(63, 27, 5, 1, D("#8a6a4e", "#6a5040")); R(64, 28, 3, 1, D("#fff3e0", "#f6e0b8")); P(65, 26, "#4a3a30"); }
+                  R(62, 26, 6, 4, PX_OUT); R(63, 27, 4, 1, D("#8a6a4e", "#6a5040")); R(63, 28, 4, 2, D("#fff3e0", "#f6e0b8")); P(64, 25, "#4a3a30"); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { P(65, 26, "#ffb040"); P(65, 25, "#fff0a8"); sp(65, 25, "#ffd98a"); 
+                if (night) { P(64, 24, "#ffb040"); P(64, 23, "#fff0a8"); sp(64, 23, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
                                         for (let k = 6; k >= 1; k--) gE(18, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
                     for (let y = 11; y < 41; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(18 - half), y, Math.round(half * 2), 1); }
-                    gE(65, 27, 5, 4, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
+                    gE(65, 27, 6, 4, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -3785,6 +3789,8 @@
                     if (hisDecline) { playSound('hangup'); document.getElementById("callBannerBar").style.display = "none"; callTip("他已挂断"); return; }
                     playSound('connect');
                     startCallTimer();
+                    const t0 = callStartTimestamp, hp = db.freq && db.freq.hangupPct !== undefined ? db.freq.hangupPct : 15;
+                    if (Math.random() * 100 < hp * 0.5) setTimeout(() => { if (callStartTimestamp === t0 && t0) { hangupCall(); callTip("他已挂断"); } }, 20000 + Math.random() * 100000);
                 }
             }, 1500 + Math.random() * 1500);
         }
@@ -9038,20 +9044,22 @@ treaty:条约`
             pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); [[1, 1], [C - 2, 1], [1, CY], [C - 2, CY]].forEach(([x, y]) => dots[y][x] = 2);
             for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (dots[y][x]) left++;
             const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 0, started = false, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
-            const pacSp = 5.4, effSp = 4.2, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
+            const pacSp = 6.6, effSp = 5.2, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
             const IT = { cherry: ["🍒", 100], speed: ["⚡", 0], ice: ["❄️", 0] };
-            // ---- 预渲染墙：整格实心圆角墙（没有豆的地方一眼就是墙），外圈加粗
-            const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#10132a"; c2.fillRect(0, 0, w, h); c2.lineCap = "round"; c2.lineJoin = "round";
-                const WCOL = "#3f4fd6", isW = (x, y) => x < 0 || y < 0 || x >= C || y >= R || !path[y][x], m = cs * 0.08, rad = cs * 0.34;
-                c2.fillStyle = WCOL;
-                for (let y = 1; y < R - 1; y++) for (let x = 1; x < C - 1; x++) { if (!isW(x, y)) continue;
-                    c2.beginPath(); c2.roundRect(x * cs + m, y * cs + m, cs - 2 * m, cs - 2 * m, rad); c2.fill();
-                    if (isW(x + 1, y)) c2.fillRect(x * cs + cs / 2, y * cs + m, cs, cs - 2 * m);
-                    if (isW(x, y + 1)) c2.fillRect(x * cs + m, y * cs + cs / 2, cs - 2 * m, cs);
-                    if (isW(x + 1, y) && isW(x, y + 1) && isW(x + 1, y + 1)) c2.fillRect(x * cs + cs / 2, y * cs + cs / 2, cs, cs);
-                    if (isW(x - 1, y) && x - 1 === 0) c2.fillRect(x * cs - cs / 2, y * cs + m, cs, cs - 2 * m);
-                    if (isW(x, y - 1) && y - 1 === 0) c2.fillRect(x * cs + m, y * cs - cs / 2, cs - 2 * m, cs); }
-                c2.strokeStyle = WCOL; c2.lineWidth = cs * 0.56; c2.beginPath(); c2.roundRect(cs / 2, cs / 2, w - cs, h - cs, cs * 0.4); c2.stroke();
+            // ---- 预渲染墙：深蓝实心圆角墙 + 亮蓝细描边（先画描边层，再盖上填充层），外圈加粗
+            const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#0d1024"; c2.fillRect(0, 0, w, h); c2.lineCap = "round"; c2.lineJoin = "round";
+                const isW = (x, y) => x < 0 || y < 0 || x >= C || y >= R || !path[y][x], m0 = cs * 0.14, ol = Math.max(2, cs * 0.09), rad = cs * 0.3;
+                const shapes = (m, col) => { c2.fillStyle = col;
+                    for (let y = 1; y < R - 1; y++) for (let x = 1; x < C - 1; x++) { if (!isW(x, y)) continue;
+                        c2.beginPath(); c2.roundRect(x * cs + m, y * cs + m, cs - 2 * m, cs - 2 * m, Math.max(1, rad - (m0 - m) * 0 )); c2.fill();
+                        if (isW(x + 1, y)) c2.fillRect(x * cs + cs / 2, y * cs + m, cs, cs - 2 * m);
+                        if (isW(x, y + 1)) c2.fillRect(x * cs + m, y * cs + cs / 2, cs - 2 * m, cs);
+                        if (x - 1 === 0) c2.fillRect(x * cs - cs / 2, y * cs + m, cs, cs - 2 * m);
+                        if (y - 1 === 0) c2.fillRect(x * cs + m, y * cs - cs / 2, cs - 2 * m, cs);
+                        if (isW(x + 1, y) && isW(x, y + 1) && isW(x + 1, y + 1)) c2.fillRect(x * cs + cs / 2, y * cs + cs / 2, cs, cs); } };
+                const ring = (lw, col) => { c2.strokeStyle = col; c2.lineWidth = lw; c2.beginPath(); c2.roundRect(cs / 2, cs / 2, w - cs, h - cs, cs * 0.4); c2.stroke(); };
+                shapes(m0 - ol, "#6f86ff"); ring(cs * 0.56 + ol * 2, "#6f86ff");
+                shapes(m0, "#1b2570"); ring(cs * 0.56, "#1b2570");
                 c2.strokeStyle = "#ffa0d0"; c2.lineWidth = 3; c2.beginPath(); c2.moveTo((CX + 0.1) * cs, CY * cs); c2.lineTo((CX + 0.9) * cs, CY * cs); c2.stroke(); }
             // ---- 输入
             const setWant = d => { if (!over) me.want = d; };
@@ -9088,7 +9096,7 @@ treaty:条约`
                 if (e.dir != null && canP(e.gx, e.gy, e.dir)) return e.dir; return null;
             }
             function arriveP(e) {
-                e.pause = 0.045;
+                e.pause = 0.04;
                 if (dots[e.gy][e.gx] === 1) { dots[e.gy][e.gx] = 0; e.score += 10; left--; if (e.human) gameSfx("waka"); } else if (dots[e.gy][e.gx] === 2) { dots[e.gy][e.gx] = 0; e.score += 50; left--; fr = 7; gameSfx("power"); }
                 const k = items.findIndex(t => t.x === e.gx && t.y === e.gy); if (k >= 0) { const t = items.splice(k, 1)[0]; if (t.t === "cherry") e.score += 100; else if (t.t === "speed") e.boost = 6; else freeze = 4; if (e.human) gameSfx("pitem"); }
             }
@@ -9136,14 +9144,14 @@ treaty:条约`
             gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
         }
         function gameBlocks() {
-            const COLS = 9, ROWS = 12, D = gameDiff, NC = { easy: 4, normal: 5, hard: 6 }[D], body = document.getElementById("gameBody"), dpr = window.devicePixelRatio || 1;
+            const COLS = 10, ROWS = 14, D = gameDiff, NC = { easy: 3, normal: 4, hard: 5 }[D], body = document.getElementById("gameBody"), dpr = window.devicePixelRatio || 1;
             body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，同时开消：点一块，和它相连的同色方块一起消掉，双方都消不动就结束</div><div class="game-msg" id="gameScore" style="font-weight:700;font-size:12.5px;margin:0 0 4px"></div><canvas id="bkCanvas" class="game-canvas"></canvas><div class="game-btns"><button class="btn" id="bkStart">开始</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("bkCanvas"), ctx = cv.getContext("2d");
             const availH = window.innerHeight - body.getBoundingClientRect().top - 190, wAvail = Math.min(body.clientWidth - 24, 400);
             const cs = Math.max(16, Math.floor(Math.min(availH / ROWS, wAvail * 0.66 / COLS))), cs2 = Math.max(8, Math.floor(cs * 0.5)), gap = 12, pw = COLS * cs + gap + COLS * cs2, ph = ROWS * cs;
             cv.style.width = pw + "px"; cv.style.height = ph + "px"; cv.width = pw * dpr; cv.height = ph * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
             const PAL = ["#ff7a8a", "#ffb04f", "#ffe066", "#6fd6a0", "#5bb8f5", "#a78bfa"], DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
-            const base = Array.from({ length: ROWS }, () => Array.from({ length: COLS }, () => Math.floor(Math.random() * NC)));
+            const base = Array.from({ length: ROWS }, () => new Array(COLS).fill(0)); for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const up = r > 0 ? base[r - 1][c] : -1, lf = c > 0 ? base[r][c - 1] : -1, k = Math.random(); base[r][c] = k < 0.28 && up >= 0 ? up : k < 0.56 && lf >= 0 ? lf : Math.floor(Math.random() * NC); } // 生成时让相邻方块更容易同色，大片色块更多
             const mk = () => ({ g: base.map(r => r.slice()), ox: base.map(r => r.map(() => 0)), oy: base.map(r => r.map(() => 0)), stuck: false, parts: [] });
             const me = mk(), him = mk(); let started = false, over = false, paused = false, raf = 0, lastT = performance.now(), aiT = 1, clock = 0, flash = 0;
             const count = P => P.g.reduce((s, r) => s + r.filter(v => v >= 0).length, 0);
@@ -9169,7 +9177,7 @@ treaty:条约`
             const startBtn = document.getElementById("bkStart"); startBtn.onclick = () => { if (started || over) return; gameSfx("pstart"); started = true; startBtn.style.visibility = "hidden"; gameResultBar("开始！点同色相连的方块"); };
             function check() { if (over) return; const a = count(me), b = count(him); if (a === 0 || b === 0 || (me.stuck && him.stuck)) finish(); }
             function finish() {
-                if (over) return; over = true; cancelAnimationFrame(raf); draw(); const a = count(me), b = count(him);
+                if (over) return; over = true; cancelAnimationFrame(raf); [me, him].forEach(P => { P.parts = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { P.ox[r][c] = 0; P.oy[r][c] = 0; } }); draw(); const a = count(me), b = count(him);
                 if (a < b) { gameResultBar(`你赢了 🎉 你剩 ${a}，他剩 ${b}`); gameStat("blocks", "w"); } else if (a > b) { gameResultBar(`他赢了 你剩 ${a}，他剩 ${b}`); gameStat("blocks", "l"); } else { gameResultBar(`平局 都剩 ${a}`); gameStat("blocks", "d"); }
                 document.getElementById("gameEnd").innerHTML = gameEndButtons();
             }
