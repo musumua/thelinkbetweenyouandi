@@ -789,7 +789,7 @@
         .mb-box svg { overflow: visible; }
         .mb-box.bump svg { animation: mbBump .6s ease; }
         @keyframes mbBump { 0% { transform: scale(1); } 30% { transform: scale(1.1, .92); } 60% { transform: scale(.97, 1.04); } 100% { transform: scale(1); } }
-        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px 12px; }
+        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 14px 12px; }
         .mb-item { display: flex; align-items: center; gap: 12px; padding: 12px 10px 12px 18px; margin-bottom: 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
         .mb-item::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: repeating-linear-gradient(135deg, #d9483f 0 6px, #f6f1e6 6px 9px, #3f78d0 9px 15px, #f6f1e6 15px 18px); }
         .mb-item .mb-stamp { width: 26px; height: 32px; border: 1.5px dashed var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--text-sub); flex-shrink: 0; opacity: .8; }
@@ -832,6 +832,33 @@
         .mb-wp-h button { background: none; border: none; font-size: 18px; color: #8a867b; cursor: pointer; padding: 2px 6px; }
         .mb-wp textarea { flex: 1; border: none; outline: none; resize: none; background: transparent; font: inherit; font-size: 15px; line-height: 1.9; color: #2f3b5c; padding: 10px 0; }
         .mb-send { align-self: flex-end; padding: 9px 22px; border-radius: 20px; border: none; background: #c8453d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
+        .mb-divider { display: flex; align-items: center; gap: 10px; padding: 8px 18px 4px; color: var(--text-sub); font-size: 12px; letter-spacing: 2px; flex-shrink: 0; }
+        .mb-divider::before, .mb-divider::after { content: ""; flex: 1; border-top: 1.5px dashed var(--border); }
+        .mb-card { position: relative; margin: 0 2px 16px; padding: 30px 14px 12px; background: #f5eedd; color: #4a4036; border-radius: 4px; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,.28); }
+        .mb-card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: repeating-linear-gradient(135deg, #d9483f 0 9px, #f5eedd 9px 13px, #3f78d0 13px 22px, #f5eedd 22px 26px); border-radius: 0 0 4px 4px; }
+        .mb-card:active { transform: scale(.985); }
+        .mb-card .mb-flap { position: absolute; left: 0; top: 0; width: 100%; height: 26px; }
+        .mb-card .mb-flap path { fill: rgba(0,0,0,.035); stroke: rgba(74,64,54,.28); stroke-width: 1; }
+        .mb-card .mb-main { display: flex; gap: 10px; align-items: flex-end; }
+        .mb-card .mb-tx { flex: 1; min-width: 0; padding-bottom: 6px; }
+        .mb-card .mb-who { font-size: 11px; letter-spacing: 1px; color: #a0907c; margin-bottom: 3px; }
+        .mb-card.his .mb-who { color: #b5675f; } .mb-card.me .mb-who { color: #5a78b8; }
+        .mb-card .mb-pv { font-size: 14px; line-height: 1.5; color: #3a3028; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mb-card .mb-tm { font-size: 10.5px; color: #a8998a; margin-top: 3px; }
+        .mb-card .mb-st { position: absolute; right: 12px; top: 6px; width: 24px; height: 28px; border: 1.5px dashed #c9b9a0; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #c0a98a; background: #f9f4e8; }
+        .mb-card .mb-pn { position: absolute; right: 46px; top: 10px; font-size: 10px; color: #a8998a; border: 1px solid #d5c8b3; border-radius: 9px; padding: 0 6px; }
+        .mb-card .mb-rm { width: 30px; height: 30px; border: none; background: transparent; color: #a8998a; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; margin-bottom: 4px; }
+        .mb-card .mb-rm:active { background: rgba(224,82,74,.18); color: #d0443c; }
+        .mb-card .mb-un { position: absolute; right: -4px; top: -6px; background: #e0403a; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.35); letter-spacing: 1px; }
+        .mb-real.mb-stack { background: transparent; box-shadow: none; overflow: visible; padding: 0; }
+        .mb-sheet { position: absolute; inset: 0; box-sizing: border-box; padding: 14px 18px 34px; background: #fffdf8; box-shadow: 0 3px 12px rgba(0,0,0,.35); font-size: 14px; line-height: 1.85; color: #3a3a36; white-space: pre-wrap; word-break: break-word; overflow: hidden; will-change: transform; }
+        .mb-stack.me .mb-sheet { color: #2f3b5c; } .mb-stack.his .mb-sheet { color: #7b3b3b; }
+        .mb-sheet .mb-r { text-align: right; }
+        .mb-sheet .mb-fn { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-size: 11px; color: #b5afa2; }
+        .mb-sheet .mb-nv { position: absolute; bottom: 4px; width: 30px; height: 26px; border: none; background: transparent; color: #8a867b; font-size: 18px; cursor: pointer; }
+        .mb-pgbar { display: flex; align-items: center; gap: 6px; margin-right: auto; color: #8a867b; font-size: 12px; }
+        .mb-pgbar button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd6c6; background: transparent; color: #8a867b; font-size: 16px; line-height: 1; cursor: pointer; }
+        .mb-wp-f { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
         .mb-toast { position: absolute; left: 50%; bottom: 80px; transform: translateX(-50%); background: rgba(30,30,30,.88); color: #fff; padding: 9px 18px; border-radius: 18px; font-size: 13px; z-index: 80; animation: djFade .3s ease both; }
         @keyframes djFade { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
             html, body { overscroll-behavior: none; }
@@ -1040,6 +1067,7 @@
                 <div style="flex:1"></div>
                 <button class="mb-write-btn" onclick="mbWrite()">✎ 写信</button>
             </div>
+            <div class="mb-divider"><span id="mbDivTxt">✉ 信箱</span></div>
             <div class="mb-list" id="mbList"></div>
             <div class="mb-foot">
                 <svg class="mb-ground" width="100%" height="60" aria-hidden="true"><defs>
@@ -2115,7 +2143,7 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00002, galK = age => 8.4 + 12.6 * (Math.asin(0.96 * Math.sin(6.2832 * age / 900000 - 1.5708)) / Math.asin(0.96) + 1) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
+        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00002, galK = age => 12, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
         function galCycle(tt) { return [{ age: tt, al: 1 }]; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
@@ -2295,10 +2323,9 @@
                 E(21, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(43, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
                 { const OLN = D("#a8804c", "#4a3a34"), TP = D("#e6c486", "#8a6a48"), TPH = D("#f2d9a6", "#a98a60"), BD = D("#cfa468", "#6e5238"), LG = D("#d8b074", "#7a5a3e"), SO = D("#b9a68c", "#5a4a44");
                   // 圆形小茶几：和家具一样的描边，木色桌面 + 一条中柱 + 底座
-                  R(65, 34, 5, 7, OLN); R(66, 34, 3, 6, LG); R(62, 40, 11, 3, OLN); R(63, 41, 9, 1, BD); R(66, 40, 3, 1, LG);
-                  R(61, 30, 14, 1, OLN); R(59, 31, 18, 1, OLN); R(59, 32, 18, 2, OLN); R(61, 34, 14, 1, OLN);
-                  R(60, 31, 16, 1, TPH); R(60, 32, 16, 1, TP); R(60, 33, 16, 1, BD);
-                  R(71, 28, 5, 2, SO); R(72, 29, 3, 1, D("#d9825a", "#a85a40")); leaf(73, 28, 0, -3, 3, D("#58a85a", "#2f5a3a")); leaf(73, 28, -2, -2, 2, D("#6fbf6a", "#38704a")); leaf(73, 28, 2, -2, 2, D("#6fbf6a", "#38704a"));
+                  R(66, 34, 1, 7, OLN); R(67, 34, 2, 7, LG); R(69, 34, 1, 7, OLN); R(64, 41, 11, 1, OLN); R(65, 40, 9, 1, LG);
+                  R(60, 31, 16, 1, TPH); R(59, 32, 18, 1, TP); R(60, 33, 16, 1, BD); R(61, 34, 14, 1, OLN); P(59, 33, OLN); P(76, 33, OLN);
+                  R(71, 29, 5, 2, SO); R(72, 29, 3, 1, D("#6fa0c9", "#4f7099"));
                   // 香薰蜡烛：玻璃罐 + 罐盖 + 灯芯
                   R(63, 28, 4, 2, SO); R(64, 29, 2, 1, D("#fff3e0", "#f6e0b8")); P(64, 27, "#4a3a30"); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
@@ -5498,8 +5525,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function renderDiaryTimeline() {
             const box = document.getElementById("mbList"); if (!box) return;
             const items = mbItems(), pend = diaryHasPending();
-            let h = items.map(x => { const un = x.who === "his" && x.l.read === false, pre = String(x.l.content).replace(/\s+/g, " ").slice(0, 30);
-                return `<div class="mb-item ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${mbEnvSvg(x.who === "me" ? "#6f8fd0" : "#d9807a")}<div class="mb-it"><div class="mb-ih">${escapeHtml(mbWho(x.who))}${x.who === "me" ? "寄出的信" : "的来信"} · ${escapeHtml(x.l.time || "")}</div><div class="mb-ip">${escapeHtml(pre)}</div></div>${un ? '<span class="mb-dot"></span>' : ""}<div class="mb-stamp">${x.who === "me" ? "♡" : "✦"}</div><button class="mb-del" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div>`; }).join("");
+            let h = items.map(x => { const un = x.who === "his" && x.l.read === false, pre = mbPlain(x.l.content).slice(0, 40), pn = String(x.l.content).split("\f").length;
+                return `<div class="mb-card ${x.who}" onclick="mbOpen('${x.who}',${x.i})"><svg class="mb-flap" viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0 0 L50 26 L100 0 Z"/></svg><div class="mb-st">${x.who === "me" ? "♡" : "✦"}</div>${pn > 1 ? `<div class="mb-pn">${pn}页</div>` : ""}${un ? '<div class="mb-un">未读</div>' : ""}<div class="mb-main"><div class="mb-tx"><div class="mb-who">${x.who === "me" ? "我寄出的信" : "他的来信"}</div><div class="mb-pv">${escapeHtml(pre)}</div><div class="mb-tm">${escapeHtml(x.l.time || "")}</div></div><button class="mb-rm" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div></div>`; }).join("");
+            const dv = document.getElementById("mbDivTxt"); if (dv) dv.innerText = "✉ 信箱 · 共 " + items.length + " 封";
             if (pend && !diaryMonthFilter) h += `<div class="mb-wait">✉ 信已经寄出，正在飞往${escapeHtml(mbWho("his"))}那里…</div>`;
             if (!h) h = `<div class="mb-empty">信箱还是空的<br>点右上角「写信」寄出第一封吧</div>`;
             box.innerHTML = h;
@@ -5508,6 +5536,27 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             if (mbBusy) return; const l = (who === "me" ? db.sentLetters : db.receivedLetters)[i]; if (!l) return;
             if (!confirm("删除这封信？删除后无法恢复。")) return;
             l.deleted = true; l.content = l.content; saveData(); renderDiaryTimeline(); // 只做标记隐藏，保持来信/回信的配对和等待状态不乱
+        }
+        const mbPlain = t => String(t).replace(/[\f\u0001]/g, " ").replace(/\s+/g, " ").trim();
+        const mbBodyHtml = t => String(t).split("\n").map(line => line.charAt(0) === "\u0001" ? `<div class="mb-r">${escapeHtml(line.slice(1))}</div>` : `<div>${line ? escapeHtml(line) : "&nbsp;"}</div>`).join("");
+        function mbReader(who, l) {
+            const chunks = String(l.content).split("\f").filter(c => c.trim()), meas = document.createElement("div"); meas.className = "mb-sheet"; meas.style.cssText = "position:fixed;left:-9999px;top:0;width:256px;height:auto;inset:auto;visibility:hidden;left:-9999px";
+            document.body.appendChild(meas); const head = `<div class="mb-from">${escapeHtml(mbWho(who))}　${escapeHtml(l.time || "")}</div>`, fits = html => { meas.innerHTML = html; return meas.scrollHeight <= 418; };
+            const pages = []; chunks.forEach((c, ci) => { let rest = c.replace(/\s+$/, ""); while (rest) { const hd = pages.length === 0 ? head : ""; let lo = 1, hi = rest.length; while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); if (fits(hd + mbBodyHtml(rest.slice(0, mid)))) lo = mid; else hi = mid - 1; }
+                let cut = lo; if (lo < rest.length) { const seg = rest.slice(Math.max(1, lo - 10), lo), m = Math.max(seg.lastIndexOf("\n"), seg.lastIndexOf(" "), seg.lastIndexOf("，"), seg.lastIndexOf("。")); if (m >= 0) cut = Math.max(1, lo - 10) + m + 1; }
+                pages.push(hd + mbBodyHtml(rest.slice(0, cut))); rest = rest.slice(cut).replace(/^\n+/, ""); } });
+            meas.remove(); if (!pages.length) pages.push(head);
+            const n = pages.length, el = document.createElement("div"); el.className = "mb-real mb-stack " + who;
+            el.innerHTML = pages.map((h, i) => `<div class="mb-sheet">${h}<div class="mb-fn">${n > 1 ? `第 ${i + 1} / ${n} 页` : ""}</div></div>`).join("") + (n > 1 ? `<button class="mb-nv" style="position:absolute;left:22px;bottom:-34px;color:#fff;font-size:13px;border:none;background:rgba(255,255,255,.14);border-radius:14px;padding:5px 14px" data-d="-1">‹ 上一页</button><button class="mb-nv" style="position:absolute;right:22px;bottom:-34px;color:#fff;font-size:13px;border:none;background:rgba(255,255,255,.14);border-radius:14px;padding:5px 14px;width:auto;height:auto" data-d="1">下一页 ›</button>` : "");
+            const sheets = Array.from(el.querySelectorAll(".mb-sheet")); let cur = 0, busy = false;
+            const lay = () => sheets.forEach((sh, i) => { const d = i - cur; sh.style.transition = "transform .4s ease"; if (d === 0) { sh.style.zIndex = 20; sh.style.transform = "none"; } else if (d > 0) { sh.style.zIndex = 20 - d; sh.style.transform = `translate(${Math.min(d, 3) * 4}px,${Math.min(d, 3) * 4}px)`; } else { sh.style.zIndex = 1 + i; sh.style.transform = "translate(-5px,-4px)"; } });
+            const go = async dir => { const ni = cur + dir; if (busy || ni < 0 || ni >= n) return; busy = true;
+                if (dir > 0) { const t = sheets[cur]; t.style.transition = "transform .32s ease"; t.style.transform = "translateX(-118%) rotate(-6deg)"; await mbSleep(320); cur = ni; lay(); await mbSleep(420); }
+                else { const t = sheets[ni]; t.style.transition = "none"; t.style.zIndex = 30; t.style.transform = "translateX(-118%) rotate(-6deg)"; void t.offsetWidth; t.style.transition = "transform .36s ease"; t.style.transform = "none"; await mbSleep(370); cur = ni; lay(); await mbSleep(60); }
+                busy = false; };
+            el.querySelectorAll(".mb-nv[data-d]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); go(+b.dataset.d); }));
+            let x0 = null; el.addEventListener("pointerdown", e => { x0 = e.clientX; }); el.addEventListener("pointerup", e => { if (x0 === null) return; const dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1); });
+            lay(); return el;
         }
         function mbToast(t) { const host = document.querySelector("#letterFullPage .pyq-scroll-content"); if (!host) return; const d = document.createElement("div"); d.className = "mb-toast"; d.innerText = t; host.appendChild(d); setTimeout(() => d.remove(), 2200); }
         function mbOv() { const old = document.getElementById("mbOv"); if (old) old.remove(); const ov = document.createElement("div"); ov.id = "mbOv"; ov.className = "mb-ov"; ov.onclick = mbOvTap; document.querySelector("#letterFullPage .pyq-scroll-content").appendChild(ov); return ov; }
@@ -5519,12 +5568,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             if (mbBusy) return; const l = (who === "me" ? db.sentLetters : db.receivedLetters)[i]; if (!l) return;
             mbBusy = true; if (l.read === false) { l.read = true; saveData(); renderDiaryTimeline(); }
             const ov = mbOv(); ov.dataset.state = "read"; ov.dataset.who = who; ov.dataset.text = l.content; ov.dataset.time = l.time || "";
-            ov.innerHTML = mbStageHtml(who, l.time, l.content, ""); const st = ov.firstChild, pp = st.querySelector("#mbPaper");
+            ov.innerHTML = mbStageHtml(who, l.time, String(l.content).split("\f")[0].replace(/\u0001/g, ""), ""); const st = ov.firstChild, pp = st.querySelector("#mbPaper");
             await mbSleep(30); ov.classList.add("show"); await mbSleep(350);
             st.classList.add("flap-open"); await mbSleep(750);
             pp.classList.add("out"); await mbSleep(800);
             st.classList.add("sink"); pp.classList.add("unfold"); await mbSleep(1500);
-            const real = document.createElement("div"); real.className = "mb-real " + who; real.innerHTML = `<div class="mb-from">${escapeHtml(mbWho(who))}　${escapeHtml(l.time || "")}</div><div class="mb-bd">${escapeHtml(l.content)}</div>`; st.appendChild(real); pp.style.display = "none";
+            const real = mbReader(who, l); st.appendChild(real); pp.style.display = "none";
             ov.dataset.state = "reading"; mbBusy = false;
         }
         async function mbCloseRead() {
@@ -5537,20 +5586,31 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         function mbOvTap(e) { const ov = document.getElementById("mbOv"); if (!ov || mbBusy) return; if (ov.dataset.state === "reading" && !e.target.closest(".mb-real")) mbCloseRead(); }
         function mbBackOv() { const ov = document.getElementById("mbOv"); if (!ov) return; if (ov.dataset.state === "reading") mbCloseRead(); else if (ov.dataset.state === "write" && !mbBusy) mbWClose(); }
+        let mbPages = [""], mbPi = 0;
+        function mbPgUpd() { const e = document.getElementById("mbPgN"); if (e) e.innerText = `第 ${mbPi + 1} / ${mbPages.length} 页`; diaryDraftText = mbPages.join("\f"); }
+        function mbWInput(ta) { mbPages[mbPi] = ta.value; mbPgUpd(); if (ta.scrollHeight > ta.clientHeight + 1) mbOverflow(ta); }
+        function mbOverflow(ta) {
+            const v = ta.value; let lo = 0, hi = v.length; while (lo < hi) { const mid = Math.ceil((lo + hi) / 2); ta.value = v.slice(0, mid); if (ta.scrollHeight <= ta.clientHeight + 1) lo = mid; else hi = mid - 1; }
+            let cut = lo; if (lo < v.length) { const seg = v.slice(Math.max(0, lo - 10), lo), m = Math.max(seg.lastIndexOf("\n"), seg.lastIndexOf(" "), seg.lastIndexOf("，"), seg.lastIndexOf("。")); if (m >= 0) cut = Math.max(0, lo - 10) + m + 1; }
+            const keep = v.slice(0, cut), rest = v.slice(cut); mbPages[mbPi] = keep; if (mbPi === mbPages.length - 1) mbPages.push(rest); else mbPages[mbPi + 1] = rest + mbPages[mbPi + 1]; ta.value = keep; mbGoPage(mbPi + 1);
+        }
+        function mbGoPage(i) { const ta = document.getElementById("mbTa"); if (!ta) return; const dir = i > mbPi ? 1 : -1; mbPi = i; mbPgUpd(); ta.value = mbPages[mbPi]; const c = ta.value.length; try { ta.setSelectionRange(c, c); } catch (e) { } ta.scrollTop = 0; // 先同步换页，保证连续打字不会串页，再播翻页动画
+            ta.animate([{ opacity: 0.1, transform: `translateX(${dir * 32}px) rotate(${dir * 1.2}deg)` }, { opacity: 1, transform: "none" }], { duration: 240, easing: "ease-out" }); ta.focus(); }
+        function mbPg(d) { const ta = document.getElementById("mbTa"); if (!ta) return; mbPages[mbPi] = ta.value; let ni = mbPi + d; if (ni < 0) return; if (ni >= mbPages.length) { if (!mbPages[mbPi].trim()) return; mbPages.push(""); } mbGoPage(ni); }
         function mbWrite() {
             if (mbBusy) return; if (diaryHasPending()) { mbToast("上一封信还在路上，等他回信再写吧"); return; }
-            const ov = mbOv(); ov.dataset.state = "write"; ov.innerHTML = `<div class="mb-wp"><div class="mb-wp-h"><button onclick="mbWClose()">✕</button><span>写给 ${escapeHtml(mbWho("his"))}</span></div><textarea id="mbTa" placeholder="亲爱的${escapeHtml(mbWho("his"))}…" oninput="diaryDraftText=this.value"></textarea><button class="mb-send" onclick="mbSend()">折好寄出 ✉</button></div>`;
+            const ov = mbOv(); ov.dataset.state = "write"; ov.innerHTML = `<div class="mb-wp"><div class="mb-wp-h"><button onclick="mbWClose()">✕</button><span>写给 ${escapeHtml(mbWho("his"))}</span></div><textarea id="mbTa" placeholder="亲爱的${escapeHtml(mbWho("his"))}…" oninput="mbWInput(this)"></textarea><div class="mb-wp-f"><div class="mb-pgbar"><button onclick="mbPg(-1)">‹</button><span id="mbPgN">第 1 / 1 页</span><button onclick="mbPg(1)">›</button></div><button class="mb-send" style="align-self:auto" onclick="mbSend()">折好寄出 ✉</button></div></div>`;
             { const wp = ov.querySelector(".mb-wp"), H = ov.clientHeight || window.innerHeight, W = ov.clientWidth || window.innerWidth, pw = Math.min(W * 0.88, 360), ph = Math.min(H * 0.66, 500); // 信纸尺寸在唤起输入法前就锁成像素，键盘弹出、页面变矮时不再缩放
               wp.style.width = pw + "px"; wp.style.height = ph + "px"; wp.style.flexShrink = "0"; ov.style.alignItems = "flex-start"; wp.style.marginTop = Math.max(8, (H - ph) / 2) + "px"; ov.style.overflow = "hidden";
             }
-            ov.classList.add("show"); document.getElementById("mbTa").value = diaryDraftText; setTimeout(() => { const t = document.getElementById("mbTa"); if (t) t.focus(); }, 480);
+            ov.classList.add("show"); mbPages = diaryDraftText ? diaryDraftText.split("\f") : [""]; mbPi = 0; document.getElementById("mbTa").value = mbPages[0]; mbPgUpd(); setTimeout(() => { const t = document.getElementById("mbTa"); if (t) t.focus(); }, 480);
         }
         function mbWClose() { const ov = document.getElementById("mbOv"); if (!ov || mbBusy) return; const t = document.getElementById("mbTa"); if (t) t.blur(); ov.classList.remove("show"); setTimeout(() => ov.remove(), 400); }
         async function mbSend() {
-            if (mbBusy) return; const ta = document.getElementById("mbTa"), text = ta ? ta.value.trim() : "";
+            if (mbBusy) return; const ta = document.getElementById("mbTa"); if (ta) mbPages[mbPi] = ta.value; const text = mbPages.map(t => t.trim()).filter(Boolean).join("\f");
             if (!text) { if (ta) { ta.focus(); ta.animate([{ transform: "translateX(0)" }, { transform: "translateX(-6px)" }, { transform: "translateX(6px)" }, { transform: "translateX(0)" }], { duration: 260 }); } return; }
             mbBusy = true; ta.blur(); const ov = document.getElementById("mbOv"); ov.dataset.state = "sending";
-            ov.innerHTML = mbStageHtml("me", "刚刚", text, "noanim flap-open"); const st = ov.firstChild, pp = st.querySelector("#mbPaper"); pp.classList.add("out", "unfold");
+            ov.innerHTML = mbStageHtml("me", "刚刚", text.split("\f")[0], "noanim flap-open"); const st = ov.firstChild, pp = st.querySelector("#mbPaper"); pp.classList.add("out", "unfold");
             void st.offsetWidth; st.classList.remove("noanim"); await mbSleep(450);
             pp.classList.remove("unfold"); await mbSleep(1500);
             pp.classList.remove("out"); await mbSleep(850);
@@ -5583,8 +5643,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 const nMin = Math.max(1, parseInt(db.freq.letterNumMin, 10) || 1), nMax = Math.max(nMin, parseInt(db.freq.letterNumMax, 10) || 3);
                 const n = nMin + Math.floor(Math.random() * (nMax - nMin + 1)); const lines = [];
                 for (let i = 0; i < n; i++) lines.push(cards[Math.floor(Math.random() * cards.length)].text);
-                body = lines.join("\n");
+                body = lines.join(" ");
             }
+            { const okN = nm => nm && !/填写/.test(nm), pk = a => a[Math.floor(Math.random() * a.length)], meN = okN(db.me.name) ? db.me.name : "你", himN = okN(db.other.name) ? db.other.name : "";
+              const gAdj = pk(["亲爱的", "最爱的", "我想念的", "我的", ""]), greet = (pk([0, 1, 2]) === 0 ? pk(["宝贝", "亲爱的", "亲爱的你"]) : gAdj + meN) + pk(["：", "，", "："]);
+              const sAdj = pk(["你的", "期待回信的", ""]), sign = himN ? sAdj + himN : (sAdj || "你的") + (sAdj ? "我" : "我"), d = new Date(), date = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+              body = `${greet}\n${body}\n\n\u0001${sign}\n\u0001${date}`; }
             db.receivedLetters.push({ content: body, time: new Date().toLocaleString(), ts: Date.now(), read: false });
             db.chat.push({ type: "diary-return", text: `📮 他的回信到了` });
             saveData(); renderChat();
@@ -9177,7 +9241,7 @@ treaty:条约`
             const group = (P, r, c) => { const v = P.g[r][c]; if (v < 0) return []; const seen = new Set([r * COLS + c]), q = [[r, c]]; for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || P.g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } return q; };
             const allGroups = P => { const seen = new Set(), out = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (P.g[r][c] < 0 || seen.has(r * COLS + c)) continue; const g = group(P, r, c); g.forEach(([y, x]) => seen.add(y * COLS + x)); if (g.length >= 2) out.push(g); } return out; };
             function pop(P, g, big) {
-                const s = big ? cs : cs2; g.forEach(([r, c]) => { const col = PAL[P.g[r][c]]; for (let k = 0; k < (big ? 4 : 1); k++) P.parts.push({ x: (c + 0.5) * s, y: (r + 0.5) * s, vx: (Math.random() - 0.5) * 3, vy: -Math.random() * 2.5, life: 1, col, s: s * 0.22 }); P.g[r][c] = -1; });
+                const s = big ? cs : cs2; g.forEach(([r, c]) => { const col = PAL[P.g[r][c]]; for (let k = 0; k < (big ? 3 : 1); k++) P.parts.push({ x: (c + 0.5) * s, y: (r + 0.5) * s, vx: (Math.random() - 0.5) * 2.2, vy: -Math.random() * 1.8, life: 0.8, col, s: Math.max(1.5, s * 0.09) }); P.g[r][c] = -1; });
                 const ng = Array.from({ length: ROWS }, () => new Array(COLS).fill(-1)), nox = ng.map(r => r.map(() => 0)), noy = ng.map(r => r.map(() => 0)); let nc = 0;
                 for (let c = 0; c < COLS; c++) { const col = []; for (let r = ROWS - 1; r >= 0; r--) if (P.g[r][c] >= 0) col.push([r, P.g[r][c]]); if (!col.length) continue; col.forEach(([r, v], i) => { const nr = ROWS - 1 - i; ng[nr][nc] = v; noy[nr][nc] = (r - nr) + P.oy[r][c]; nox[nr][nc] = (c - nc) + P.ox[r][c]; }); nc++; }
                 P.g = ng; P.ox = ng.map(r => r.map(() => 0)); P.oy = ng.map(r => r.map(() => 0)); P.stuck = allGroups(P).length === 0;
