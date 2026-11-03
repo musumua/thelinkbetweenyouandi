@@ -2279,21 +2279,22 @@
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
                 E(21, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(43, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
-                { const TP = D("#f2dfb8", "#b09870"), BD = D("#cfa86e", "#8e7855"), OL = D("#fff6e0", "#d6c29a"), LG = D("#c9a06a", "#8a7352"), PAP = D("#f6f1e6", "#d8d0c0");
-                  // 圆形小茶几（植物下面那张）：浅木色圆桌面 + 三条斜腿
-                  L(63, 34, 61, 42, LG); L(64, 34, 62, 42, LG); L(73, 34, 75, 42, LG); L(72, 34, 74, 42, LG); L(68, 34, 68, 42, LG); L(69, 34, 69, 42, LG);
+                { const TP = D("#d9ac66", "#a98a58"), BD = D("#b8864a", "#86693f"), OL = D("#f3dca8", "#d6bd8a"), LG = D("#a8773c", "#7a5f38"), PAP = D("#f6f1e6", "#d8d0c0");
+                  // 圆形小茶几：浅木色圆桌面 + 一条中间的粗腿 + 底座
+                  R(67, 34, 3, 7, LG); R(64, 41, 9, 1, LG); R(65, 40, 7, 1, BD);
                   R(62, 30, 12, 1, OL); R(60, 31, 16, 1, TP); P(60, 31, OL); P(75, 31, OL); R(59, 32, 18, 1, TP); P(59, 32, OL); P(76, 32, OL); R(60, 33, 16, 1, BD); R(62, 34, 12, 1, OL);
-                  R(72, 28, 4, 1, D("#6fa0c9", "#4f7099")); R(72, 29, 4, 1, PAP); R(61, 29, 3, 1, PAP);
-                  R(65, 27, 2, 3, D("#f6ead0", "#ffe2a0")); R(69, 27, 2, 3, D("#f6ead0", "#ffe2a0")); }
+                  R(72, 28, 4, 1, D("#6fa0c9", "#4f7099")); R(72, 29, 4, 1, PAP);
+                  // 香薰蜡烛：玻璃罐 + 罐盖 + 灯芯
+                  R(63, 27, 5, 3, D("#e9d8c0", "#c9b8a0")); R(63, 27, 5, 1, D("#8a6a4e", "#6a5040")); R(64, 28, 3, 1, D("#fff3e0", "#f6e0b8")); P(65, 26, "#4a3a30"); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { R(65, 27, 2, 3, "#fff3c8"); R(69, 27, 2, 3, "#fff3c8"); P(65, 26, "#ffb040"); P(69, 26, "#ffb040"); P(65, 25, "#fff0a8"); P(69, 25, "#fff0a8"); sp(65, 25, "#ffd98a"); sp(69, 25, "#ffd98a"); 
+                if (night) { P(65, 26, "#ffb040"); P(65, 25, "#fff0a8"); sp(65, 25, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
                                         for (let k = 6; k >= 1; k--) gE(18, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
                     for (let y = 11; y < 41; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(18 - half), y, Math.round(half * 2), 1); }
-                    gE(66, 26, 4, 4, "rgba(255,190,90,.1)"); gE(70, 26, 4, 4, "rgba(255,190,90,.1)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
+                    gE(65, 27, 5, 4, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -6438,19 +6439,19 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function gameFireworks() {
             const host = document.getElementById("gamesFullPage"); if (!host || !host.classList.contains("open")) return;
             const cv = document.createElement("canvas"); cv.className = "fx-canvas";
-            const W = host.clientWidth, H = host.clientHeight, dpr = window.devicePixelRatio || 1;
+            const W = window.innerWidth, H = window.innerHeight, dpr = window.devicePixelRatio || 1; cv.style.position = "fixed"; cv.style.zIndex = "3000";
             cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px";
-            host.appendChild(cv); const ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+            document.body.appendChild(cv); const ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
             const parts = []; const colors = ["#FF6B8B", "#FFD36B", "#6BE0FF", "#9B8CFF", "#7DFFA5", "#FFFFFF"];
             let launched = 0, start = performance.now();
-            function burst() { const cx = W * (0.15 + Math.random() * 0.7), cy = H * (0.15 + Math.random() * 0.4), col = colors[Math.floor(Math.random() * colors.length)]; for (let i = 0; i < 90; i++) { const a = Math.random() * 6.283, v = 1.5 + Math.random() * 4.2; parts.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, col }); } }
+            function burst() { const cx = W * (0.15 + Math.random() * 0.7), cy = H * (0.15 + Math.random() * 0.4), col = colors[Math.floor(Math.random() * colors.length)]; for (let i = 0; i < 46; i++) { const a = Math.random() * 6.283, v = 1.2 + Math.random() * 3.4; parts.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, col }); } }
             function frame(now) {
                 const el = now - start;
                 if (launched < 7 && el > launched * 450) { burst(); launched++; }
                 ctx.clearRect(0, 0, W, H);
-                parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.045; p.vx *= 0.985; p.life -= 0.009; if (p.life > 0) { ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.col; ctx.beginPath(); ctx.arc(p.x, p.y, 3.2, 0, 6.283); ctx.fill(); ctx.globalAlpha = Math.max(0, p.life) * 0.3; ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, 6.283); ctx.fill(); } });
+                parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.045; p.vx *= 0.985; p.life -= 0.012; if (p.life > 0) { ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.col; ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, 6.283); ctx.fill(); } });
                 ctx.globalAlpha = 1;
-                if (el < 5600) requestAnimationFrame(frame); else cv.remove();
+                if (el < 4800) requestAnimationFrame(frame); else cv.remove();
             }
             requestAnimationFrame(frame);
         }
@@ -6458,7 +6459,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"], ["blocks", "消除方块", "同时开始，点相连的同色方块消掉，时间到时剩得少的赢"], ["pacman", "吃豆人", "迷宫里你和他各一个吃豆人，四只鬼在追；大力丸能反吃鬼，还有樱桃、加速、冰冻道具，得分高的赢"]];
+            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"], ["blocks", "消除方块", "同时开始，点相连的同色方块消掉，都消不动时剩得少的赢"], ["pacman", "吃豆人", "迷宫里你和他各一个吃豆人，四只鬼在追；大力丸能反吃鬼，还有樱桃、加速、冰冻道具，得分高的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -8948,7 +8949,7 @@ treaty:条约`
             const CM = "#ffe873", CH = "#c9b8f4", D = gameDiff, spd0 = { easy: 190, normal: 235, hard: 285 }[D] || 235, padBase = { easy: 92, normal: 80, hard: 68 }[D] || 80, hp0 = { easy: 2, normal: 2, hard: 3 }[D] || 2;
             const HPC = { 1: ["#7fd08a", "#5fb0e8", "#a98be8"], 2: "#e8845a", 3: "#e0405a" };
             const bricks = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { let hp = 1, iron = false; if (r < 2) hp = hp0; else if (r === 2 && (c === 0 || c === COLS - 1)) iron = true; else if (r === 3 && (c === 3 || c === 4) && D !== "easy") hp = 2;
-                bricks.push({ x: c * bw, y: top + r * (bh + 3), hp, iron, item: !iron && Math.random() < 0.16, base: ["#ff7a8a", "#ff9f5a", "#ffd25a", "#6fd6a0", "#5bb8f5", "#9a86f2"][r % 6] }); }
+                bricks.push({ x: c * bw, y: top + r * (bh + 3), hp, iron, item: !iron && Math.random() < 0.16, base: ["#e8505f", "#f08a3c", "#e8c030", "#3fb37a", "#3a94e0", "#7e66e0"][r % 6] }); }
             const mk = (col, y, human) => ({ col, y, human, px: w / 2, padW: padBase, balls: [], lives: 3, score: 0, serve: true, serveAt: performance.now() + 900, wide: 0, pierce: 0, slow: 0 });
             const me = mk(CM, h - 24, true), him = mk(CH, h - 24, false), sides = [me, him], drops = [];
             const newBall = s => ({ x: s.px, y: s.y - 8, vx: 0, vy: 0 });
@@ -8991,13 +8992,15 @@ treaty:条约`
             function draw() {
                 ctx.fillStyle = "#14162a"; ctx.fillRect(0, 0, w, h);
                 const rr = (x, y, w2, h2, r2) => { ctx.beginPath(); ctx.moveTo(x + r2, y); ctx.lineTo(x + w2 - r2, y); ctx.quadraticCurveTo(x + w2, y, x + w2, y + r2); ctx.lineTo(x + w2, y + h2 - r2); ctx.quadraticCurveTo(x + w2, y + h2, x + w2 - r2, y + h2); ctx.lineTo(x + r2, y + h2); ctx.quadraticCurveTo(x, y + h2, x, y + h2 - r2); ctx.lineTo(x, y + r2); ctx.quadraticCurveTo(x, y, x + r2, y); ctx.closePath(); };
-                bricks.forEach(b => { if (b.hp <= 0) return; const x = b.x + 2, y = b.y + 1.5, w2 = bw - 4, h2 = bh - 3;
-                    if (b.iron) { rr(x, y, w2, h2, 3); ctx.fillStyle = "#59607a"; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = "#a9b0c8"; ctx.stroke(); ctx.fillStyle = "#c9cfe2"; [[x + 4, y + h2 / 2], [x + w2 - 4, y + h2 / 2]].forEach(q => { ctx.beginPath(); ctx.arc(q[0], q[1], 1.5, 0, 7); ctx.fill(); }); return; }
-                    rr(x, y, w2, h2, 3); ctx.fillStyle = b.base + "30"; ctx.fill();
-                    rr(x, y, w2, h2, 3); ctx.lineWidth = 4; ctx.strokeStyle = b.base + "33"; ctx.stroke(); ctx.lineWidth = 1.6; ctx.strokeStyle = b.base; ctx.stroke();
-                    for (let q = 1; q < b.hp && q < 3; q++) { rr(x + q * 3, y + q * 3, w2 - q * 6, h2 - q * 6, 2); ctx.lineWidth = 1.2; ctx.strokeStyle = b.base + "bb"; ctx.stroke(); }
-                    if (b.hp === 1) { rr(x + 3, y + 3, w2 - 6, h2 - 6, 2); ctx.fillStyle = b.base + "55"; ctx.fill(); }
-                    if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold " + Math.round(h2 * 0.62) + "px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("★", b.x + bw / 2, b.y + bh / 2 + 1); ctx.textBaseline = "alphabetic"; } });
+                bricks.forEach(b => { if (b.hp <= 0) return; const x = b.x + 1, y = b.y + 1, w2 = bw - 2, h2 = bh - 2, e = 2;
+                    // 街机式立体砖：实心饱和色 + 上/左亮边 + 下/右暗边；硬砖颜色更深并多一圈框，铁砖是灰色带铆钉
+                    const col = b.iron ? "#6d7490" : b.hp > 2 ? "#7a2b3a" : b.hp > 1 ? "#a8453a" : b.base;
+                    ctx.fillStyle = col; ctx.fillRect(x, y, w2, h2);
+                    ctx.fillStyle = "rgba(255,255,255,.42)"; ctx.fillRect(x, y, w2, e); ctx.fillRect(x, y, e, h2);
+                    ctx.fillStyle = "rgba(0,0,0,.34)"; ctx.fillRect(x, y + h2 - e, w2, e); ctx.fillRect(x + w2 - e, y, e, h2);
+                    if (b.iron) { ctx.fillStyle = "#c9cfe2"; [[x + 6, y + h2 / 2], [x + w2 - 6, y + h2 / 2]].forEach(q => { ctx.beginPath(); ctx.arc(q[0], q[1], 1.7, 0, 7); ctx.fill(); }); }
+                    else if (b.hp > 1) { ctx.strokeStyle = "rgba(255,230,200,.7)"; ctx.lineWidth = 1; ctx.strokeRect(x + 4.5, y + 4.5, w2 - 9, h2 - 9); if (b.hp > 2) ctx.strokeRect(x + 7.5, y + 7.5, w2 - 15, h2 - 15); }
+                    if (b.item) { ctx.fillStyle = "#fff"; ctx.font = "bold " + Math.round(h2 * 0.7) + "px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("?", b.x + bw / 2, b.y + bh / 2 + 1); ctx.textBaseline = "alphabetic"; } });
                 sides.forEach(s => { if (s.lives <= 0) return; ctx.fillStyle = s.col; ctx.globalAlpha = s.human ? 1 : .85; ctx.fillRect(s.px - s.padW / 2, s.y, s.padW, 8); ctx.globalAlpha = 1; s.balls.forEach(b => { ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fillStyle = s.col; ctx.fill(); ctx.strokeStyle = s.col; ctx.lineWidth = 2; ctx.stroke(); }); });
                 drops.forEach(d => { const p = PT[d.t]; ctx.beginPath(); ctx.arc(d.x, d.y, 9, 0, 7); ctx.fillStyle = p[1]; ctx.fill(); ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = "#222"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center"; ctx.fillText(p[0], d.x, d.y + 4); });
                 document.getElementById("gameScore").innerHTML = `<span style="background:#f3e8aa;color:#4a4220;padding:1px 9px;border-radius:10px">你 ${me.score} ${"♥".repeat(me.lives)}</span>　<span style="background:#d9ccf6;color:#35295c;padding:1px 9px;border-radius:10px">${hisName()} ${him.score} ${"♥".repeat(him.lives)}</span>`;
@@ -9035,14 +9038,20 @@ treaty:条约`
             pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); [[1, 1], [C - 2, 1], [1, CY], [C - 2, CY]].forEach(([x, y]) => dots[y][x] = 2);
             for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (dots[y][x]) left++;
             const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 0, started = false, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
-            const pacSp = 6.4, effSp = 5, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
+            const pacSp = 5.4, effSp = 4.2, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
             const IT = { cherry: ["🍒", 100], speed: ["⚡", 0], ice: ["❄️", 0] };
-            // ---- 预渲染墙：整格墙只勾边（中空），外圈加粗
+            // ---- 预渲染墙：整格实心圆角墙（没有豆的地方一眼就是墙），外圈加粗
             const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#10132a"; c2.fillRect(0, 0, w, h); c2.lineCap = "round"; c2.lineJoin = "round";
-                const pass = (outer) => { c2.strokeStyle = "#5468f0"; c2.lineWidth = outer ? Math.max(5, cs * 0.24) : Math.max(2.4, cs * 0.1); c2.beginPath();
-                    for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) { if (!path[y][x]) continue; [[0, -1, x, y, x + 1, y], [1, 0, x + 1, y, x + 1, y + 1], [0, 1, x, y + 1, x + 1, y + 1], [-1, 0, x, y, x, y + 1]].forEach(([dx, dy, a1, b1, a2, b2]) => { const nx = x + dx, ny = y + dy; if (nx >= 0 && ny >= 0 && nx < C && ny < R && path[ny][nx]) return; const ob = nx <= 0 || ny <= 0 || nx >= C - 1 || ny >= R - 1; if (ob) return; c2.moveTo(a1 * cs, b1 * cs); c2.lineTo(a2 * cs, b2 * cs); }); }
-                    c2.stroke(); };
-                pass(false); c2.strokeStyle = "#5468f0"; c2.lineWidth = Math.max(5, cs * 0.24); c2.strokeRect(cs, cs, w - 2 * cs, h - 2 * cs);
+                const WCOL = "#3f4fd6", isW = (x, y) => x < 0 || y < 0 || x >= C || y >= R || !path[y][x], m = cs * 0.08, rad = cs * 0.34;
+                c2.fillStyle = WCOL;
+                for (let y = 1; y < R - 1; y++) for (let x = 1; x < C - 1; x++) { if (!isW(x, y)) continue;
+                    c2.beginPath(); c2.roundRect(x * cs + m, y * cs + m, cs - 2 * m, cs - 2 * m, rad); c2.fill();
+                    if (isW(x + 1, y)) c2.fillRect(x * cs + cs / 2, y * cs + m, cs, cs - 2 * m);
+                    if (isW(x, y + 1)) c2.fillRect(x * cs + m, y * cs + cs / 2, cs - 2 * m, cs);
+                    if (isW(x + 1, y) && isW(x, y + 1) && isW(x + 1, y + 1)) c2.fillRect(x * cs + cs / 2, y * cs + cs / 2, cs, cs);
+                    if (isW(x - 1, y) && x - 1 === 0) c2.fillRect(x * cs - cs / 2, y * cs + m, cs, cs - 2 * m);
+                    if (isW(x, y - 1) && y - 1 === 0) c2.fillRect(x * cs + m, y * cs - cs / 2, cs - 2 * m, cs); }
+                c2.strokeStyle = WCOL; c2.lineWidth = cs * 0.56; c2.beginPath(); c2.roundRect(cs / 2, cs / 2, w - cs, h - cs, cs * 0.4); c2.stroke();
                 c2.strokeStyle = "#ffa0d0"; c2.lineWidth = 3; c2.beginPath(); c2.moveTo((CX + 0.1) * cs, CY * cs); c2.lineTo((CX + 0.9) * cs, CY * cs); c2.stroke(); }
             // ---- 输入
             const setWant = d => { if (!over) me.want = d; };
@@ -9079,7 +9088,7 @@ treaty:条约`
                 if (e.dir != null && canP(e.gx, e.gy, e.dir)) return e.dir; return null;
             }
             function arriveP(e) {
-                e.pause = 0;
+                e.pause = 0.045;
                 if (dots[e.gy][e.gx] === 1) { dots[e.gy][e.gx] = 0; e.score += 10; left--; if (e.human) gameSfx("waka"); } else if (dots[e.gy][e.gx] === 2) { dots[e.gy][e.gx] = 0; e.score += 50; left--; fr = 7; gameSfx("power"); }
                 const k = items.findIndex(t => t.x === e.gx && t.y === e.gy); if (k >= 0) { const t = items.splice(k, 1)[0]; if (t.t === "cherry") e.score += 100; else if (t.t === "speed") e.boost = 6; else freeze = 4; if (e.human) gameSfx("pitem"); }
             }
@@ -9127,8 +9136,8 @@ treaty:条约`
             gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
         }
         function gameBlocks() {
-            const COLS = 9, ROWS = 12, D = gameDiff, NC = { easy: 4, normal: 5, hard: 6 }[D], TL = 60, body = document.getElementById("gameBody"), dpr = window.devicePixelRatio || 1;
-            body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，同时开消：点一块，和它相连的同色方块一起消掉</div><div class="game-msg" id="gameScore" style="font-weight:700;font-size:12.5px;margin:0 0 4px"></div><canvas id="bkCanvas" class="game-canvas"></canvas><div class="game-btns"><button class="btn" id="bkStart">开始</button></div><div id="gameEnd"></div>`;
+            const COLS = 9, ROWS = 12, D = gameDiff, NC = { easy: 4, normal: 5, hard: 6 }[D], body = document.getElementById("gameBody"), dpr = window.devicePixelRatio || 1;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，同时开消：点一块，和它相连的同色方块一起消掉，双方都消不动就结束</div><div class="game-msg" id="gameScore" style="font-weight:700;font-size:12.5px;margin:0 0 4px"></div><canvas id="bkCanvas" class="game-canvas"></canvas><div class="game-btns"><button class="btn" id="bkStart">开始</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("bkCanvas"), ctx = cv.getContext("2d");
             const availH = window.innerHeight - body.getBoundingClientRect().top - 190, wAvail = Math.min(body.clientWidth - 24, 400);
             const cs = Math.max(16, Math.floor(Math.min(availH / ROWS, wAvail * 0.66 / COLS))), cs2 = Math.max(8, Math.floor(cs * 0.5)), gap = 12, pw = COLS * cs + gap + COLS * cs2, ph = ROWS * cs;
@@ -9136,7 +9145,7 @@ treaty:条约`
             const PAL = ["#ff7a8a", "#ffb04f", "#ffe066", "#6fd6a0", "#5bb8f5", "#a78bfa"], DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
             const base = Array.from({ length: ROWS }, () => Array.from({ length: COLS }, () => Math.floor(Math.random() * NC)));
             const mk = () => ({ g: base.map(r => r.slice()), ox: base.map(r => r.map(() => 0)), oy: base.map(r => r.map(() => 0)), stuck: false, parts: [] });
-            const me = mk(), him = mk(); let started = false, over = false, paused = false, tLeft = TL, raf = 0, lastT = performance.now(), aiT = 1, clock = 0, flash = 0;
+            const me = mk(), him = mk(); let started = false, over = false, paused = false, raf = 0, lastT = performance.now(), aiT = 1, clock = 0, flash = 0;
             const count = P => P.g.reduce((s, r) => s + r.filter(v => v >= 0).length, 0);
             const group = (P, r, c) => { const v = P.g[r][c]; if (v < 0) return []; const seen = new Set([r * COLS + c]), q = [[r, c]]; for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || P.g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } return q; };
             const allGroups = P => { const seen = new Set(), out = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (P.g[r][c] < 0 || seen.has(r * COLS + c)) continue; const g = group(P, r, c); g.forEach(([y, x]) => seen.add(y * COLS + x)); if (g.length >= 2) out.push(g); } return out; };
@@ -9167,21 +9176,19 @@ treaty:条约`
             function step(dt) {
                 clock += dt; flash = Math.max(0, flash - dt);
                 [me, him].forEach(P => { const k = Math.pow(0.0006, dt); for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { P.ox[r][c] *= k; P.oy[r][c] *= k; if (Math.abs(P.ox[r][c]) < 0.01) P.ox[r][c] = 0; if (Math.abs(P.oy[r][c]) < 0.01) P.oy[r][c] = 0; } P.parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.18; p.life -= dt * 2.2; }); P.parts = P.parts.filter(p => p.life > 0); });
-                if (!started || over) return; tLeft -= dt; aiT -= dt; if (aiT <= 0) { aiT = { easy: 2.2, normal: 1.6, hard: 1.15 }[D] * (0.7 + Math.random() * 0.6); aiMove(); }
-                if (tLeft <= 0) { tLeft = 0; finish(); }
+                if (!started || over) return; aiT -= dt; if (aiT <= 0) { aiT = { easy: 2.2, normal: 1.6, hard: 1.15 }[D] * (0.7 + Math.random() * 0.6); aiMove(); }
             }
             function drawBoard(P, x0, y0, s, mine) {
                 ctx.save(); ctx.translate(x0, y0); ctx.fillStyle = mine ? "#1a1d36" : "#15172b"; ctx.fillRect(0, 0, COLS * s, ROWS * s);
-                for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const v = P.g[r][c]; if (v < 0) continue; const x = (c + P.ox[r][c]) * s, y = (r - P.oy[r][c]) * s, m = Math.max(1, s * 0.06), w2 = s - m * 2; ctx.fillStyle = PAL[v]; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x + m, y + m, w2, w2, s * 0.2) : ctx.rect(x + m, y + m, w2, w2); ctx.fill(); ctx.fillStyle = "rgba(255,255,255,.28)"; ctx.fillRect(x + m + s * 0.14, y + m + s * 0.12, w2 - s * 0.28, Math.max(1, s * 0.1)); }
+                for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const v = P.g[r][c]; if (v < 0) continue; const x = (c + P.ox[r][c]) * s, y = (r - P.oy[r][c]) * s, m = Math.max(1, s * 0.06), w2 = s - m * 2; ctx.fillStyle = PAL[v]; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x + m, y + m, w2, w2, s * 0.2) : ctx.rect(x + m, y + m, w2, w2); ctx.fill(); }
                 P.parts.forEach(p => { ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.col; ctx.fillRect(p.x, p.y, p.s, p.s); }); ctx.globalAlpha = 1; ctx.restore();
             }
             function draw() {
                 ctx.clearRect(0, 0, pw, ph); drawBoard(me, 0, 0, cs, true); const hx = COLS * cs + gap; drawBoard(him, hx, 0, cs2, false);
                 if (flash > 0) { ctx.fillStyle = `rgba(255,90,90,${flash * 0.6})`; ctx.fillRect(0, 0, COLS * cs, ROWS * cs); }
                 ctx.textAlign = "left"; ctx.textBaseline = "top"; const ty = ROWS * cs2 + 14, fs = Math.max(11, Math.round(cs * 0.5));
-                ctx.fillStyle = "#9aa0c8"; ctx.font = `${fs}px sans-serif`; ctx.fillText("剩余时间", hx, ty); ctx.fillStyle = tLeft < 10 ? "#ff6b6b" : "#fff"; ctx.font = `bold ${Math.round(fs * 1.9)}px sans-serif`; ctx.fillText(Math.ceil(tLeft) + "s", hx, ty + fs + 4);
-                ctx.fillStyle = "#9aa0c8"; ctx.font = `${fs}px sans-serif`; ctx.fillText("方块越少越好", hx, ty + fs * 4.2);
-                if (me.stuck) ctx.fillText(over ? "" : "你已无可消", hx, ty + fs * 5.6);
+                ctx.fillStyle = "#9aa0c8"; ctx.font = `${fs}px sans-serif`; ctx.fillText("没有时间限制", hx, ty); ctx.fillText("方块越少越好", hx, ty + fs * 1.5); ctx.fillText("双方都消不动就结束", hx, ty + fs * 3);
+                if (me.stuck && !over) { ctx.fillStyle = "#ff8a8a"; ctx.fillText("你已无可消", hx, ty + fs * 4.8); } else if (him.stuck && !over) { ctx.fillText("他已无可消", hx, ty + fs * 4.8); }
                 if (!started) { ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fillRect(0, ph / 2 - 22, COLS * cs, 44); ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.font = "bold 17px sans-serif"; ctx.fillText("点下方「开始」", COLS * cs / 2, ph / 2); }
                 document.getElementById("gameScore").innerHTML = `<span style="background:#f3e8aa;color:#4a4220;padding:1px 9px;border-radius:10px">你 剩 ${count(me)}</span>　<span style="background:#d9ccf6;color:#35295c;padding:1px 9px;border-radius:10px">${hisName()} 剩 ${count(him)}</span>`;
             }
