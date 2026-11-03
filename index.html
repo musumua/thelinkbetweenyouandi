@@ -502,6 +502,8 @@
         /* ==================== 🏠 桌面主页样式 ==================== */
         #mainAppView.chat-in { animation: chatIn .38s cubic-bezier(.22,.8,.3,1) both; } @keyframes chatIn { from { opacity:0; transform:translateY(18px) scale(.985); } to { opacity:1; transform:none; } }
         .home-screen { position: fixed; top: 0; left: 0; width: 100%; height: var(--home-h, 100%); z-index: 50; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); background-size: cover; background-position: center; }
+        #mainAppView { position: relative; z-index: 2; }
+        .home-screen { background-color: var(--bg); }
         .home-wallpaper-mask { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.16);} [data-theme="eye-care"] .home-wallpaper-mask, [data-theme="light-green"] .home-wallpaper-mask { background: rgba(255,255,255,0.10); } .home-wallpaper-mask {  pointer-events: none; z-index: 0; }
         /* ==================== 💑 首页双方头像 + 心跳连接 ==================== */
         .home-couple-row { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; gap: 2px; padding: 0 10px; margin-top: 4.5vh; position: relative; z-index: 1; }
@@ -2100,7 +2102,7 @@
             w.arrive = Date.now() + 1500; db.wishStars.push(w); galFly = { w, t0: performance.now() }; saveData();
         }
         // 星系盘：在“盘面坐标”里画好（旋臂光带 + 大片云），旋臂按差速自转，age 越大绕得越紧；每个循环结束时与“新生”的盘交叉淡出淡入
-        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00009, galK = age => 8.4 + 12.6 * (Math.asin(0.96 * Math.sin(6.2832 * age / 480000 - 1.5708)) / Math.asin(0.96) + 1) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
+        const GAL_T = 369000, GAL_F = 9000, GAL_A0 = 0, GAL_O0 = 0.00004, galK = age => 8.4 + 12.6 * (Math.asin(0.96 * Math.sin(6.2832 * age / 900000 - 1.5708)) / Math.asin(0.96) + 1) / 2, galTh = (rr, age) => -GAL_O0 * age + (rr - 0.66) * (galK(age) - 4.2);
         function galCycle(tt) { return [{ age: tt, al: 1 }]; }
         function galDiscBuf(Rx) { const S = 3, n = Math.ceil(2 * Rx / S); return { n, S, P: new Float32Array(n * n * 3), A: new Float32Array(n * n), cv: Object.assign(document.createElement("canvas"), { width: n, height: n }), im: new ImageData(n, n) }; }
         function galFillDisc(Rx, age, B) {
@@ -2146,7 +2148,7 @@
             splat(W * 0.2, H * 0.15, 0, 1, R * 0.36, lin([40, 48, 110], 0.045), 0); splat(W * 0.85, H * 0.9, 0, 1, R * 0.4, lin([56, 40, 112], 0.05), 0);
             splat(cx, cy, ph, Ry / Rx, Rx, [[0, 214, 172, 126, 0.34], [0.3, 128, 134, 184, 0.1], [0.65, 92, 102, 156, 0.03], [1, 60, 76, 140, 0]], 0);
             splat(cx, cy, ph, 0.7, Rx * 1.3, [[0, 90, 110, 190, 0], [0.5, 90, 110, 190, 0.004], [0.8, 96, 108, 190, 0.01], [1, 80, 90, 180, 0]], 0);
-            splat(cx, cy, ph, 0.62, Rx * 0.27, [[0, 255, 244, 222, 0.95], [0.12, 255, 222, 170, 0.7], [0.45, 224, 176, 120, 0.2], [1, 210, 160, 110, 0]], 0);
+            splat(cx, cy, ph, 0.9, Rx * 0.2, [[0, 255, 244, 222, 0.8], [0.15, 255, 226, 180, 0.55], [0.5, 224, 176, 130, 0.14], [1, 210, 160, 110, 0]], 0);
             for (let i = 0; i < N; i++) { const lum = (add[i * 3] + add[i * 3 + 1] + add[i * 3 + 2]) / 3; vl[i] = 1 - (1 - vl[i]) * (1 - Math.min(0.93, lum / 45)); }
             const gcv = gal.glow || (gal.glow = document.createElement("canvas")), vcv = gal.veil || (gal.veil = document.createElement("canvas")); gcv.width = vcv.width = gw; gcv.height = vcv.height = gh;
             const gi = new ImageData(gw, gh), vi = new ImageData(gw, gh);
@@ -2180,7 +2182,7 @@
             ctx.globalCompositeOperation = "source-over";
             (db.wishStars || []).forEach(w => { if (w.arrive && nowMs - w.arrive < 600 && nowMs >= w.arrive) { const wr = 0.12 + w.r * 0.5, [x, y] = pos(wr, w.a + omega(wr) * t), k = (nowMs - w.arrive) / 600; ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 2 + k * 9, 0, 6.283); ctx.stroke(); } });
             // 流星
-            if (!gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
+            if (false && !gal.shoot && t > gal.nextShoot) { gal.shoot = { t0: t, x: Math.random() * W * 0.6 + W * 0.2, y: Math.random() * H * 0.3, dx: 1 + Math.random(), dy: 0.6 + Math.random() * 0.4 }; gal.nextShoot = t + 5000 + Math.random() * 5000; }
             if (gal.shoot) { const k = (t - gal.shoot.t0) / 700; if (k > 1) gal.shoot = null; else { const x = gal.shoot.x + gal.shoot.dx * k * 90, y = gal.shoot.y + gal.shoot.dy * k * 90; const g = ctx.createLinearGradient(x, y, x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); g.addColorStop(0, `rgba(255,255,255,${(1 - k) * 0.7})`); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - gal.shoot.dx * 22, y - gal.shoot.dy * 22); ctx.stroke(); } }
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             // 一颗星星从下方飞进去
@@ -2264,7 +2266,7 @@
                 c.restore(); c.save(); c.translate(9, -1);
                 B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
                 c.restore();
-                { const LP = D("#e4e6ea", "#a0a2b2"), SH1 = D("#f7f4ee", "#f3e2b8"), SH2 = D("#e2ddd2", "#e6cf98"), CAP = D("#d9a066", "#d9a066");
+                { const LP = D("#7d8494", "#cfd2e2"), SH1 = D("#f7f4ee", "#f3e2b8"), SH2 = D("#e2ddd2", "#e6cf98"), CAP = D("#d9a066", "#d9a066");
                   R(5, 12, 1, 35, LP); L(5, 12, 7, 10, LP); L(7, 10, 17, 6, LP); R(3, 47, 5, 1, LP); R(2, 48, 7, 1, LP); R(1, 49, 9, 1, LP); P(17, 5, LP);
                   R(17, 4, 2, 1, CAP);
                   for (let y = 0; y < 5; y++) { const half = 1 + y * 0.8, x0 = Math.round(18 - half), x1 = Math.round(18 + half); R(x0, 5 + y, x1 - x0 + 1, 1, y < 3 ? SH1 : SH2); }
@@ -2275,16 +2277,22 @@
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
                 E(21, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(43, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
-                B(59, 31, 17, 3, D("#f1e6d2", "#b9aa98")); R(61, 34, 2, 8, D("#e2d3b8", "#b9aa98")); R(72, 34, 2, 8, D("#e2d3b8", "#b9aa98")); R(60, 38, 14, 1, D("#e8dcc4", "#a99a88")); R(64, 29, 2, 2, D("#f6ead0", "#ffe2a0")); R(70, 29, 2, 2, D("#f6ead0", "#ffe2a0"));
+                { const TP = D("#f2dfb8", "#a8906a"), BD = D("#cfa86e", "#8e7855"), OL = D("#fff6e0", "#c9b48c"), IN = D("#a98550", "#4a3a2a"), LG = D("#b88f58", "#8a7352");
+                  B(58, 31, 20, 2, TP, OL); B(59, 33, 18, 6, BD, OL); B(60, 34, 9, 4, TP, OL); R(63, 35, 3, 1, IN); R(70, 34, 6, 4, IN); R(70, 37, 6, 1, D("#c9aa7c", "#6a5640"));
+                  R(71, 35, 4, 2, D("#c96f6f", "#9a5a5a")); R(72, 35, 2, 1, D("#e8b0a0", "#b88a80"));
+                  L(60, 39, 59, 42, LG); L(61, 39, 60, 42, LG); L(75, 39, 76, 42, LG); L(74, 39, 75, 42, LG);
+                  R(60, 29, 4, 2, D("#6fa0c9", "#4f7099")); R(60, 29, 4, 1, D("#f6f1e6", "#d8d0c0"));
+                  R(73, 28, 3, 3, D("#f6f1e6", "#d8d0c0")); R(76, 29, 1, 1, D("#f6f1e6", "#d8d0c0"));
+                  R(66, 29, 2, 2, D("#f6ead0", "#ffe2a0")); R(70, 29, 2, 2, D("#f6ead0", "#ffe2a0")); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { R(64, 29, 2, 2, "#fff3c8"); R(70, 29, 2, 2, "#fff3c8"); P(64, 28, "#ffb040"); P(70, 28, "#ffb040"); P(64, 27, "#fff0a8"); P(70, 27, "#fff0a8"); sp(64, 27, "#ffd98a"); sp(70, 27, "#ffd98a"); 
+                if (night) { R(66, 29, 2, 2, "#fff3c8"); R(70, 29, 2, 2, "#fff3c8"); P(66, 28, "#ffb040"); P(70, 28, "#ffb040"); P(66, 27, "#fff0a8"); P(70, 27, "#fff0a8"); sp(66, 27, "#ffd98a"); sp(70, 27, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
                                         for (let k = 6; k >= 1; k--) gE(18, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
                     for (let y = 11; y < 46; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(18 - half), y, Math.round(half * 2), 1); }
-                    gE(65, 28, 4, 4, "rgba(255,190,90,.1)"); gE(71, 28, 4, 4, "rgba(255,190,90,.1)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
+                    gE(67, 28, 4, 4, "rgba(255,190,90,.1)"); gE(71, 28, 4, 4, "rgba(255,190,90,.1)"); gE(22, 46, 26, 4, "rgba(255,222,140,.11)"); gE(22, 46, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -3768,9 +3776,11 @@
             playSound('call_loop');
             loopCallerId = setInterval(() => { playSound('call_loop'); }, 2000);
 
+            const hisDecline = Math.random() < 0.15;
             setTimeout(() => {
-                if(document.getElementById("callBannerBar").style.display === "flex" && callTotalSeconds === 0) {
+                if(document.getElementById("callBannerBar").style.display === "flex" && callTotalSeconds === 0 && !callStartTimestamp) {
                     clearInterval(loopCallerId);
+                    if (hisDecline) { playSound('hangup'); document.getElementById("callBannerBar").style.display = "none"; callTip("他已挂断"); return; }
                     playSound('connect');
                     startCallTimer();
                 }
@@ -3786,7 +3796,7 @@
             
             playSound('call_loop');
             loopCallerId = setInterval(() => { playSound('call_loop'); }, 2000);
-            incomingCallTimeoutId = setTimeout(() => { declineIncomingCall(); }, 30000);
+            incomingCallTimeoutId = setTimeout(() => { declineIncomingCall("t"); }, 30000);
         }
 
         function acceptIncomingCall() {
@@ -3802,11 +3812,13 @@
             startCallTimer();
         }
 
-        function declineIncomingCall() {
+        function callTip(text) { db.chat.push({ type: "system", text, red: true }); saveData(); try { renderChat(); } catch (e) { } }
+        function declineIncomingCall(timeout) {
             clearInterval(loopCallerId);
             clearTimeout(incomingCallTimeoutId);
             playSound('hangup');
             document.getElementById("incomingCallScreen").style.display = "none";
+            callTip(timeout === "t" ? "未接来电" : "你已挂断他的来电");
         }
 
         let callStartTimestamp = 0;
@@ -3839,6 +3851,7 @@
             if(callTimerInterval) clearInterval(callTimerInterval);
             playSound('hangup');
             document.getElementById("callBannerBar").style.display = "none";
+            if (!(callStartTimestamp && callTotalSeconds > 0)) callTip("你已取消通话");
             if(callStartTimestamp && callTotalSeconds > 0) {
                 const h = Math.floor(callTotalSeconds / 3600);
                 const m = Math.floor((callTotalSeconds % 3600) / 60);
@@ -5502,6 +5515,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         function mbWrite() {
             if (mbBusy) return; if (diaryHasPending()) { mbToast("上一封信还在路上，等他回信再写吧"); return; }
             const ov = mbOv(); ov.dataset.state = "write"; ov.innerHTML = `<div class="mb-wp"><div class="mb-wp-h"><button onclick="mbWClose()">✕</button><span>写给 ${escapeHtml(mbWho("his"))}</span></div><textarea id="mbTa" placeholder="亲爱的${escapeHtml(mbWho("his"))}…" oninput="diaryDraftText=this.value"></textarea><button class="mb-send" onclick="mbSend()">折好寄出 ✉</button></div>`;
+            { const wp = ov.querySelector(".mb-wp"), H = ov.clientHeight || window.innerHeight, W = ov.clientWidth || window.innerWidth, pw = Math.min(W * 0.88, 360), ph = Math.min(H * 0.66, 500); // 信纸尺寸在唤起输入法前就锁成像素，键盘弹出、页面变矮时不再缩放
+              wp.style.width = pw + "px"; wp.style.height = ph + "px"; wp.style.flexShrink = "0"; ov.style.alignItems = "flex-start"; wp.style.marginTop = Math.max(8, (H - ph) / 2) + "px"; wp.style.transition = "margin-top .25s ease"; ov.style.overflow = "hidden";
+              const ta0 = wp.querySelector("textarea"); ta0.addEventListener("focus", () => { wp.style.marginTop = "8px"; }); ta0.addEventListener("blur", () => { wp.style.marginTop = Math.max(8, (H - ph) / 2) + "px"; }); }
             ov.classList.add("show"); document.getElementById("mbTa").value = diaryDraftText; setTimeout(() => { const t = document.getElementById("mbTa"); if (t) t.focus(); }, 480);
         }
         function mbWClose() { const ov = document.getElementById("mbOv"); if (!ov || mbBusy) return; const t = document.getElementById("mbTa"); if (t) t.blur(); ov.classList.remove("show"); setTimeout(() => ov.remove(), 400); }
@@ -5636,6 +5652,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 }
                 if (m.type === "system" || m.type === "letter-tip") {
                     const tip = document.createElement("div"); tip.className = "system-msg"; tip.innerText = m.text;
+                    if (m.red) { tip.style.background = "none"; tip.style.color = "#e5484d"; }
                     tip.dataset.idx = idx;
                     if (m.isNudge) {
                         if (chatCollectMode) {
