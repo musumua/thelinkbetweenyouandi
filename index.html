@@ -503,6 +503,7 @@
         #mainAppView.chat-in { animation: chatIn .38s cubic-bezier(.22,.8,.3,1) both; } @keyframes chatIn { from { opacity:0; transform:translateY(18px) scale(.985); } to { opacity:1; transform:none; } }
         .home-screen { position: fixed; top: 0; left: 0; width: 100%; height: var(--home-h, 100%); z-index: 50; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); background-size: cover; background-position: center; }
         #mainAppView { position: relative; z-index: 2; }
+        #mainAppView > #globalBg { z-index: -1; }
         .home-screen { background-color: var(--bg); }
         .home-wallpaper-mask { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.16);} [data-theme="eye-care"] .home-wallpaper-mask, [data-theme="light-green"] .home-wallpaper-mask { background: rgba(255,255,255,0.10); } .home-wallpaper-mask {  pointer-events: none; z-index: 0; }
         /* ==================== 💑 首页双方头像 + 心跳连接 ==================== */
@@ -779,19 +780,25 @@
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
         #letterFullPage .pyq-scroll-content { position: relative; display: flex; flex-direction: column; overflow: hidden; }
         .mb-head { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top)) 12px 6px; flex-shrink: 0; }
-        .mb-foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 16px calc(10px + env(safe-area-inset-bottom)); pointer-events: none; }
-        .mb-foot > * { pointer-events: auto; }
+        .mb-foot { position: relative; flex-shrink: 0; height: calc(150px + env(safe-area-inset-bottom)); }
+        .mb-ground { position: absolute; left: 0; right: 0; bottom: 0; height: calc(60px + env(safe-area-inset-bottom)); display: block; }
+        .mb-foot .month-pill { position: absolute; left: 16px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 2; background: var(--panel); box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+        .mb-foot .mb-box { position: absolute; right: 18px; bottom: calc(42px + env(safe-area-inset-bottom)); z-index: 2; }
         .mb-write-btn { padding: 7px 16px; border-radius: 16px; border: 1px solid var(--primary); background: transparent; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; }
         .mb-box { flex-shrink: 0; display: flex; justify-content: center; }
         .mb-box svg { overflow: visible; }
         .mb-box.bump svg { animation: mbBump .6s ease; }
         @keyframes mbBump { 0% { transform: scale(1); } 30% { transform: scale(1.1, .92); } 60% { transform: scale(.97, 1.04); } 100% { transform: scale(1); } }
-        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px calc(120px + env(safe-area-inset-bottom)); }
-        .mb-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 10px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; position: relative; }
+        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px 12px; }
+        .mb-item { display: flex; align-items: center; gap: 12px; padding: 12px 10px 12px 18px; margin-bottom: 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; position: relative; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+        .mb-item::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: repeating-linear-gradient(135deg, #d9483f 0 6px, #f6f1e6 6px 9px, #3f78d0 9px 15px, #f6f1e6 15px 18px); }
+        .mb-item .mb-stamp { width: 26px; height: 32px; border: 1.5px dashed var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--text-sub); flex-shrink: 0; opacity: .8; }
+        .mb-del { width: 30px; height: 30px; border: none; background: transparent; color: var(--text-sub); opacity: .7; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+        .mb-del:active { background: rgba(224,82,74,.18); color: #e0524a; }
         .mb-item:active { transform: scale(.985); }
-        .mb-item.me { border-left: 4px solid #6f8fd0; } .mb-item.his { border-left: 4px solid #d9807a; }
+        
         .mb-item .mb-it { flex: 1; min-width: 0; } .mb-item .mb-ih { font-size: 12px; color: var(--text-sub); margin-bottom: 3px; } .mb-item .mb-ip { font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mb-item .mb-dot { position: absolute; right: 12px; top: 12px; width: 9px; height: 9px; border-radius: 50%; background: #e0524a; }
+        .mb-item .mb-dot { position: absolute; left: 12px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: #e0524a; }
         .mb-wait, .mb-empty { text-align: center; font-size: 13px; color: var(--text-sub); padding: 18px 0; }
         .mb-ov { position: absolute; inset: 0; z-index: 50; background: rgba(0,0,0,0); transition: background .4s; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .mb-ov.show { background: rgba(0,0,0,.62); }
@@ -831,8 +838,6 @@
     </style>
 </head>
 <body>
-
-    <div class="bg-layer" id="globalBg"></div>
 
     <div class="home-screen" id="homeScreen">
         <div class="home-wallpaper-mask"></div>
@@ -934,6 +939,7 @@
     </div>
 
     <div id="mainAppView" style="display:none; flex-direction:column; height:100%;">
+        <div class="bg-layer" id="globalBg"></div>
         <div class="header">
             <button class="home-back-btn" onclick="goHome()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
             <div class="header-other-看板" onclick="triggerRandomStarAction(true)">
@@ -1034,13 +1040,15 @@
                 <div style="flex:1"></div>
                 <button class="mb-write-btn" onclick="mbWrite()">✎ 写信</button>
             </div>
-            <div class="mb-foot">
-                <button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button>
-            <div class="mb-box" id="mbBox">
-                <svg id="mbSvg" viewBox="0 0 100 130" width="64" height="83"><rect x="20" y="116" width="60" height="9" rx="3" fill="#a5352f"/><rect x="26" y="36" width="48" height="82" fill="#d9483f"/><path d="M24 38 Q24 14 50 14 Q76 14 76 38 Z" fill="#d9483f"/><circle cx="50" cy="10" r="4.5" fill="#a5352f"/><rect x="24" y="36" width="52" height="5" fill="#a5352f"/><rect x="34" y="50" width="32" height="7" rx="3.5" fill="#7d2621" id="mbSlot"/><rect x="26" y="68" width="48" height="3" fill="#a5352f"/><rect x="34" y="78" width="32" height="30" rx="3" fill="none" stroke="#a5352f" stroke-width="2.5"/><circle cx="60" cy="93" r="2.2" fill="#fff"/></svg>
-            </div>
-            </div>
             <div class="mb-list" id="mbList"></div>
+            <div class="mb-foot">
+                <svg class="mb-ground" width="100%" height="60" aria-hidden="true"><defs>
+                    <pattern id="mbGr" width="16" height="22" patternUnits="userSpaceOnUse"><rect width="16" height="22" fill="#5f9a5c"/><path d="M3 22 L4.5 15 L6 22 M10 22 L11.5 17 L13 22" fill="#86bd7f"/><circle cx="8" cy="8" r="1" fill="#79b274"/></pattern>
+                    <pattern id="mbSt" width="30" height="19" patternUnits="userSpaceOnUse"><rect width="30" height="19" fill="#7d7769"/><g fill="#b8b19f"><rect x="1" y="1" width="13" height="8" rx="3.5"/><rect x="16" y="1" width="13" height="8" rx="3.5"/><rect x="8.5" y="10" width="13" height="8" rx="3.5"/><rect x="-6.5" y="10" width="13" height="8" rx="3.5"/><rect x="23.5" y="10" width="13" height="8" rx="3.5"/></g></pattern></defs>
+                    <rect width="100%" height="22" fill="url(#mbGr)"/><rect y="21" width="100%" height="2" fill="#4a7d4a"/><rect y="22" width="100%" height="38" fill="url(#mbSt)"/></svg>
+                <button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button>
+                <div class="mb-box" id="mbBox"><svg id="mbSvg" viewBox="0 0 100 130" width="90" height="117"><rect x="20" y="116" width="60" height="9" rx="3" fill="#a5352f"/><rect x="26" y="36" width="48" height="82" fill="#d9483f"/><path d="M24 38 Q24 14 50 14 Q76 14 76 38 Z" fill="#d9483f"/><circle cx="50" cy="10" r="4.5" fill="#a5352f"/><rect x="24" y="36" width="52" height="5" fill="#a5352f"/><rect x="34" y="50" width="32" height="7" rx="3.5" fill="#7d2621" id="mbSlot"/><rect x="26" y="68" width="48" height="3" fill="#a5352f"/><rect x="34" y="78" width="32" height="30" rx="3" fill="none" stroke="#a5352f" stroke-width="2.5"/><circle cx="60" cy="93" r="2.2" fill="#fff"/></svg></div>
+            </div>
         </div>
     </div>
 
@@ -1395,7 +1403,7 @@
                     </div>
 
                 </div>
-                <p style="font-size:11px; color:var(--text-sub); margin-bottom:12px; text-align:center;">控制对话、朋友圈及日记的自动流转频率</p>
+                <p style="font-size:11px; color:var(--text-sub); margin-bottom:12px; text-align:center;">控制对话、朋友圈及信箱的自动流转频率</p>
                 <div class="section" style="margin-bottom:0;">
                     <div class="flex-row-between"><span>气泡数（一次几条）</span><div><input id="cfg_card_min" type="number"> 至 <input id="cfg_card_max" type="number"> 个</div></div>
                     <div class="flex-row-between"><span>合并字卡（单条含几张）</span><div><input id="cfg_merge_card_min" type="number"> 至 <input id="cfg_merge_card_max" type="number"> 条</div></div>
@@ -1404,8 +1412,8 @@
                                         <div class="flex-row-between"><span>朋友圈发布间隔</span><div><input id="cfg_pyq_min" type="number"> 至 <input id="cfg_pyq_max" type="number"> 小时</div></div>
                     <div class="flex-row-between"><span>朋友圈发送条数</span><div><input id="cfg_pyq_card_min" type="number"> 至 <input id="cfg_pyq_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>朋友圈回复间隔</span><div><input id="cfg_pyq_reply_min" type="number"> 至 <input id="cfg_pyq_reply_max" type="number"> 秒</div></div>
-                    <div class="flex-row-between"><span>日记回复条数</span><div><input id="cfg_letter_num_min" type="number"> 至 <input id="cfg_letter_num_max" type="number"> 条</div></div>
-                    <div class="flex-row-between"><span>日记回复间隔</span><div><input id="cfg_letter_min" type="number"> 至 <input id="cfg_letter_max" type="number"> 小时</div></div>
+                    <div class="flex-row-between"><span>信件回复条数</span><div><input id="cfg_letter_num_min" type="number"> 至 <input id="cfg_letter_num_max" type="number"> 条</div></div>
+                    <div class="flex-row-between"><span>信件回复等待时长</span><div><input id="cfg_letter_min" type="number"> 至 <input id="cfg_letter_max" type="number"> 小时</div></div>
                 </div>
                 <p style="font-size:11px; color:var(--text-sub); margin:14px 0 8px; text-align:center;">以下每项只需填一个数字</p>
                 <div class="section" style="margin-bottom:0;">
@@ -2290,18 +2298,18 @@
                   R(65, 34, 5, 7, OLN); R(66, 34, 3, 6, LG); R(62, 40, 11, 3, OLN); R(63, 41, 9, 1, BD); R(66, 40, 3, 1, LG);
                   R(61, 30, 14, 1, OLN); R(59, 31, 18, 1, OLN); R(59, 32, 18, 2, OLN); R(61, 34, 14, 1, OLN);
                   R(60, 31, 16, 1, TPH); R(60, 32, 16, 1, TP); R(60, 33, 16, 1, BD);
-                  R(72, 27, 4, 3, SO); R(73, 28, 2, 1, D("#6fa0c9", "#4f7099")); R(73, 29, 2, 1, D("#f6f1e6", "#d8d0c0"));
+                  R(71, 28, 5, 2, SO); R(72, 29, 3, 1, D("#d9825a", "#a85a40")); leaf(73, 28, 0, -3, 3, D("#58a85a", "#2f5a3a")); leaf(73, 28, -2, -2, 2, D("#6fbf6a", "#38704a")); leaf(73, 28, 2, -2, 2, D("#6fbf6a", "#38704a"));
                   // 香薰蜡烛：玻璃罐 + 罐盖 + 灯芯
-                  R(62, 26, 6, 4, SO); R(63, 27, 4, 1, D("#8a6a4e", "#6a5040")); R(63, 28, 4, 2, D("#fff3e0", "#f6e0b8")); P(64, 25, "#4a3a30"); }
+                  R(63, 28, 4, 2, SO); R(64, 29, 2, 1, D("#fff3e0", "#f6e0b8")); P(64, 27, "#4a3a30"); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { P(64, 24, "#ffb040"); P(64, 23, "#fff0a8"); sp(64, 23, "#ffd98a"); 
+                if (night) { P(64, 26, "#ffb040"); P(64, 25, "#fff0a8"); sp(64, 25, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
                                         for (let k = 6; k >= 1; k--) gE(18, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
                     for (let y = 11; y < 41; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(18 - half), y, Math.round(half * 2), 1); }
-                    gE(65, 27, 6, 4, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
+                    gE(65, 28, 4, 3, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -4400,9 +4408,9 @@
             db.freq.hangupPct = Math.min(100, Math.max(0, parseFloat(document.getElementById("cfg_hangup_pct").value) || 0));
             db.freq.readNoReplyPct = Math.min(100, Math.max(0, parseFloat(document.getElementById("cfg_rnr_pct").value) || 0));
             db.next = {};
-            db.freq.letterMin = Math.max(1, parseFloat(document.getElementById("cfg_letter_min").value) || 1);
+            db.freq.letterMin = Math.max(0.02, parseFloat(document.getElementById("cfg_letter_min").value) || 1);
             db.freq.letterMax = Math.max(db.freq.letterMin, parseFloat(document.getElementById("cfg_letter_max").value) || 3);
-            saveData(); setupPyqTimelineAutomation(); setupStatusTimerAutomation(); setupMissingQuoteAutomation(); setupAutoMessageAutomation(); closeModal("freqLargeModal"); alert("配置保存成功！");
+            saveData(); setupPyqTimelineAutomation(); setupStatusTimerAutomation(); setupMissingQuoteAutomation(); setupAutoMessageAutomation(); { const fb = document.querySelector('#freqLargeModal button[onclick="saveFrequencies()"]'); if (fb) { const t0 = fb.innerText; fb.innerText = "已保存 ✓"; setTimeout(() => { fb.innerText = t0; }, 1500); } }
         }
 
         function openFreqModal() {
@@ -5452,7 +5460,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             monthPickTarget = target;
             const set = new Set();
             if (target === "diary") {
-                db.sentLetters.concat(db.receivedLetters).forEach(l => { const k = tsMonthKey(itemTs(l)); if (k) set.add(k); });
+                db.sentLetters.concat(db.receivedLetters).filter(l => !l.deleted).forEach(l => { const k = tsMonthKey(itemTs(l)); if (k) set.add(k); });
             } else {
                 (db.pyqPosts || []).forEach(p => { const k = tsMonthKey(pyqPostTs(p)); if (k) set.add(k); });
             }
@@ -5484,17 +5492,22 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         const mbEnvSvg = c => `<svg viewBox="0 0 40 28" width="40" height="28" style="flex-shrink:0"><rect x="1" y="1" width="38" height="26" rx="3" fill="#fbf6ea" stroke="${c}" stroke-width="1.8"/><path d="M2 3l18 13L38 3" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
         function mbItems() {
             const n = Math.max(db.sentLetters.length, db.receivedLetters.length), r = [];
-            for (let i = 0; i < n; i++) { if (db.sentLetters[i]) r.push({ who: "me", i, l: db.sentLetters[i] }); if (db.receivedLetters[i]) r.push({ who: "his", i, l: db.receivedLetters[i] }); }
+            for (let i = 0; i < n; i++) { if (db.sentLetters[i] && !db.sentLetters[i].deleted) r.push({ who: "me", i, l: db.sentLetters[i] }); if (db.receivedLetters[i] && !db.receivedLetters[i].deleted) r.push({ who: "his", i, l: db.receivedLetters[i] }); }
             return diaryMonthFilter ? r.filter(x => tsMonthKey(itemTs(x.l)) === diaryMonthFilter) : r;
         }
         function renderDiaryTimeline() {
             const box = document.getElementById("mbList"); if (!box) return;
             const items = mbItems(), pend = diaryHasPending();
             let h = items.map(x => { const un = x.who === "his" && x.l.read === false, pre = String(x.l.content).replace(/\s+/g, " ").slice(0, 30);
-                return `<div class="mb-item ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${mbEnvSvg(x.who === "me" ? "#6f8fd0" : "#d9807a")}<div class="mb-it"><div class="mb-ih">${escapeHtml(mbWho(x.who))}${x.who === "me" ? "寄出的信" : "的来信"} · ${escapeHtml(x.l.time || "")}</div><div class="mb-ip">${escapeHtml(pre)}</div></div>${un ? '<span class="mb-dot"></span>' : ""}</div>`; }).join("");
+                return `<div class="mb-item ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${mbEnvSvg(x.who === "me" ? "#6f8fd0" : "#d9807a")}<div class="mb-it"><div class="mb-ih">${escapeHtml(mbWho(x.who))}${x.who === "me" ? "寄出的信" : "的来信"} · ${escapeHtml(x.l.time || "")}</div><div class="mb-ip">${escapeHtml(pre)}</div></div>${un ? '<span class="mb-dot"></span>' : ""}<div class="mb-stamp">${x.who === "me" ? "♡" : "✦"}</div><button class="mb-del" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div>`; }).join("");
             if (pend && !diaryMonthFilter) h += `<div class="mb-wait">✉ 信已经寄出，正在飞往${escapeHtml(mbWho("his"))}那里…</div>`;
             if (!h) h = `<div class="mb-empty">信箱还是空的<br>点右上角「写信」寄出第一封吧</div>`;
             box.innerHTML = h;
+        }
+        function mbDel(who, i) {
+            if (mbBusy) return; const l = (who === "me" ? db.sentLetters : db.receivedLetters)[i]; if (!l) return;
+            if (!confirm("删除这封信？删除后无法恢复。")) return;
+            l.deleted = true; l.content = l.content; saveData(); renderDiaryTimeline(); // 只做标记隐藏，保持来信/回信的配对和等待状态不乱
         }
         function mbToast(t) { const host = document.querySelector("#letterFullPage .pyq-scroll-content"); if (!host) return; const d = document.createElement("div"); d.className = "mb-toast"; d.innerText = t; host.appendChild(d); setTimeout(() => d.remove(), 2200); }
         function mbOv() { const old = document.getElementById("mbOv"); if (old) old.remove(); const ov = document.createElement("div"); ov.id = "mbOv"; ov.className = "mb-ov"; ov.onclick = mbOvTap; document.querySelector("#letterFullPage .pyq-scroll-content").appendChild(ov); return ov; }
@@ -5558,9 +5571,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             saveData(); renderChat();
             currentDiaryRound = getDiaryRounds().length - 1;
             const delayHours = db.freq.letterMin + Math.random() * (db.freq.letterMax - db.freq.letterMin);
-            db.letterReplyDue = Date.now() + delayHours * 2000;
+            db.letterReplyDue = Date.now() + delayHours * 3600000;
             saveData();
-            setTimeout(checkLetterReply, delayHours * 2000 + 50);
+            setTimeout(checkLetterReply, Math.min(delayHours * 3600000 + 50, 2147000000));
         }
         function checkLetterReply() {
             if (!db.letterReplyDue || Date.now() < db.letterReplyDue || !diaryHasPending()) { if (db.letterReplyDue && !diaryHasPending()) { db.letterReplyDue = 0; } return; }
@@ -9147,24 +9160,24 @@ treaty:条约`
             gameCleanup = () => { cancelAnimationFrame(raf); document.removeEventListener("keydown", key); over = true; };
         }
         function gameBlocks() {
-            const COLS = 10, ROWS = 14, D = gameDiff, NC = { easy: 3, normal: 4, hard: 5 }[D], body = document.getElementById("gameBody"), dpr = window.devicePixelRatio || 1;
+            const COLS = 10, ROWS = 14, D = gameDiff, NC = { easy: 4, normal: 5, hard: 6 }[D], body = document.getElementById("gameBody"), dpr = window.devicePixelRatio || 1;
             body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，同时开消：点一块，和它相连的同色方块一起消掉，双方都消不动就结束</div><div class="game-msg" id="gameScore" style="font-weight:700;font-size:12.5px;margin:0 0 4px"></div><canvas id="bkCanvas" class="game-canvas"></canvas><div class="game-btns"><button class="btn" id="bkStart">开始</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("bkCanvas"), ctx = cv.getContext("2d");
             const availH = window.innerHeight - body.getBoundingClientRect().top - 190, wAvail = Math.min(body.clientWidth - 24, 400);
             const cs = Math.max(16, Math.floor(Math.min(availH / ROWS, wAvail * 0.66 / COLS))), cs2 = Math.max(8, Math.floor(cs * 0.5)), gap = 12, pw = COLS * cs + gap + COLS * cs2, ph = ROWS * cs;
             cv.style.width = pw + "px"; cv.style.height = ph + "px"; cv.width = pw * dpr; cv.height = ph * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
-            const PAL = ["#ff7a8a", "#ffb04f", "#ffe066", "#6fd6a0", "#5bb8f5", "#a78bfa"], DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
+            const PAL = ["#ff7a8a", "#ffe066", "#6fd6a0", "#5bb8f5", "#ffb04f", "#a78bfa"], DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
             const collapse = g => { const out = g.map(r => r.map(() => -1)); let nc = 0; for (let c = 0; c < COLS; c++) { const col = []; for (let r = ROWS - 1; r >= 0; r--) if (g[r][c] >= 0) col.push(g[r][c]); if (!col.length) continue; col.forEach((v, i) => { out[ROWS - 1 - i][nc] = v; }); nc++; } return out; };
-            const solvable = b0 => { for (let t = 0; t < 14; t++) { let g = b0.map(r => r.slice()); for (;;) { const seen = new Set(), gs = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (g[r][c] < 0 || seen.has(r * COLS + c)) continue; const v = g[r][c], q = [[r, c]]; seen.add(r * COLS + c); for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } if (q.length >= 2) gs.push(q); } if (!gs.length) break; gs.sort((a, b) => a.length - b.length); const pick = t === 0 ? gs[0] : gs[Math.floor(Math.pow(Math.random(), t % 2 ? 1 : 2) * gs.length)]; pick.forEach(([y, x]) => { g[y][x] = -1; }); g = collapse(g); } if (g.every(r => r.every(v => v < 0))) return true; } return false; };
-            const genBoard = () => { const base = Array.from({ length: ROWS }, () => new Array(COLS).fill(0)); for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const up = r > 0 ? base[r - 1][c] : -1, lf = c > 0 ? base[r][c - 1] : -1, k = Math.random(); base[r][c] = k < 0.28 && up >= 0 ? up : k < 0.56 && lf >= 0 ? lf : Math.floor(Math.random() * NC); }
-            return base; }; let base = genBoard(); for (let i = 0; i < 150 && !solvable(base); i++) base = genBoard(); // 生成时让相邻方块更容易同色；并保证这盘能被全部消完
+            const solvable = b0 => { for (let t = 0; t < 9; t++) { let g = b0.map(r => r.slice()); for (;;) { const seen = new Set(), gs = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (g[r][c] < 0 || seen.has(r * COLS + c)) continue; const v = g[r][c], q = [[r, c]]; seen.add(r * COLS + c); for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } if (q.length >= 2) gs.push(q); } if (!gs.length) break; gs.sort((a, b) => a.length - b.length); const pick = t === 0 ? gs[0] : gs[Math.floor(Math.pow(Math.random(), t % 2 ? 1 : 2) * gs.length)]; pick.forEach(([y, x]) => { g[y][x] = -1; }); g = collapse(g); } if (g.every(r => r.every(v => v < 0))) return true; } return false; };
+            const genBoard = pc => { const base = Array.from({ length: ROWS }, () => new Array(COLS).fill(0)); for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const up = r > 0 ? base[r - 1][c] : -1, lf = c > 0 ? base[r][c - 1] : -1, k = Math.random(); base[r][c] = k < pc && up >= 0 ? up : k < pc * 2 && lf >= 0 ? lf : Math.floor(Math.random() * NC); }
+            return base; }; let base = genBoard(0.1); for (let i = 1; i < 500 && !solvable(base); i++) base = genBoard(Math.min(0.36, 0.12 + i * 0.01)); // 先试松散的盘面，试不出能全消的就逐步增加同色相邻的概率 // 生成时让相邻方块更容易同色；并保证这盘能被全部消完
             const mk = () => ({ g: base.map(r => r.slice()), ox: base.map(r => r.map(() => 0)), oy: base.map(r => r.map(() => 0)), stuck: false, parts: [] });
             const me = mk(), him = mk(); let started = false, over = false, paused = false, raf = 0, lastT = performance.now(), aiT = 1, clock = 0, flash = 0;
             const count = P => P.g.reduce((s, r) => s + r.filter(v => v >= 0).length, 0);
             const group = (P, r, c) => { const v = P.g[r][c]; if (v < 0) return []; const seen = new Set([r * COLS + c]), q = [[r, c]]; for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || P.g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } return q; };
             const allGroups = P => { const seen = new Set(), out = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (P.g[r][c] < 0 || seen.has(r * COLS + c)) continue; const g = group(P, r, c); g.forEach(([y, x]) => seen.add(y * COLS + x)); if (g.length >= 2) out.push(g); } return out; };
             function pop(P, g, big) {
-                g.forEach(([r, c]) => { P.g[r][c] = -1; });
+                const s = big ? cs : cs2; g.forEach(([r, c]) => { const col = PAL[P.g[r][c]]; for (let k = 0; k < (big ? 4 : 1); k++) P.parts.push({ x: (c + 0.5) * s, y: (r + 0.5) * s, vx: (Math.random() - 0.5) * 3, vy: -Math.random() * 2.5, life: 1, col, s: s * 0.22 }); P.g[r][c] = -1; });
                 const ng = Array.from({ length: ROWS }, () => new Array(COLS).fill(-1)), nox = ng.map(r => r.map(() => 0)), noy = ng.map(r => r.map(() => 0)); let nc = 0;
                 for (let c = 0; c < COLS; c++) { const col = []; for (let r = ROWS - 1; r >= 0; r--) if (P.g[r][c] >= 0) col.push([r, P.g[r][c]]); if (!col.length) continue; col.forEach(([r, v], i) => { const nr = ROWS - 1 - i; ng[nr][nc] = v; noy[nr][nc] = (r - nr) + P.oy[r][c]; nox[nr][nc] = (c - nc) + P.ox[r][c]; }); nc++; }
                 P.g = ng; P.ox = ng.map(r => r.map(() => 0)); P.oy = ng.map(r => r.map(() => 0)); P.stuck = allGroups(P).length === 0;
