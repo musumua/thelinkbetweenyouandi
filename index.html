@@ -779,13 +779,14 @@
         #letterFullPage .pyq-scroll-content { display: flex; flex-direction: column; overflow: hidden; }
         #letterFullPage .pyq-scroll-content { position: relative; display: flex; flex-direction: column; overflow: hidden; }
         .mb-head { display: flex; align-items: center; gap: 8px; padding: calc(10px + env(safe-area-inset-top)) 12px 6px; flex-shrink: 0; }
-        .mb-sub { padding: 0 14px 4px; flex-shrink: 0; }
+        .mb-foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 16px calc(10px + env(safe-area-inset-bottom)); pointer-events: none; }
+        .mb-foot > * { pointer-events: auto; }
         .mb-write-btn { padding: 7px 16px; border-radius: 16px; border: 1px solid var(--primary); background: transparent; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; }
-        .mb-box { flex-shrink: 0; display: flex; justify-content: center; padding: 2px 0 0; }
+        .mb-box { flex-shrink: 0; display: flex; justify-content: center; }
         .mb-box svg { overflow: visible; }
         .mb-box.bump svg { animation: mbBump .6s ease; }
         @keyframes mbBump { 0% { transform: scale(1); } 30% { transform: scale(1.1, .92); } 60% { transform: scale(.97, 1.04); } 100% { transform: scale(1); } }
-        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px calc(18px + env(safe-area-inset-bottom)); }
+        .mb-list { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 10px 14px calc(120px + env(safe-area-inset-bottom)); }
         .mb-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 10px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; position: relative; }
         .mb-item:active { transform: scale(.985); }
         .mb-item.me { border-left: 4px solid #6f8fd0; } .mb-item.his { border-left: 4px solid #d9807a; }
@@ -1033,9 +1034,11 @@
                 <div style="flex:1"></div>
                 <button class="mb-write-btn" onclick="mbWrite()">✎ 写信</button>
             </div>
-            <div class="mb-sub"><button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button></div>
+            <div class="mb-foot">
+                <button class="month-pill" id="diaryMonthBtn" onclick="openMonthPicker('diary')">全部</button>
             <div class="mb-box" id="mbBox">
                 <svg id="mbSvg" viewBox="0 0 100 130" width="64" height="83"><rect x="20" y="116" width="60" height="9" rx="3" fill="#a5352f"/><rect x="26" y="36" width="48" height="82" fill="#d9483f"/><path d="M24 38 Q24 14 50 14 Q76 14 76 38 Z" fill="#d9483f"/><circle cx="50" cy="10" r="4.5" fill="#a5352f"/><rect x="24" y="36" width="52" height="5" fill="#a5352f"/><rect x="34" y="50" width="32" height="7" rx="3.5" fill="#7d2621" id="mbSlot"/><rect x="26" y="68" width="48" height="3" fill="#a5352f"/><rect x="34" y="78" width="32" height="30" rx="3" fill="none" stroke="#a5352f" stroke-width="2.5"/><circle cx="60" cy="93" r="2.2" fill="#fff"/></svg>
+            </div>
             </div>
             <div class="mb-list" id="mbList"></div>
         </div>
@@ -1413,7 +1416,7 @@
                     <div class="flex-row-between"><span>表情包概率</span><div><input id="cfg_emoji_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>自由造句概率</span><div><input id="cfg_free_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>主动通话概率</span><div><input id="cfg_call_pct" type="number"> %</div></div>
-                    <div class="flex-row-between"><span>他挂断通话概率</span><div><input id="cfg_hangup_pct" type="number"> %</div></div>
+                    <div class="flex-row-between"><span>挂断通话概率</span><div><input id="cfg_hangup_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>已读不回概率</span><div><input id="cfg_rnr_pct" type="number"> %</div></div>
                 </div>
                 <button class="btn" style="width:100%; margin-top:14px;" onclick="saveFrequencies()">保存配置</button>
@@ -2268,11 +2271,11 @@
                 c.restore(); c.save(); c.translate(9, -1);
                 B(27, 8, 8, 10, D("#f7f3ea", "#8d869c"), D("#d9d1c0", "#b9b3cc")); R(29, 10, 4, 6, D("#cfd8e6", "#566078"));
                 c.restore();
-                { const LP = D("#7d8494", "#cfd2e2"), SH1 = D("#f7f4ee", "#f3e2b8"), SH2 = D("#e2ddd2", "#e6cf98"), CAP = D("#d9a066", "#d9a066");
-                  R(4, 12, 3, 30, PX_OUT); L(5, 11, 7, 9, PX_OUT); L(5, 13, 7, 11, PX_OUT); L(7, 9, 17, 5, PX_OUT); L(7, 11, 17, 7, PX_OUT); R(2, 40, 8, 3, PX_OUT); R(16, 3, 4, 2, PX_OUT);
-                  for (let y = 0; y < 5; y++) { const half = 1 + y * 0.8, x0 = Math.round(18 - half), x1 = Math.round(18 + half); R(x0 - 1, 5 + y, 1, 1, PX_OUT); R(x1 + 1, 5 + y, 1, 1, PX_OUT); }
-                  R(13, 10, 11, 2, PX_OUT);
-                  R(5, 12, 1, 30, LP); L(5, 12, 7, 10, LP); L(7, 10, 17, 6, LP); R(3, 41, 6, 1, LP); P(17, 5, LP);
+                { const LP = D("#9a98aa", "#d4d6e6"), LP2 = D("#74728a", "#a0a2bc"), LSO = D("#b8b0a0", "#9a8a64"), SH1 = D("#f7f4ee", "#f3e2b8"), SH2 = D("#e2ddd2", "#e6cf98"), CAP = D("#d9a066", "#d9a066");
+                  
+                  for (let y = 0; y < 5; y++) { const half = 1 + y * 0.8, x0 = Math.round(18 - half), x1 = Math.round(18 + half); R(x0 - 1, 5 + y, 1, 1, LSO); R(x1 + 1, 5 + y, 1, 1, LSO); }
+                  R(13, 11, 11, 1, LSO);
+                  R(5, 12, 1, 30, LP); R(6, 12, 1, 30, LP2); L(5, 12, 7, 10, LP); L(6, 12, 8, 10, LP2); L(7, 10, 17, 6, LP); L(7, 11, 17, 7, LP2); R(2, 41, 8, 1, LP); R(3, 42, 6, 1, LP2); P(17, 5, LP);
                   R(17, 4, 2, 1, CAP);
                   for (let y = 0; y < 5; y++) { const half = 1 + y * 0.8, x0 = Math.round(18 - half), x1 = Math.round(18 + half); R(x0, 5 + y, x1 - x0 + 1, 1, y < 3 ? SH1 : SH2); }
                   R(14, 10, 9, 1, D("#fff4cc", "#fff8d8")); }
@@ -2282,14 +2285,14 @@
                 B(13, 39, 4, 3, "#8a6a4e"); B(48, 39, 4, 3, "#8a6a4e");
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
                 E(21, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(43, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
-                { const OLN = D("#8f6a3e", PX_OUT), TP = D("#e0b878", "#8a6a48"), TPH = D("#efd29c", "#a98a60"), BD = D("#c49454", "#6e5238"), LG = D("#cfa468", "#7a5a3e");
+                { const OLN = D("#a8804c", "#4a3a34"), TP = D("#e6c486", "#8a6a48"), TPH = D("#f2d9a6", "#a98a60"), BD = D("#cfa468", "#6e5238"), LG = D("#d8b074", "#7a5a3e"), SO = D("#b9a68c", "#5a4a44");
                   // 圆形小茶几：和家具一样的描边，木色桌面 + 一条中柱 + 底座
                   R(65, 34, 5, 7, OLN); R(66, 34, 3, 6, LG); R(62, 40, 11, 3, OLN); R(63, 41, 9, 1, BD); R(66, 40, 3, 1, LG);
                   R(61, 30, 14, 1, OLN); R(59, 31, 18, 1, OLN); R(59, 32, 18, 2, OLN); R(61, 34, 14, 1, OLN);
                   R(60, 31, 16, 1, TPH); R(60, 32, 16, 1, TP); R(60, 33, 16, 1, BD);
-                  R(72, 27, 4, 3, PX_OUT); R(73, 28, 2, 1, D("#6fa0c9", "#4f7099")); R(73, 29, 2, 1, D("#f6f1e6", "#d8d0c0"));
+                  R(72, 27, 4, 3, SO); R(73, 28, 2, 1, D("#6fa0c9", "#4f7099")); R(73, 29, 2, 1, D("#f6f1e6", "#d8d0c0"));
                   // 香薰蜡烛：玻璃罐 + 罐盖 + 灯芯
-                  R(62, 26, 6, 4, PX_OUT); R(63, 27, 4, 1, D("#8a6a4e", "#6a5040")); R(63, 28, 4, 2, D("#fff3e0", "#f6e0b8")); P(64, 25, "#4a3a30"); }
+                  R(62, 26, 6, 4, SO); R(63, 27, 4, 1, D("#8a6a4e", "#6a5040")); R(63, 28, 4, 2, D("#fff3e0", "#f6e0b8")); P(64, 25, "#4a3a30"); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
@@ -3790,7 +3793,7 @@
                     playSound('connect');
                     startCallTimer();
                     const t0 = callStartTimestamp, hp = db.freq && db.freq.hangupPct !== undefined ? db.freq.hangupPct : 15;
-                    if (Math.random() * 100 < hp * 0.5) setTimeout(() => { if (callStartTimestamp === t0 && t0) { hangupCall(); callTip("他已挂断"); } }, 20000 + Math.random() * 100000);
+                    if (Math.random() * 100 < hp) setTimeout(() => { if (callStartTimestamp === t0 && t0) { hangupCall(); callTip("他已挂断"); } }, 3600000 + Math.random() * 3600000);
                 }
             }, 1500 + Math.random() * 1500);
         }
@@ -9034,7 +9037,7 @@ treaty:条约`
               while (st.length) { const [a, b] = st[st.length - 1], nb = [0, 1, 2, 3].filter(d => cellOk(a + DX[d], b + DY[d]) && !seen[b + DY[d]][a + DX[d]]); if (!nb.length) { st.pop(); continue; } const d = nb[Math.floor(Math.random() * nb.length)]; openC(a, b, d); seen[b + DY[d]][a + DX[d]] = true; st.push([a + DX[d], b + DY[d]]); }
               const deg = (a, b) => [0, 1, 2, 3].filter(d => path[b * 2 + 1 + DY[d]][a * 2 + 1 + DX[d]]).length;
               for (let b = 0; b < CHn; b++) for (let a = 0; a < CW; a++) { if (!cellOk(a, b)) continue; if (deg(a, b) <= 1) { const cl = [0, 1, 2, 3].filter(d => cellOk(a + DX[d], b + DY[d]) && !path[b * 2 + 1 + DY[d]][a * 2 + 1 + DX[d]]); if (cl.length) openC(a, b, cl[Math.floor(Math.random() * cl.length)]); } }
-              for (let b = 0; b < CHn; b++) for (let a = 0; a < CW; a++) { if (!cellOk(a, b)) continue; [1, 2].forEach(d => { if (cellOk(a + DX[d], b + DY[d]) && !path[b * 2 + 1 + DY[d]][a * 2 + 1 + DX[d]] && Math.random() < 0.07) openC(a, b, d); }); } }
+              for (let b = 0; b < CHn; b++) for (let a = 0; a < CW; a++) { if (!cellOk(a, b)) continue; [1, 2].forEach(d => { if (cellOk(a + DX[d], b + DY[d]) && !path[b * 2 + 1 + DY[d]][a * 2 + 1 + DX[d]] && Math.random() < 0.26) openC(a, b, d); }); } }
             path[CY][CX - 1] = path[CY][CX] = path[CY][CX + 1] = true; path[CY - 1][CX] = true;
             const dots = Array.from({ length: R }, (_, y) => Array.from({ length: C }, (_, x) => path[y][x] && !inCage(x, y) ? 1 : 0)); let left = 0; dots[CY - 1][CX] = 0;
             const mkP = (col, sx, sy, human) => ({ col, sx, sy, human, gx: sx, gy: sy, tx: sx, ty: sy, p: 1, dir: null, face: 1, want: null, score: 0, lives: 3, inv: 0, boost: 0, pause: 0, at: false });
@@ -9151,17 +9154,20 @@ treaty:条约`
             const cs = Math.max(16, Math.floor(Math.min(availH / ROWS, wAvail * 0.66 / COLS))), cs2 = Math.max(8, Math.floor(cs * 0.5)), gap = 12, pw = COLS * cs + gap + COLS * cs2, ph = ROWS * cs;
             cv.style.width = pw + "px"; cv.style.height = ph + "px"; cv.width = pw * dpr; cv.height = ph * dpr; cv.style.touchAction = "none"; ctx.scale(dpr, dpr);
             const PAL = ["#ff7a8a", "#ffb04f", "#ffe066", "#6fd6a0", "#5bb8f5", "#a78bfa"], DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
-            const base = Array.from({ length: ROWS }, () => new Array(COLS).fill(0)); for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const up = r > 0 ? base[r - 1][c] : -1, lf = c > 0 ? base[r][c - 1] : -1, k = Math.random(); base[r][c] = k < 0.28 && up >= 0 ? up : k < 0.56 && lf >= 0 ? lf : Math.floor(Math.random() * NC); } // 生成时让相邻方块更容易同色，大片色块更多
+            const collapse = g => { const out = g.map(r => r.map(() => -1)); let nc = 0; for (let c = 0; c < COLS; c++) { const col = []; for (let r = ROWS - 1; r >= 0; r--) if (g[r][c] >= 0) col.push(g[r][c]); if (!col.length) continue; col.forEach((v, i) => { out[ROWS - 1 - i][nc] = v; }); nc++; } return out; };
+            const solvable = b0 => { for (let t = 0; t < 14; t++) { let g = b0.map(r => r.slice()); for (;;) { const seen = new Set(), gs = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (g[r][c] < 0 || seen.has(r * COLS + c)) continue; const v = g[r][c], q = [[r, c]]; seen.add(r * COLS + c); for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } if (q.length >= 2) gs.push(q); } if (!gs.length) break; gs.sort((a, b) => a.length - b.length); const pick = t === 0 ? gs[0] : gs[Math.floor(Math.pow(Math.random(), t % 2 ? 1 : 2) * gs.length)]; pick.forEach(([y, x]) => { g[y][x] = -1; }); g = collapse(g); } if (g.every(r => r.every(v => v < 0))) return true; } return false; };
+            const genBoard = () => { const base = Array.from({ length: ROWS }, () => new Array(COLS).fill(0)); for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const up = r > 0 ? base[r - 1][c] : -1, lf = c > 0 ? base[r][c - 1] : -1, k = Math.random(); base[r][c] = k < 0.28 && up >= 0 ? up : k < 0.56 && lf >= 0 ? lf : Math.floor(Math.random() * NC); }
+            return base; }; let base = genBoard(); for (let i = 0; i < 150 && !solvable(base); i++) base = genBoard(); // 生成时让相邻方块更容易同色；并保证这盘能被全部消完
             const mk = () => ({ g: base.map(r => r.slice()), ox: base.map(r => r.map(() => 0)), oy: base.map(r => r.map(() => 0)), stuck: false, parts: [] });
             const me = mk(), him = mk(); let started = false, over = false, paused = false, raf = 0, lastT = performance.now(), aiT = 1, clock = 0, flash = 0;
             const count = P => P.g.reduce((s, r) => s + r.filter(v => v >= 0).length, 0);
             const group = (P, r, c) => { const v = P.g[r][c]; if (v < 0) return []; const seen = new Set([r * COLS + c]), q = [[r, c]]; for (let i = 0; i < q.length; i++) { const [y, x] = q[i]; for (let d = 0; d < 4; d++) { const ny = y + DY[d], nx = x + DX[d]; if (ny < 0 || nx < 0 || ny >= ROWS || nx >= COLS || P.g[ny][nx] !== v || seen.has(ny * COLS + nx)) continue; seen.add(ny * COLS + nx); q.push([ny, nx]); } } return q; };
             const allGroups = P => { const seen = new Set(), out = []; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { if (P.g[r][c] < 0 || seen.has(r * COLS + c)) continue; const g = group(P, r, c); g.forEach(([y, x]) => seen.add(y * COLS + x)); if (g.length >= 2) out.push(g); } return out; };
             function pop(P, g, big) {
-                const s = big ? cs : cs2; g.forEach(([r, c]) => { const col = PAL[P.g[r][c]]; for (let k = 0; k < (big ? 4 : 1); k++) P.parts.push({ x: (c + 0.5) * s, y: (r + 0.5) * s, vx: (Math.random() - 0.5) * 3, vy: -Math.random() * 2.5, life: 1, col, s: s * 0.22 }); P.g[r][c] = -1; });
+                g.forEach(([r, c]) => { P.g[r][c] = -1; });
                 const ng = Array.from({ length: ROWS }, () => new Array(COLS).fill(-1)), nox = ng.map(r => r.map(() => 0)), noy = ng.map(r => r.map(() => 0)); let nc = 0;
                 for (let c = 0; c < COLS; c++) { const col = []; for (let r = ROWS - 1; r >= 0; r--) if (P.g[r][c] >= 0) col.push([r, P.g[r][c]]); if (!col.length) continue; col.forEach(([r, v], i) => { const nr = ROWS - 1 - i; ng[nr][nc] = v; noy[nr][nc] = (r - nr) + P.oy[r][c]; nox[nr][nc] = (c - nc) + P.ox[r][c]; }); nc++; }
-                P.g = ng; P.ox = nox; P.oy = noy; P.stuck = allGroups(P).length === 0;
+                P.g = ng; P.ox = ng.map(r => r.map(() => 0)); P.oy = ng.map(r => r.map(() => 0)); P.stuck = allGroups(P).length === 0;
             }
             function tap(x, y) {
                 if (!started || over || paused || me.stuck) return; const c = Math.floor(x / cs), r = Math.floor(y / cs); if (c < 0 || r < 0 || c >= COLS || r >= ROWS || me.g[r][c] < 0) return;
