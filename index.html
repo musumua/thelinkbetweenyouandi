@@ -525,7 +525,7 @@
         .home-clock-zone { flex-shrink: 0; text-align: center; padding: 3vh 0 0 0; position: relative; z-index: 1; }
         .flip-clock-row { display: flex; align-items: center; justify-content: center; gap: 6px; perspective: 500px; }
         .flip-card { width: 62px; height: 78px; position: relative; }
-        .flip-card-inner { width: 100%; height: 100%; background: linear-gradient(180deg, var(--clock-bg1), var(--clock-bg2)); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 700; font-family: "Courier New", monospace; color: var(--clock-text); box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.04); backface-visibility: hidden; transform-style: preserve-3d; transition: transform 0.32s cubic-bezier(.5,0,.5,1); position: relative; }
+        .flip-card-inner { width: 100%; height: 100%; background: linear-gradient(180deg, var(--clock-bg1), var(--clock-bg2)); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 800; font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif; font-variant-numeric: tabular-nums; color: var(--clock-text); box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.04); backface-visibility: hidden; transform-style: preserve-3d; transition: transform 0.32s cubic-bezier(.5,0,.5,1); position: relative; }
         .flip-card-inner::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: rgba(0,0,0,0.45); transform: translateY(-1px); }
         .flip-card-inner::before { content: ""; position: absolute; left: 4px; right: 4px; top: 4px; height: 1px; background: rgba(255,255,255,0.08); }
         .flip-colon { font-size: 34px; font-weight: 300; color: var(--text-main); padding-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.35); animation: blink 1.4s infinite; }
@@ -1436,7 +1436,7 @@
                     <div class="flex-row-between"><span>气泡数（一次几条）</span><div><input id="cfg_card_min" type="number"> 至 <input id="cfg_card_max" type="number"> 个</div></div>
                     <div class="flex-row-between"><span>合并字卡（单条含几张）</span><div><input id="cfg_merge_card_min" type="number"> 至 <input id="cfg_merge_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>回复前等待</span><div><input id="cfg_reply_min" type="number"> 至 <input id="cfg_reply_max" type="number"> 秒</div></div>
-                    <div class="flex-row-between"><span>随机打招呼频率</span><div><input id="cfg_rand_min" type="number"> 至 <input id="cfg_rand_max" type="number"> 分钟</div></div>
+                    <div class="flex-row-between"><span>主动回复频率</span><div><input id="cfg_rand_min" type="number"> 至 <input id="cfg_rand_max" type="number"> 分钟</div></div>
                                         <div class="flex-row-between"><span>朋友圈发布间隔</span><div><input id="cfg_pyq_min" type="number"> 至 <input id="cfg_pyq_max" type="number"> 小时</div></div>
                     <div class="flex-row-between"><span>朋友圈发送条数</span><div><input id="cfg_pyq_card_min" type="number"> 至 <input id="cfg_pyq_card_max" type="number"> 条</div></div>
                     <div class="flex-row-between"><span>朋友圈回复间隔</span><div><input id="cfg_pyq_reply_min" type="number"> 至 <input id="cfg_pyq_reply_max" type="number"> 秒</div></div>
@@ -1447,7 +1447,7 @@
                 <div class="section" style="margin-bottom:0;">
                     <div class="flex-row-between"><span>念想更新间隔</span><div><input id="cfg_missing_every" type="number"> 分钟</div></div>
                     <div class="flex-row-between"><span>状态更新间隔</span><div><input id="cfg_status_every" type="number"> 分钟</div></div>
-                    <div class="flex-row-between"><span>书房/游戏说话间隔</span><div><input id="cfg_speak_every" type="number"> 秒</div></div>
+                    <div class="flex-row-between"><span>书房说话间隔</span><div><input id="cfg_speak_every" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>拍一拍概率</span><div><input id="cfg_nudge_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>表情包概率</span><div><input id="cfg_emoji_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>自由造句概率</span><div><input id="cfg_free_pct" type="number"> %</div></div>
@@ -2322,21 +2322,23 @@
                 B(10, 43, 46, 7, D("#f4efe6", "#8c8494")); for (let x = 12; x < 50; x += 6) { L(x, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); L(x + 6, 44, x + 3, 48, D("#9fb1c8", "#6f7690")); }
                 E(21, 46, 5, 3, D("#f3ece0", "#b8aebc")); E(43, 47, 4, 2, D("#f3ece0", "#a8a0b0"));
                 { const OLN = D("#a8804c", "#4a3a34"), TP = D("#e6c486", "#8a6a48"), TPH = D("#f2d9a6", "#a98a60"), BD = D("#cfa468", "#6e5238"), LG = D("#d8b074", "#7a5a3e"), SO = D("#b9a68c", "#5a4a44");
-                  // 圆形小茶几：和家具一样的描边，木色桌面 + 一条中柱 + 底座
-                  R(66, 34, 1, 7, OLN); R(67, 34, 2, 7, LG); R(69, 34, 1, 7, OLN); R(64, 41, 11, 1, OLN); R(65, 40, 9, 1, LG);
-                  R(60, 31, 16, 1, TPH); R(59, 32, 18, 1, TP); R(60, 33, 16, 1, BD); R(61, 34, 14, 1, OLN); P(59, 33, OLN); P(76, 33, OLN);
-                  R(71, 29, 5, 2, SO); R(72, 29, 3, 1, D("#6fa0c9", "#4f7099"));
-                  // 香薰蜡烛：玻璃罐 + 罐盖 + 灯芯
-                  R(63, 28, 4, 2, SO); R(64, 29, 2, 1, D("#fff3e0", "#f6e0b8")); P(64, 27, "#4a3a30"); }
+                  // 两层小茶几：上层桌面 + 下层搁板，两边桌脚左右对称（中线 x=67.5）
+                  R(61, 33, 2, 9, LG); R(73, 33, 2, 9, LG); R(61, 41, 2, 1, OLN); R(73, 41, 2, 1, OLN);
+                  R(61, 37, 14, 1, TP); R(61, 38, 14, 1, BD);
+                  R(63, 35, 6, 1, D("#c96f6f", "#9a5a5a")); R(63, 36, 6, 1, D("#f6f1e6", "#d8d0c0"));
+                  R(59, 31, 18, 1, TPH); R(59, 32, 18, 1, BD); P(59, 32, OLN); P(76, 32, OLN);
+                  R(71, 29, 5, 2, SO); R(72, 30, 3, 1, D("#6fa0c9", "#4f7099"));
+                  // 香薰蜡烛：玻璃罐 + 灯芯
+                  R(63, 29, 4, 2, SO); R(64, 30, 2, 1, D("#fff3e0", "#f6e0b8")); P(64, 28, "#4a3a30"); }
                 B(80, 22, 9, 18, D("#e2c597", "#9a7a56")); R(81, 25, 7, 1, PX_OUT); R(81, 31, 7, 1, PX_OUT); R(81, 37, 7, 1, PX_OUT); for (let i = 0; i < 6; i++) { R(82 + i, 26, 1, 5, ["#c96f6f", "#6fa0c9", "#e0c26a", "#7fb98a", "#c9a0d6", "#e8a070"][i]); R(82 + i, 32, 1, 5, ["#6fa0c9", "#e8a070", "#7fb98a", "#c96f6f", "#e0c26a", "#c9a0d6"][i]); }
                 E(84, 20, 3, 2, D("#6fbf6a", "#3d6c4a")); B(82, 20, 5, 3, D("#e0d9cd", "#8e8884"));
                 for (let i = 0; i < 6; i++) { const x = 62 + i * 4, y = 2 + Math.round(Math.sin(i * 1.2) * 1.5); P(x, y, D("#fff7d0", "#ffe9a0")); sp(x, y, "#fff2b0", true); }
-                if (night) { P(64, 26, "#ffb040"); P(64, 25, "#fff0a8"); sp(64, 25, "#ffd98a"); 
+                if (night) { P(64, 27, "#ffb040"); P(64, 26, "#fff0a8"); sp(64, 26, "#ffd98a"); 
                     // 落地灯亮着：灯罩发光 + 柔和光晕（无描边的纯光，不改变布局）
                     const gE = (cx, cy, rx, ry, col) => { c.fillStyle = col; for (let yy = -ry; yy <= ry; yy++) for (let xx = -rx; xx <= rx; xx++) if ((xx * xx) / (rx * rx) + (yy * yy) / (ry * ry) <= 1) c.fillRect(Math.round(cx + xx), Math.round(cy + yy), 1, 1); };
                                         for (let k = 6; k >= 1; k--) gE(18, 11, 4 + k * 5, 3 + k * 4.2, "rgba(255,226,150,.045)");
                     for (let y = 11; y < 41; y++) { const half = 3 + (y - 11) * 0.6; c.fillStyle = "rgba(255,222,140,.045)"; c.fillRect(Math.round(18 - half), y, Math.round(half * 2), 1); }
-                    gE(65, 28, 4, 3, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
+                    gE(65, 29, 4, 3, "rgba(255,190,90,.12)"); gE(22, 42, 26, 4, "rgba(255,222,140,.11)"); gE(22, 42, 14, 2, "rgba(255,236,180,.1)");
                 }
                 else { sp(30, 36, "#fff"); sp(50, 33, "#fff"); sp(20, 18, "#fff"); }
             } else if (kind === "home") {
@@ -3099,6 +3101,7 @@
             let lastBack = 0, toastEl = null;
             const toast = (t) => { if (!toastEl) { toastEl = document.createElement("div"); toastEl.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:9px 18px;border-radius:18px;font-size:13px;z-index:3000;pointer-events:none;transition:opacity .25s;opacity:0"; document.body.appendChild(toastEl); } toastEl.innerText = t; toastEl.style.opacity = "1"; clearTimeout(toast._t); toast._t = setTimeout(() => toastEl.style.opacity = "0", 1800); };
             function handleBack() {
+                { const cro = document.getElementById("crOv"); if (cro) { cro.remove(); return true; } }
                 if (document.getElementById("mbOv")) { mbBackOv(); return true; }
             for (const oid of ["imgViewMask", "divZoom", "frBankOv"]) { const oe = document.getElementById(oid); if (oe) { oe.remove(); return true; } }
                 const bem = document.getElementById("bubbleEditMask"); if (bem) { bem.remove(); return true; }
@@ -3932,7 +3935,7 @@
             initAudio();
             if (Math.random() * 100 < (db.freq.callPct === undefined ? 3 : db.freq.callPct)) { triggerIncomingCallMock(); return; }
             if (!manual) { if (replyRunning) return; replyRunning = true; try { sendBurst(pickBubbleCount(), true, () => { replyRunning = false; }); } catch (e) { replyRunning = false; console.error(e); } return; } // 定时主动发：带 ★，气泡间隔在最短/最长之间随机
-            // 点名字：他立刻回一条（不用等），不是主动发的所以没有星标；有我发的消息时就引用最近一条来回复
+            // 点名字：他立刻主动打个招呼（不用等），带星标；有我发的消息时就引用最近一条来回复
             const now = new Date();
             const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
             const dateLabel = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
@@ -3953,13 +3956,13 @@
                 const nudgeText = `${db.other.name}${db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)]}`;
                 msg = { type: "system", text: nudgeText, isNudge: true, time: timeStr, timeLabel: dateLabel }; preview = nudgeText;
             } else if (r < nudgeP + emojiP && db.otherEmojis.length > 0) {
-                msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
+                msg = { me: false, proactive: true, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
             } else if (r < nudgeP + emojiP + freeP && hasFreeWords()) {
-                const sen = makeFreeSentence(); msg = { me: false, text: sen, time: timeStr, timeLabel: dateLabel, replyTo }; preview = sen;
+                const sen = makeFreeSentence(); msg = { me: false, proactive: true, text: sen, time: timeStr, timeLabel: dateLabel, replyTo }; preview = sen;
             } else if (cards.length) {
-                const t = pickMergedTexts(cards).join("\n"); msg = { me: false, text: t, time: timeStr, timeLabel: dateLabel, replyTo }; preview = t.split("\n")[0];
+                const t = pickMergedTexts(cards).join("\n"); msg = { me: false, proactive: true, text: t, time: timeStr, timeLabel: dateLabel, replyTo }; preview = t.split("\n")[0];
             } else if (db.otherEmojis.length > 0) {
-                msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
+                msg = { me: false, proactive: true, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
             }
             if (!msg) return;
             const typ = document.getElementById("typing"); if (typ) typ.style.display = "flex";
@@ -3975,46 +3978,46 @@
         function triggerCoverUpload() { document.getElementById("pyq_cover_file").click(); }
         
         document.getElementById("pyq_cover_file").onchange = (e) => {
-            if(!e.target.files || !e.target.files.length) return;
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const img = new Image();
-                img.onload = () => {
-                    openModalBox("coverCropModal");
-                    const canvas = document.getElementById("cropCanvas");
-                    const ctx = canvas.getContext("2d");
-                    
-                    canvas.width = 800;
-                    canvas.height = 450;
-                    
-                    const targetRatio = 800 / 450;
-                    let srcX = 0, srcY = 0, srcWidth = img.width, srcHeight = img.height;
-                    
-                    if (img.width / img.height > targetRatio) {
-                        srcWidth = img.height * targetRatio;
-                        srcX = (img.width - srcWidth) / 2;
-                    } else {
-                        srcHeight = img.width / targetRatio;
-                        srcY = (img.height - srcHeight) / 2;
-                    }
-                    
-                    ctx.fillStyle = "#000";
-                    ctx.fillRect(0, 0, 800, 450);
-                    ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, 0, 0, 800, 450);
-                    
-                    document.getElementById("confirmCropBtn").onclick = () => {
-                        db.pyqCover = canvas.toDataURL("image/jpeg", 0.85);
-                        saveData();
-                        syncProfileUI();
-                        closeModal("coverCropModal");
-                    };
-                };
-                img.src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
+            if (!e.target.files || !e.target.files.length) return;
+            const file = e.target.files[0]; e.target.value = "";
+            openCropper(file, 16 / 9, 960, data => { db.pyqCover = data; saveData(); syncProfileUI(); }, "封面：拖动、缩放，选要保留的区域");
         };
 
+        // ---------- 手动裁剪：拖动 + 双指/滑块缩放，自己选要保留的区域（不再自动居中截取）
+        function openCropper(file, aspect, outW, done, title) {
+            const rd = new FileReader(); rd.onload = ev => { const img = new Image(); img.onload = () => start(img); img.onerror = () => alert("这张图片打不开"); img.src = ev.target.result; }; rd.readAsDataURL(file);
+            function start(img) {
+                const old = document.getElementById("crOv"); if (old) old.remove();
+                const ov = document.createElement("div"); ov.id = "crOv"; ov.style.cssText = "position:fixed;inset:0;z-index:6000;background:#0b0b0e;display:flex;flex-direction:column;touch-action:none;user-select:none;-webkit-user-select:none";
+                const bs = "background:none;border:none;color:#fff;font-size:15px;padding:6px 10px";
+                ov.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 12px 8px;color:#fff"><button id="crX" style="${bs}">取消</button><span style="font-size:13px;opacity:.8">${title || "拖动、双指缩放，选要保留的区域"}</span><button id="crOk" style="${bs};font-weight:700;color:#8ec5ff">确定</button></div><div id="crSt" style="flex:1;position:relative;overflow:hidden"><canvas id="crCv" style="position:absolute;left:0;top:0;width:100%;height:100%"></canvas></div><div style="padding:10px 28px calc(16px + env(safe-area-inset-bottom));color:#aaa;font-size:12px;display:flex;align-items:center;gap:10px">缩放<input id="crZ" type="range" min="0" max="100" value="0" style="flex:1"></div>`;
+                document.body.appendChild(ov);
+                const st = ov.querySelector("#crSt"), cv = ov.querySelector("#crCv"), ctx = cv.getContext("2d"), zs = ov.querySelector("#crZ"), iw = img.width, ih = img.height, dpr = window.devicePixelRatio || 1;
+                let W = 0, H = 0, fx = 0, fy = 0, fw = 0, fh = 0, minS = 1, sc = 1, ox = 0, oy = 0, first = true;
+                const clamp = () => { ox = Math.min(fx, Math.max(fx + fw - iw * sc, ox)); oy = Math.min(fy, Math.max(fy + fh - ih * sc, oy)); };
+                const layout = () => { W = st.clientWidth; H = st.clientHeight; cv.width = W * dpr; cv.height = H * dpr; fw = Math.min(W * 0.92, H * 0.92 * aspect); fh = fw / aspect; fx = (W - fw) / 2; fy = (H - fh) / 2; minS = Math.max(fw / iw, fh / ih);
+                    if (first) { sc = minS; ox = fx + (fw - iw * sc) / 2; oy = fy + (fh - ih * sc) / 2; first = false; } else sc = Math.max(sc, minS); clamp(); draw(); };
+                const draw = () => { ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); ctx.drawImage(img, ox, oy, iw * sc, ih * sc);
+                    ctx.fillStyle = "rgba(0,0,0,.6)"; ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.rect(fx, fy, fw, fh); ctx.fill("evenodd");
+                    ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.strokeRect(fx, fy, fw, fh); ctx.strokeStyle = "rgba(255,255,255,.3)"; ctx.lineWidth = 1; ctx.beginPath(); for (let k = 1; k < 3; k++) { ctx.moveTo(fx + fw * k / 3, fy); ctx.lineTo(fx + fw * k / 3, fy + fh); ctx.moveTo(fx, fy + fh * k / 3); ctx.lineTo(fx + fw, fy + fh * k / 3); } ctx.stroke();
+                    if (aspect === 1) { ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.arc(fx + fw / 2, fy + fh / 2, fw / 2, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
+                    zs.value = Math.round((sc / minS - 1) / 5 * 100); };
+                const zoomAt = (ns, cx, cy) => { ns = Math.min(minS * 6, Math.max(minS, ns)); const k = ns / sc; ox = cx - (cx - ox) * k; oy = cy - (cy - oy) * k; sc = ns; clamp(); draw(); };
+                const pts = new Map(); let lastD = 0;
+                cv.addEventListener("pointerdown", e => { cv.setPointerCapture(e.pointerId); pts.set(e.pointerId, [e.clientX, e.clientY]); lastD = 0; });
+                cv.addEventListener("pointermove", e => { if (!pts.has(e.pointerId)) return; const p = pts.get(e.pointerId), nx = e.clientX, ny = e.clientY;
+                    if (pts.size === 1) { ox += nx - p[0]; oy += ny - p[1]; clamp(); draw(); pts.set(e.pointerId, [nx, ny]); }
+                    else if (pts.size === 2) { pts.set(e.pointerId, [nx, ny]); const [a, b] = Array.from(pts.values()), d = Math.hypot(a[0] - b[0], a[1] - b[1]), r = cv.getBoundingClientRect(); if (lastD) zoomAt(sc * d / lastD, (a[0] + b[0]) / 2 - r.left, (a[1] + b[1]) / 2 - r.top); lastD = d; } });
+                const up = e => { pts.delete(e.pointerId); lastD = 0; }; cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+                cv.addEventListener("wheel", e => { e.preventDefault(); const r = cv.getBoundingClientRect(); zoomAt(sc * (e.deltaY < 0 ? 1.1 : 0.9), e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+                zs.addEventListener("input", () => zoomAt(minS * (1 + zs.value / 100 * 5), fx + fw / 2, fy + fh / 2));
+                const close = () => { ov.remove(); window.removeEventListener("resize", layout); };
+                ov.querySelector("#crX").onclick = close;
+                ov.querySelector("#crOk").onclick = () => { const oh = Math.round(outW / aspect), oc = document.createElement("canvas"); oc.width = outW; oc.height = oh; const c2 = oc.getContext("2d"); c2.fillStyle = "#fff"; c2.fillRect(0, 0, outW, oh); c2.imageSmoothingQuality = "high";
+                    c2.drawImage(img, (fx - ox) / sc, (fy - oy) / sc, fw / sc, fh / sc, 0, 0, outW, oh); close(); done(oc.toDataURL("image/jpeg", 0.88)); };
+                window.addEventListener("resize", layout); layout();
+            }
+        }
         function openImgView(src) {
             if (!src) return; const old = document.getElementById("imgViewMask"); if (old) old.remove();
             const mk = document.createElement("div"); mk.id = "imgViewMask"; mk.style.cssText = "position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box";
@@ -4330,16 +4333,20 @@
             db.chat.push(Object.assign({ me: false, time: n.getHours().toString().padStart(2, '0') + ":" + n.getMinutes().toString().padStart(2, '0'), timeLabel: `${n.getFullYear()}年${n.getMonth() + 1}月${n.getDate()}日` }, extra));
             saveData(); renderChat();
         }
-        // 他连发 total 个气泡。pro=true 是他主动发的（每个气泡都带 ★），false 是回复（不带）
+        // 他连发 total 个气泡。pro=true 是他主动发的（每个气泡都带 ★），false 是回复（不带）。第一个气泡会按概率换成拍一拍/表情包/自由造句
         function sendBurst(total, pro, done) {
-            let i = 0; const typing = document.getElementById("typing");
+            let i = 0; const typing = document.getElementById("typing"), startLen = db.chat.length;
             const step = () => {
                 if (typing) typing.style.display = "none";
-                let b = null; const fp = Math.min(15, db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100, ep = Math.min(15, db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100;
-                if (i === 0 && !pro && hasFreeWords() && Math.random() < fp) b = { text: makeFreeSentence() };
-                else if (i === 0 && !pro && db.otherEmojis.length && Math.random() < ep) b = { img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)] };
-                else { const cards = getSignalCards(); if (cards.length) b = { text: pickMergedTexts(cards).join("\n") }; }
-                if (b) { if (pro) b.proactive = true; hisBubbleNow(b); notifyIncomingOtherMessage(b.text ? b.text.split("\n")[0] : "[表情]"); }
+                if (pro && i > 0 && db.chat.slice(startLen).some(m => m.me)) { if (done) done(); return; } // 主动发到一半我回了话：剩下的不发了，免得混进“回复”里还带着星标
+                let b = null; const fr = db.freq, np = (fr.nudgePct === undefined ? 5 : fr.nudgePct) / 100, ep = (fr.emojiPct === undefined ? 8 : fr.emojiPct) / 100, fp = (fr.freePct === undefined ? 8 : fr.freePct) / 100, r0 = Math.random();
+                if (i === 0 && r0 < np && (db.nudgeList || []).length) { const nt = `${db.other.name}${db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)]}`; hisBubbleNow({ type: "system", text: nt, isNudge: true }); notifyIncomingOtherMessage(nt); }
+                else {
+                    if (i === 0 && r0 < np + ep && db.otherEmojis.length) b = { img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)] };
+                    else if (i === 0 && r0 < np + ep + fp && hasFreeWords()) b = { text: makeFreeSentence() };
+                    else { const cards = getSignalCards(); if (cards.length) b = { text: pickMergedTexts(cards).join("\n") }; }
+                    if (b) { if (pro) b.proactive = true; hisBubbleNow(b); notifyIncomingOtherMessage(b.text ? b.text.split("\n")[0] : "[表情]"); }
+                }
                 i++;
                 if (i >= total) { if (done) done(); return; }
                 const f0 = db.freq, ga = Math.max(0.8, parseFloat(f0.replyMin) || 1), gb = Math.max(ga, parseFloat(f0.replyMax) || 5), gap = (ga + Math.random() * (gb - ga)) * 1000; // 同一轮里两条气泡间隔：在最短和最长之间随机
@@ -4632,20 +4639,20 @@
         }
 
         function quickEditOther() {
-            document.getElementById("qProfileTitle").innerText = "修改他的信息"; document.getElementById("qProfileName").value = db.other.name; profileTempImgData = db.other.avatar; openModalBox("quickProfileModal");
+            document.getElementById("qProfileTitle").innerText = "修改他的信息"; document.getElementById("qProfileName").value = db.other.name; profileTempImgData = db.other.avatar; openModalBox("quickProfileModal"); document.getElementById("qProfileUploadBtn").innerText = "更换头像图片";
             document.getElementById("qProfileUploadBtn").onclick = () => { document.getElementById("qProfileFile").click(); };
             document.getElementById("qProfileFile").onchange = (e) => {
                 if(!e.target.files.length) return;
-                compressImageFile(e.target.files[0], 500, 0.8).then(data => { profileTempImgData = data; });
+                { const ff = e.target.files[0]; e.target.value = ""; openCropper(ff, 1, 500, data => { profileTempImgData = data; const pv = document.getElementById("qProfileUploadBtn"); if (pv) pv.innerText = "头像已选好（点保存生效）"; }, "头像：拖动、缩放，选要保留的区域"); }
             };
             document.getElementById("qProfileSaveBtn").onclick = () => { db.other.name = document.getElementById("qProfileName").value.trim() || db.other.name; db.other.avatar = profileTempImgData; saveData(); syncProfileUI(); closeModal("quickProfileModal"); };
         }
         function quickEditMe() {
-            document.getElementById("qProfileTitle").innerText = "修改我的信息"; document.getElementById("qProfileName").value = db.me.name; profileTempImgData = db.me.avatar; openModalBox("quickProfileModal");
+            document.getElementById("qProfileTitle").innerText = "修改我的信息"; document.getElementById("qProfileName").value = db.me.name; profileTempImgData = db.me.avatar; openModalBox("quickProfileModal"); document.getElementById("qProfileUploadBtn").innerText = "更换头像图片";
             document.getElementById("qProfileUploadBtn").onclick = () => { document.getElementById("qProfileFile").click(); };
             document.getElementById("qProfileFile").onchange = (e) => {
                 if(!e.target.files.length) return;
-                compressImageFile(e.target.files[0], 500, 0.8).then(data => { profileTempImgData = data; });
+                { const ff = e.target.files[0]; e.target.value = ""; openCropper(ff, 1, 500, data => { profileTempImgData = data; const pv = document.getElementById("qProfileUploadBtn"); if (pv) pv.innerText = "头像已选好（点保存生效）"; }, "头像：拖动、缩放，选要保留的区域"); }
             };
             document.getElementById("qProfileSaveBtn").onclick = () => { db.me.name = document.getElementById("qProfileName").value.trim() || db.me.name; db.me.avatar = profileTempImgData; saveData(); syncProfileUI(); closeModal("quickProfileModal"); };
         }
@@ -4796,7 +4803,7 @@
         function triggerProfilePhotoUpload() { document.getElementById("profile_photo_file").click(); }
         document.getElementById("profile_photo_file").onchange = (e) => {
             const f = e.target.files[0]; if (!f) return;
-            compressImageFile(f, 700, 0.8).then(data => { db.other.idPhoto = data; document.getElementById("profileIdPhoto").src = data; saveData(); });
+            e.target.value = ""; openCropper(f, 2 / 3, 600, data => { db.other.idPhoto = data; document.getElementById("profileIdPhoto").src = data; saveData(); }, "证件照：拖动、缩放，选要保留的区域");
         };
         // 档案里的姓名（profileName）是独立字段，不影响首页头像/聊天页顶栏共用的显示名字（db.other.name）
         function handleProfileInfoInput(field, val) {
@@ -4852,13 +4859,13 @@
             box.innerHTML = list.map((a, i) => {
                 const side = i % 2 === 0 ? "side-left" : "side-right";
                 const imgHtml = a.img
-                    ? `<img class="anni-img" src="${a.img}" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">`
+                    ? `<img class="anni-img" src="${a.img}" onclick="event.stopPropagation(); openImgView(this.src)">`
                     : `<div class="anni-add-img-box" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋</div>`;
                 return `<div class="anni-item ${side}" data-id="${a.id}">
                     <div class="anni-dot"></div>
                     <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span>${imgHtml}</div>
                     <div class="anni-date" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.date)}</div>
-                    ${a.img ? `<img class="anni-img-large" src="${a.img}">` : ''}
+                    ${a.img ? `<img class="anni-img-large" src="${a.img}" onclick="event.stopPropagation(); openImgView(this.src)"><div style="font-size:11px;color:var(--text-sub);margin-top:4px" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">更换图片</div>` : ''}
                 </div>`;
             }).join("");
             box.querySelectorAll(".anni-item").forEach(el => {
@@ -5797,12 +5804,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
 
         document.getElementById("bg_file_handler").onchange = (e) => {
             if(!e.target.files || !e.target.files.length) return;
-            compressImageFile(e.target.files[0], 1000, 0.75).then(data => { db.backgroundImage = data; saveData(); applyBgUI(); });
+            { const ff = e.target.files[0]; e.target.value = ""; openCropper(ff, window.innerWidth / window.innerHeight, 900, data => { db.backgroundImage = data; saveData(); applyBgUI(); }, "聊天背景：选要保留的区域"); }
         };
 
         document.getElementById("home_wallpaper_file").onchange = (e) => {
             if(!e.target.files || !e.target.files.length) return;
-            compressImageFile(e.target.files[0], 1000, 0.75).then(data => { db.homeWallpaper = data; saveData(); applyHomeWallpaperUI(); });
+            { const ff = e.target.files[0]; e.target.value = ""; openCropper(ff, window.innerWidth / window.innerHeight, 900, data => { db.homeWallpaper = data; saveData(); applyHomeWallpaperUI(); }, "主页壁纸：选要保留的区域"); }
         };
 
         setInterval(() => {
@@ -9124,7 +9131,7 @@ treaty:条约`
             pacs.forEach(q => dots[q.sy][q.sx] = 0); ghosts.forEach(q => dots[q.hy][q.hx] = 0); [[1, 1], [C - 2, 1], [1, CY], [C - 2, CY]].forEach(([x, y]) => dots[y][x] = 2);
             for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) if (dots[y][x]) left++;
             const items = []; let itemT = 5, fr = 0, freeze = 0, ready = 0, started = false, over = false, paused = false, raf = 0, lastT = performance.now(), clock = 0;
-            const pacSp = 6.6, effSp = 5.2, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
+            const spdK = D === "normal" ? 0.92 : 1, pacSp = 6.6 * spdK, effSp = 5.2 * spdK, gSp = effSp * { easy: 0.72, normal: 0.86, hard: 0.97 }[D], aiErr = { easy: 0.22, normal: 0.09, hard: 0.02 }[D], chase = { easy: 0.5, normal: 0.72, hard: 0.9 }[D];
             const IT = { cherry: ["🍒", 100], speed: ["⚡", 0], ice: ["❄️", 0] };
             // ---- 预渲染墙：深蓝实心圆角墙 + 亮蓝细描边（先画描边层，再盖上填充层），外圈加粗
             const wc = document.createElement("canvas"); wc.width = w * dpr; wc.height = h * dpr; { const c2 = wc.getContext("2d"); c2.scale(dpr, dpr); c2.fillStyle = "#0d1024"; c2.fillRect(0, 0, w, h); c2.lineCap = "round"; c2.lineJoin = "round";
