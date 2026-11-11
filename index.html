@@ -834,22 +834,18 @@
         .mb-send { align-self: flex-end; padding: 9px 22px; border-radius: 20px; border: none; background: #c8453d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
         .mb-divider { display: flex; align-items: center; gap: 10px; padding: 8px 18px 4px; color: var(--text-sub); font-size: 12px; letter-spacing: 2px; flex-shrink: 0; }
         .mb-divider::before, .mb-divider::after { content: ""; flex: 1; border-top: 1.5px dashed var(--border); }
-        .mb-card { position: relative; margin: 0 2px 16px; padding: 30px 14px 12px; background: #f5eedd; color: #4a4036; border-radius: 4px; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,.28); }
-        .mb-card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: repeating-linear-gradient(135deg, #d9483f 0 9px, #f5eedd 9px 13px, #3f78d0 13px 22px, #f5eedd 22px 26px); border-radius: 0 0 4px 4px; }
+        .mb-card { position: relative; margin: 0 2px 10px; padding: 12px 14px; background: #f7f1e3; color: #4a4036; border-radius: 10px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
         .mb-card:active { transform: scale(.985); }
-        .mb-card .mb-flap { position: absolute; left: 0; top: 0; width: 100%; height: 26px; }
-        .mb-card .mb-flap path { fill: rgba(0,0,0,.035); stroke: rgba(74,64,54,.28); stroke-width: 1; }
-        .mb-card .mb-main { display: flex; gap: 10px; align-items: flex-end; }
-        .mb-card .mb-tx { flex: 1; min-width: 0; padding-bottom: 6px; }
-        .mb-card .mb-who { font-size: 11px; letter-spacing: 1px; color: #a0907c; margin-bottom: 3px; }
+        .mb-card .mb-main { display: flex; gap: 10px; align-items: center; }
+        .mb-card .mb-tx { flex: 1; min-width: 0; }
+        .mb-card .mb-who { font-size: 12px; color: #a0907c; margin-bottom: 3px; }
         .mb-card.his .mb-who { color: #b5675f; } .mb-card.me .mb-who { color: #5a78b8; }
         .mb-card .mb-pv { font-size: 14px; line-height: 1.5; color: #3a3028; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mb-card .mb-tm { font-size: 10.5px; color: #a8998a; margin-top: 3px; }
-        .mb-card .mb-st { position: absolute; right: 12px; top: 6px; width: 24px; height: 28px; border: 1.5px dashed #c9b9a0; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #c0a98a; background: #f9f4e8; }
-        .mb-card .mb-pn { position: absolute; right: 46px; top: 10px; font-size: 10px; color: #a8998a; border: 1px solid #d5c8b3; border-radius: 9px; padding: 0 6px; }
-        .mb-card .mb-rm { width: 30px; height: 30px; border: none; background: transparent; color: #a8998a; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; margin-bottom: 4px; }
+        .mb-card .mb-tm { font-size: 11px; color: #a8998a; margin-top: 3px; }
+        .mb-card .mb-pn { margin-left: 6px; }
+        .mb-card .mb-rm { width: 30px; height: 30px; border: none; background: transparent; color: #a8998a; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
         .mb-card .mb-rm:active { background: rgba(224,82,74,.18); color: #d0443c; }
-        .mb-card .mb-un { position: absolute; right: -4px; top: -6px; background: #e0403a; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.35); letter-spacing: 1px; }
+        .mb-card .mb-un { position: absolute; right: 10px; top: 8px; background: #e0403a; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 9px; }
         .mb-real.mb-stack { background: transparent; box-shadow: none; overflow: visible; padding: 0; }
         .mb-sheet { position: absolute; inset: 0; box-sizing: border-box; padding: 14px 18px 34px; background: #fffdf8; box-shadow: 0 3px 12px rgba(0,0,0,.35); font-size: 14px; line-height: 1.85; color: #3a3a36; white-space: pre-wrap; word-break: break-word; overflow: hidden; will-change: transform; }
         .mb-stack.me .mb-sheet { color: #2f3b5c; } .mb-stack.his .mb-sheet { color: #7b3b3b; }
@@ -3935,7 +3931,7 @@
             initAudio();
             if (Math.random() * 100 < (db.freq.callPct === undefined ? 3 : db.freq.callPct)) { triggerIncomingCallMock(); return; }
             if (!manual) { if (replyRunning) return; replyRunning = true; try { sendBurst(pickBubbleCount(), true, () => { replyRunning = false; }); } catch (e) { replyRunning = false; console.error(e); } return; } // 定时主动发：带 ★，气泡间隔在最短/最长之间随机
-            // 点名字：他立刻主动打个招呼（不用等），带星标；有我发的消息时就引用最近一条来回复
+            // 点名字：他立刻主动打个招呼（不用等）；有我发的消息时就引用最近一条来回复
             const now = new Date();
             const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
             const dateLabel = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
@@ -3956,13 +3952,13 @@
                 const nudgeText = `${db.other.name}${db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)]}`;
                 msg = { type: "system", text: nudgeText, isNudge: true, time: timeStr, timeLabel: dateLabel }; preview = nudgeText;
             } else if (r < nudgeP + emojiP && db.otherEmojis.length > 0) {
-                msg = { me: false, proactive: true, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
+                msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
             } else if (r < nudgeP + emojiP + freeP && hasFreeWords()) {
-                const sen = makeFreeSentence(); msg = { me: false, proactive: true, text: sen, time: timeStr, timeLabel: dateLabel, replyTo }; preview = sen;
+                const sen = makeFreeSentence(); msg = { me: false, text: sen, time: timeStr, timeLabel: dateLabel, replyTo }; preview = sen;
             } else if (cards.length) {
-                const t = pickMergedTexts(cards).join("\n"); msg = { me: false, proactive: true, text: t, time: timeStr, timeLabel: dateLabel, replyTo }; preview = t.split("\n")[0];
+                const t = pickMergedTexts(cards).join("\n"); msg = { me: false, text: t, time: timeStr, timeLabel: dateLabel, replyTo }; preview = t.split("\n")[0];
             } else if (db.otherEmojis.length > 0) {
-                msg = { me: false, proactive: true, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
+                msg = { me: false, img: db.otherEmojis[Math.floor(Math.random() * db.otherEmojis.length)], time: timeStr, timeLabel: dateLabel, replyTo }; preview = "[表情]";
             }
             if (!msg) return;
             const typ = document.getElementById("typing"); if (typ) typ.style.display = "flex";
@@ -4338,7 +4334,6 @@
             let i = 0; const typing = document.getElementById("typing"), startLen = db.chat.length;
             const step = () => {
                 if (typing) typing.style.display = "none";
-                if (pro && i > 0 && db.chat.slice(startLen).some(m => m.me)) { if (done) done(); return; } // 主动发到一半我回了话：剩下的不发了，免得混进“回复”里还带着星标
                 let b = null; const fr = db.freq, np = (fr.nudgePct === undefined ? 5 : fr.nudgePct) / 100, ep = (fr.emojiPct === undefined ? 8 : fr.emojiPct) / 100, fp = (fr.freePct === undefined ? 8 : fr.freePct) / 100, r0 = Math.random();
                 if (i === 0 && r0 < np && (db.nudgeList || []).length) { const nt = `${db.other.name}${db.nudgeList[Math.floor(Math.random() * db.nudgeList.length)]}`; hisBubbleNow({ type: "system", text: nt, isNudge: true }); notifyIncomingOtherMessage(nt); }
                 else {
@@ -5533,7 +5528,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const box = document.getElementById("mbList"); if (!box) return;
             const items = mbItems(), pend = diaryHasPending();
             let h = items.map(x => { const un = x.who === "his" && x.l.read === false, pre = mbPlain(x.l.content).slice(0, 40), pn = String(x.l.content).split("\f").length;
-                return `<div class="mb-card ${x.who}" onclick="mbOpen('${x.who}',${x.i})"><svg class="mb-flap" viewBox="0 0 100 26" preserveAspectRatio="none"><path d="M0 0 L50 26 L100 0 Z"/></svg><div class="mb-st">${x.who === "me" ? "♡" : "✦"}</div>${pn > 1 ? `<div class="mb-pn">${pn}页</div>` : ""}${un ? '<div class="mb-un">未读</div>' : ""}<div class="mb-main"><div class="mb-tx"><div class="mb-who">${x.who === "me" ? "我寄出的信" : "他的来信"}</div><div class="mb-pv">${escapeHtml(pre)}</div><div class="mb-tm">${escapeHtml(x.l.time || "")}</div></div><button class="mb-rm" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div></div>`; }).join("");
+                return `<div class="mb-card ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${un ? '<div class="mb-un">未读</div>' : ""}<div class="mb-main"><div class="mb-tx"><div class="mb-who">${x.who === "me" ? "我寄出的信" : "他的来信"}</div><div class="mb-pv">${escapeHtml(pre)}</div><div class="mb-tm">${escapeHtml(x.l.time || "")}${pn > 1 ? `<span class="mb-pn">${pn}页</span>` : ""}</div></div><button class="mb-rm" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div></div>`; }).join("");
             const dv = document.getElementById("mbDivTxt"); if (dv) dv.innerText = "✉ 信箱 · 共 " + items.length + " 封";
             if (pend && !diaryMonthFilter) h += `<div class="mb-wait">✉ 信已经寄出，正在飞往${escapeHtml(mbWho("his"))}那里…</div>`;
             if (!h) h = `<div class="mb-empty">信箱还是空的<br>点右上角「写信」寄出第一封吧</div>`;
