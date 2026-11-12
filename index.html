@@ -469,7 +469,9 @@
         .pyq-comment-zone { background: rgba(0,0,0,0.15); border-radius: 8px; margin-top: 6px; padding: 6px 10px; font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
         [data-theme="eye-care"] .pyq-comment-zone { background: rgba(124,102,166,0.08); }
         [data-theme="light-green"] .pyq-comment-zone { background: rgba(111,163,127,0.08); }
-        .pyq-like-names { color: var(--primary); font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 2px; margin-bottom: 2px; display: flex; align-items: center; gap: 4px; }
+        .pyq-like-names { color: var(--primary); font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0 4px 4px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; line-height: 16px; min-height: 16px; }
+        .pyq-heart { flex: 0 0 14px; display: block; }
+        .pyq-like-txt { display: block; line-height: 16px; }
         .pyq-comment-line { color: var(--text-main); line-height: 1.4; padding: 2px 4px; border-radius: 4px; cursor: pointer; }
         .pyq-comment-line b { color: var(--primary); }
 
@@ -525,7 +527,14 @@
         .home-clock-zone { flex-shrink: 0; text-align: center; padding: 3vh 0 0 0; position: relative; z-index: 1; }
         .flip-clock-row { display: flex; align-items: center; justify-content: center; gap: 6px; perspective: 500px; }
         .flip-card { width: 62px; height: 78px; position: relative; }
-        .flip-card-inner { width: 100%; height: 100%; background: linear-gradient(180deg, var(--clock-bg1), var(--clock-bg2)); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 800; font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif; font-variant-numeric: tabular-nums; color: var(--clock-text); box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.04); backface-visibility: hidden; transform-style: preserve-3d; transition: transform 0.32s cubic-bezier(.5,0,.5,1); position: relative; }
+        .flip-card-inner { width: 100%; height: 100%; background: linear-gradient(180deg, var(--clock-bg1), var(--clock-bg2)); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 800; font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif; font-variant-numeric: tabular-nums; color: var(--clock-text); box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.04); backface-visibility: hidden; transform-style: preserve-3d; perspective: 320px; position: relative; }
+        .flip-card-inner .fl { position: absolute; inset: 0; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, var(--clock-bg1), var(--clock-bg2)); backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-origin: 50% 50%; }
+        .flip-card-inner .fl-top { clip-path: inset(0 0 50% 0); } .flip-card-inner .fl-bot { clip-path: inset(50% 0 0 0); }
+        .flip-card-inner .fl-flap { animation: flDown .3s ease-in forwards; z-index: 3; }
+        .flip-card-inner .fl-flap2 { transform: rotateX(90deg); animation: flDown2 .3s ease-out .3s forwards; z-index: 3; }
+        .flip-card-inner.flipping::after { z-index: 4; }
+        @keyframes flDown { from { transform: rotateX(0); } to { transform: rotateX(-90deg); } }
+        @keyframes flDown2 { from { transform: rotateX(90deg); } to { transform: rotateX(0); } }
         .flip-card-inner::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: rgba(0,0,0,0.45); transform: translateY(-1px); }
         .flip-card-inner::before { content: ""; position: absolute; left: 4px; right: 4px; top: 4px; height: 1px; background: rgba(255,255,255,0.08); }
         .flip-colon { font-size: 34px; font-weight: 300; color: var(--text-main); padding-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.35); animation: blink 1.4s infinite; }
@@ -834,16 +843,17 @@
         .mb-send { align-self: flex-end; padding: 9px 22px; border-radius: 20px; border: none; background: #c8453d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
         .mb-divider { display: flex; align-items: center; gap: 10px; padding: 8px 18px 4px; color: var(--text-sub); font-size: 12px; letter-spacing: 2px; flex-shrink: 0; }
         .mb-divider::before, .mb-divider::after { content: ""; flex: 1; border-top: 1.5px dashed var(--border); }
-        .mb-card { position: relative; margin: 0 2px 10px; padding: 12px 14px; background: #f7f1e3; color: #4a4036; border-radius: 10px; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
-        .mb-card:active { transform: scale(.985); }
-        .mb-card .mb-main { display: flex; gap: 10px; align-items: center; }
+        .mb-card { position: relative; margin: 0 2px 10px; padding: 12px 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: var(--text-main); border-radius: 12px; cursor: pointer; }
+        .mb-card:active { transform: scale(.985); background: rgba(255,255,255,.11); }
+        .mb-card .mb-main { display: flex; gap: 12px; align-items: center; }
+        .mb-card .mb-env { flex: 0 0 38px; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.08); color: var(--text-sub); }
+        .mb-card.his .mb-env { background: var(--primary-light); color: var(--primary); }
         .mb-card .mb-tx { flex: 1; min-width: 0; }
-        .mb-card .mb-who { font-size: 12px; color: #a0907c; margin-bottom: 3px; }
-        .mb-card.his .mb-who { color: #b5675f; } .mb-card.me .mb-who { color: #5a78b8; }
-        .mb-card .mb-pv { font-size: 14px; line-height: 1.5; color: #3a3028; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mb-card .mb-tm { font-size: 11px; color: #a8998a; margin-top: 3px; }
+        .mb-card .mb-who { font-size: 12px; color: var(--text-sub); margin-bottom: 3px; }
+        .mb-card .mb-pv { font-size: 14px; line-height: 1.5; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mb-card .mb-tm { font-size: 11px; color: var(--text-sub); opacity: .8; margin-top: 3px; }
         .mb-card .mb-pn { margin-left: 6px; }
-        .mb-card .mb-rm { width: 30px; height: 30px; border: none; background: transparent; color: #a8998a; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+        .mb-card .mb-rm { width: 30px; height: 30px; border: none; background: transparent; color: var(--text-sub); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
         .mb-card .mb-rm:active { background: rgba(224,82,74,.18); color: #d0443c; }
         .mb-card .mb-un { position: absolute; right: 10px; top: 8px; background: #e0403a; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 9px; }
         .mb-real.mb-stack { background: transparent; box-shadow: none; overflow: visible; padding: 0; }
@@ -3189,12 +3199,13 @@
         let lastMinuteFlipVal = "";
         function flipCardTo(el, newVal, lastVal) {
             if (!el || newVal === lastVal) return lastVal;
-            if (lastVal === "") { el.innerText = newVal; return newVal; }
-            el.style.transform = "rotateX(90deg)";
-            setTimeout(() => {
-                el.innerText = newVal;
-                el.style.transform = "rotateX(0deg)";
-            }, 220);
+            if (lastVal === "" || lastVal === undefined || lastVal === null) { el.textContent = newVal; return newVal; }
+            // 翻页日历式下翻：上半片折下去，露出新的上半；新的下半片接着翻下来盖住旧的下半
+            const mk = (cls, v) => { const d = document.createElement("div"); d.className = "fl " + cls; d.textContent = v; return d; };
+            el.textContent = ""; el.classList.add("flipping");
+            const f1 = mk("fl-top fl-flap", lastVal), f2 = mk("fl-bot fl-flap2", newVal);
+            [mk("fl-top", newVal), mk("fl-bot", lastVal), f1, f2].forEach(n => el.appendChild(n));
+            clearTimeout(el._ft); el._ft = setTimeout(() => { el.classList.remove("flipping"); el.textContent = newVal; }, 620);
             return newVal;
         }
 
@@ -4027,10 +4038,10 @@
         }
         function hisReactToMyPost(post) {
             if (!post || !db.other) return; const nm = db.other.name, cards = getSignalCards(); if (!post.likes) post.likes = []; if (!post.comments) post.comments = [];
-            let like = Math.random() < 0.8, cmt = Math.random() < 0.6 && cards.length; if (!like && !cmt) like = true;
+            const rr = Math.random(); let like = rr < 0.75, cmt = (rr >= 0.4) && cards.length > 0; if (!like && !cmt) like = true; // 约40%又赞又评、35%只赞、25%只评
             let msg = "";
             if (like && !post.likes.includes(nm)) { post.likes.push(nm); msg = "赞了你的朋友圈"; }
-            if (cmt) { const arr = [], n = 1 + Math.floor(Math.random() * 2); for (let k = 0; k < n; k++) arr.push(cards[Math.floor(Math.random() * cards.length)].text); const tx = arr.join(" "); post.comments.push({ name: nm, text: tx }); msg = "评论了你的朋友圈：" + tx.slice(0, 24); }
+            if (cmt) { const arr = [], n = 1 + Math.floor(Math.random() * 2); for (let k = 0; k < n; k++) arr.push(cards[Math.floor(Math.random() * cards.length)].text); const tx = arr.join(" "); post.comments.push({ name: nm, text: tx }); msg = (like ? "赞并评论了你的朋友圈：" : "评论了你的朋友圈：") + tx.slice(0, 24); }
             post.hisAt = 0; saveData(); renderPyqStream(); if (msg) notifyIncomingOther2("moments", msg);
         }
         function openPyqPage() { toggleSidebar(false); document.getElementById("pyqFullPage").classList.add("open"); renderPyqStream(); if (db.unreadPyq) { db.unreadPyq = 0; saveData(); renderHomeScreen(); } }
@@ -4146,7 +4157,7 @@
             if (!shownPosts.length) { box.innerHTML = `<div class="empty-state" style="color:var(--text-sub);">这个月没有动态</div>`; return; }
             const htmlParts = shownPosts.map(p => {
                 if(!p.likes) p.likes = []; if(!p.comments) p.comments = [];
-                let likeHtml = p.likes.length ? `<div class="pyq-like-names"><span class="heart-icon"></span>${p.likes.join(", ")}</div>` : '';
+                let likeHtml = p.likes.length ? `<div class="pyq-like-names"><svg class="pyq-heart" viewBox="0 0 24 24" width="14" height="14"><path d="M12 21s-8.5-5.3-8.5-11.2C3.5 6.6 5.8 4.5 8.4 4.5c1.6 0 2.9.8 3.6 2 .7-1.2 2-2 3.6-2 2.6 0 4.9 2.1 4.9 5.3C20.5 15.7 12 21 12 21z" fill="#CC5A5A"/></svg><span class="pyq-like-txt">${p.likes.join(", ")}</span></div>` : '';
                 let commentHtml = '';
                 if(p.comments.length) {
                     commentHtml = `<div class="pyq-comment-lines-box">` + 
@@ -5528,7 +5539,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             const box = document.getElementById("mbList"); if (!box) return;
             const items = mbItems(), pend = diaryHasPending();
             let h = items.map(x => { const un = x.who === "his" && x.l.read === false, pre = mbPlain(x.l.content).slice(0, 40), pn = String(x.l.content).split("\f").length;
-                return `<div class="mb-card ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${un ? '<div class="mb-un">未读</div>' : ""}<div class="mb-main"><div class="mb-tx"><div class="mb-who">${x.who === "me" ? "我寄出的信" : "他的来信"}</div><div class="mb-pv">${escapeHtml(pre)}</div><div class="mb-tm">${escapeHtml(x.l.time || "")}${pn > 1 ? `<span class="mb-pn">${pn}页</span>` : ""}</div></div><button class="mb-rm" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div></div>`; }).join("");
+                return `<div class="mb-card ${x.who}" onclick="mbOpen('${x.who}',${x.i})">${un ? '<div class="mb-un">未读</div>' : ""}<div class="mb-main"><div class="mb-env"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></div><div class="mb-tx"><div class="mb-who">${x.who === "me" ? "我寄出的信" : "他的来信"}</div><div class="mb-pv">${escapeHtml(pre)}</div><div class="mb-tm">${escapeHtml(x.l.time || "")}${pn > 1 ? `<span class="mb-pn">${pn}页</span>` : ""}</div></div><button class="mb-rm" aria-label="删除" onclick="event.stopPropagation();mbDel('${x.who}',${x.i})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button></div></div>`; }).join("");
             const dv = document.getElementById("mbDivTxt"); if (dv) dv.innerText = "✉ 信箱 · 共 " + items.length + " 封";
             if (pend && !diaryMonthFilter) h += `<div class="mb-wait">✉ 信已经寄出，正在飞往${escapeHtml(mbWho("his"))}那里…</div>`;
             if (!h) h = `<div class="mb-empty">信箱还是空的<br>点右上角「写信」寄出第一封吧</div>`;
@@ -6277,6 +6288,10 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
 
         const RWS_MAJ = ["00_Fool", "01_Magician", "02_High_Priestess", "03_Empress", "04_Emperor", "05_Hierophant", "06_Lovers", "07_Chariot", "08_Strength", "09_Hermit", "10_Wheel_of_Fortune", "11_Justice", "12_Hanged_Man", "13_Death", "14_Temperance", "15_Devil", "16_Tower", "17_Star", "18_Moon", "19_Sun", "20_Judgement", "21_World"];
+        const RWS_H = ["90", "de", "88", "d2", "c3", "8d", "db", "9b", "f5", "4d", "3c", "e0", "2b", "d7", "f8", "55", "53", "db", "7f", "17", "dd", "ff", "11", "0f", "ff", "a4", "9d", "3b", "e4", "6b", "e7", "0b", "6a", "16", "0d", "ce", "36", "f8", "7a", "35", "d7", "17", "ae", "60", "24", "84", "ad", "fa", "62", "04", "1a", "9e", "02", "bf", "23", "29", "34", "a7", "2f", "d4", "4c", "b0", "d4", "33", "fd", "9f", "42", "35", "96", "a6", "6a", "49", "f0", "42", "ec", "d5", "88", "1c"];
+        function rwsFile(idx) { if (idx < 22) return "RWS_Tarot_" + RWS_MAJ[idx] + ".jpg"; const si = Math.floor((idx - 22) / 14), r = (idx - 22) % 14 + 1; return ["Wands", "Cups", "Swords", "Pents"][si] + String(r).padStart(2, "0") + ".jpg"; }
+        function rwsDirect(idx, w) { const f = rwsFile(idx), h = RWS_H[idx]; return "https://upload.wikimedia.org/wikipedia/commons/thumb/" + h[0] + "/" + h + "/" + f + "/" + (w > 420 ? 960 : 500) + "px-" + f; }
+
         function rwsUrl(idx, w) { let f; if (idx < 22) f = "RWS_Tarot_" + RWS_MAJ[idx] + ".jpg"; else { const si = Math.floor((idx - 22) / 14), r = (idx - 22) % 14 + 1; f = ["Wands", "Cups", "Swords", "Pents"][si] + String(r).padStart(2, "0") + ".jpg"; } return "https://commons.wikimedia.org/wiki/Special:FilePath/" + f + "?width=" + w; }
         const LENO_EMO = ["🏇", "☘️", "⛵", "🏠", "🌳", "☁️", "🐍", "⚰️", "💐", "🌾", "🪢", "🐦", "👶", "🦊", "🐻", "✨", "🦢", "🐕", "🏰", "🌷", "⛰️", "🔀", "🐭", "❤️", "💍", "📖", "✉️", "🧔", "👩", "🪷", "☀️", "🌙", "🗝️", "🐟", "⚓", "✝️"];
         const LENO_PC = ["9♥", "6♦", "10♠", "K♥", "7♥", "K♣", "Q♣", "9♦", "Q♠", "J♦", "J♣", "7♦", "J♠", "9♣", "10♣", "6♥", "Q♥", "10♥", "6♠", "8♠", "8♣", "Q♦", "7♣", "J♥", "A♣", "10♦", "7♠", "A♥", "A♠", "K♠", "A♦", "8♥", "8♦", "K♦", "9♠", "6♣"];
@@ -6289,11 +6304,14 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         }
         function tarotName(idx) { return idx < 22 ? TAROT[idx][0] : SUIT_NAMES[Math.floor((idx - 22) / 14)] + RANK_NAMES[(idx - 22) % 14]; }
         // 牌面内部 html（要放进 position:relative 的容器里）；w=请求的图片宽度
-        function rwsNext(im) { const n = +im.dataset.s + 1, base = rwsUrl(+im.dataset.i, +im.dataset.w); im.dataset.s = n; if (n === 1) im.src = "https://wsrv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else if (n === 2) im.src = "https://images.weserv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else im.remove(); }
-        function cardFaceInner(tab, idx, rev, w) {
+        function rwsNext(im) { const n = +im.dataset.s + 1, i = +im.dataset.i, w = +im.dataset.w, base = rwsUrl(i, w); im.dataset.s = n; im.dataset.t = Date.now(); if (n === 1) im.src = "https://wsrv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else if (n === 2) im.src = base; else if (n === 3) im.src = "https://images.weserv.nl/?url=" + encodeURIComponent(base.replace(/^https:\/\//, "")); else im.remove(); }
+        // 看门狗：某个图源 4 秒还没出图就换下一个源，不干等
+        setInterval(() => { document.querySelectorAll("img.rws").forEach(im => { if (im.complete && im.naturalWidth) { im.dataset.ok = 1; return; } if (im.dataset.ok) return; if (!im.dataset.t) im.dataset.t = Date.now(); else if (Date.now() - (+im.dataset.t) > 4000) rwsNext(im); }); }, 1000);
+        
+function cardFaceInner(tab, idx, rev, w) {
             if (tab === "tarot") {
                 const nm = tarotName(idx), fb = tarotArt(idx, rev);
-                return fb + `<img class="rws${rev ? " rv" : ""}" src="${rwsUrl(idx, w || 400)}" referrerpolicy="no-referrer" data-i="${idx}" data-w="${w || 400}" data-s="0" onerror="rwsNext(this)" alt="">`;
+                return fb + `<img class="rws${rev ? " rv" : ""}" src="${rwsDirect(idx, w || 400)}" referrerpolicy="no-referrer" data-i="${idx}" data-w="${w || 400}" data-s="0" onerror="rwsNext(this)" alt="">`;
             }
             const pc = LENO_PC[idx], red = /[♥♦]/.test(pc);
             return `<div class="lf${red ? " rd" : ""}"><div class="li">${pc.replace(/(.)$/, "<br>$1")}</div><div class="li li2">${pc.replace(/(.)$/, "<br>$1")}</div><div class="le" style="${rev ? "" : ""}">${LENO_EMO[idx]}</div><div class="ln">${LENO[idx][0]}</div><div class="lnn">${idx + 1}</div></div>`;
