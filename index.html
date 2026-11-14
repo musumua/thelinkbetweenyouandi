@@ -226,7 +226,7 @@
         .div-cards { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 12px; } .div-card { flex:1 1 28%; min-width:92px; border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:12px 8px; text-align:center; color:var(--text-main); animation:divIn .45s both; } .div-card .pos { font-size:11px; color:var(--text-sub); } .div-card .nm { font-size:16px; font-weight:bold; margin:6px 0 2px; } .div-card .rv { font-size:11px; color:var(--primary); } .div-card .kw { font-size:12px; color:var(--text-sub); margin-top:4px; line-height:1.5; } .div-card.rev .nm { transform:rotate(180deg); }
         @keyframes divIn { from { opacity:0; transform:translateY(8px) scale(.96); } to { opacity:1; transform:none; } }
         .div-res { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:12px 14px; font-size:13.5px; line-height:1.7; color:var(--text-main); white-space:pre-wrap; margin-bottom:10px; } .div-act { display:flex; gap:8px; margin-bottom:12px; }
-        .div-rec { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:10px 12px; margin-bottom:10px; } .div-rec .h { display:flex; justify-content:space-between; font-size:12px; color:var(--text-sub); margin-bottom:6px; } .div-rec { cursor:pointer; } .div-rec .pv { font-size:13px; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .div-rec .h { margin-bottom:4px !important; } .div-rec .t { display:none; margin-top:6px; } .div-rec.open .t { display:block; } .div-rec.open .pv { display:none; } .div-rec .t { font-size:13px; color:var(--text-main); white-space:pre-wrap; line-height:1.6; } .div-hint { font-size:12px; color:var(--text-sub); margin:4px 2px 10px; }
+        .div-rec { border:1px solid var(--border); background:var(--panel); border-radius:14px; padding:10px 12px; margin-bottom:10px; } .div-rec .h { display:flex; justify-content:space-between; font-size:12px; color:var(--text-sub); margin-bottom:6px; } .div-rec { cursor:pointer; } .div-rec .pv .pq, .div-rec .pv .pr { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .div-rec .pv .pq { font-weight:600; margin-bottom:2px; } .div-rec .pv .pr { color:var(--text-sub); } .div-rec .pv { font-size:13px; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .div-rec .h { margin-bottom:4px !important; } .div-rec .t { display:none; margin-top:6px; } .div-rec.open .t { display:block; } .div-rec.open .pv { display:none; } .div-rec .t { font-size:13px; color:var(--text-main); white-space:pre-wrap; line-height:1.6; } .div-hint { font-size:12px; color:var(--text-sub); margin:4px 2px 10px; }
         .stats-page-body { padding: 16px 16px 40px 16px; display: flex; flex-direction: column; gap: 20px; }
         .stats-summary-row { display: flex; gap: 12px; }
         .stats-summary-card { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 8px; text-align: center; box-shadow: var(--shadow-sm); }
@@ -466,13 +466,15 @@
         
         .pyq-interact-btn { background: rgba(255,255,255,0.08); border: none; padding: 4px 10px; border-radius: 8px; color: var(--text-main); font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 2px; }
         
-        .pyq-comment-zone { background: rgba(0,0,0,0.15); border-radius: 8px; margin-top: 6px; padding: 6px 10px; font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+        .pyq-comment-zone { background: rgba(0,0,0,0.15); border-radius: 8px; margin-top: 6px; padding: 8px 10px; font-size: 12px; display: flex; flex-direction: column; gap: 0; }
         [data-theme="eye-care"] .pyq-comment-zone { background: rgba(124,102,166,0.08); }
         [data-theme="light-green"] .pyq-comment-zone { background: rgba(111,163,127,0.08); }
-        .pyq-like-names { color: var(--primary); font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0 4px 4px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; line-height: 16px; min-height: 16px; }
-        .pyq-heart { flex: 0 0 14px; display: block; }
-        .pyq-like-txt { display: block; line-height: 16px; }
-        .pyq-comment-line { color: var(--text-main); line-height: 1.4; padding: 2px 4px; border-radius: 4px; cursor: pointer; }
+        .pyq-like-names { color: var(--primary); font-weight: bold; display: flex; align-items: center; gap: 6px; min-height: 18px; line-height: 18px; padding: 0; margin: 0; }
+        .pyq-like-names + .pyq-comment-lines-box { margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(128,128,128,0.18); }
+        .pyq-heart { flex: 0 0 14px; display: block; width: 14px; height: 14px; }
+        .pyq-like-txt { display: block; line-height: 18px; min-width: 0; word-break: break-all; }
+        .pyq-comment-lines-box { display: flex; flex-direction: column; gap: 3px; }
+        .pyq-comment-line { color: var(--text-main); line-height: 1.4; padding: 0; border-radius: 4px; cursor: pointer; }
         .pyq-comment-line b { color: var(--primary); }
 
         .flex-row-between { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; font-size: 13px; }
@@ -843,8 +845,8 @@
         .mb-send { align-self: flex-end; padding: 9px 22px; border-radius: 20px; border: none; background: #c8453d; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
         .mb-divider { display: flex; align-items: center; gap: 10px; padding: 8px 18px 4px; color: var(--text-sub); font-size: 12px; letter-spacing: 2px; flex-shrink: 0; }
         .mb-divider::before, .mb-divider::after { content: ""; flex: 1; border-top: 1.5px dashed var(--border); }
-        .mb-card { position: relative; margin: 0 2px 10px; padding: 12px 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: var(--text-main); border-radius: 12px; cursor: pointer; }
-        .mb-card:active { transform: scale(.985); background: rgba(255,255,255,.11); }
+        .mb-card { position: relative; margin: 0 2px 10px; padding: 12px 14px; background: var(--panel); border: 1.5px solid color-mix(in srgb, var(--primary) 45%, transparent); color: var(--text-main); border-radius: 12px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+        .mb-card:active { transform: scale(.985); }
         .mb-card .mb-main { display: flex; gap: 12px; align-items: center; }
         .mb-card .mb-env { flex: 0 0 38px; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.08); color: var(--text-sub); }
         .mb-card.his .mb-env { background: var(--primary-light); color: var(--primary); }
@@ -4033,7 +4035,7 @@
         }
         function deletePyqPost(postId) {
             const p = db.pyqPosts.find(x => x.id == postId); if (!p) return;
-            if (!confirm("删除这条朋友圈吗？")) return;
+            if (!confirm("删除这条朋友圈吗？")) return; if (!confirm("删除后无法恢复，真的要删除吗？")) return;
             db.pyqPosts = db.pyqPosts.filter(x => x.id != postId); saveData(); renderPyqStream();
         }
         function hisReactToMyPost(post) {
@@ -6355,7 +6357,7 @@ function cardFaceInner(tab, idx, rev, w) {
         function divSend() { if (!divLast) return; divSendCard(divLast.body !== undefined ? divLast : { q: "", title: divLast.type, body: divLast.text }); divToast("已发给他"); }
         function renderDivRec(b) {
             const r = db.divRecords || [];
-            b.innerHTML = r.length ? r.map(x => { const d = new Date(x.ts); return `<div class="div-rec" onclick="this.classList.toggle('open')"><div class="h"><span>${x.type} · ${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}</span><span><a onclick="event.stopPropagation();divRecSend(${x.id})">发给他</a>　<a onclick="event.stopPropagation();divRecDel(${x.id})">删除</a></span></div><div class="pv">${x.brief ? x.brief.replace(/</g, "&lt;") : x.text.split("\n").filter(Boolean).slice(0, 2).join(" ").replace(/</g, "&lt;")}</div><div class="t">${x.cards && x.cards.length ? recLayoutHtml(x.cards) : ""}${x.text.replace(/</g, "&lt;")}</div></div>`; }).join("") : '<div class="div-hint" style="text-align:center;margin-top:40px">还没有记录，抽过的牌会自动存在这里</div>';
+            b.innerHTML = r.length ? r.map(x => { const d = new Date(x.ts); return `<div class="div-rec" onclick="this.classList.toggle('open')"><div class="h"><span>${x.type} · ${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}</span><span><a onclick="event.stopPropagation();divRecSend(${x.id})">发给他</a>　<a onclick="event.stopPropagation();divRecDel(${x.id})">删除</a></span></div><div class="pv"><div class="pq">${x.q ? "问：" + x.q.replace(/</g, "&lt;") : "（没写问题）"}</div><div class="pr">${x.brief ? x.brief.replace(/</g, "&lt;") : x.text.split("\n").filter(Boolean).slice(0, 2).join(" ").replace(/</g, "&lt;")}</div></div><div class="t">${x.cards && x.cards.length ? recLayoutHtml(x.cards) : ""}${x.text.replace(/</g, "&lt;")}</div></div>`; }).join("") : '<div class="div-hint" style="text-align:center;margin-top:40px">还没有记录，抽过的牌会自动存在这里</div>';
         }
         function divRecDel(id) { if (!confirm("确定删除这条占卜记录吗？")) return; if (!confirm("删除后无法恢复，真的要删除吗？")) return; db.divRecords = db.divRecords.filter(x => x.id !== id); saveData(); renderDiv(); }
         function divRecSend(id) { const x = db.divRecords.find(v => v.id === id); if (!x) return; divSendCard(x.body !== undefined ? x : { q: "", title: x.type, body: x.text }); divToast("已发给他"); }
