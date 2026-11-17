@@ -167,7 +167,7 @@
         .msg-img { max-width: 200px; max-height: 200px; border-radius: 12px; display: block; margin-top: 2px; }
         .reply-quote-block { display:block; padding:0 0 0 9px; margin:0 0 8px; border-left:2px solid color-mix(in srgb, currentColor 40%, transparent); background:none; color:inherit; font-size:12px; line-height:1.45; text-align:left; white-space:normal; }
         .reply-quote-block .rq-i { display:block; max-width:64px; max-height:64px; border-radius:6px; margin-top:3px; opacity:.92; }
-        .reply-quote-block .rq-a { font-weight:700; font-size:11px; opacity:.6; margin-bottom:1px; } .reply-quote-block .rq-t { opacity:.7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+        .reply-quote-block .rq-a { font-weight:700; font-size:11px; opacity:.6; margin-bottom:1px; } .reply-quote-block .rq-t { opacity:.7; white-space:pre-wrap; word-break:break-word; max-width:100%; }
 
         .reply-preview-bar { display: none; align-items: center; gap: 8px; padding: 8px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12px; }
         .chat-collect-bar { display: none; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; background: var(--panel); border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-sub); }
@@ -470,11 +470,11 @@
         [data-theme="eye-care"] .pyq-comment-zone { background: rgba(124,102,166,0.08); }
         [data-theme="light-green"] .pyq-comment-zone { background: rgba(111,163,127,0.08); }
         .pyq-like-names { color: var(--primary); font-weight: bold; display: flex; align-items: center; gap: 6px; min-height: 18px; line-height: 18px; padding: 0; margin: 0; }
-        .pyq-like-names + .pyq-comment-lines-box { margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(128,128,128,0.18); }
+        .pyq-like-names + .pyq-comment-lines-box { margin-top: 2px; padding: 0; border: 0; }
         .pyq-heart { flex: 0 0 14px; display: block; width: 14px; height: 14px; }
         .pyq-like-txt { display: block; line-height: 18px; min-width: 0; word-break: break-all; }
-        .pyq-comment-lines-box { display: flex; flex-direction: column; gap: 3px; }
-        .pyq-comment-line { color: var(--text-main); line-height: 1.4; padding: 0; border-radius: 4px; cursor: pointer; }
+        .pyq-comment-lines-box { display: flex; flex-direction: column; gap: 2px; }
+        .pyq-comment-line { color: var(--text-main); line-height: 18px; padding: 0; border-radius: 4px; cursor: pointer; }
         .pyq-comment-line b { color: var(--primary); }
 
         .flex-row-between { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; font-size: 13px; }
@@ -1412,7 +1412,7 @@
         <div class="large-modal-box">
             <div class="bottom-tabs">
                 <button class="tab-btn active" id="btnTab0" onclick="switchBottomTab(0)">表情包</button>
-                <button class="tab-btn" id="btnTab1" onclick="switchBottomTab(1)">拍一拍</button>
+                <button class="tab-btn" id="btnTab1" onclick="switchBottomTab(1)">动作</button>
                 <button style="margin-left:auto; background:none; border:none; color:var(--primary); font-size:13px;" onclick="bottomAddAction()">+ 添加</button>
             </div>
             <div style="flex:1; overflow-y:auto;">
@@ -1456,7 +1456,7 @@
                     <div class="flex-row-between"><span>念想更新间隔</span><div><input id="cfg_missing_every" type="number"> 分钟</div></div>
                     <div class="flex-row-between"><span>状态更新间隔</span><div><input id="cfg_status_every" type="number"> 分钟</div></div>
                     <div class="flex-row-between"><span>书房说话间隔</span><div><input id="cfg_speak_every" type="number"> 秒</div></div>
-                    <div class="flex-row-between"><span>拍一拍概率</span><div><input id="cfg_nudge_pct" type="number"> %</div></div>
+                    <div class="flex-row-between"><span>动作概率</span><div><input id="cfg_nudge_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>表情包概率</span><div><input id="cfg_emoji_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>自由造句概率</span><div><input id="cfg_free_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>主动通话概率</span><div><input id="cfg_call_pct" type="number"> %</div></div>
@@ -1588,7 +1588,7 @@
             <div class="card-tab-bar" id="cardTabBar">
                 <button class="card-tab-btn active" onclick="switchCardTab(0)">字卡</button>
                 <button class="card-tab-btn" onclick="switchCardTab(1)">状态</button>
-                <button class="card-tab-btn" onclick="switchCardTab(2)">拍一拍</button>
+                <button class="card-tab-btn" onclick="switchCardTab(2)">动作</button>
                 <button class="card-tab-btn" onclick="switchCardTab(3)">表情包</button>
                 <button class="card-tab-btn" onclick="switchCardTab(4)">念想</button>
                 <button class="card-tab-btn" onclick="switchCardTab(5)">自由造句</button>
@@ -3926,16 +3926,23 @@
         // 自由造句：按词性随机抽词，词与词之间用空格连接
         function makeFreeSentence() {
             const W = db.freeWords || {};
-            const has = c => W[c] && W[c].length;
-            const pick = c => W[c][Math.floor(Math.random() * W[c].length)];
-            const patterns = [["名词", "助词", "动词", "名词"], ["副词", "动词", "介词", "名词"], ["名词", "副词", "形容词"], ["介词", "名词", "动词"], ["名词", "动词"], ["形容词", "助词", "名词"], ["名词", "连词", "名词", "动词"]];
-            const pat = patterns[Math.floor(Math.random() * patterns.length)];
-            let words = pat.filter(has).map(pick);
-            if (words.length < 2) {
-                const cats = Object.keys(W).filter(has); if (!cats.length) return "";
-                const n = 2 + Math.floor(Math.random() * 3); words = [];
-                for (let i = 0; i < n; i++) words.push(pick(cats[Math.floor(Math.random() * cats.length)]));
+            const cats = Object.keys(W).filter(c => W[c] && W[c].length);
+            if (!cats.length) return "";
+            const pickFrom = c => W[c][Math.floor(Math.random() * W[c].length)];
+            const nounCats = cats.filter(c => c.includes("名词")), std = ["名词", "动词", "形容词", "副词", "助词", "介词", "连词"];
+            // 名词类不管拆成几类，都当“名词”这一个位置：先随机选一类，再抽词，这样名词不会因为词多/类多而占满句子
+            const role = r => r === "名词" ? (nounCats.length ? pickFrom(nounCats[Math.floor(Math.random() * nounCats.length)]) : null) : (W[r] && W[r].length ? pickFrom(r) : null);
+            const patterns = [["副词", "动词"], ["副词", "形容词"], ["形容词", "助词"], ["动词", "助词"], ["连词", "动词"], ["副词", "动词", "助词"], ["介词", "名词", "动词"], ["名词", "副词", "形容词"], ["名词", "动词"], ["动词", "名词"], ["形容词", "名词"], ["副词", "动词", "介词", "名词"], ["名词", "连词", "名词", "动词"]];
+            const wts = [3, 2, 2, 2, 1, 3, 1, 1, 1, 1, 1, 1, 0.3]; // 带名词的句型权重低
+            let words = [];
+            for (let t = 0; t < 8 && words.length < 2; t++) {
+                let r = Math.random() * wts.reduce((x, y) => x + y, 0), k = 0; while (k < wts.length - 1 && (r -= wts[k]) > 0) k++;
+                words = patterns[k].map(role).filter(Boolean);
             }
+            // 自己新加的词类（不在标准七类里、也不是名词类）：有 40% 概率再插一个词，位置按词类在列表里的先后
+            const extra = cats.filter(c => !std.includes(c) && !c.includes("名词"));
+            if (extra.length && Math.random() < 0.4) { const c = extra[Math.floor(Math.random() * extra.length)]; if (Object.keys(W).indexOf(c) < Object.keys(W).length / 2) words.unshift(pickFrom(c)); else words.push(pickFrom(c)); }
+            if (words.length < 2) { const n = 2 + Math.floor(Math.random() * 2); words = []; for (let i = 0; i < n; i++) words.push(pickFrom(cats[Math.floor(Math.random() * cats.length)])); }
             return words.join(" ");
         }
         function hasFreeWords() { return Object.values(db.freeWords || {}).reduce((n, a) => n + a.length, 0) >= 2; }
@@ -3956,7 +3963,7 @@
                     let ts = m.ts; if (!ts && m.timeLabel && m.time) { const mm = /(\d+)年(\d+)月(\d+)日/.exec(m.timeLabel), tt = /(\d+):(\d+)/.exec(m.time); if (mm && tt) ts = new Date(+mm[1], +mm[2] - 1, +mm[3], +tt[1], +tt[2]).getTime(); }
                     if (ts && ts >= cutoff) cand.push(m);
                 }
-                if (cand.length) { const m = cand[Math.floor(Math.random() * cand.length)]; replyTo = { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]" }; if (!m.text && m.img) { const rt = replyTo; qThumb(m.img, t => { if (t) rt.img = t; }); } }
+                if (cand.length) { const m = cand[Math.floor(Math.random() * cand.length)]; replyTo = { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 800) : "[图片]" }; if (!m.text && m.img) { const rt = replyTo; qThumb(m.img, t => { if (t) rt.img = t; }); } }
             }
             const cards = getSignalCards();
             const nudgeP = (db.freq.nudgePct === undefined ? 5 : db.freq.nudgePct) / 100, emojiP = (db.freq.emojiPct === undefined ? 8 : db.freq.emojiPct) / 100, freeP = (db.freq.freePct === undefined ? 8 : db.freq.freePct) / 100;
@@ -4032,6 +4039,11 @@
             const mk = document.createElement("div"); mk.id = "imgViewMask"; mk.style.cssText = "position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box";
             mk.innerHTML = '<img style="max-width:100%;max-height:100%;object-fit:contain;border-radius:6px"><div style="position:absolute;top:14px;right:18px;color:#fff;font-size:26px;opacity:.8">✕</div>';
             mk.firstChild.src = src; mk.onclick = () => mk.remove(); document.body.appendChild(mk);
+        }
+        function deletePyqComment(postId, ci) {
+            const p = db.pyqPosts.find(x => x.id == postId); if (!p || !p.comments || !p.comments[ci]) return;
+            if (!confirm("删除这条评论吗？")) return;
+            p.comments.splice(ci, 1); saveData(); renderPyqStream();
         }
         function deletePyqPost(postId) {
             const p = db.pyqPosts.find(x => x.id == postId); if (!p) return;
@@ -4163,7 +4175,7 @@
                 let commentHtml = '';
                 if(p.comments.length) {
                     commentHtml = `<div class="pyq-comment-lines-box">` + 
-                        p.comments.map(c => `<div class="pyq-comment-line" onclick="replySpecificComment(${p.id}, '${c.name.replace(/<[^>]*>/g, '')}')"><b>${c.name}</b>: ${c.text}</div>`).join("") + 
+                        p.comments.map((c, ci) => `<div class="pyq-comment-line" data-ci="${ci}" onclick="if(this._lp){this._lp=false;return}replySpecificComment(${p.id}, '${c.name.replace(/<[^>]*>/g, '')}')"><b>${c.name}</b>: ${c.text}</div>`).join("") + 
                     `</div>`;
                 }
 
@@ -4189,6 +4201,11 @@
             });
             box.innerHTML = htmlParts.join("");
             box.querySelectorAll(".pyq-item").forEach(el => attachLongPressDelete(el, () => deletePyqPost(el.dataset.pid)));
+            box.querySelectorAll(".pyq-comment-line").forEach(line => {
+                const pid = line.closest(".pyq-item").dataset.pid, ci = +line.dataset.ci;
+                ["touchstart", "mousedown"].forEach(ev => line.addEventListener(ev, e => e.stopPropagation(), { passive: true })); // 不让长按评论时触发整条动态的删除
+                attachLongPressDelete(line, () => { line._lp = true; setTimeout(() => { line._lp = false; }, 700); deletePyqComment(pid, ci); });
+            });
             const scr = document.getElementById("pyqScrollContainer");
             if(scr) { scr.style.transform = 'translateZ(0)'; }
         }
@@ -4303,7 +4320,7 @@
             const now = new Date();
             const replySnapshot = (pendingReplyIndex !== null && db.chat[pendingReplyIndex]) ? (() => {
                 const m = db.chat[pendingReplyIndex];
-                return { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 60) : "[图片]", img: (!m.text && m.img && pendingReplyThumb) ? pendingReplyThumb : undefined };
+                return { author: m.me ? (db.me.name || "我") : (db.other.name || "他"), text: m.text ? m.text.slice(0, 800) : "[图片]", img: (!m.text && m.img && pendingReplyThumb) ? pendingReplyThumb : undefined };
             })() : null;
             db.chat.push({
                 me: true, text: text,
@@ -4614,7 +4631,7 @@
                     try {
                         const parsed = JSON.parse(evt.target.result);
                         if (!parsed || !parsed.__signalExport) { alert("这不是信号数据备份文件！"); return; }
-                        if (!confirm("导入将覆盖当前的字卡/状态/拍一拍/表情包数据，确定要恢复吗？")) return;
+                        if (!confirm("导入将覆盖当前的字卡/状态/动作/表情包数据，确定要恢复吗？")) return;
                         db.cards = parsed.cards || [];
                         db.cardGroups = parsed.cardGroups || [];
                         db.statusList = parsed.statusList || [];
@@ -4928,7 +4945,7 @@
             if (document.getElementById("btnTab0").classList.contains("active")) {
                 emojiPick("bottom_emoji_file", "my");
             } else {
-                openTextInputModal("新增我的拍一拍动作（支持回车多行批量添加）", (val) => { 
+                openTextInputModal("新增我的动作（支持回车多行批量添加）", (val) => { 
                     if(!val) return; 
                     let lines = val.split("\n").map(t => t.trim()).filter(t=>t);
                     lines.forEach(t => { db.bottomNudges.push(t); });
@@ -5028,7 +5045,7 @@
             renderCardTabPanel();
         }
 
-        // 字卡/状态/拍一拍/表情包/念想 —— 面板支持左右滑动切换 tab
+        // 字卡/状态/动作/表情包/念想 —— 面板支持左右滑动切换 tab
         (function attachCardTabSwipe() {
             const panel = document.getElementById("cardTabPanel");
             if (!panel) return;
@@ -9564,7 +9581,7 @@ treaty:条约`
             if (!db.freeWords) db.freeWords = {};
             const cats = Object.keys(db.freeWords);
             const q = freeSearch.trim();
-            let h = `<div class="free-cats"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" onclick="freeSetCat('${c}')">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button></div>`;
+            let h = `<div class="free-cats"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" onclick="freeSetCat('${c}')">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button></div>` + (freeCat ? `<div style="display:flex;gap:8px;margin:0 0 10px"><button class="btn btn-outline" style="flex:1;padding:8px" onclick="freeMoveCat(-1)">◀ 词类前移</button><button class="btn btn-outline" style="flex:1;padding:8px" onclick="freeMoveCat(1)">词类后移 ▶</button><button class="btn btn-outline" style="flex:0 0 auto;padding:8px 12px" onclick="freeRenameCat()">改名</button><button class="btn btn-danger" style="flex:0 0 auto;padding:8px 12px" onclick="freeDeleteCat()">删除</button></div>` : "");
             h += `<div class="card-toolbar-row1"><button class="btn ${freeSelectMode ? "" : "btn-outline"}" style="flex:0 0 auto; padding:10px 14px;" onclick="freeToggleSelect()">${freeSelectMode ? "完成" : "多选"}</button><input class="modal-input" placeholder="🔍 搜索..." value="${freeSearch.replace(/"/g, "&quot;")}" oninput="freeSearch=this.value;renderCardTabPanel()"><button class="btn btn-outline card-dedupe-btn" onclick="freeDedupe()">查重</button></div>`;
             h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<button class="btn btn-danger" style="width:100%; margin-bottom:8px;" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
             const rows = [];
@@ -9584,6 +9601,14 @@ treaty:条约`
             if (!confirm(`「${c}」里发现 ${dups.length} 个重复词语：\n${dups.slice(0, 12).join("、")}${dups.length > 12 ? "…" : ""}\n\n只保留第一个，删除其余？`)) return;
             const seen = new Set(); db.freeWords[c] = db.freeWords[c].filter(w => { const k = w.trim(); if (seen.has(k)) return false; seen.add(k); return true; });
             freeSelectedSet.clear(); saveData(); renderCardTabPanel();
+        }
+        function freeMoveCat(d) {
+            const keys = Object.keys(db.freeWords), i = keys.indexOf(freeCat), j = i + d; if (i < 0 || j < 0 || j >= keys.length) return;
+            [keys[i], keys[j]] = [keys[j], keys[i]]; const nw = {}; keys.forEach(k => { nw[k] = db.freeWords[k]; }); db.freeWords = nw; saveData(); renderCardTabPanel();
+        }
+        function freeRenameCat() {
+            const old = freeCat; if (!old) return;
+            openSimpleEditModal("词类改名", old, n => { n = (n || "").trim(); if (!n || n === old) return; if (db.freeWords[n]) { alert("已经有这个词类了"); return; } const nw = {}; Object.keys(db.freeWords).forEach(k => { nw[k === old ? n : k] = db.freeWords[k]; }); db.freeWords = nw; freeCat = n; saveData(); renderCardTabPanel(); });
         }
         function freeDeleteCat() {
             if (!freeCat) return; const n = db.freeWords[freeCat].length;
