@@ -1151,6 +1151,7 @@
             <h2>添加纪念日</h2>
             <input class="modal-input" id="anniTitleInput" placeholder="纪念日名称，如：在一起纪念日">
             <input class="modal-input" type="date" id="anniDateInput">
+            <div style="display:flex; align-items:center; gap:10px; margin:2px 0 12px;"><button class="btn btn-outline" style="padding:8px 14px;" onclick="pickAnniNewImg()">＋ 添加图片（可选）</button><img id="anniNewPrev" style="display:none; width:44px; height:44px; border-radius:8px; object-fit:cover;"></div>
             <div style="display:flex; justify-content:flex-end; gap:8px;">
                 <button class="btn btn-outline" onclick="closeModal('addAnniversaryModal')">取消</button>
                 <button class="btn" onclick="submitAddAnniversary()">保存</button>
@@ -4038,7 +4039,7 @@
             if (!src) return; const old = document.getElementById("imgViewMask"); if (old) old.remove();
             const mk = document.createElement("div"); mk.id = "imgViewMask"; mk.style.cssText = "position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box";
             mk.innerHTML = '<img style="max-width:100%;max-height:100%;object-fit:contain;border-radius:6px"><div style="position:absolute;top:14px;right:18px;color:#fff;font-size:26px;opacity:.8">✕</div>';
-            mk.firstChild.src = src; mk.onclick = () => mk.remove(); document.body.appendChild(mk);
+            mk.firstChild.onerror = () => { mk.firstChild.outerHTML = '<div style="color:#fff;font-size:14px">图片无法显示</div>'; }; mk.firstChild.src = src; mk.onclick = () => mk.remove(); document.body.appendChild(mk);
         }
         function deletePyqComment(postId, ci) {
             const p = db.pyqPosts.find(x => x.id == postId); if (!p || !p.comments || !p.comments[ci]) return;
@@ -4838,14 +4839,16 @@
         function openAddAnniversaryModal() {
             document.getElementById("anniTitleInput").value = "";
             document.getElementById("anniDateInput").value = "";
-            openModalBox("addAnniversaryModal");
+            anniNewImg = null; { const pv = document.getElementById("anniNewPrev"); if (pv) pv.style.display = "none"; } openModalBox("addAnniversaryModal");
         }
+        let anniNewImg = null;
+        function pickAnniNewImg() { anniImgTargetId = "__new__"; const f = document.getElementById("anni_card_img_file"); f.value = ""; f.click(); }
         function submitAddAnniversary() {
             const title = document.getElementById("anniTitleInput").value.trim();
             const date = document.getElementById("anniDateInput").value;
             if (!title || !date) { alert("请填写名称和日期"); return; }
             if (!db.anniversaries) db.anniversaries = [];
-            db.anniversaries.push({ id: "anni_" + Date.now(), title, date, img: null });
+            db.anniversaries.push({ id: "anni_" + Date.now(), title, date, img: anniNewImg || null }); anniNewImg = null;
             closeModal('addAnniversaryModal');
             saveData(); renderAnniversaryTimeline();
         }
@@ -4867,15 +4870,19 @@
         let anniImgTargetId = null;
         function triggerAnniImageUpload(id) {
             anniImgTargetId = id;
-            document.getElementById("anni_card_img_file").click();
+            const f = document.getElementById("anni_card_img_file"); f.value = ""; f.click();
         }
         document.getElementById("anni_card_img_file").onchange = (e) => {
-            const f = e.target.files[0]; if (!f || !anniImgTargetId) return;
+            const f = e.target.files && e.target.files[0], tid = anniImgTargetId; e.target.value = ""; // 清空，下次再选同一张也能触发
+            if (!f || !tid) return;
             compressImageFile(f, 700, 0.8).then(data => {
-                const item = (db.anniversaries || []).find(a => a.id === anniImgTargetId);
+                if (!data) { alert("图片读取失败，换一张试试"); return; }
+                if (tid === "__new__") { anniNewImg = data; const pv = document.getElementById("anniNewPrev"); if (pv) { pv.src = data; pv.style.display = "block"; } return; }
+                const item = (db.anniversaries || []).find(a => a.id === tid);
                 if (item) { item.img = data; saveData(); renderAnniversaryTimeline(); }
             });
         };
+        function removeAnniImage(id) { const it = (db.anniversaries || []).find(a => a.id === id); if (!it || !confirm("移除这张图片吗？")) return; it.img = null; saveData(); renderAnniversaryTimeline(); }
         function renderAnniversaryTimeline() {
             const box = document.getElementById("profileAnniversaryTimeline");
             if (!box) return;
@@ -4883,14 +4890,15 @@
             if (!list.length) { box.innerHTML = `<div class="empty-state">还没有纪念日，点右上角添加吧</div>`; return; }
             box.innerHTML = list.map((a, i) => {
                 const side = i % 2 === 0 ? "side-left" : "side-right";
-                const imgHtml = a.img
-                    ? `<img class="anni-img" src="${a.img}" onclick="event.stopPropagation(); openImgView(this.src)">`
-                    : `<div class="anni-add-img-box" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋</div>`;
+                const act = 'style="font-size:12px;color:var(--primary);margin-top:6px;display:inline-block;padding:4px 0;"';
+                const imgBlock = a.img
+                    ? `<img class="anni-img-large" src="${a.img}" onclick="event.stopPropagation(); openImgView(this.src)" onerror="this.outerHTML='<div style=&quot;font-size:12px;color:var(--text-sub);margin-top:6px&quot;>图片无法显示，请重新上传</div>'"><div><span ${act} onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">更换</span>　<span ${act} onclick="event.stopPropagation(); removeAnniImage('${a.id}')">移除</span></div>`
+                    : `<div ${act} onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋ 添加图片</div>`;
                 return `<div class="anni-item ${side}" data-id="${a.id}">
                     <div class="anni-dot"></div>
-                    <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span>${imgHtml}</div>
+                    <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span></div>
                     <div class="anni-date" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.date)}</div>
-                    ${a.img ? `<img class="anni-img-large" src="${a.img}" onclick="event.stopPropagation(); openImgView(this.src)"><div style="font-size:11px;color:var(--text-sub);margin-top:4px" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">更换图片</div>` : ''}
+                    ${imgBlock}
                 </div>`;
             }).join("");
             box.querySelectorAll(".anni-item").forEach(el => {
