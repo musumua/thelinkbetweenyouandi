@@ -273,6 +273,7 @@
         .anni-item.side-right .anni-title-row { justify-content: flex-start; }
         .anni-img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; cursor: pointer; flex-shrink: 0; }
         .anni-add-img-box { width: 20px; height: 20px; border: 1.5px dashed var(--text-sub); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--text-sub); cursor: pointer; flex-shrink: 0; line-height: 1; }
+        .anni-add-big { margin-top: 6px; padding: 14px 10px; border: 1.5px dashed var(--text-sub); border-radius: 8px; font-size: 13px; color: var(--text-sub); text-align: center; cursor: pointer; }
         .anni-img-large { max-width: 100%; border-radius: 8px; display: block; margin-top: 6px; }
         .anni-title { font-size: 13px; font-weight: 400; color: var(--text-main); }
         .anni-date { font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
@@ -4035,11 +4036,21 @@
                 window.addEventListener("resize", layout); layout();
             }
         }
-        function openImgView(src) {
+        function openImgView(src, actions) {
             if (!src) return; const old = document.getElementById("imgViewMask"); if (old) old.remove();
             const mk = document.createElement("div"); mk.id = "imgViewMask"; mk.style.cssText = "position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box";
             mk.innerHTML = '<img style="max-width:100%;max-height:100%;object-fit:contain;border-radius:6px"><div style="position:absolute;top:14px;right:18px;color:#fff;font-size:26px;opacity:.8">✕</div>';
-            mk.firstChild.onerror = () => { mk.firstChild.outerHTML = '<div style="color:#fff;font-size:14px">图片无法显示</div>'; }; mk.firstChild.src = src; mk.onclick = () => mk.remove(); document.body.appendChild(mk);
+            mk.firstChild.onerror = () => { mk.firstChild.outerHTML = '<div style="color:#fff;font-size:14px">图片无法显示</div>'; };
+            mk.firstChild.src = src; mk.onclick = () => mk.remove(); document.body.appendChild(mk);
+            if (actions && actions.length) {
+                const bar = document.createElement("div"); bar.style.cssText = "position:absolute;left:0;right:0;bottom:calc(24px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:14px;";
+                actions.forEach(ac => { const bt = document.createElement("button"); bt.textContent = ac.label; bt.style.cssText = "padding:11px 24px;border-radius:22px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);color:#fff;font-size:15px;"; bt.onclick = ev => { ev.stopPropagation(); mk.remove(); ac.fn(); }; bar.appendChild(bt); });
+                mk.appendChild(bar);
+            }
+        }
+        function openAnniViewer(id) {
+            const a = (db.anniversaries || []).find(x => x.id === id); if (!a || !a.img) return;
+            openImgView(a.img, [{ label: "更换图片", fn: () => triggerAnniImageUpload(id) }, { label: "移除图片", fn: () => removeAnniImage(id) }]);
         }
         function deletePyqComment(postId, ci) {
             const p = db.pyqPosts.find(x => x.id == postId); if (!p || !p.comments || !p.comments[ci]) return;
@@ -4842,7 +4853,7 @@
             anniNewImg = null; { const pv = document.getElementById("anniNewPrev"); if (pv) pv.style.display = "none"; } openModalBox("addAnniversaryModal");
         }
         let anniNewImg = null;
-        function pickAnniNewImg() { anniImgTargetId = "__new__"; const f = document.getElementById("anni_card_img_file"); f.value = ""; f.click(); }
+        function pickAnniNewImg() { anniImgTargetId = "__new__"; const f = document.getElementById("anni_card_img_file"); f.value = ""; try { sessionStorage.setItem("anniPick", String(Date.now())); } catch (e) { } f.click(); }
         function submitAddAnniversary() {
             const title = document.getElementById("anniTitleInput").value.trim();
             const date = document.getElementById("anniDateInput").value;
@@ -4870,18 +4881,27 @@
         let anniImgTargetId = null;
         function triggerAnniImageUpload(id) {
             anniImgTargetId = id;
-            const f = document.getElementById("anni_card_img_file"); f.value = ""; f.click();
+            const f = document.getElementById("anni_card_img_file"); f.value = ""; try { sessionStorage.setItem("anniPick", String(Date.now())); } catch (e) { } f.click();
         }
         document.getElementById("anni_card_img_file").onchange = (e) => {
+            try { sessionStorage.removeItem("anniPick"); } catch (x) { }
             const f = e.target.files && e.target.files[0], tid = anniImgTargetId; e.target.value = ""; // 清空，下次再选同一张也能触发
-            if (!f || !tid) return;
-            compressImageFile(f, 700, 0.8).then(data => {
-                if (!data) { alert("图片读取失败，换一张试试"); return; }
+            if (!f) { alert("没有读到选中的图片（文件为空）"); return; }
+            if (!tid) { alert("内部状态丢失，请再点一次添加图片"); return; }
+            compressImageFile(f, 700, 0.8).then(async data => {
+                if (!data) { alert(`图片读取失败：${f.name || "未知文件"}（${f.type || "未知格式"}，${Math.round(f.size / 1024)}KB）`); return; }
+                if (!/^data:image\/(jpeg|png|webp|gif)/.test(data)) { alert(`这张图的格式（${f.type || "未知"}）浏览器无法处理，请换一张 JPG/PNG 图片`); return; }
+                if (data.length > 3500000) { alert(`图片太大（${Math.round(data.length / 1024)}KB 压缩后仍过大），请换一张小一点的`); return; }
                 if (tid === "__new__") { anniNewImg = data; const pv = document.getElementById("anniNewPrev"); if (pv) { pv.src = data; pv.style.display = "block"; } return; }
                 const item = (db.anniversaries || []).find(a => a.id === tid);
-                if (item) { item.img = data; saveData(); renderAnniversaryTimeline(); }
-            });
+                if (!item) { alert("找不到这个纪念日，请刷新后再试"); return; }
+                item.img = data; renderAnniversaryTimeline();
+                const ok = await idbSet(IDB_KEY, db); // 直接写库并检查结果，失败要说出来
+                if (!ok) alert("图片已显示，但保存到手机存储失败了（可能是存储空间不足），退出后会丢失");
+            }).catch(err => alert("上传出错：" + (err && err.message || err)));
         };
+        // 选图回来页面被系统重新加载的话，change 事件会丢：启动时发现上次选图没完成就说明白
+        try { if (sessionStorage.getItem("anniPick")) { sessionStorage.removeItem("anniPick"); setTimeout(() => alert("刚才选完图片后页面被手机系统重新加载了（通常是内存不足），图片没传上。请先关掉其他后台应用，或选一张小一点的图再试"), 800); } } catch (e) { }
         function removeAnniImage(id) { const it = (db.anniversaries || []).find(a => a.id === id); if (!it || !confirm("移除这张图片吗？")) return; it.img = null; saveData(); renderAnniversaryTimeline(); }
         function renderAnniversaryTimeline() {
             const box = document.getElementById("profileAnniversaryTimeline");
@@ -4890,10 +4910,9 @@
             if (!list.length) { box.innerHTML = `<div class="empty-state">还没有纪念日，点右上角添加吧</div>`; return; }
             box.innerHTML = list.map((a, i) => {
                 const side = i % 2 === 0 ? "side-left" : "side-right";
-                const act = 'style="font-size:12px;color:var(--primary);margin-top:6px;display:inline-block;padding:4px 0;"';
                 const imgBlock = a.img
-                    ? `<img class="anni-img-large" src="${a.img}" onclick="event.stopPropagation(); openImgView(this.src)" onerror="this.outerHTML='<div style=&quot;font-size:12px;color:var(--text-sub);margin-top:6px&quot;>图片无法显示，请重新上传</div>'"><div><span ${act} onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">更换</span>　<span ${act} onclick="event.stopPropagation(); removeAnniImage('${a.id}')">移除</span></div>`
-                    : `<div ${act} onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋ 添加图片</div>`;
+                    ? `<img class="anni-img-large" src="${a.img}" onclick="event.stopPropagation(); openAnniViewer('${a.id}')" onerror="this.outerHTML='<div class=&quot;anni-add-big&quot; onclick=&quot;event.stopPropagation(); triggerAnniImageUpload(\\'${a.id}\\')&quot;>图片无法显示，点这里重新上传</div>'">`
+                    : `<div class="anni-add-big" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋ 添加图片</div>`;
                 return `<div class="anni-item ${side}" data-id="${a.id}">
                     <div class="anni-dot"></div>
                     <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span></div>
