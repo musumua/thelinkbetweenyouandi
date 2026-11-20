@@ -279,6 +279,15 @@
         .anni-date { font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
         .memory-list { padding: 16px 16px 40px 16px; display:flex; flex-direction:column; gap:16px; }
         .memory-card { background: var(--panel); border-radius:14px; padding:14px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        .memory-list > *, .memory-bubble-row, .memory-card-head { flex-shrink: 0; }
+        .memory-card.mhl { border-color: #e6b94a; box-shadow: 0 0 0 1px #e6b94a inset, var(--shadow-sm); }
+        .memory-bubble.mhl { box-shadow: 0 0 0 2px #f2c14e; position: relative; }
+        .memory-bubble.mhl::after { content: "★"; position: absolute; right: -6px; top: -8px; font-size: 13px; color: #f2c14e; }
+        .mem-star { background: none; border: none; font-size: 18px; line-height: 1; padding: 2px 4px; color: var(--text-sub); cursor: pointer; }
+        .mem-star.on { color: #f2c14e; }
+        .mem-filter { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; font-size: 12px; color: var(--text-sub); }
+        .mem-filter button { white-space: nowrap; border: 1px solid var(--border); background: transparent; color: var(--text-sub); border-radius: 14px; padding: 5px 12px; font-size: 12px; }
+        .mem-filter button.on { background: #f2c14e; color: #3a2a00; border-color: transparent; font-weight: 600; }
         .memory-card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap: 8px; }
         .memory-card-title-wrap { display:flex; flex-direction:column; gap:2px; min-width:0; }
         .memory-card-title { font-size:14.5px; font-weight:700; color:var(--text-main); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -1320,7 +1329,7 @@
             <div class="app-page-title" id="gameTitle">游戏</div>
             <div class="app-page-header-spacer"></div>
         </div>
-        <div class="lib-speak" id="gameSpeakBar" style="display:none"><img class="speak-avatar" id="gameSpeakAvatar" src=""><span id="gameSpeakText"></span></div>
+        
         <div class="game-body" id="gameBody"></div>
     </div>
 
@@ -3926,23 +3935,25 @@
 
         // 🎯 右上角头像区交互彩蛋：先展示“正在输入”动画，结束之后再优雅发送
         // 自由造句：按词性随机抽词，词与词之间用空格连接
+        const FREE_ROLES = ["名词", "动词", "形容词", "副词", "助词", "介词", "连词"];
+        function freeRoleOf(c) { const r = (db.freeRoles || {})[c]; if (r) return r; if (FREE_ROLES.includes(c)) return c; for (const k of FREE_ROLES) if (c.includes(k)) return k; return "其他"; }
         function makeFreeSentence() {
             const W = db.freeWords || {};
             const cats = Object.keys(W).filter(c => W[c] && W[c].length);
             if (!cats.length) return "";
             const pickFrom = c => W[c][Math.floor(Math.random() * W[c].length)];
-            const nounCats = cats.filter(c => c.includes("名词")), std = ["名词", "动词", "形容词", "副词", "助词", "介词", "连词"];
-            // 名词类不管拆成几类，都当“名词”这一个位置：先随机选一类，再抽词，这样名词不会因为词多/类多而占满句子
-            const role = r => r === "名词" ? (nounCats.length ? pickFrom(nounCats[Math.floor(Math.random() * nounCats.length)]) : null) : (W[r] && W[r].length ? pickFrom(r) : null);
-            const patterns = [["副词", "动词"], ["副词", "形容词"], ["形容词", "助词"], ["动词", "助词"], ["连词", "动词"], ["副词", "动词", "助词"], ["介词", "名词", "动词"], ["名词", "副词", "形容词"], ["名词", "动词"], ["动词", "名词"], ["形容词", "名词"], ["副词", "动词", "介词", "名词"], ["名词", "连词", "名词", "动词"]];
-            const wts = [3, 2, 2, 2, 1, 3, 1, 1, 1, 1, 1, 1, 0.3]; // 带名词的句型权重低
+            // 每个词类有一个“句中角色”（默认按名字认：叫“名词”或名字里带“名词”的当名词，也可以在词类里手动指定）。同一角色下有几个词类，就先随机选一类再抽词，这样名词拆成多类也不会占满句子
+            const byRole = {}; cats.forEach(c => { (byRole[freeRoleOf(c)] = byRole[freeRoleOf(c)] || []).push(c); });
+            const role = r => byRole[r] ? pickFrom(byRole[r][Math.floor(Math.random() * byRole[r].length)]) : null;
+            const patterns = [["副词", "动词"], ["副词", "形容词"], ["形容词", "助词"], ["动词", "助词"], ["连词", "动词"], ["副词", "动词", "助词"], ["介词", "名词", "动词"], ["名词", "副词", "形容词"], ["名词", "动词"], ["动词", "名词"], ["形容词", "名词"], ["名词", "动词", "名词"], ["名词", "副词", "动词", "名词"], ["副词", "动词", "介词", "名词"], ["名词", "连词", "名词", "动词"]];
+            const wts = [3, 2, 2, 2, 1, 3, 1, 1, 1, 1, 1, 1.2, 0.6, 1, 0.3]; // 带名词的句型权重偏低；主语+宾语都是名词的句型（名词 动词 名词）也有
             let words = [];
             for (let t = 0; t < 8 && words.length < 2; t++) {
                 let r = Math.random() * wts.reduce((x, y) => x + y, 0), k = 0; while (k < wts.length - 1 && (r -= wts[k]) > 0) k++;
                 words = patterns[k].map(role).filter(Boolean);
             }
-            // 自己新加的词类（不在标准七类里、也不是名词类）：有 40% 概率再插一个词，位置按词类在列表里的先后
-            const extra = cats.filter(c => !std.includes(c) && !c.includes("名词"));
+            // 角色是“其他”的词类（如语气词、代词）：有 40% 概率再插一个词，位置按词类在列表里的先后
+            const extra = byRole["其他"] || [];
             if (extra.length && Math.random() < 0.4) { const c = extra[Math.floor(Math.random() * extra.length)]; if (Object.keys(W).indexOf(c) < Object.keys(W).length / 2) words.unshift(pickFrom(c)); else words.push(pickFrom(c)); }
             if (words.length < 2) { const n = 2 + Math.floor(Math.random() * 2); words = []; for (let i = 0; i < n; i++) words.push(pickFrom(cats[Math.floor(Math.random() * cats.length)])); }
             return words.join(" ");
@@ -4715,7 +4726,10 @@
         function closeLetterPage() { document.getElementById("letterFullPage").classList.remove("open"); }
 
         // ==================== 🗂️ 记忆（聊天记录收藏） ====================
-        let expandedMemoryIds = new Set();
+        let expandedMemoryIds = new Set(), memHlOnly = false;
+        function toggleMemHl(id) { const m = (db.memories || []).find(x => x.id === id); if (!m) return; m.hl = !m.hl; saveData(); renderMemoryList(); }
+        function toggleMemBubbleHl(id, i) { const m = (db.memories || []).find(x => x.id === id); if (!m || !m.items[i]) return; m.items[i].hl = !m.items[i].hl; saveData(); renderMemoryList(); }
+        function setMemHlOnly(v) { memHlOnly = v; renderMemoryList(); }
         function toggleMemoryExpand(id) {
             if (expandedMemoryIds.has(id)) expandedMemoryIds.delete(id); else expandedMemoryIds.add(id);
             renderMemoryList();
@@ -4780,20 +4794,25 @@
                 box.innerHTML = `<div class="empty-state">还没有收藏的回忆，去聊天里点右上角的书签图标，挑几条气泡收藏进来吧</div>`;
                 return;
             }
-            box.innerHTML = memories.map(mem => {
+            const hasHl = m => m.hl || (m.items || []).some(it => it.hl);
+            let list = memHlOnly ? memories.filter(hasHl) : memories;
+            list = list.slice().sort((a, b) => (b.hl ? 1 : 0) - (a.hl ? 1 : 0)); // 标了重点的收藏排在最前，其余保持原顺序
+            const filterBar = `<div class="mem-filter"><button class="${memHlOnly ? "" : "on"}" onclick="setMemHlOnly(false)">全部</button><button class="${memHlOnly ? "on" : ""}" onclick="setMemHlOnly(true)">★ 只看重点</button></div><div style="font-size:11.5px;color:var(--text-sub);margin:-4px 0 10px">点收藏右边的 ☆ 标整段；展开后点某条气泡标这一条</div>`;
+            if (!list.length) { box.innerHTML = filterBar + `<div class="empty-state">还没有标重点的收藏</div>`; return; }
+            box.innerHTML = filterBar + list.map(mem => {
                 const dt = new Date(mem.time);
                 const timeStr = `${dt.getFullYear()}年${dt.getMonth()+1}月${dt.getDate()}日 ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}`;
-                const bubblesHtml = mem.items.map(it => {
+                const bubblesHtml = mem.items.map((it, bi) => {
                     if (it.isNudge) {
                         return `<div class="system-msg" style="margin:8px auto;">${(it.text || '').replace(/</g,'&lt;')}</div>`;
                     }
                     const inner = it.img ? `<img src="${it.img}" class="msg-img">` : `<span>${(it.text || '').replace(/</g,'&lt;')}</span>`;
                     const quote = it.replyTo ? `<div class="reply-quote-block"><div class="rq-a">${String(it.replyTo.author || '').replace(/</g,'&lt;')}</div><div class="rq-t">${String(it.replyTo.text || '').replace(/</g,'&lt;')}</div></div>` : "";
-                    return `<div class="memory-bubble-row ${it.me ? 'my' : 'other'}"><div class="msg ${it.me ? 'my' : 'other'} memory-bubble">${quote}${inner}</div></div>`;
+                    return `<div class="memory-bubble-row ${it.me ? 'my' : 'other'}"><div class="msg ${it.me ? 'my' : 'other'} memory-bubble${it.hl ? ' mhl' : ''}" onclick="toggleMemBubbleHl('${mem.id}',${bi})">${quote}${inner}</div></div>`;
                 }).join("");
                 const isExpanded = expandedMemoryIds.has(mem.id);
                 return `
-                    <div class="memory-card">
+                    <div class="memory-card${mem.hl ? ' mhl' : ''}">
                         <div class="memory-card-head" onclick="toggleMemoryExpand('${mem.id}')" style="cursor:pointer;">
                             <div class="memory-card-title-wrap">
                                 <div class="memory-card-title">${mem.title ? mem.title : `一段回忆 · ${mem.items.length}条`}</div>
@@ -4801,6 +4820,7 @@
                             </div>
                             <div class="memory-card-actions">
                                 <svg class="memory-chev ${isExpanded ? 'expanded' : ''}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg>
+                                <button class="mem-star${mem.hl ? ' on' : ''}" onclick="event.stopPropagation(); toggleMemHl('${mem.id}')">${mem.hl ? '★' : '☆'}</button>
                                 <button class="simple-edit-btn" onclick="event.stopPropagation(); renameMemory('${mem.id}')">✎</button>
                                 <button class="simple-del-btn" onclick="event.stopPropagation(); deleteMemory('${mem.id}')">✕</button>
                             </div>
@@ -4888,8 +4908,8 @@
             const f = e.target.files && e.target.files[0], tid = anniImgTargetId; e.target.value = ""; // 清空，下次再选同一张也能触发
             if (!f) { alert("没有读到选中的图片（文件为空）"); return; }
             if (!tid) { alert("内部状态丢失，请再点一次添加图片"); return; }
-            compressImageFile(f, 700, 0.8).then(async data => {
-                if (!data) { alert(`图片读取失败：${f.name || "未知文件"}（${f.type || "未知格式"}，${Math.round(f.size / 1024)}KB）`); return; }
+            compressImageFile(f, 700, 0.8, true).then(async data => {
+                if (!data) { alert(`这张图片手机浏览器解不出来：${f.name || "未知文件"}（格式 ${f.type || "未知"}，${Math.round(f.size / 1024)}KB）。多半是 HEIC 之类的特殊格式，换一张 JPG/PNG，或先截个屏再传`); return; }
                 if (!/^data:image\/(jpeg|png|webp|gif)/.test(data)) { alert(`这张图的格式（${f.type || "未知"}）浏览器无法处理，请换一张 JPG/PNG 图片`); return; }
                 if (data.length > 3500000) { alert(`图片太大（${Math.round(data.length / 1024)}KB 压缩后仍过大），请换一张小一点的`); return; }
                 if (tid === "__new__") { anniNewImg = data; const pv = document.getElementById("anniNewPrev"); if (pv) { pv.src = data; pv.style.display = "block"; } return; }
@@ -5507,7 +5527,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
         // ==================== 📔 交换日记：合并寄出/收到，按时间交替展示 ====================
         function escapeHtml(str) { return (str || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
         // 图片压缩：上传的照片统一缩放+压缩后再转base64存储，避免数据库越滚越大导致卡顿
-        function compressImageFile(file, maxDim = 900, quality = 0.75) {
+        function compressImageFile(file, maxDim = 900, quality = 0.75, strict = false) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -5527,7 +5547,12 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                             resolve(canvas.toDataURL("image/jpeg", quality));
                         } catch (err) { resolve(rawDataUrl); } // 压缩过程出错时，退回使用原图，保证上传永远不会静默失败
                     };
-                    img.onerror = () => resolve(rawDataUrl); // 部分格式（如iPhone拍的HEIC）浏览器无法解码做压缩，直接用原图兜底
+                    img.onerror = () => {
+                        if (!strict) { resolve(rawDataUrl); return; }
+                        // 严格模式（纪念日）：原图解不出来就换 createImageBitmap 再试一次，仍不行就明确失败，不存一份看不了的数据
+                        if (window.createImageBitmap) createImageBitmap(file).then(bm => { try { let w = bm.width, h = bm.height; if (w > maxDim || h > maxDim) { if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; } else { w = Math.round(w * maxDim / h); h = maxDim; } } const c = document.createElement("canvas"); c.width = w; c.height = h; c.getContext("2d").drawImage(bm, 0, 0, w, h); resolve(c.toDataURL("image/jpeg", quality)); } catch (er) { resolve(null); } }).catch(() => resolve(null));
+                        else resolve(null);
+                    }; // 部分格式（如iPhone拍的HEIC）浏览器无法解码做压缩，直接用原图兜底
                     img.src = rawDataUrl;
                 };
                 reader.onerror = () => resolve(null);
@@ -6526,7 +6551,7 @@ function cardFaceInner(tab, idx, rev, w) {
         let gameDiff = "normal", gameCurrent = "", gameCleanup = null;
         const GAME_DIFF_NAMES = { easy: "简单", normal: "普通", hard: "困难", expert: "极难", hell: "地狱" }; let gameLv = "normal";
         function openGamesPage() {
-            document.getElementById("gameSpeakAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
+            
             document.getElementById("gamesFullPage").classList.add("open");
             renderGameMenu();
         }
@@ -6608,7 +6633,7 @@ function cardFaceInner(tab, idx, rev, w) {
             requestAnimationFrame(frame);
         }
         function renderGameMenu() {
-            gameStopCurrent(); herSpeakStop("game"); document.getElementById("gameSpeakBar").style.display = "none";
+            gameStopCurrent(); herSpeakStop("game");
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
             const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"], ["blocks", "消除方块", "同时开始，点相连的同色方块消掉，都消不动时剩得少的赢"], ["pacman", "吃豆人", "迷宫里你和他各一个吃豆人，四只鬼在追；大力丸能反吃鬼，还有樱桃、加速、冰冻道具，得分高的赢"]];
@@ -6618,7 +6643,7 @@ function cardFaceInner(tab, idx, rev, w) {
         }
         function startGame(k, fresh) {
             gameStopCurrent(); gameCurrent = k;
-            document.getElementById("gameSpeakBar").style.display = ""; herSpeakStart("gameSpeakText", "game");
+            
             const st = gameStashes[k];
             if (st && !fresh) {
                 delete gameStashes[k]; const body = document.getElementById("gameBody"); body.innerHTML = ""; body.appendChild(st.frag);
@@ -9608,14 +9633,43 @@ treaty:条约`
             if (!db.freeWords) db.freeWords = {};
             const cats = Object.keys(db.freeWords);
             const q = freeSearch.trim();
-            let h = `<div class="free-cats"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" onclick="freeSetCat('${c}')">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button></div>` + (freeCat ? `<div style="display:flex;gap:8px;margin:0 0 10px"><button class="btn btn-outline" style="flex:1;padding:8px" onclick="freeMoveCat(-1)">◀ 词类前移</button><button class="btn btn-outline" style="flex:1;padding:8px" onclick="freeMoveCat(1)">词类后移 ▶</button><button class="btn btn-outline" style="flex:0 0 auto;padding:8px 12px" onclick="freeRenameCat()">改名</button><button class="btn btn-danger" style="flex:0 0 auto;padding:8px 12px" onclick="freeDeleteCat()">删除</button></div>` : "");
+            let h = `<div class="free-cats"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" data-cat="${escapeHtml(c)}" onclick="freeSetCat(this.dataset.cat)">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button></div>` + (freeCat ? `<div style="display:flex;gap:8px;margin:0 0 10px"><span style="flex:1;font-size:12px;color:var(--text-sub);align-self:center">长按上面的词类标签，左右拖动换位置</span><select class="modal-input" style="flex:0 0 auto;width:auto;padding:6px 8px;font-size:12px" onchange="freeSetRole(this.value)" title="这个词类在句子里当什么用">${["自动", ...FREE_ROLES, "其他"].map(r => `<option value="${r}" ${((db.freeRoles || {})[freeCat] || "自动") === r ? "selected" : ""}>${r === "自动" ? "角色：自动(" + freeRoleOf(freeCat) + ")" : "角色：" + r}</option>`).join("")}</select><button class="btn btn-outline" style="flex:0 0 auto;padding:8px 12px" onclick="freeRenameCat()">改名</button><button class="btn btn-danger" style="flex:0 0 auto;padding:8px 12px" onclick="freeDeleteCat()">删除</button></div>` : "");
             h += `<div class="card-toolbar-row1"><button class="btn ${freeSelectMode ? "" : "btn-outline"}" style="flex:0 0 auto; padding:10px 14px;" onclick="freeToggleSelect()">${freeSelectMode ? "完成" : "多选"}</button><input class="modal-input" placeholder="🔍 搜索..." value="${freeSearch.replace(/"/g, "&quot;")}" oninput="freeSearch=this.value;renderCardTabPanel()"><button class="btn btn-outline card-dedupe-btn" onclick="freeDedupe()">查重</button></div>`;
             h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<button class="btn btn-danger" style="width:100%; margin-bottom:8px;" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
             const rows = [];
             cats.forEach(c => { if (freeCat && freeCat !== c) return; db.freeWords[c].forEach((w, i) => { if (!q || w.includes(q)) rows.push({ c, i, w }); }); });
             if (!rows.length) h += `<div class="empty-state">${q ? "没有找到匹配的词语" : "还没有词语，点上方按钮添加吧。他会随机抽取名词、动词、助词、介词等，用空格连成一句话发给你"}</div>`;
             else h += rows.map(r => { const key = r.c + "\u0001" + r.i; return `<div class="simple-list-row">${freeSelectMode ? `<input type="checkbox" class="item-select-checkbox" ${freeSelectedSet.has(key) ? "checked" : ""} onchange="freeToggleSel(this.dataset.k)" data-k="${key}">` : ""}<span>${escapeHtml(r.w)}${freeCat ? "" : ` <em class="free-tag">${escapeHtml(r.c)}</em>`}</span>${!freeSelectMode ? `<button class="simple-edit-btn" onclick="freeEdit('${r.c}',${r.i})">✎</button><button class="simple-del-btn" onclick="freeDelete('${r.c}',${r.i})">✕</button>` : ""}</div>`; }).join("");
-            panel.innerHTML = h;
+            panel.innerHTML = h; freeBindDrag(panel);
+        }
+        // 长按词类标签后左右拖动换位置（松手生效）
+        let freeDragged = false;
+        function freeBindDrag(panel) {
+            const row = panel.querySelector(".free-cats"); if (!row) return;
+            row.querySelectorAll(".free-cat[data-cat]").forEach(chip => {
+                let timer = null, active = false, sx = 0, sy = 0, startScroll = 0;
+                const chips = () => [...row.querySelectorAll(".free-cat[data-cat]")];
+                const begin = (x, y) => { sx = x; sy = y; active = false; clearTimeout(timer); timer = setTimeout(() => { active = true; startScroll = row.scrollLeft; chip.style.cssText += ";transition:none;z-index:5;position:relative;box-shadow:0 4px 14px rgba(0,0,0,.4);transform:scale(1.08)"; if (navigator.vibrate) navigator.vibrate(12); }, 380); };
+                const move = (x, y, ev) => {
+                    if (!active) { if (Math.abs(x - sx) > 8 || Math.abs(y - sy) > 8) clearTimeout(timer); return; }
+                    if (ev && ev.cancelable) ev.preventDefault();
+                    const rr = row.getBoundingClientRect(); if (x > rr.right - 30) row.scrollLeft += 8; else if (x < rr.left + 30) row.scrollLeft -= 8;
+                    chip.style.transform = `translateX(${x - sx + (row.scrollLeft - startScroll)}px) scale(1.08)`;
+                };
+                const end = (x) => {
+                    clearTimeout(timer); if (!active) return; active = false; freeDragged = true; setTimeout(() => { freeDragged = false; }, 300);
+                    const cr = chip.getBoundingClientRect(), cx = cr.left + cr.width / 2, others = chips().filter(c => c !== chip);
+                    let t = 0; others.forEach(c => { const r = c.getBoundingClientRect(); if (r.left + r.width / 2 < cx) t++; });
+                    const keys = Object.keys(db.freeWords), name = chip.dataset.cat, from = keys.indexOf(name); keys.splice(from, 1); keys.splice(t, 0, name);
+                    if (keys.indexOf(name) !== from) { const nw = {}; keys.forEach(k => { nw[k] = db.freeWords[k]; }); db.freeWords = nw; saveData(); }
+                    renderCardTabPanel();
+                };
+                chip.addEventListener("touchstart", e => { const t = e.touches[0]; begin(t.clientX, t.clientY); }, { passive: true });
+                chip.addEventListener("touchmove", e => { const t = e.touches[0]; move(t.clientX, t.clientY, e); }, { passive: false });
+                chip.addEventListener("touchend", e => end()); chip.addEventListener("touchcancel", () => { clearTimeout(timer); active = false; });
+                chip.addEventListener("mousedown", e => { begin(e.clientX, e.clientY); const mm = ev => move(ev.clientX, ev.clientY, ev), mu = ev => { document.removeEventListener("mousemove", mm); document.removeEventListener("mouseup", mu); end(); }; document.addEventListener("mousemove", mm); document.addEventListener("mouseup", mu); });
+                chip.addEventListener("click", e => { if (freeDragged) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+            });
         }
         function freeSetCat(c) { freeCat = c; freeSelectedSet.clear(); renderCardTabPanel(); }
         function freeToggleSelect() { freeSelectMode = !freeSelectMode; freeSelectedSet.clear(); renderCardTabPanel(); }
@@ -9629,13 +9683,14 @@ treaty:条约`
             const seen = new Set(); db.freeWords[c] = db.freeWords[c].filter(w => { const k = w.trim(); if (seen.has(k)) return false; seen.add(k); return true; });
             freeSelectedSet.clear(); saveData(); renderCardTabPanel();
         }
+        function freeSetRole(r) { if (!freeCat) return; if (!db.freeRoles) db.freeRoles = {}; if (r === "自动") delete db.freeRoles[freeCat]; else db.freeRoles[freeCat] = r; saveData(); renderCardTabPanel(); }
         function freeMoveCat(d) {
             const keys = Object.keys(db.freeWords), i = keys.indexOf(freeCat), j = i + d; if (i < 0 || j < 0 || j >= keys.length) return;
             [keys[i], keys[j]] = [keys[j], keys[i]]; const nw = {}; keys.forEach(k => { nw[k] = db.freeWords[k]; }); db.freeWords = nw; saveData(); renderCardTabPanel();
         }
         function freeRenameCat() {
             const old = freeCat; if (!old) return;
-            openSimpleEditModal("词类改名", old, n => { n = (n || "").trim(); if (!n || n === old) return; if (db.freeWords[n]) { alert("已经有这个词类了"); return; } const nw = {}; Object.keys(db.freeWords).forEach(k => { nw[k === old ? n : k] = db.freeWords[k]; }); db.freeWords = nw; freeCat = n; saveData(); renderCardTabPanel(); });
+            openSimpleEditModal("词类改名", old, n => { n = (n || "").trim(); if (!n || n === old) return; if (db.freeWords[n]) { alert("已经有这个词类了"); return; } const nw = {}; Object.keys(db.freeWords).forEach(k => { nw[k === old ? n : k] = db.freeWords[k]; }); if (db.freeRoles && db.freeRoles[old]) { db.freeRoles[n] = db.freeRoles[old]; delete db.freeRoles[old]; } db.freeWords = nw; freeCat = n; saveData(); renderCardTabPanel(); });
         }
         function freeDeleteCat() {
             if (!freeCat) return; const n = db.freeWords[freeCat].length;
