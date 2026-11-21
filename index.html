@@ -409,6 +409,8 @@
         .lib-speak { min-height:44px; padding:10px 20px; text-align:center; font-size:13.5px; color:var(--text-sub); display:flex; align-items:center; justify-content:center; flex-shrink:0; border-bottom:none; }
         .lib-speak span { opacity:0; transition:opacity .6s ease; }
         .lib-speak span.show { opacity:1; }
+        .lib-set { display:flex; align-items:center; gap:12px; margin:8px 0; font-size:13px; color:var(--text-main); } .lib-set span { flex:0 0 36px; color:var(--text-sub); } .lib-set input[type=range] { flex:1; accent-color: var(--primary); } .lib-set em { font-style:normal; flex:0 0 40px; text-align:right; font-size:12px; color:var(--text-sub); }
+        .lib-toc-item { padding:12px 20px; font-size:14px; border-bottom:1px solid var(--border); cursor:pointer; display:flex; justify-content:space-between; gap:10px; } .lib-toc-item.cur { color:var(--primary); font-weight:700; } .lib-toc-item i { font-style:normal; font-size:11px; color:var(--text-sub); flex-shrink:0; }
         .lib-text { flex:1; overflow:hidden; padding:18px 22px; font-size:16px; line-height:28px; white-space:pre-wrap; word-break:break-all; }
         .lib-pager { display:flex; align-items:center; justify-content:center; gap:22px; padding:8px 0 calc(10px + env(safe-area-inset-bottom)); border-top:1px solid var(--border); font-size:12px; color:var(--text-sub); flex-shrink:0; }
         .lib-pager button { background:none; border:none; color:var(--text-main); font-size:22px; padding:0 14px; cursor:pointer; }
@@ -417,6 +419,7 @@
         .lib-speak span { flex:0 1 auto; max-width:74%; background:var(--other-bubble); color:var(--text-main); padding:8px 13px; border-radius:16px 16px 16px 4px; line-height:1.5; box-shadow:var(--shadow-sm, none); }
         .speak-set { background:none; border:none; color:var(--text-sub); font-size:16px; padding:4px 0 4px 8px; cursor:pointer; }
         .game-speak { min-height:44px; }
+        .free-cats.sorting { flex-wrap:wrap; overflow:visible; } .free-cats.sorting .free-cat[data-cat] { border-style:dashed; }
         .free-cats { display:flex; gap:6px; overflow-x:auto; padding:2px 0 10px; }
         .free-cat { flex:0 0 auto; padding:6px 12px; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:13px; cursor:pointer; white-space:nowrap; }
         .free-cat.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; } .free-cat i { font-style:normal; font-size:10px; margin-left:4px; opacity:.7; }
@@ -1361,11 +1364,22 @@
         <div class="app-page-header">
             <button class="pyq-back-pure-symbol" onclick="closeLibReader()"></button>
             <div class="app-page-title" id="libReaderTitle" style="font-size:15px;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">书</div>
-            <div class="app-page-header-spacer" id="libReaderPct" style="font-size:12px;color:var(--text-sub);text-align:right">0%</div>
+            <button class="btn btn-outline" id="libTocBtn" style="padding:5px 12px;font-size:12px" onclick="libOpenToc()">目录</button>
         </div>
         <div class="lib-speak"><img class="speak-avatar" id="libSpeakAvatar" src=""><span id="libSpeakText"></span></div>
         <div class="lib-text" id="libText"></div>
         <div class="lib-pager"><button onclick="libTurn(-1)">‹</button><span id="libPageLabel">1 / 1</span><button onclick="libTurn(1)">›</button></div>
+        <div id="libDim" style="position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:6"></div>
+        <div id="libToc" style="display:none;position:absolute;left:0;right:0;top:0;bottom:0;z-index:8;background:var(--bg);flex-direction:column">
+            <div class="app-page-header"><button class="pyq-back-pure-symbol" onclick="libCloseToc()"></button><div class="app-page-title" style="font-size:15px">目录</div><div class="app-page-header-spacer"></div></div>
+            <div id="libTocList" style="flex:1;overflow-y:auto;padding:6px 0 30px"></div>
+        </div>
+        <div id="libPanel" style="display:none;position:absolute;left:0;right:0;bottom:0;z-index:9;background:var(--panel);border-top:1px solid var(--border);padding:14px 20px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(0,0,0,.35)">
+            <div class="lib-set"><span>页码</span><input type="range" id="libSetPage" min="1" max="1" step="1" oninput="libSetPageSlide(this.value)"><em id="libSetPageV">1</em></div>
+            <div class="lib-set"><span>字号</span><input type="range" id="libSetFs" min="13" max="28" step="1" oninput="libSetPref('fs',this.value)"><em id="libSetFsV"></em></div>
+            <div class="lib-set"><span>行距</span><input type="range" id="libSetLh" min="1.3" max="2.8" step="0.1" oninput="libSetPref('lh',this.value)"><em id="libSetLhV"></em></div>
+            <div class="lib-set"><span>明暗</span><input type="range" id="libSetBr" min="30" max="100" step="1" oninput="libSetPref('br',this.value)"><em id="libSetBrV"></em></div>
+        </div>
     </div>
 
     <div class="pyq-full-page" id="statsFullPage">
@@ -3121,6 +3135,7 @@
             const toast = (t) => { if (!toastEl) { toastEl = document.createElement("div"); toastEl.style.cssText = "position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:rgba(30,30,30,.88);color:#fff;padding:9px 18px;border-radius:18px;font-size:13px;z-index:3000;pointer-events:none;transition:opacity .25s;opacity:0"; document.body.appendChild(toastEl); } toastEl.innerText = t; toastEl.style.opacity = "1"; clearTimeout(toast._t); toast._t = setTimeout(() => toastEl.style.opacity = "0", 1800); };
             function handleBack() {
                 { const cro = document.getElementById("crOv"); if (cro) { cro.remove(); return true; } }
+                { const lt = document.getElementById("libToc"); if (lt && lt.style.display === "flex") { libCloseToc(); return true; } if (typeof libPanelOpen === "function" && libPanelOpen()) { libTogglePanel(false); return true; } }
                 if (document.getElementById("mbOv")) { mbBackOv(); return true; }
             for (const oid of ["imgViewMask", "divZoom", "frBankOv"]) { const oe = document.getElementById(oid); if (oe) { oe.remove(); return true; } }
                 const bem = document.getElementById("bubbleEditMask"); if (bem) { bem.remove(); return true; }
@@ -5531,7 +5546,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const rawDataUrl = e.target.result;
+                    let rawDataUrl = e.target.result;
+                    // 部分安卓相册/文件管理器给的文件没有类型，读出来是 data:application/octet-stream，有的浏览器解不了这种；按文件头认出真实格式改回来
+                    if (typeof rawDataUrl === "string" && !/^data:image\//.test(rawDataUrl)) { const b64 = rawDataUrl.slice(rawDataUrl.indexOf(",") + 1, rawDataUrl.indexOf(",") + 9), mt = b64.startsWith("/9j/") ? "image/jpeg" : b64.startsWith("iVBOR") ? "image/png" : b64.startsWith("R0lGO") ? "image/gif" : b64.startsWith("UklGR") ? "image/webp" : "image/jpeg"; rawDataUrl = "data:" + mt + rawDataUrl.slice(rawDataUrl.indexOf(";")); }
                     const img = new Image();
                     img.onload = () => {
                         try {
@@ -6507,10 +6524,44 @@ function cardFaceInner(tab, idx, rev, w) {
             document.getElementById("libText").textContent = libText.slice(from, to).replace(/^\n/, "");
             document.getElementById("libPageLabel").innerText = (libPage + 1) + " / " + libPages.length;
             const pct = libText.length ? from / libText.length : 0;
-            document.getElementById("libReaderPct").innerText = Math.round(pct * 100) + "%";
+            document.getElementById("libPageLabel").innerText = (libPage + 1) + " / " + libPages.length + "　" + Math.round(pct * 100) + "%";
             if (libCurrent && save !== false) { libCurrent.pos = from; libCurrent.progress = libPages.length > 1 ? libPage / (libPages.length - 1) : 1; clearTimeout(libSaveT); libSaveT = setTimeout(() => saveData(), 500); }
         }
+        function libPanelOpen() { const pn = document.getElementById("libPanel"); return !!pn && pn.style.display !== "none"; }
         function libTurn(d) { libShowPage(libPage + d); }
+        function libPrefs() { if (!db.libPrefs) db.libPrefs = { fs: 16, lh: 1.75, br: 100 }; return db.libPrefs; }
+        function libApplyPrefs(repage) {
+            const p = libPrefs(), el = document.getElementById("libText"); if (!el) return;
+            el.style.fontSize = p.fs + "px"; el.style.lineHeight = Math.round(p.fs * p.lh) + "px";
+            document.getElementById("libDim").style.opacity = String(Math.max(0, Math.min(0.7, (100 - p.br) / 100)));
+            if (repage && libCurrent && libText) { const pos = libCurrent.pos || 0; libPaginate(); libShowPage(libPageForPos(pos), false); }
+        }
+        function libSetPref(k, v) {
+            const p = libPrefs(); p[k] = parseFloat(v); document.getElementById("libSetFsV").innerText = p.fs + "px"; document.getElementById("libSetLhV").innerText = p.lh.toFixed(1); document.getElementById("libSetBrV").innerText = Math.round(p.br) + "%";
+            libApplyPrefs(k !== "br"); clearTimeout(libSaveT); libSaveT = setTimeout(() => saveData(), 500); libSyncPageSlider();
+        }
+        function libSyncPageSlider() { const sl = document.getElementById("libSetPage"); sl.max = Math.max(1, libPages.length); sl.value = libPage + 1; document.getElementById("libSetPageV").innerText = (libPage + 1) + "/" + libPages.length; }
+        function libSetPageSlide(v) { libShowPage(parseInt(v) - 1); document.getElementById("libSetPageV").innerText = (libPage + 1) + "/" + libPages.length; }
+        function libTogglePanel(force) {
+            const pn = document.getElementById("libPanel"), show = force === undefined ? pn.style.display === "none" : force;
+            if (show) { const p = libPrefs(); document.getElementById("libSetFs").value = p.fs; document.getElementById("libSetLh").value = p.lh; document.getElementById("libSetBr").value = p.br; document.getElementById("libSetFsV").innerText = p.fs + "px"; document.getElementById("libSetLhV").innerText = p.lh.toFixed(1); document.getElementById("libSetBrV").innerText = Math.round(p.br) + "%"; libSyncPageSlider(); }
+            pn.style.display = show ? "block" : "none";
+        }
+        // 目录：扫描「第X章/回/节…」「Chapter N」「楔子/序章/后记/番外…」这类单独成行的标题
+        function libBuildToc() {
+            const re = /^[ \t\u3000]*((第[\d零〇一二三四五六七八九十百千两]+[章节回卷集部篇][^\n]{0,40})|(Chapter\s*\d+[^\n]{0,40})|((?:楔子|序章|序言|引子|前言|后记|尾声|终章|番外)[^\n]{0,30}))[ \t\r]*$/gm, out = []; let m;
+            while ((m = re.exec(libText)) && out.length < 3000) out.push({ t: m[1].trim(), pos: m.index + m[0].indexOf(m[1]) });
+            return out;
+        }
+        function libOpenToc() {
+            libTogglePanel(false); const list = libBuildToc(), box = document.getElementById("libTocList"), cur = libCurrent ? (libCurrent.pos || 0) : 0;
+            let ci = -1; list.forEach((c, i) => { if (c.pos <= cur) ci = i; });
+            box.innerHTML = list.length ? list.map((c, i) => `<div class="lib-toc-item${i === ci ? " cur" : ""}" onclick="libGoPos(${c.pos})"><span>${escapeHtml(c.t)}</span><i>${libText.length ? Math.round(c.pos / libText.length * 100) : 0}%</i></div>`).join("") : `<div class="lib-empty">没有识别到章节标题（需要单独成行，如「第一章 …」）<br>可以点中间，用页码滑条跳转</div>`;
+            document.getElementById("libToc").style.display = "flex";
+            const el = box.querySelector(".cur"); if (el) setTimeout(() => el.scrollIntoView({ block: "center" }), 30);
+        }
+        function libCloseToc() { document.getElementById("libToc").style.display = "none"; }
+        function libGoPos(pos) { libCloseToc(); libShowPage(libPageForPos(pos)); }
         function libPageForPos(pos) { let p = 0; for (let i = 0; i < libPages.length; i++) { if (libPages[i] <= pos) p = i; else break; } return p; }
         async function openLibReader(id) {
             const b = db.books.find(x => x.id === id); if (!b) return;
@@ -6521,7 +6572,7 @@ function cardFaceInner(tab, idx, rev, w) {
             document.getElementById("libReaderPage").classList.add("open");
             b.lastReadAt = Date.now();
             requestAnimationFrame(() => {
-                libPaginate();
+                libApplyPrefs(false); libTogglePanel(false); libCloseToc(); libPaginate();
                 let pos = b.pos;
                 if (pos === undefined) pos = Math.floor((b.progress || 0) * libText.length);
                 libShowPage(libPageForPos(pos), false);
@@ -6529,7 +6580,7 @@ function cardFaceInner(tab, idx, rev, w) {
             herSpeakStart("libSpeakText", "lib");
         }
         function closeLibReader() {
-            document.getElementById("libReaderPage").classList.remove("open");
+            document.getElementById("libReaderPage").classList.remove("open"); libTogglePanel(false); libCloseToc();
             herSpeakStop("lib"); clearTimeout(libSaveT); saveData(); libCurrent = null; libText = ""; libPages = []; renderLibrary();
         }
         (function () {
@@ -6539,10 +6590,11 @@ function cardFaceInner(tab, idx, rev, w) {
                 el.addEventListener("touchend", e => {
                     if (libTouchX === null) return;
                     const dx = e.changedTouches[0].clientX - libTouchX; libTouchX = null;
+                    if (libPanelOpen()) { if (Math.abs(dx) < 15) libTogglePanel(false); return; }
                     if (Math.abs(dx) > 40) libTurn(dx < 0 ? 1 : -1);
-                    else { const r = el.getBoundingClientRect(), x = e.changedTouches[0].clientX - r.left; if (x < r.width * 0.33) libTurn(-1); else if (x > r.width * 0.67) libTurn(1); }
+                    else { const r = el.getBoundingClientRect(), x = e.changedTouches[0].clientX - r.left; if (x < r.width * 0.33) libTurn(-1); else if (x > r.width * 0.67) libTurn(1); else libTogglePanel(true); }
                 });
-                el.addEventListener("click", e => { if ("ontouchstart" in window) return; const r = el.getBoundingClientRect(), x = e.clientX - r.left; if (x < r.width / 2) libTurn(-1); else libTurn(1); });
+                el.addEventListener("click", e => { if ("ontouchstart" in window) return; if (libPanelOpen()) { libTogglePanel(false); return; } const r = el.getBoundingClientRect(), x = e.clientX - r.left; if (x < r.width * 0.33) libTurn(-1); else if (x > r.width * 0.67) libTurn(1); else libTogglePanel(true); });
                 window.addEventListener("resize", () => { if (libCurrent && libText) { const pos = libCurrent.pos || 0; libPaginate(); libShowPage(libPageForPos(pos), false); } });
             });
         })();
@@ -9633,7 +9685,7 @@ treaty:条约`
             if (!db.freeWords) db.freeWords = {};
             const cats = Object.keys(db.freeWords);
             const q = freeSearch.trim();
-            let h = `<div class="free-cats"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" data-cat="${escapeHtml(c)}" onclick="freeSetCat(this.dataset.cat)">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button></div>` + (freeCat ? `<div style="display:flex;gap:8px;margin:0 0 10px"><span style="flex:1;font-size:12px;color:var(--text-sub);align-self:center">长按上面的词类标签，左右拖动换位置</span><select class="modal-input" style="flex:0 0 auto;width:auto;padding:6px 8px;font-size:12px" onchange="freeSetRole(this.value)" title="这个词类在句子里当什么用">${["自动", ...FREE_ROLES, "其他"].map(r => `<option value="${r}" ${((db.freeRoles || {})[freeCat] || "自动") === r ? "selected" : ""}>${r === "自动" ? "角色：自动(" + freeRoleOf(freeCat) + ")" : "角色：" + r}</option>`).join("")}</select><button class="btn btn-outline" style="flex:0 0 auto;padding:8px 12px" onclick="freeRenameCat()">改名</button><button class="btn btn-danger" style="flex:0 0 auto;padding:8px 12px" onclick="freeDeleteCat()">删除</button></div>` : "");
+            let h = `<div class="free-cats${freeSortMode ? " sorting" : ""}"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" data-cat="${escapeHtml(c)}" onclick="freeSetCat(this.dataset.cat)">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button><button class="free-cat ${freeSortMode ? "on" : ""}" onclick="freeToggleSort()">${freeSortMode ? "完成排序" : "↔ 排序"}</button></div>` + (freeCat ? `<div style="display:flex;gap:8px;margin:0 0 10px"><span style="flex:1;font-size:12px;color:var(--text-sub);align-self:center">点「↔ 排序」后可拖动标签换位置</span><select class="modal-input" style="flex:0 0 auto;width:auto;padding:6px 8px;font-size:12px" onchange="freeSetRole(this.value)" title="这个词类在句子里当什么用">${["自动", ...FREE_ROLES, "其他"].map(r => `<option value="${r}" ${((db.freeRoles || {})[freeCat] || "自动") === r ? "selected" : ""}>${r === "自动" ? "角色：自动(" + freeRoleOf(freeCat) + ")" : "角色：" + r}</option>`).join("")}</select><button class="btn btn-outline" style="flex:0 0 auto;padding:8px 12px" onclick="freeRenameCat()">改名</button><button class="btn btn-danger" style="flex:0 0 auto;padding:8px 12px" onclick="freeDeleteCat()">删除</button></div>` : "");
             h += `<div class="card-toolbar-row1"><button class="btn ${freeSelectMode ? "" : "btn-outline"}" style="flex:0 0 auto; padding:10px 14px;" onclick="freeToggleSelect()">${freeSelectMode ? "完成" : "多选"}</button><input class="modal-input" placeholder="🔍 搜索..." value="${freeSearch.replace(/"/g, "&quot;")}" oninput="freeSearch=this.value;renderCardTabPanel()"><button class="btn btn-outline card-dedupe-btn" onclick="freeDedupe()">查重</button></div>`;
             h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<button class="btn btn-danger" style="width:100%; margin-bottom:8px;" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
             const rows = [];
@@ -9642,33 +9694,35 @@ treaty:条约`
             else h += rows.map(r => { const key = r.c + "\u0001" + r.i; return `<div class="simple-list-row">${freeSelectMode ? `<input type="checkbox" class="item-select-checkbox" ${freeSelectedSet.has(key) ? "checked" : ""} onchange="freeToggleSel(this.dataset.k)" data-k="${key}">` : ""}<span>${escapeHtml(r.w)}${freeCat ? "" : ` <em class="free-tag">${escapeHtml(r.c)}</em>`}</span>${!freeSelectMode ? `<button class="simple-edit-btn" onclick="freeEdit('${r.c}',${r.i})">✎</button><button class="simple-del-btn" onclick="freeDelete('${r.c}',${r.i})">✕</button>` : ""}</div>`; }).join("");
             panel.innerHTML = h; freeBindDrag(panel);
         }
-        // 长按词类标签后左右拖动换位置（松手生效）
-        let freeDragged = false;
+        // 排序模式：点「排序」后词类标签全部摊开（不再横向滚动），按住标签直接拖到想放的位置，松手生效
+        let freeSortMode = false;
+        function freeToggleSort() { freeSortMode = !freeSortMode; renderCardTabPanel(); }
         function freeBindDrag(panel) {
-            const row = panel.querySelector(".free-cats"); if (!row) return;
+            const row = panel.querySelector(".free-cats"); if (!row || !freeSortMode) return;
             row.querySelectorAll(".free-cat[data-cat]").forEach(chip => {
-                let timer = null, active = false, sx = 0, sy = 0, startScroll = 0;
-                const chips = () => [...row.querySelectorAll(".free-cat[data-cat]")];
-                const begin = (x, y) => { sx = x; sy = y; active = false; clearTimeout(timer); timer = setTimeout(() => { active = true; startScroll = row.scrollLeft; chip.style.cssText += ";transition:none;z-index:5;position:relative;box-shadow:0 4px 14px rgba(0,0,0,.4);transform:scale(1.08)"; if (navigator.vibrate) navigator.vibrate(12); }, 380); };
-                const move = (x, y, ev) => {
-                    if (!active) { if (Math.abs(x - sx) > 8 || Math.abs(y - sy) > 8) clearTimeout(timer); return; }
-                    if (ev && ev.cancelable) ev.preventDefault();
-                    const rr = row.getBoundingClientRect(); if (x > rr.right - 30) row.scrollLeft += 8; else if (x < rr.left + 30) row.scrollLeft -= 8;
-                    chip.style.transform = `translateX(${x - sx + (row.scrollLeft - startScroll)}px) scale(1.08)`;
-                };
-                const end = (x) => {
-                    clearTimeout(timer); if (!active) return; active = false; freeDragged = true; setTimeout(() => { freeDragged = false; }, 300);
-                    const cr = chip.getBoundingClientRect(), cx = cr.left + cr.width / 2, others = chips().filter(c => c !== chip);
-                    let t = 0; others.forEach(c => { const r = c.getBoundingClientRect(); if (r.left + r.width / 2 < cx) t++; });
-                    const keys = Object.keys(db.freeWords), name = chip.dataset.cat, from = keys.indexOf(name); keys.splice(from, 1); keys.splice(t, 0, name);
-                    if (keys.indexOf(name) !== from) { const nw = {}; keys.forEach(k => { nw[k] = db.freeWords[k]; }); db.freeWords = nw; saveData(); }
-                    renderCardTabPanel();
-                };
-                chip.addEventListener("touchstart", e => { const t = e.touches[0]; begin(t.clientX, t.clientY); }, { passive: true });
-                chip.addEventListener("touchmove", e => { const t = e.touches[0]; move(t.clientX, t.clientY, e); }, { passive: false });
-                chip.addEventListener("touchend", e => end()); chip.addEventListener("touchcancel", () => { clearTimeout(timer); active = false; });
-                chip.addEventListener("mousedown", e => { begin(e.clientX, e.clientY); const mm = ev => move(ev.clientX, ev.clientY, ev), mu = ev => { document.removeEventListener("mousemove", mm); document.removeEventListener("mouseup", mu); end(); }; document.addEventListener("mousemove", mm); document.addEventListener("mouseup", mu); });
-                chip.addEventListener("click", e => { if (freeDragged) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+                chip.style.touchAction = "none";
+                chip.addEventListener("pointerdown", e => {
+                    e.preventDefault(); chip.setPointerCapture(e.pointerId);
+                    const sx = e.clientX, sy = e.clientY; chip.style.cssText += ";transition:none;position:relative;z-index:5;box-shadow:0 4px 14px rgba(0,0,0,.4);opacity:.92";
+                    const mv = ev => { chip.style.transform = `translate(${ev.clientX - sx}px,${ev.clientY - sy}px) scale(1.06)`; };
+                    const up = ev => {
+                        chip.removeEventListener("pointermove", mv); chip.removeEventListener("pointerup", up); chip.removeEventListener("pointercancel", up);
+                        const px = ev.clientX, py = ev.clientY, others = [...row.querySelectorAll(".free-cat[data-cat]")].filter(c => c !== chip);
+                        let target = null, after = false;
+                        for (const c of others) { const r = c.getBoundingClientRect(); if (px >= r.left - 4 && px <= r.right + 4 && py >= r.top - 4 && py <= r.bottom + 4) { target = c; after = px > r.left + r.width / 2; break; } }
+                        if (!target) { // 没落在某个标签上：按最近的标签算，同一行靠右算排在后面
+                            let best = 1e9; for (const c of others) { const r = c.getBoundingClientRect(), d = Math.hypot(px - (r.left + r.width / 2), py - (r.top + r.height / 2)); if (d < best) { best = d; target = c; after = px > r.left + r.width / 2; } }
+                        }
+                        if (target) {
+                            const keys = Object.keys(db.freeWords), name = chip.dataset.cat; keys.splice(keys.indexOf(name), 1);
+                            let ti = keys.indexOf(target.dataset.cat) + (after ? 1 : 0); keys.splice(ti, 0, name);
+                            const nw = {}; keys.forEach(k => { nw[k] = db.freeWords[k]; }); db.freeWords = nw; saveData();
+                        }
+                        renderCardTabPanel();
+                    };
+                    chip.addEventListener("pointermove", mv); chip.addEventListener("pointerup", up); chip.addEventListener("pointercancel", up);
+                });
+                chip.addEventListener("click", e => { e.preventDefault(); e.stopImmediatePropagation(); }, true);
             });
         }
         function freeSetCat(c) { freeCat = c; freeSelectedSet.clear(); renderCardTabPanel(); }
