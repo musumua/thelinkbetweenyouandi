@@ -273,8 +273,8 @@
         .anni-item.side-right .anni-title-row { justify-content: flex-start; }
         .anni-img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; cursor: pointer; flex-shrink: 0; }
         .anni-add-img-box { width: 20px; height: 20px; border: 1.5px dashed var(--text-sub); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--text-sub); cursor: pointer; flex-shrink: 0; line-height: 1; }
-        .anni-add-big { margin-top: 6px; padding: 14px 10px; border: 1.5px dashed var(--text-sub); border-radius: 8px; font-size: 13px; color: var(--text-sub); text-align: center; cursor: pointer; }
-        .anni-img-large { max-width: 100%; border-radius: 8px; display: block; margin-top: 6px; }
+        .anni-add-big { margin-top: 0; padding: 14px 10px; border: 1.5px dashed var(--text-sub); border-radius: 8px; font-size: 13px; color: var(--text-sub); text-align: center; cursor: pointer; }
+        .anni-img-large { max-width: 100%; border-radius: 8px; display: block; margin-top: 0; }
         .anni-title { font-size: 13px; font-weight: 400; color: var(--text-main); }
         .anni-date { font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
         .memory-list { padding: 16px 16px 40px 16px; display:flex; flex-direction:column; gap:16px; }
@@ -1375,7 +1375,7 @@
             <div id="libTocList" style="flex:1;overflow-y:auto;padding:6px 0 30px"></div>
         </div>
         <div id="libPanel" style="display:none;position:absolute;left:0;right:0;bottom:0;z-index:9;background:var(--panel);border-top:1px solid var(--border);padding:14px 20px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(0,0,0,.35)">
-            <div class="lib-set"><span>页码</span><input type="range" id="libSetPage" min="1" max="1" step="1" oninput="libSetPageSlide(this.value)"><em id="libSetPageV">1</em></div>
+            <div class="lib-set"><span>本章</span><input type="range" id="libSetPage" min="1" max="1" step="1" oninput="libSetPageSlide(this.value)"><em id="libSetPageV">1</em></div>
             <div class="lib-set"><span>字号</span><input type="range" id="libSetFs" min="13" max="28" step="1" oninput="libSetPref('fs',this.value)"><em id="libSetFsV"></em></div>
             <div class="lib-set"><span>行距</span><input type="range" id="libSetLh" min="1.3" max="2.8" step="0.1" oninput="libSetPref('lh',this.value)"><em id="libSetLhV"></em></div>
             <div class="lib-set"><span>明暗</span><input type="range" id="libSetBr" min="30" max="100" step="1" oninput="libSetPref('br',this.value)"><em id="libSetBrV"></em></div>
@@ -4812,7 +4812,7 @@
             const hasHl = m => m.hl || (m.items || []).some(it => it.hl);
             let list = memHlOnly ? memories.filter(hasHl) : memories;
             list = list.slice().sort((a, b) => (b.hl ? 1 : 0) - (a.hl ? 1 : 0)); // 标了重点的收藏排在最前，其余保持原顺序
-            const filterBar = `<div class="mem-filter"><button class="${memHlOnly ? "" : "on"}" onclick="setMemHlOnly(false)">全部</button><button class="${memHlOnly ? "on" : ""}" onclick="setMemHlOnly(true)">★ 只看重点</button></div><div style="font-size:11.5px;color:var(--text-sub);margin:-4px 0 10px">点收藏右边的 ☆ 标整段；展开后点某条气泡标这一条</div>`;
+            const filterBar = `<div class="mem-filter"><button class="${memHlOnly ? "" : "on"}" onclick="setMemHlOnly(false)">全部</button><button class="${memHlOnly ? "on" : ""}" onclick="setMemHlOnly(true)">★ 只看重点</button></div>`;
             if (!list.length) { box.innerHTML = filterBar + `<div class="empty-state">还没有标重点的收藏</div>`; return; }
             box.innerHTML = filterBar + list.map(mem => {
                 const dt = new Date(mem.time);
@@ -4949,10 +4949,12 @@
                     ? `<img class="anni-img-large" src="${a.img}" onclick="event.stopPropagation(); openAnniViewer('${a.id}')" onerror="this.outerHTML='<div class=&quot;anni-add-big&quot; onclick=&quot;event.stopPropagation(); triggerAnniImageUpload(\\'${a.id}\\')&quot;>图片无法显示，点这里重新上传</div>'">`
                     : `<div class="anni-add-big" onclick="event.stopPropagation(); triggerAnniImageUpload('${a.id}')">＋ 添加图片</div>`;
                 return `<div class="anni-item ${side}" data-id="${a.id}">
-                    <div class="anni-dot"></div>
-                    <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span></div>
-                    <div class="anni-date" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.date)}</div>
                     ${imgBlock}
+                    <div style="position:relative;margin:0 -16px;padding:8px 16px 0">
+                        <div class="anni-dot" style="top:12px"></div>
+                        <div class="anni-title-row"><span class="anni-title" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.title)}</span></div>
+                        <div class="anni-date" style="margin-bottom:0" onclick="event.stopPropagation(); editAnniversary('${a.id}')">${escapeHtml(a.date)}</div>
+                    </div>
                 </div>`;
             }).join("");
             box.querySelectorAll(".anni-item").forEach(el => {
@@ -6524,10 +6526,20 @@ function cardFaceInner(tab, idx, rev, w) {
             document.getElementById("libText").textContent = libText.slice(from, to).replace(/^\n/, "");
             document.getElementById("libPageLabel").innerText = (libPage + 1) + " / " + libPages.length;
             const pct = libText.length ? from / libText.length : 0;
-            document.getElementById("libPageLabel").innerText = (libPage + 1) + " / " + libPages.length + "　" + Math.round(pct * 100) + "%";
+            { const cr = libChapRange(); document.getElementById("libPageLabel").innerText = (cr.idx >= 0 || cr.title ? (cr.title.length > 12 ? cr.title.slice(0, 12) + "…" : cr.title) + "　" : "") + (libPage - cr.first + 1) + " / " + (cr.last - cr.first + 1); }
             if (libCurrent && save !== false) { libCurrent.pos = from; libCurrent.progress = libPages.length > 1 ? libPage / (libPages.length - 1) : 1; clearTimeout(libSaveT); libSaveT = setTimeout(() => saveData(), 500); }
         }
         function libPanelOpen() { const pn = document.getElementById("libPanel"); return !!pn && pn.style.display !== "none"; }
+        let libChapCache = null;
+        function libChaps() { if (!libChapCache || libChapCache.len !== libText.length) libChapCache = { len: libText.length, list: libBuildToc() }; return libChapCache.list; }
+        // 当前页所在的章：返回 { first, last, idx }（页码范围）。没有识别到章节就当整本是一章
+        function libChapRange() {
+            const list = libChaps(); if (!list.length || !libPages.length) return { first: 0, last: Math.max(0, libPages.length - 1), idx: -1, title: "" };
+            const from = libPages[libPage] || 0; let idx = -1; list.forEach((c, i) => { if (c.pos <= from) idx = i; });
+            if (idx < 0) return { first: 0, last: Math.max(0, libPageForPos(list[0].pos - 1)), idx: -1, title: "序" };
+            const first = libPageForPos(list[idx].pos), last = idx + 1 < list.length ? Math.max(first, libPageForPos(list[idx + 1].pos - 1)) : libPages.length - 1;
+            return { first, last, idx, title: list[idx].t };
+        }
         function libTurn(d) { libShowPage(libPage + d); }
         function libPrefs() { if (!db.libPrefs) db.libPrefs = { fs: 16, lh: 1.75, br: 100 }; return db.libPrefs; }
         function libApplyPrefs(repage) {
@@ -6540,8 +6552,8 @@ function cardFaceInner(tab, idx, rev, w) {
             const p = libPrefs(); p[k] = parseFloat(v); document.getElementById("libSetFsV").innerText = p.fs + "px"; document.getElementById("libSetLhV").innerText = p.lh.toFixed(1); document.getElementById("libSetBrV").innerText = Math.round(p.br) + "%";
             libApplyPrefs(k !== "br"); clearTimeout(libSaveT); libSaveT = setTimeout(() => saveData(), 500); libSyncPageSlider();
         }
-        function libSyncPageSlider() { const sl = document.getElementById("libSetPage"); sl.max = Math.max(1, libPages.length); sl.value = libPage + 1; document.getElementById("libSetPageV").innerText = (libPage + 1) + "/" + libPages.length; }
-        function libSetPageSlide(v) { libShowPage(parseInt(v) - 1); document.getElementById("libSetPageV").innerText = (libPage + 1) + "/" + libPages.length; }
+        function libSyncPageSlider() { const sl = document.getElementById("libSetPage"), cr = libChapRange(); sl.dataset.first = cr.first; sl.max = Math.max(1, cr.last - cr.first + 1); sl.value = libPage - cr.first + 1; document.getElementById("libSetPageV").innerText = (libPage - cr.first + 1) + "/" + (cr.last - cr.first + 1); }
+        function libSetPageSlide(v) { const sl = document.getElementById("libSetPage"), first = parseInt(sl.dataset.first) || 0; libShowPage(first + parseInt(v) - 1); const cr = libChapRange(); document.getElementById("libSetPageV").innerText = (libPage - cr.first + 1) + "/" + (cr.last - cr.first + 1); }
         function libTogglePanel(force) {
             const pn = document.getElementById("libPanel"), show = force === undefined ? pn.style.display === "none" : force;
             if (show) { const p = libPrefs(); document.getElementById("libSetFs").value = p.fs; document.getElementById("libSetLh").value = p.lh; document.getElementById("libSetBr").value = p.br; document.getElementById("libSetFsV").innerText = p.fs + "px"; document.getElementById("libSetLhV").innerText = p.lh.toFixed(1); document.getElementById("libSetBrV").innerText = Math.round(p.br) + "%"; libSyncPageSlider(); }
@@ -6565,7 +6577,7 @@ function cardFaceInner(tab, idx, rev, w) {
         function libPageForPos(pos) { let p = 0; for (let i = 0; i < libPages.length; i++) { if (libPages[i] <= pos) p = i; else break; } return p; }
         async function openLibReader(id) {
             const b = db.books.find(x => x.id === id); if (!b) return;
-            libCurrent = b;
+            libCurrent = b; libChapCache = null;
             libText = (await idbGet("book_text_" + id)) || "";
             document.getElementById("libReaderTitle").innerText = b.title;
             document.getElementById("libSpeakAvatar").src = db.other.avatar || DEFAULT_SVG_AVATAR;
@@ -9685,7 +9697,7 @@ treaty:条约`
             if (!db.freeWords) db.freeWords = {};
             const cats = Object.keys(db.freeWords);
             const q = freeSearch.trim();
-            let h = `<div class="free-cats${freeSortMode ? " sorting" : ""}"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" data-cat="${escapeHtml(c)}" onclick="freeSetCat(this.dataset.cat)">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button><button class="free-cat ${freeSortMode ? "on" : ""}" onclick="freeToggleSort()">${freeSortMode ? "完成排序" : "↔ 排序"}</button></div>` + (freeCat ? `<div style="display:flex;gap:8px;margin:0 0 10px"><span style="flex:1;font-size:12px;color:var(--text-sub);align-self:center">点「↔ 排序」后可拖动标签换位置</span><select class="modal-input" style="flex:0 0 auto;width:auto;padding:6px 8px;font-size:12px" onchange="freeSetRole(this.value)" title="这个词类在句子里当什么用">${["自动", ...FREE_ROLES, "其他"].map(r => `<option value="${r}" ${((db.freeRoles || {})[freeCat] || "自动") === r ? "selected" : ""}>${r === "自动" ? "角色：自动(" + freeRoleOf(freeCat) + ")" : "角色：" + r}</option>`).join("")}</select><button class="btn btn-outline" style="flex:0 0 auto;padding:8px 12px" onclick="freeRenameCat()">改名</button><button class="btn btn-danger" style="flex:0 0 auto;padding:8px 12px" onclick="freeDeleteCat()">删除</button></div>` : "");
+            let h = `<div class="free-cats${freeSortMode ? " sorting" : ""}"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" data-cat="${escapeHtml(c)}" onclick="if(freeLpFired){freeLpFired=false;return}freeSetCat(this.dataset.cat)">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button><button class="free-cat ${freeSortMode ? "on" : ""}" onclick="freeToggleSort()">${freeSortMode ? "完成排序" : "↔ 排序"}</button></div>` ;
             h += `<div class="card-toolbar-row1"><button class="btn ${freeSelectMode ? "" : "btn-outline"}" style="flex:0 0 auto; padding:10px 14px;" onclick="freeToggleSelect()">${freeSelectMode ? "完成" : "多选"}</button><input class="modal-input" placeholder="🔍 搜索..." value="${freeSearch.replace(/"/g, "&quot;")}" oninput="freeSearch=this.value;renderCardTabPanel()"><button class="btn btn-outline card-dedupe-btn" onclick="freeDedupe()">查重</button></div>`;
             h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<button class="btn btn-danger" style="width:100%; margin-bottom:8px;" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
             const rows = [];
@@ -9695,10 +9707,37 @@ treaty:条约`
             panel.innerHTML = h; freeBindDrag(panel);
         }
         // 排序模式：点「排序」后词类标签全部摊开（不再横向滚动），按住标签直接拖到想放的位置，松手生效
-        let freeSortMode = false;
+        let freeSortMode = false, freeLpFired = false;
+        function freeSheet(title, opts) {
+            const old = document.getElementById("freeSheet"); if (old) old.remove();
+            const mk = document.createElement("div"); mk.id = "freeSheet"; mk.style.cssText = "position:fixed;inset:0;z-index:5500;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center";
+            const box = document.createElement("div"); box.style.cssText = "width:100%;max-width:520px;background:var(--panel);border-radius:16px 16px 0 0;padding:10px 14px calc(14px + env(safe-area-inset-bottom));border:1px solid var(--border)";
+            box.innerHTML = `<div style="text-align:center;font-size:12px;color:var(--text-sub);padding:6px 0 8px">${escapeHtml(title)}</div>`;
+            opts.concat([{ label: "取消", fn: null, plain: true }]).forEach(o => { const b = document.createElement("button"); b.textContent = o.label; b.style.cssText = "display:block;width:100%;padding:13px;margin-top:6px;border-radius:12px;border:1px solid var(--border);background:transparent;font-size:15px;color:" + (o.danger ? "#e5484d" : "var(--text-main)"); b.onclick = () => { mk.remove(); if (o.fn) o.fn(); }; box.appendChild(b); });
+            mk.appendChild(box); mk.onclick = e => { if (e.target === mk) mk.remove(); }; document.body.appendChild(mk);
+        }
+        function freeCatMenu(c) {
+            freeSheet("词类「" + c + "」", [
+                { label: "改名", fn: () => { freeCat = c; freeRenameCat(); } },
+                { label: "句中当什么用（当前：" + ((db.freeRoles || {})[c] || "自动·" + freeRoleOf(c)) + "）", fn: () => freeSheet("「" + c + "」在句子里当…", ["自动", ...FREE_ROLES, "其他"].map(r => ({ label: r, fn: () => { freeCat = c; freeSetRole(r); } }))) },
+                { label: "删除", danger: true, fn: () => { freeCat = c; freeDeleteCat(); } }
+            ]);
+        }
         function freeToggleSort() { freeSortMode = !freeSortMode; renderCardTabPanel(); }
         function freeBindDrag(panel) {
-            const row = panel.querySelector(".free-cats"); if (!row || !freeSortMode) return;
+            const row = panel.querySelector(".free-cats"); if (!row) return;
+            if (!freeSortMode) { // 平时：长按词类标签 → 改名 / 句中角色 / 删除
+                row.querySelectorAll(".free-cat[data-cat]").forEach(chip => {
+                    let tm = null, sx = 0, sy = 0; const clr = () => { clearTimeout(tm); tm = null; };
+                    const st = (x, y) => { sx = x; sy = y; clr(); tm = setTimeout(() => { tm = null; freeLpFired = true; setTimeout(() => { freeLpFired = false; }, 600); if (navigator.vibrate) navigator.vibrate(12); freeCatMenu(chip.dataset.cat); }, 500); };
+                    chip.addEventListener("touchstart", e => { const t = e.touches[0]; st(t.clientX, t.clientY); }, { passive: true });
+                    chip.addEventListener("touchmove", e => { const t = e.touches[0]; if (Math.abs(t.clientX - sx) > 8 || Math.abs(t.clientY - sy) > 8) clr(); }, { passive: true });
+                    chip.addEventListener("touchend", clr); chip.addEventListener("touchcancel", clr);
+                    chip.addEventListener("mousedown", e => st(e.clientX, e.clientY)); chip.addEventListener("mouseup", clr); chip.addEventListener("mouseleave", clr);
+                    chip.addEventListener("contextmenu", e => e.preventDefault());
+                });
+                return;
+            }
             row.querySelectorAll(".free-cat[data-cat]").forEach(chip => {
                 chip.style.touchAction = "none";
                 chip.addEventListener("pointerdown", e => {
