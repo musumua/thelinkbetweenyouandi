@@ -406,7 +406,7 @@
         .lib-select-mode .lib-check { display:block; }
         .lib-item.sel .lib-check { background:var(--primary); border-color:var(--primary); }
         .lib-empty { text-align:center; color:var(--text-sub); font-size:13px; padding:40px 0; }
-        .lib-speak { min-height:44px; padding:10px 20px; text-align:center; font-size:13.5px; color:var(--text-sub); display:flex; align-items:center; justify-content:center; flex-shrink:0; border-bottom:none; }
+        .lib-speak { height:78px; min-height:78px; box-sizing:border-box; overflow:hidden; padding:10px 20px; text-align:center; font-size:13.5px; color:var(--text-sub); display:flex; align-items:center; justify-content:center; flex-shrink:0; border-bottom:none; }
         .lib-speak span { opacity:0; transition:opacity .6s ease; }
         .lib-speak span.show { opacity:1; }
         .lib-set { display:flex; align-items:center; gap:12px; margin:8px 0; font-size:13px; color:var(--text-main); } .lib-set span { flex:0 0 36px; color:var(--text-sub); } .lib-set input[type=range] { flex:1; accent-color: var(--primary); } .lib-set em { font-style:normal; flex:0 0 40px; text-align:right; font-size:12px; color:var(--text-sub); }
@@ -416,7 +416,7 @@
         .lib-pager button { background:none; border:none; color:var(--text-main); font-size:22px; padding:0 14px; cursor:pointer; }
         .speak-avatar { width:30px; height:30px; border-radius:50%; object-fit:cover; margin-right:10px; flex-shrink:0; background:var(--border); }
         .lib-speak { justify-content:flex-start !important; text-align:left !important; }
-        .lib-speak span { flex:0 1 auto; max-width:74%; background:var(--other-bubble); color:var(--text-main); padding:8px 13px; border-radius:16px 16px 16px 4px; line-height:1.5; box-shadow:var(--shadow-sm, none); }
+        .lib-speak span { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; flex:0 1 auto; max-width:74%; background:var(--other-bubble); color:var(--text-main); padding:8px 13px; border-radius:16px 16px 16px 4px; line-height:1.5; box-shadow:var(--shadow-sm, none); }
         .speak-set { background:none; border:none; color:var(--text-sub); font-size:16px; padding:4px 0 4px 8px; cursor:pointer; }
         .game-speak { min-height:44px; }
         .free-cats.sorting { flex-wrap:wrap; overflow:visible; } .free-cats.sorting .free-cat[data-cat] { border-style:dashed; }
@@ -1617,6 +1617,7 @@
                 <button class="card-tab-btn" onclick="switchCardTab(3)">表情包</button>
                 <button class="card-tab-btn" onclick="switchCardTab(4)">念想</button>
                 <button class="card-tab-btn" onclick="switchCardTab(5)">自由造句</button>
+                <button class="card-tab-btn" onclick="switchCardTab(6)">书房</button>
             </div>
             <div class="card-tab-panel" id="cardTabPanel"></div>
             <input type="file" id="other_emoji_file" class="file" accept="image/*" multiple>
@@ -3510,6 +3511,7 @@
 
             if (stored) { try { db = Object.assign(db, stored); } catch(e) {} }
 
+            if(!db.libLines) db.libLines = [];
             if(!db.nudgeList) db.nudgeList = ["摸了摸你的头", "顺了顺你的长发"];
             if(!db.wheelOptions) db.wheelOptions = [];
             if(db.homeWallpaper === undefined) db.homeWallpaper = "";
@@ -4644,6 +4646,7 @@
                 cardGroups: db.cardGroups,
                 statusList: db.statusList,
                 nudgeList: db.nudgeList,
+                freeWords: db.freeWords, libLines: db.libLines,
                 otherEmojis: db.otherEmojis
             };
             try {
@@ -4674,6 +4677,7 @@
                         db.cardGroups = parsed.cardGroups || [];
                         db.statusList = parsed.statusList || [];
                         db.nudgeList = parsed.nudgeList || [];
+                        if (parsed.freeWords) db.freeWords = parsed.freeWords; if (parsed.libLines) db.libLines = parsed.libLines;
                         db.otherEmojis = parsed.otherEmojis || [];
                         await saveDataImmediate();
                         renderCardTabPanel(); cycleMissingQuote(false);
@@ -5126,7 +5130,7 @@
                 if (!tracking) return; tracking = false;
                 if (!horizontal) return;
                 const dx = e.changedTouches[0].clientX - startX;
-                const TAB_COUNT = 5;
+                const TAB_COUNT = 7;
                 if (dx < -55 && activeCardTab < TAB_COUNT - 1) switchCardTab(activeCardTab + 1);
                 else if (dx > 55 && activeCardTab > 0) switchCardTab(activeCardTab - 1);
             });
@@ -5140,7 +5144,8 @@
             else if (activeCardTab === 2) renderNudgeTabContent(panel);
             else if (activeCardTab === 3) renderEmojiTabContent(panel);
             else if (activeCardTab === 4) renderMissingTabContent(panel);
-            else renderFreeTabContent(panel);
+            else if (activeCardTab === 5) renderFreeTabContent(panel);
+            else renderLibLinesTab(panel);
         }
 
         function renderCardsTabContent(panel) {
@@ -5391,6 +5396,51 @@
             saveData(); rollOtherStatus(); renderCardTabPanel();
         }
 
+        // ==================== 📖 书房（信号里「书房」：他在书房里说的话，每条最多两行） ====================
+        let libLnSelMode = false, libLnSel = new Set(), libLnQ = "";
+        function libLineFits(text) {
+            const W = window.innerWidth, inner = Math.max(80, 0.74 * (W - 40) - 26);
+            const d = document.createElement("div"); d.style.cssText = `position:fixed;left:-9999px;top:0;width:${inner}px;font-size:13.5px;line-height:1.5;white-space:pre-wrap;visibility:hidden`; d.textContent = text; document.body.appendChild(d);
+            const h = d.offsetHeight; d.remove(); return h <= 13.5 * 1.5 * 2 + 1.5;
+        }
+        function libLineCap() { const inner = Math.max(80, 0.74 * (window.innerWidth - 40) - 26); return Math.floor(inner / 13.5) * 2; }
+        // 添加/编辑弹窗：输入时实时检查，哪条超过两行就红字提醒，超了不让保存
+        function libLineModal(title, initial, multi, onSave) {
+            const old = document.getElementById("libLnModal"); if (old) old.remove();
+            const mk = document.createElement("div"); mk.id = "libLnModal"; mk.style.cssText = "position:fixed;inset:0;z-index:5600;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:20px";
+            mk.innerHTML = `<div style="width:100%;max-width:420px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px"><div style="font-weight:700;margin-bottom:10px">${title}</div><textarea id="libLnTa" rows="${multi ? 6 : 3}" style="width:100%;box-sizing:border-box;background:var(--input-bg);color:var(--input-text);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:14px;resize:none;outline:none" placeholder="${multi ? "一行一句，回车换下一句" : ""}"></textarea><div id="libLnWarn" style="min-height:34px;font-size:12px;margin:6px 0 10px;color:var(--text-sub)"></div><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-outline" id="libLnNo">取消</button><button class="btn" id="libLnOk">保存</button></div></div>`;
+            document.body.appendChild(mk);
+            const ta = mk.querySelector("#libLnTa"), warn = mk.querySelector("#libLnWarn"); ta.value = initial || "";
+            const lines = () => multi ? ta.value.split("\n").map(t => t.trim()).filter(Boolean) : [ta.value.replace(/\s*\n\s*/g, " ").trim()].filter(Boolean);
+            const check = () => {
+                const ls = lines(), bad = []; ls.forEach((t, i) => { if (!libLineFits(t)) bad.push(i + 1); });
+                if (bad.length) { warn.style.color = "#e5484d"; warn.innerText = (multi ? `第 ${bad.slice(0, 6).join("、")} 句` : "这句") + `超过两行了（一句最多约 ${libLineCap()} 字），请缩短一点`; }
+                else { warn.style.color = "var(--text-sub)"; warn.innerText = `书房里每句最多显示两行（约 ${libLineCap()} 字）` + (ls.length === 1 ? `，现在 ${ls[0].length} 字` : ""); }
+                return !bad.length;
+            };
+            ta.oninput = check; check(); setTimeout(() => ta.focus(), 50);
+            mk.querySelector("#libLnNo").onclick = () => mk.remove();
+            mk.onclick = e => { if (e.target === mk) mk.remove(); };
+            mk.querySelector("#libLnOk").onclick = () => { const ls = lines(); if (!ls.length) { mk.remove(); return; } if (!check()) { warn.animate([{ transform: "translateX(-4px)" }, { transform: "translateX(4px)" }, { transform: "none" }], { duration: 220 }); return; } mk.remove(); onSave(ls); };
+        }
+        function libLnAdd() { libLineModal("新增书房里他说的话", "", true, ls => { ls.forEach(t => { if (!db.libLines.includes(t)) db.libLines.push(t); }); saveData(); renderCardTabPanel(); }); }
+        function libLnEdit(i) { libLineModal("编辑这句话", db.libLines[i], false, ls => { db.libLines[i] = ls[0]; saveData(); renderCardTabPanel(); }); }
+        function libLnDel(i) { if (!confirm("删除这句话？")) return; db.libLines.splice(i, 1); saveData(); renderCardTabPanel(); }
+        function libLnToggleSel() { libLnSelMode = !libLnSelMode; libLnSel.clear(); renderCardTabPanel(); }
+        function libLnPick(i) { libLnSel.has(i) ? libLnSel.delete(i) : libLnSel.add(i); renderCardTabPanel(); }
+        function libLnSearch(v) { libLnQ = v; renderCardTabPanel(); }
+        function libLnDelSel() { if (!libLnSel.size || !confirm(`确定删除选中的 ${libLnSel.size} 句吗？`)) return; [...libLnSel].sort((a, b) => b - a).forEach(i => db.libLines.splice(i, 1)); libLnSel.clear(); libLnSelMode = false; saveData(); renderCardTabPanel(); }
+        function libLnDedupe() { const n0 = db.libLines.length; db.libLines = db.libLines.filter((t, i, a) => a.indexOf(t) === i); if (db.libLines.length === n0) { alert("没有发现重复的话～"); return; } saveData(); renderCardTabPanel(); alert(`已删除 ${n0 - db.libLines.length} 条重复`); }
+        function renderLibLinesTab(panel) {
+            const q = libLnQ.trim(); if (!db.libLines) db.libLines = [];
+            let html = listToolbarRows({ selectMode: libLnSelMode, selectedCount: libLnSel.size, toggleFn: "libLnToggleSel", searchVal: libLnQ, searchFn: "libLnSearch", dedupeFn: "libLnDedupe", deleteFn: "libLnDelSel", batchFn: "libLnAdd", label: "书房的话" });
+            const idx = db.libLines.map((_, i) => i).filter(i => !q || db.libLines[i].includes(q));
+            const tooLong = db.libLines.filter(t => !libLineFits(t)).length;
+            if (tooLong) html += `<div style="font-size:12px;color:#e5484d;margin:0 0 8px">有 ${tooLong} 句在这个屏幕宽度下超过两行，书房里会被截断，可以点 ✎ 缩短</div>`;
+            if (!idx.length) html += `<div class="empty-state">${q ? "没有找到匹配的话" : "还没有收录。书房里他每隔一阵会说一句，从这里挑；没有收录时先用字卡顶着"}</div>`;
+            else html += idx.map(i => `<div class="simple-list-row">${libLnSelMode ? `<input type="checkbox" class="item-select-checkbox" ${libLnSel.has(i) ? "checked" : ""} onchange="libLnPick(${i})">` : ""}<span>${escapeHtml(db.libLines[i])}</span>${!libLnSelMode ? `<button class="simple-edit-btn" onclick="libLnEdit(${i})">✎</button><button class="simple-del-btn" onclick="libLnDel(${i})">✕</button>` : ""}</div>`).join("");
+            panel.innerHTML = html;
+        }
         function renderNudgeTabContent(panel) {
             const q = nudgeSearchQuery.trim();
             let html = listToolbarRows({ selectMode: nudgeSelectMode, selectedCount: nudgeSelectedSet.size, toggleFn: 'toggleNudgeSelectMode', searchVal: nudgeSearchQuery, searchFn: 'handleNudgeSearchInput', dedupeFn: 'checkNudgeDuplicates', deleteFn: 'deleteSelectedNudge', batchFn: 'showNudgeModal', label: '动作' });
@@ -5605,9 +5655,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             closeModal("monthPickModal");
         }
         function getDiaryRounds() {
-            const n = Math.max(db.sentLetters.length, db.receivedLetters.length, 1);
+            const prim = db.receivedLetters.filter(l => !l.extra), n = Math.max(db.sentLetters.length, prim.length, 1);
             let rounds = [];
-            for (let i = 0; i < n; i++) rounds.push({ mine: db.sentLetters[i] || null, his: db.receivedLetters[i] || null });
+            for (let i = 0; i < n; i++) rounds.push({ mine: db.sentLetters[i] || null, his: prim[i] || null });
             if (diaryWriting && !diaryHasPending() && db.sentLetters.length > 0) rounds.push({ mine: null, his: null });
             if (diaryMonthFilter) {
                 rounds = rounds.filter(r => tsMonthKey(itemTs(r.mine) || itemTs(r.his)) === diaryMonthFilter);
@@ -5616,13 +5666,18 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             return rounds;
         }
         let mbBusy = false, diaryWriting = false, diaryTargetIdx = -1, diaryDraftText = "";
-        function diaryHasPending() { return db.sentLetters.length > db.receivedLetters.length; }
+        function diaryHasPending() { return db.sentLetters.length > db.receivedLetters.filter(l => !l.extra).length; }
         const mbSleep = ms => new Promise(r => setTimeout(r, ms));
         const mbWho = w => w === "me" ? "我" : "他";
         const mbEnvSvg = c => `<svg viewBox="0 0 40 28" width="40" height="28" style="flex-shrink:0"><rect x="1" y="1" width="38" height="26" rx="3" fill="#fbf6ea" stroke="${c}" stroke-width="1.8"/><path d="M2 3l18 13L38 3" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
         function mbItems() {
-            const n = Math.max(db.sentLetters.length, db.receivedLetters.length), r = [];
-            for (let i = 0; i < n; i++) { if (db.sentLetters[i] && !db.sentLetters[i].deleted) r.push({ who: "me", i, l: db.sentLetters[i] }); if (db.receivedLetters[i] && !db.receivedLetters[i].deleted) r.push({ who: "his", i, l: db.receivedLetters[i] }); }
+            // 每封信一轮：我寄出的 → 他的回信（可能有两封：字卡回信 + 自由造句回信，第二封标 extra，紧跟在第一封后面）
+            const R = db.receivedLetters, groups = []; R.forEach((l, idx) => { if (!l.extra || !groups.length) groups.push([idx]); else groups[groups.length - 1].push(idx); });
+            const n = Math.max(db.sentLetters.length, groups.length), r = [];
+            for (let i = 0; i < n; i++) {
+                if (db.sentLetters[i] && !db.sentLetters[i].deleted) r.push({ who: "me", i, l: db.sentLetters[i] });
+                (groups[i] || []).forEach(ri => { if (R[ri] && !R[ri].deleted) r.push({ who: "his", i: ri, l: R[ri] }); });
+            }
             return diaryMonthFilter ? r.filter(x => tsMonthKey(itemTs(x.l)) === diaryMonthFilter) : r;
         }
         function renderDiaryTimeline() {
@@ -5738,7 +5793,30 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
             saveData();
             setTimeout(checkLetterReply, Math.min(delayHours * 3600000 + 50, 2147000000));
         }
+        // 给信加称呼、署名、日期（称呼/署名里的形容词随机，可有可无）
+        function mbFrame(body) {
+            const okN = nm => nm && !/填写/.test(nm), pk = a => a[Math.floor(Math.random() * a.length)], meN = okN(db.me.name) ? db.me.name : "你", himN = okN(db.other.name) ? db.other.name : "";
+            const gAdj = pk(["亲爱的", "最爱的", "我想念的", "我的", ""]), greet = (pk([0, 1, 2]) === 0 ? pk(["宝贝", "亲爱的", "亲爱的你"]) : gAdj + meN) + pk(["：", "，", "："]);
+            const sAdj = pk(["你的", "期待回信的", ""]), sign = himN ? sAdj + himN : (sAdj || "你的") + "我", d = new Date(), date = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+            return `${greet}\n${body}\n\n\u0001${sign}\n\u0001${date}`;
+        }
+        // 自由造句回信：一句句造句用空格连起来，凑够 60 字（不算空格）以上
+        function makeFreeLetterBody() {
+            if (!hasFreeWords()) return "";
+            const parts = []; let len = 0, guard = 0;
+            while (len < 60 && guard++ < 60) { const t = makeFreeSentence(); if (!t) break; parts.push(t); len += t.replace(/\s/g, "").length; }
+            return len >= 60 ? parts.join(" ") : "";
+        }
         function checkLetterReply() {
+            // 第二封（自由造句回信）：第一封到了之后，隔一段时间再来
+            if (db.letterReply2Due && Date.now() >= db.letterReply2Due) {
+                db.letterReply2Due = 0; const fb = makeFreeLetterBody();
+                if (fb) {
+                    db.receivedLetters.push({ content: mbFrame(fb), time: new Date().toLocaleString(), ts: Date.now(), read: false, extra: true });
+                    db.chat.push({ type: "diary-return", text: `📮 他又寄来一封信` });
+                    saveData(); renderChat(); renderDiaryTimeline(); notifyIncomingOther2("letters", "又来了一封信，去信箱看看吧");
+                } else saveData();
+            }
             if (!db.letterReplyDue || Date.now() < db.letterReplyDue || !diaryHasPending()) { if (db.letterReplyDue && !diaryHasPending()) { db.letterReplyDue = 0; } return; }
             db.letterReplyDue = 0;
             const cards = getSignalCards(); let body = "见字如晤。信我已细细读过，愿你今夜好梦。";
@@ -5748,12 +5826,11 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 for (let i = 0; i < n; i++) lines.push(cards[Math.floor(Math.random() * cards.length)].text);
                 body = lines.join(" ");
             }
-            { const okN = nm => nm && !/填写/.test(nm), pk = a => a[Math.floor(Math.random() * a.length)], meN = okN(db.me.name) ? db.me.name : "你", himN = okN(db.other.name) ? db.other.name : "";
-              const gAdj = pk(["亲爱的", "最爱的", "我想念的", "我的", ""]), greet = (pk([0, 1, 2]) === 0 ? pk(["宝贝", "亲爱的", "亲爱的你"]) : gAdj + meN) + pk(["：", "，", "："]);
-              const sAdj = pk(["你的", "期待回信的", ""]), sign = himN ? sAdj + himN : (sAdj || "你的") + (sAdj ? "我" : "我"), d = new Date(), date = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
-              body = `${greet}\n${body}\n\n\u0001${sign}\n\u0001${date}`; }
+            body = mbFrame(body);
             db.receivedLetters.push({ content: body, time: new Date().toLocaleString(), ts: Date.now(), read: false });
             db.chat.push({ type: "diary-return", text: `📮 他的回信到了` });
+            // 安排第二封：自由造句回信（有自由造句词库时），比第一封晚一段时间
+            if (hasFreeWords()) { const lo = Math.max(0.02, parseFloat(db.freq.letterMin) || 1), hi = Math.max(lo, parseFloat(db.freq.letterMax) || 3), gapH = Math.max(0.05, (lo + Math.random() * (hi - lo)) * 0.6); db.letterReply2Due = Date.now() + gapH * 3600000; setTimeout(checkLetterReply, Math.min(gapH * 3600000 + 50, 2147000000)); }
             saveData(); renderChat();
             if (!diaryWriting) { currentDiaryRound = getDiaryRounds().length - 1; }
             renderDiaryTimeline();
@@ -9704,7 +9781,9 @@ treaty:条约`
             cats.forEach(c => { if (freeCat && freeCat !== c) return; db.freeWords[c].forEach((w, i) => { if (!q || w.includes(q)) rows.push({ c, i, w }); }); });
             if (!rows.length) h += `<div class="empty-state">${q ? "没有找到匹配的词语" : "还没有词语，点上方按钮添加吧。他会随机抽取名词、动词、助词、介词等，用空格连成一句话发给你"}</div>`;
             else h += rows.map(r => { const key = r.c + "\u0001" + r.i; return `<div class="simple-list-row">${freeSelectMode ? `<input type="checkbox" class="item-select-checkbox" ${freeSelectedSet.has(key) ? "checked" : ""} onchange="freeToggleSel(this.dataset.k)" data-k="${key}">` : ""}<span>${escapeHtml(r.w)}${freeCat ? "" : ` <em class="free-tag">${escapeHtml(r.c)}</em>`}</span>${!freeSelectMode ? `<button class="simple-edit-btn" onclick="freeEdit('${r.c}',${r.i})">✎</button><button class="simple-del-btn" onclick="freeDelete('${r.c}',${r.i})">✕</button>` : ""}</div>`; }).join("");
+            const oldRow = panel.querySelector(".free-cats"), keepScroll = oldRow ? oldRow.scrollLeft : 0, hadFree = !!oldRow;
             panel.innerHTML = h; freeBindDrag(panel);
+            { const nr = panel.querySelector(".free-cats"); if (nr && hadFree) { nr.scrollLeft = keepScroll; const on = nr.querySelector(".free-cat.on"); if (on) { const a = on.offsetLeft, b = a + on.offsetWidth; if (a < nr.scrollLeft) nr.scrollLeft = a - 8; else if (b > nr.scrollLeft + nr.clientWidth) nr.scrollLeft = b - nr.clientWidth + 8; } } }
         }
         // 排序模式：点「排序」后词类标签全部摊开（不再横向滚动），按住标签直接拖到想放的位置，松手生效
         let freeSortMode = false, freeLpFired = false;
@@ -9832,7 +9911,8 @@ treaty:条约`
             const span = document.getElementById(spanId);
             const t = herSpeakTimers[key] = { loop: null, hide: null };
             const once = () => {
-                const cards = getSignalCards();
+                // 书房里他说的话：优先用「信号 → 书房」里收录的；一条都没有时先用字卡顶着
+                const own = (db.libLines || []).filter(x => x && x.trim()), cards = own.length ? own.map(x => ({ text: x })) : getSignalCards();
                 if (cards.length) {
                     span.innerText = cards[Math.floor(Math.random() * cards.length)].text || "";
                     span.classList.add("show");
