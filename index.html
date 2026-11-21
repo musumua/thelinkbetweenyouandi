@@ -1617,7 +1617,7 @@
                 <button class="card-tab-btn" onclick="switchCardTab(3)">表情包</button>
                 <button class="card-tab-btn" onclick="switchCardTab(4)">念想</button>
                 <button class="card-tab-btn" onclick="switchCardTab(5)">自由造句</button>
-                <button class="card-tab-btn" onclick="switchCardTab(6)">书房</button>
+                <button class="card-tab-btn" onclick="switchCardTab(6)">札记</button>
             </div>
             <div class="card-tab-panel" id="cardTabPanel"></div>
             <input type="file" id="other_emoji_file" class="file" accept="image/*" multiple>
@@ -5113,13 +5113,13 @@
             renderCardTabPanel();
         }
 
-        // 字卡/状态/动作/表情包/念想 —— 面板支持左右滑动切换 tab
+        // 字卡/状态/动作/表情包/念想/自由造句/札记 —— 面板支持左右滑动切换 tab
         (function attachCardTabSwipe() {
             const panel = document.getElementById("cardTabPanel");
             if (!panel) return;
             let startX = 0, startY = 0, tracking = false, horizontal = false;
             panel.addEventListener("touchstart", (e) => {
-                const t = e.touches[0]; startX = t.clientX; startY = t.clientY; tracking = true; horizontal = false;
+                const t = e.touches[0]; startX = t.clientX; startY = t.clientY; tracking = !(e.target.closest && e.target.closest(".free-cats")); horizontal = false; // 在词类标签那一排上滑动是滚动标签，不切换页签
             }, { passive: true });
             panel.addEventListener("touchmove", (e) => {
                 if (!tracking) return;
@@ -5423,7 +5423,7 @@
             mk.onclick = e => { if (e.target === mk) mk.remove(); };
             mk.querySelector("#libLnOk").onclick = () => { const ls = lines(); if (!ls.length) { mk.remove(); return; } if (!check()) { warn.animate([{ transform: "translateX(-4px)" }, { transform: "translateX(4px)" }, { transform: "none" }], { duration: 220 }); return; } mk.remove(); onSave(ls); };
         }
-        function libLnAdd() { libLineModal("新增书房里他说的话", "", true, ls => { ls.forEach(t => { if (!db.libLines.includes(t)) db.libLines.push(t); }); saveData(); renderCardTabPanel(); }); }
+        function libLnAdd() { libLineModal("新增札记（他在书房里说的话）", "", true, ls => { ls.forEach(t => { if (!db.libLines.includes(t)) db.libLines.push(t); }); saveData(); renderCardTabPanel(); }); }
         function libLnEdit(i) { libLineModal("编辑这句话", db.libLines[i], false, ls => { db.libLines[i] = ls[0]; saveData(); renderCardTabPanel(); }); }
         function libLnDel(i) { if (!confirm("删除这句话？")) return; db.libLines.splice(i, 1); saveData(); renderCardTabPanel(); }
         function libLnToggleSel() { libLnSelMode = !libLnSelMode; libLnSel.clear(); renderCardTabPanel(); }
@@ -5433,11 +5433,11 @@
         function libLnDedupe() { const n0 = db.libLines.length; db.libLines = db.libLines.filter((t, i, a) => a.indexOf(t) === i); if (db.libLines.length === n0) { alert("没有发现重复的话～"); return; } saveData(); renderCardTabPanel(); alert(`已删除 ${n0 - db.libLines.length} 条重复`); }
         function renderLibLinesTab(panel) {
             const q = libLnQ.trim(); if (!db.libLines) db.libLines = [];
-            let html = listToolbarRows({ selectMode: libLnSelMode, selectedCount: libLnSel.size, toggleFn: "libLnToggleSel", searchVal: libLnQ, searchFn: "libLnSearch", dedupeFn: "libLnDedupe", deleteFn: "libLnDelSel", batchFn: "libLnAdd", label: "书房的话" });
+            let html = listToolbarRows({ selectMode: libLnSelMode, selectedCount: libLnSel.size, toggleFn: "libLnToggleSel", searchVal: libLnQ, searchFn: "libLnSearch", dedupeFn: "libLnDedupe", deleteFn: "libLnDelSel", batchFn: "libLnAdd", label: "札记" });
             const idx = db.libLines.map((_, i) => i).filter(i => !q || db.libLines[i].includes(q));
             const tooLong = db.libLines.filter(t => !libLineFits(t)).length;
             if (tooLong) html += `<div style="font-size:12px;color:#e5484d;margin:0 0 8px">有 ${tooLong} 句在这个屏幕宽度下超过两行，书房里会被截断，可以点 ✎ 缩短</div>`;
-            if (!idx.length) html += `<div class="empty-state">${q ? "没有找到匹配的话" : "还没有收录。书房里他每隔一阵会说一句，从这里挑；没有收录时先用字卡顶着"}</div>`;
+            if (!idx.length) html += `<div class="empty-state">${q ? "没有找到匹配的话" : "还没有札记。书房里他每隔一阵会说一句，从这里挑；没有收录时先用字卡顶着"}</div>`;
             else html += idx.map(i => `<div class="simple-list-row">${libLnSelMode ? `<input type="checkbox" class="item-select-checkbox" ${libLnSel.has(i) ? "checked" : ""} onchange="libLnPick(${i})">` : ""}<span>${escapeHtml(db.libLines[i])}</span>${!libLnSelMode ? `<button class="simple-edit-btn" onclick="libLnEdit(${i})">✎</button><button class="simple-del-btn" onclick="libLnDel(${i})">✕</button>` : ""}</div>`).join("");
             panel.innerHTML = html;
         }
@@ -9783,7 +9783,7 @@ treaty:条约`
             else h += rows.map(r => { const key = r.c + "\u0001" + r.i; return `<div class="simple-list-row">${freeSelectMode ? `<input type="checkbox" class="item-select-checkbox" ${freeSelectedSet.has(key) ? "checked" : ""} onchange="freeToggleSel(this.dataset.k)" data-k="${key}">` : ""}<span>${escapeHtml(r.w)}${freeCat ? "" : ` <em class="free-tag">${escapeHtml(r.c)}</em>`}</span>${!freeSelectMode ? `<button class="simple-edit-btn" onclick="freeEdit('${r.c}',${r.i})">✎</button><button class="simple-del-btn" onclick="freeDelete('${r.c}',${r.i})">✕</button>` : ""}</div>`; }).join("");
             const oldRow = panel.querySelector(".free-cats"), keepScroll = oldRow ? oldRow.scrollLeft : 0, hadFree = !!oldRow;
             panel.innerHTML = h; freeBindDrag(panel);
-            { const nr = panel.querySelector(".free-cats"); if (nr && hadFree) { nr.scrollLeft = keepScroll; const on = nr.querySelector(".free-cat.on"); if (on) { const a = on.offsetLeft, b = a + on.offsetWidth; if (a < nr.scrollLeft) nr.scrollLeft = a - 8; else if (b > nr.scrollLeft + nr.clientWidth) nr.scrollLeft = b - nr.clientWidth + 8; } } }
+            { const nr = panel.querySelector(".free-cats"); if (nr && hadFree) nr.scrollLeft = keepScroll; } // 选中词类时标签行原地不动
         }
         // 排序模式：点「排序」后词类标签全部摊开（不再横向滚动），按住标签直接拖到想放的位置，松手生效
         let freeSortMode = false, freeLpFired = false;
@@ -9911,7 +9911,7 @@ treaty:条约`
             const span = document.getElementById(spanId);
             const t = herSpeakTimers[key] = { loop: null, hide: null };
             const once = () => {
-                // 书房里他说的话：优先用「信号 → 书房」里收录的；一条都没有时先用字卡顶着
+                // 书房里他说的话：优先用「信号 → 札记」里收录的；一条都没有时先用字卡顶着
                 const own = (db.libLines || []).filter(x => x && x.trim()), cards = own.length ? own.map(x => ({ text: x })) : getSignalCards();
                 if (cards.length) {
                     span.innerText = cards[Math.floor(Math.random() * cards.length)].text || "";
