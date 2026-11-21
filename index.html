@@ -6700,7 +6700,7 @@ function cardFaceInner(tab, idx, rev, w) {
             gameStopCurrent(); herSpeakStop("game");
             document.getElementById("gameTitle").innerText = "游戏";
             const st = db.gameStats || {};
-            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "你一步，他一步"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的人输"], ["link", "连连看", "轮流消除，消得多的人赢"], ["tetris", "俄罗斯方块", "你一盘他一盘，消行给对方加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对方的子翻成自己的，子多的赢"], ["breakout", "打砖块", "你黄他紫，同一行各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"], ["blocks", "消除方块", "同时开始，点相连的同色方块消掉，都消不动时剩得少的赢"], ["pacman", "吃豆人", "迷宫里你和他各一个吃豆人，四只鬼在追；大力丸能反吃鬼，还有樱桃、加速、冰冻道具，得分高的赢"]];
+            const list = [["snake", "贪吃蛇", "两条蛇同时动，越来越快"], ["gomoku", "五子棋", "轮流落子，先连成五个的赢"], ["connect4", "四子棋", "轮流投子，先连成四个的赢"], ["frog", "小青蛙过河", "在荷叶上拼出英文单词，拼对小青蛙才跳一格，先过河的赢"], ["memory", "记忆翻牌", "轮流翻两张，配对多的赢"], ["mine", "扫雷", "轮流翻格，踩雷的输"], ["link", "连连看", "轮流消除，消得多的赢"], ["tetris", "俄罗斯方块", "各玩一盘，消行会给另一边加垃圾行"], ["arrow", "箭头消除", "轮流消除，箭头前方没挡着才能消，消得多的赢"], ["othello", "黑白棋", "夹住对手的子翻面，子多的赢"], ["breakout", "打砖块", "黄、紫各一块挡板各一个球，砖块有硬砖、铁砖和道具，得分高的赢"], ["blocks", "消除方块", "同时开始，点相连的同色方块消掉，都消不动时剩得少的赢"], ["pacman", "吃豆人", "迷宫里两个吃豆人，四只鬼在追；大力丸能反吃鬼，还有樱桃、加速、冰冻道具，得分高的赢"]];
             const body = document.getElementById("gameBody");
             body.innerHTML = `<div class="game-diff">${["easy", "normal", "hard"].map(k => `<button class="${gameDiff === k ? "on" : ""}" onclick="gameDiff='${k}';renderGameMenu()">${GAME_DIFF_NAMES[k]}</button>`).join("")}</div><div class="game-grid">` +
                 list.map(g => { const r = st[g[0]] || { w: 0, l: 0, d: 0 }; return `<div class="game-card" onclick="startGame('${g[0]}')"><div class="gc-t">${g[1]}${gameStashes[g[0]] ? ` <span style="font-size:12px;color:var(--primary);font-weight:600;">· 进行中，点击继续</span>` : ""}</div><div class="gc-d">${g[2]}</div><div class="gc-r">胜 ${r.w} · 负 ${r.l} · 平 ${r.d}${gameStashes[g[0]] ? ` <a style="float:right;color:var(--text-sub);text-decoration:underline;" onclick="event.stopPropagation();gameDropStash('${g[0]}');renderGameMenu()">放弃这局</a>` : ""}</div></div>`; }).join("") + `</div>`;
@@ -6726,7 +6726,7 @@ function cardFaceInner(tab, idx, rev, w) {
         // ---------- 2048 ----------
         function gameGomoku() {
             const N = 15, body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你执黑先手</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">黑方先手</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d");
             const size = Math.min(body.clientWidth - 24, 420), dpr = window.devicePixelRatio || 1;
             cv.style.width = cv.style.height = size + "px"; cv.width = cv.height = size * dpr; ctx.scale(dpr, dpr);
@@ -6840,7 +6840,7 @@ function cardFaceInner(tab, idx, rev, w) {
         // ---------- 四子棋 ----------
         function gameConnect4() {
             const C = 7, R = 6, body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你执红先手，点一列落子</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">红方先手，点一列落子</div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d");
             const w = Math.min(body.clientWidth - 24, 400), cell = w / C, h = cell * R, dpr = window.devicePixelRatio || 1;
             cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; ctx.scale(dpr, dpr);
@@ -6935,7 +6935,7 @@ function cardFaceInner(tab, idx, rev, w) {
             const icons = ALL.slice(0, { easy: 6, normal: 10, hard: 15 }[gameDiff] || 10);
             const deck = icons.concat(icons).sort(() => Math.random() - .5);
             const cols = { easy: 4, normal: 5, hard: 6 }[gameDiff] || 5;
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻，翻两张</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:5px;width:min(${cols * 54}px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">翻两张，相同就配对</div><div id="memScore" style="text-align:center;font-size:14px;margin:4px 0"></div><div id="memGrid" style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:5px;width:min(${cols * 54}px,calc(100% - 24px));margin:8px auto"></div><div id="gameEnd"></div>`;
             const grid = document.getElementById("memGrid");
             const st = deck.map(() => 0); // 0盖 1翻开 2已配对
             const sc = [0, 0], known = {}; let forced = -1, turn = 1, picks = [], busy = false, over = false, timer = null;
@@ -8744,7 +8744,7 @@ treaty:条约`
         function gameMine() {
             const R = 9, C = 9, M = { easy: 8, normal: 12, hard: 16 }[gameDiff];
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先翻</div><div class="mine-score" id="mineScore"></div><div class="mine-grid" id="mineGrid"></div><div class="game-btns"><button class="btn btn-outline" id="mineFlagBtn">⛏ 翻开</button></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">先翻两张</div><div class="mine-score" id="mineScore"></div><div class="mine-grid" id="mineGrid"></div><div class="game-btns"><button class="btn btn-outline" id="mineFlagBtn">⛏ 翻开</button></div><div id="gameEnd"></div>`;
             let mines = null, rev = Array.from({ length: R }, () => new Array(C).fill(false)), flag = Array.from({ length: R }, () => new Array(C).fill(false)), num = null;
             let over = false, thinking = false, flagMode = false, timer = null, myCnt = 0, hisCnt = 0, firstDone = false;
             const nb = (r, c) => { const o = []; for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { if (!dr && !dc) continue; const nr = r + dr, nc = c + dc; if (nr >= 0 && nc >= 0 && nr < R && nc < C) o.push([nr, nc]); } return o; };
@@ -8841,7 +8841,7 @@ treaty:条约`
             const cfg = { easy: { r: 6, c: 6, k: 8 }, normal: { r: 8, c: 6, k: 12 }, hard: { r: 12, c: 8, k: 20 } }[gameDiff];
             const R = cfg.r, C = cfg.c, EM = ["🍎", "🍋", "🍇", "🍓", "🍑", "🍒", "🥝", "🍉", "🌸", "🌙", "⭐", "🐱", "🐶", "🐰", "🦊", "🐼", "🍍", "🥕", "🍄", "🐸"].slice(0, cfg.k);
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点两个相同的图案</div><div class="mine-score" id="linkScore"></div><div class="link-wrap"><div class="link-inner"><div class="link-grid" id="linkGrid"></div><svg class="link-svg" id="linkSvg" viewBox="0 0 ${C} ${R}" preserveAspectRatio="none"></svg></div></div><div class="game-btns"><button class="btn btn-outline" id="linkHint">提示</button></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">点两个相同的图案</div><div class="mine-score" id="linkScore"></div><div class="link-wrap"><div class="link-inner"><div class="link-grid" id="linkGrid"></div><svg class="link-svg" id="linkSvg" viewBox="0 0 ${C} ${R}" preserveAspectRatio="none"></svg></div></div><div class="game-btns"><button class="btn btn-outline" id="linkHint">提示</button></div><div id="gameEnd"></div>`;
             const W = C + 2, H = R + 2;
             const g = Array.from({ length: H }, () => new Array(W).fill(0));
             let tiles = []; for (let i = 0; i < R * C / 2; i++) { const k = 1 + (i % EM.length); tiles.push(k, k); }
@@ -9056,7 +9056,7 @@ treaty:条约`
         // ---------- 俄罗斯方块（你一盘、他一盘，消行给对方加垃圾行） ----------
         function gameTetris() {
             const COLS = 10, ROWS = 24, body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，消 2 行以上会给对方加垃圾行</div><div class="mine-score" id="ttScore"></div><div class="snake-lcd"><canvas id="ttCanvas"></canvas></div>
+            body.innerHTML = `<div class="game-msg" id="gameMsg">点「开始」，消 2 行以上会给另一边加垃圾行</div><div class="mine-score" id="ttScore"></div><div class="snake-lcd"><canvas id="ttCanvas"></canvas></div>
               <div class="tt-pad"><button class="pad-btn tt-s" id="ttStart">开始</button><button class="pad-btn" data-a="drop">⤓</button><button class="pad-btn" data-a="rot">↻</button><button class="pad-btn" data-a="L">◀</button><button class="pad-btn" data-a="D">▼</button><button class="pad-btn" data-a="R">▶</button></div><div id="gameEnd"></div>`;
             const cv = document.getElementById("ttCanvas"), ctx = cv.getContext("2d"), dpr = window.devicePixelRatio || 1;
             const availH = body.clientHeight - 300, wAvail = Math.min(body.clientWidth - 44, 400);
@@ -9139,7 +9139,7 @@ treaty:条约`
         // ---------- 黑白棋 ----------
         function gameOthello() {
             const N = 8, body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你执黑先手，点亮点落子</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">黑方先手，点亮点落子</div><div class="game-msg" id="gameScore" style="font-weight:700"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d");
             const w = Math.min(body.clientWidth - 24, 400), cell = w / N, dpr = window.devicePixelRatio || 1;
             cv.style.width = w + "px"; cv.style.height = w + "px"; cv.width = w * dpr; cv.height = w * dpr; ctx.scale(dpr, dpr);
@@ -9183,7 +9183,7 @@ treaty:条约`
         // ---------- 打砖块（双球：你和他各打各的球，互相接不到） ----------
         function gameBreakout() {
             const body = document.getElementById("gameBody");
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你是黄色，他是紫色，各接各的球</div><div class="game-msg" id="gameScore" style="font-weight:700;font-size:12.5px"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">黄色、紫色各接各的球</div><div class="game-msg" id="gameScore" style="font-weight:700;font-size:12.5px"></div><canvas id="gmCanvas" class="game-canvas"></canvas><div id="gameEnd"></div>`;
             const cv = document.getElementById("gmCanvas"), ctx = cv.getContext("2d"), w = Math.min(body.clientWidth - 24, 380), h = Math.round(w * 1.4), dpr = window.devicePixelRatio || 1;
             cv.style.width = w + "px"; cv.style.height = h + "px"; cv.width = w * dpr; cv.height = h * dpr; cv.style.touchAction = "pan-y"; ctx.scale(dpr, dpr);
             const COLS = 8, ROWS = 6, bw = w / COLS, bh = 16, top = 40, cs = getComputedStyle(document.body);
@@ -9447,7 +9447,7 @@ treaty:条约`
             const cfg = { easy: [14, 14, 8], normal: [22, 22, 14], hard: [30, 30, 26] }[gameDiff], R = cfg[0], C = cfg[1], MAXL = cfg[2], body = document.getElementById("gameBody");
             const DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]]; // 0上 1右 2下 3左
             const cs = Math.max(9, Math.floor(Math.min(body.clientWidth - 24, 400) / C)), SZ = cs * C;
-            body.innerHTML = `<div class="game-msg" id="gameMsg">你先来：点一条前方没被挡住的线</div><div class="mine-score" id="arScore"></div><svg id="arSvg" class="ar-svg" width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}"></svg><div class="game-btns"><button class="btn btn-outline" id="arHint">提示</button></div><div id="gameEnd"></div>`;
+            body.innerHTML = `<div class="game-msg" id="gameMsg">点一条前方没被挡住的线</div><div class="mine-score" id="arScore"></div><svg id="arSvg" class="ar-svg" width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}"></svg><div class="game-btns"><button class="btn btn-outline" id="arHint">提示</button></div><div id="gameEnd"></div>`;
             const occ = Array.from({ length: R }, () => new Array(C).fill(-1)), paths = [];
             const inb = (x, y) => x >= 0 && y >= 0 && x < C && y < R;
             const rayBlocker = (p) => { const d = DIRS[p.dir]; let x = p.cells[p.cells.length - 1][0] + d[0], y = p.cells[p.cells.length - 1][1] + d[1]; while (inb(x, y)) { if (occ[y][x] >= 0) return occ[y][x]; x += d[0]; y += d[1]; } return -1; };
@@ -9699,7 +9699,7 @@ treaty:条约`
             const q = freeSearch.trim();
             let h = `<div class="free-cats${freeSortMode ? " sorting" : ""}"><button class="free-cat ${freeCat === "" ? "on" : ""}" onclick="freeSetCat('')">全部</button>` + cats.map(c => `<button class="free-cat ${freeCat === c ? "on" : ""}" data-cat="${escapeHtml(c)}" onclick="if(freeLpFired){freeLpFired=false;return}freeSetCat(this.dataset.cat)">${escapeHtml(c)}<i>${db.freeWords[c].length}</i></button>`).join("") + `<button class="free-cat" onclick="freeAddCat()">＋词类</button><button class="free-cat ${freeSortMode ? "on" : ""}" onclick="freeToggleSort()">${freeSortMode ? "完成排序" : "↔ 排序"}</button></div>` ;
             h += `<div class="card-toolbar-row1"><button class="btn ${freeSelectMode ? "" : "btn-outline"}" style="flex:0 0 auto; padding:10px 14px;" onclick="freeToggleSelect()">${freeSelectMode ? "完成" : "多选"}</button><input class="modal-input" placeholder="🔍 搜索..." value="${freeSearch.replace(/"/g, "&quot;")}" oninput="freeSearch=this.value;renderCardTabPanel()"><button class="btn btn-outline card-dedupe-btn" onclick="freeDedupe()">查重</button></div>`;
-            h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<button class="btn btn-danger" style="width:100%; margin-bottom:8px;" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
+            h += `<div class="card-toolbar-row3">${freeSelectMode && freeSelectedSet.size ? `<div style="display:flex;gap:8px;margin-bottom:8px"><button class="btn btn-outline" style="flex:1" onclick="freeMoveSelected()">移动到词类…(${freeSelectedSet.size})</button><button class="btn btn-danger" style="flex:1" onclick="freeDeleteSelected()">删除所选(${freeSelectedSet.size})</button></div>` : ""}<button class="btn" onclick="freeOpenAdd()">＋ 批量添加词语</button></div>`;
             const rows = [];
             cats.forEach(c => { if (freeCat && freeCat !== c) return; db.freeWords[c].forEach((w, i) => { if (!q || w.includes(q)) rows.push({ c, i, w }); }); });
             if (!rows.length) h += `<div class="empty-state">${q ? "没有找到匹配的词语" : "还没有词语，点上方按钮添加吧。他会随机抽取名词、动词、助词、介词等，用空格连成一句话发给你"}</div>`;
@@ -9792,6 +9792,16 @@ treaty:条约`
         }
         function freeEdit(c, i) { openSimpleEditModal("编辑词语", db.freeWords[c][i], v => { db.freeWords[c][i] = v; saveData(); renderCardTabPanel(); }); }
         function freeDelete(c, i) { if (!confirm(`确定删除「${db.freeWords[c][i]}」吗？`)) return; db.freeWords[c].splice(i, 1); saveData(); renderCardTabPanel(); }
+        function freeMoveSelected() {
+            if (!freeSelectedSet.size) return;
+            const cats = Object.keys(db.freeWords);
+            freeSheet("把选中的 " + freeSelectedSet.size + " 个词移动到…", cats.map(c => ({ label: c, fn: () => {
+                const by = {}; freeSelectedSet.forEach(k => { const [from, i] = k.split("\u0001"); (by[from] = by[from] || []).push(+i); });
+                const moved = []; Object.keys(by).forEach(from => { if (from === c) return; by[from].sort((a, b) => b - a).forEach(i => { moved.unshift(db.freeWords[from].splice(i, 1)[0]); }); });
+                moved.forEach(w => { if (!db.freeWords[c].includes(w)) db.freeWords[c].push(w); });
+                freeSelectedSet.clear(); freeSelectMode = false; saveData(); renderCardTabPanel();
+            } })));
+        }
         function freeDeleteSelected() {
             if (!confirm(`确定删除选中的 ${freeSelectedSet.size} 个词语吗？`)) return;
             const by = {}; freeSelectedSet.forEach(k => { const [c, i] = k.split("\u0001"); (by[c] = by[c] || []).push(+i); });
