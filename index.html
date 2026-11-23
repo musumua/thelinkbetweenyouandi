@@ -379,20 +379,6 @@
         .dpad button:active, .dpad button.down, .pad-btn:active, .pad-btn.down { transform:translateY(4px) scale(.96); box-shadow:0 1px 0 rgba(0,0,0,.35); background:var(--primary); color:var(--bg); }
         .dpad button svg { width:30px; height:30px; }
         .dp-u { grid-column:2; grid-row:1; } .dp-l { grid-column:1; grid-row:2; } .dp-d { grid-column:2; grid-row:2; } .dp-r { grid-column:3; grid-row:2; }
-        .date-tabs { display:flex; gap:6px; padding:10px 14px 4px; flex-shrink:0; }
-        .date-tabs button { flex:1; padding:8px 0; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--text-sub); font-size:12.5px; cursor:pointer; }
-        .date-tabs button.on { background:var(--primary); color:var(--bg); border-color:transparent; font-weight:600; }
-        .date-row { display:flex; align-items:center; gap:10px; padding:12px 12px; margin-bottom:8px; background:var(--panel); border:1px solid var(--border); border-radius:14px; }
-        .date-row.sel { border-color:var(--primary); }
-        .date-row-main { flex:1; min-width:0; cursor:pointer; } .date-row-main .t { font-size:15px; } .date-row-main .s { font-size:11.5px; color:var(--text-sub); margin-top:3px; }
-        .date-go { background:none; border:none; color:var(--primary); font-size:22px; padding:4px 8px; cursor:pointer; }
-        .date-ongoing { background:var(--primary); color:var(--bg); border-radius:14px; padding:11px 14px; font-size:13px; margin-bottom:10px; cursor:pointer; }
-        .date-group { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:6px 12px 10px; margin-bottom:10px; }
-        .date-group-head { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); } .date-group-head .t { flex:1; font-size:15px; font-weight:600; } .date-group-head .s { font-size:11.5px; color:var(--text-sub); }
-        .date-item { display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px dashed var(--border); font-size:13.5px; } .date-item:last-child { border-bottom:none; }
-        .date-chip { display:inline-block; margin:3px 5px 3px 0; padding:5px 11px; border-radius:14px; background:var(--primary-light); border:1px solid var(--border); font-size:12.5px; }
-        .date-rec { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:10px; box-shadow:var(--shadow-sm); }
-        .date-rec-head { display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--text-sub); } .date-rec-place { font-size:15px; font-weight:600; margin-top:4px; } .date-rec-time { font-size:12px; color:var(--text-sub); margin:3px 0 6px; } .date-rec-sentence { margin-top:8px; font-size:13.5px; line-height:1.7; padding-top:8px; border-top:1px dashed var(--border); }
         .lib-bar { display:flex; gap:6px; align-items:center; padding:12px 14px 6px; }
         .lib-bar .btn { padding:8px 10px; font-size:12.5px; white-space:nowrap; }
         .lib-search { flex:1; min-width:0; background:var(--panel); border:1px solid var(--border); color:var(--text-main); border-radius:14px; padding:8px 12px; font-size:13px; outline:none; }
@@ -562,8 +548,8 @@
         .home-missing-text::before { content: open-quote; }
         .home-missing-text::after { content: close-quote; }
 
-        .home-master-track { display: flex; width: 300%; height: 100%; flex: 1; min-height: 0; transition: transform 0.3s cubic-bezier(.2,.8,.3,1); touch-action: pan-y; }
-        .home-master-page { width: 33.3333%; flex-shrink: 0; box-sizing: border-box; display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
+        .home-master-track { display: flex; width: 400%; height: 100%; flex: 1; min-height: 0; transition: transform 0.3s cubic-bezier(.2,.8,.3,1); touch-action: pan-y; }
+        .home-master-page { width: 25%; flex-shrink: 0; box-sizing: border-box; display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
         .home-pages { display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 20px; column-gap: 12px; padding: 0 20px 20px 20px; box-sizing: border-box; position: relative; z-index: 1; flex-shrink: 0; margin-top: auto; align-content: start; }
         .home-page-dots { flex-shrink: 0; display: flex; align-items: center; justify-content: center; gap: 6px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); position: relative; z-index: 1; }
 
@@ -626,7 +612,6 @@
         .pet-actions { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:10px 20px 4px; } .pet-actions button { border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:14px; padding:12px 0; font-size:13.5px; }
         .pet-scenes { display:flex; gap:8px; padding:8px 20px 20px; } .pet-scenes button { flex:1; border:1px solid var(--border); background:transparent; color:var(--text-sub); border-radius:12px; padding:8px 0; font-size:12.5px; } .pet-scenes button.on { background:var(--primary); color:var(--bg); border-color:transparent; }
         .pet-sec { font-size:12px; color:var(--text-sub); margin:8px 0 6px; } .pet-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; } .pet-food { border:1px solid var(--border); border-radius:12px; padding:8px 0; text-align:center; background:var(--panel); } .pet-food span { font-size:26px; display:block; } .pet-food b { font-size:12px; font-weight:500; color:var(--text-main); }
-        .date-rec { cursor:pointer; } .date-rec-detail { display:none; margin-top:6px; } .date-rec.open .date-rec-detail { display:block; } .date-rec .rec-more { color:var(--text-sub); font-size:11px; } .date-rec.open .rec-more { display:none; }
         .date-quick { display:flex; gap:8px; align-items:center; padding:0 0 8px; font-size:12px; color:var(--text-sub); } .date-quick button { border:1px dashed var(--border); background:transparent; color:var(--text-main); border-radius:12px; padding:4px 10px; font-size:12px; }
         .star-card { position:relative; height:150px; border-radius:16px; overflow:hidden; background:radial-gradient(ellipse at 50% 120%, #1c2a5a 0%, #0b1030 55%, #05071a 100%); box-shadow:0 4px 14px rgba(0,0,0,.28); flex-shrink:0; }
         .star-card canvas { width:100%; height:100%; display:block; touch-action:none; }
@@ -635,6 +620,42 @@
         .star-tip { position:absolute; left:50%; top:10px; transform:translateX(-50%); max-width:84%; background:rgba(255,255,255,.16); color:#fff; font-size:13px; padding:5px 12px; border-radius:12px; opacity:0; transition:opacity .25s; pointer-events:none; backdrop-filter:blur(4px); text-align:center; }
         .star-tip.on { opacity:1; }
         .home-page2-top { flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 3.2vh 22px 1.6vh 22px; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%; }
+
+        /* 周历 / 月历 / 月相 */
+        .cal-week { flex:0 0 auto; border-radius:16px; padding:10px 8px 8px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); box-sizing:border-box; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+        [data-theme="eye-care"] .cal-week, [data-theme="light-green"] .cal-week { background:linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,255,255,0.42)); border-color:rgba(255,255,255,0.8); }
+        .cal-week-row { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+        .cw-day { position:relative; display:flex; flex-direction:column; align-items:center; gap:2px; padding:5px 0 4px; border-radius:11px; cursor:pointer; color:var(--text-main); border:1.5px solid transparent; user-select:none; -webkit-user-select:none; }
+        .cw-day .wk { font-size:10px; opacity:.6; } .cw-day .dn { font-size:15px; font-weight:600; line-height:1.2; } .cw-day .ic { font-size:11px; height:13px; line-height:13px; white-space:nowrap; }
+        .cw-day.period, .cm-cell.period { background:#f3a9bb; color:#fff; } .cw-day.pred, .cm-cell.pred { border:1.5px dashed #ee93aa; }
+        .cw-day.today, .cm-cell.today { border:2px solid var(--text-main); }
+        .cw-day .ev, .cm-cell .ev { position:absolute; top:3px; right:5px; width:5px; height:5px; border-radius:50%; }
+        .cal-week-tip { text-align:center; font-size:11px; opacity:.55; color:var(--text-main); margin-top:6px; }
+        .cm-wrap { flex:1; overflow-y:auto; padding:8px 16px 24px; color:var(--text-main); }
+        .cm-head { display:flex; align-items:center; justify-content:center; gap:18px; font-size:17px; font-weight:600; margin:6px 0 8px; }
+        .cm-head button { background:none; border:none; color:var(--text-main); font-size:22px; padding:2px 12px; cursor:pointer; }
+        .cm-legend { display:flex; gap:16px; justify-content:center; font-size:12px; color:var(--text-sub); margin-bottom:8px; }
+        .cm-legend i { display:inline-block; width:12px; height:12px; border-radius:4px; vertical-align:-2px; margin-right:4px; }
+        .cm-wd, .cm-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+        .cm-wd span { text-align:center; font-size:12px; color:var(--text-sub); padding:4px 0; }
+        .cm-cell { position:relative; aspect-ratio:1/1; border-radius:12px; background:var(--panel); border:1.5px solid var(--border); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:15px; color:var(--text-main); cursor:pointer; user-select:none; -webkit-user-select:none; }
+        .cm-cell.empty { background:none; border:none; cursor:default; }
+        .cm-cell .ic { font-size:10px; height:12px; line-height:12px; }
+        .cm-cell.sel:not(.today) { border-color:var(--primary); }
+        .cm-day { margin-top:14px; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:12px 14px; }
+        .cm-day h3 { margin:0 0 8px; font-size:15px; font-weight:600; color:var(--text-main); }
+        .cm-md { display:flex; gap:10px; align-items:center; font-size:13px; color:var(--text-sub); margin-bottom:8px; }
+        .cm-md button { border:1px solid var(--border); background:var(--bg); color:var(--text-main); border-radius:14px; padding:4px 12px; font-size:13px; cursor:pointer; }
+        .cmo-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:6px 0 12px; }
+        .cmo-grid button { font-size:24px; padding:8px 0; border-radius:12px; border:1.5px solid var(--border); background:var(--bg); cursor:pointer; }
+        .cmo-grid button.on { border-color:var(--primary); background:var(--panel); }
+        .moon-card { flex-shrink:0; border-radius:16px; padding:12px 14px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); box-sizing:border-box; color:var(--text-main); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+        [data-theme="eye-care"] .moon-card, [data-theme="light-green"] .moon-card { background:linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,255,255,0.42)); border-color:rgba(255,255,255,0.8); }
+        .moon-top { display:flex; align-items:center; gap:14px; } .moon-top svg { flex:0 0 auto; }
+        .moon-name { font-size:18px; font-weight:600; } .moon-sub { font-size:12px; opacity:.7; margin-top:3px; }
+        .moon-row { display:flex; justify-content:space-between; margin-top:10px; }
+        .moon-row span { width:11.5%; aspect-ratio:1/1; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .moon-row span.on { box-shadow:0 0 0 2px var(--primary); } .moon-row svg { width:100%; height:100%; }
         .home-p2-calendar-card { flex-shrink: 0; padding: 12px 14px 10px 14px; border-radius: 16px; background: rgba(255,255,255,0.12); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.22); box-sizing: border-box; }
         [data-theme="eye-care"] .home-p2-calendar-card, [data-theme="light-green"] .home-p2-calendar-card { background: linear-gradient(145deg, rgba(255,255,255,0.78), rgba(255,255,255,0.42)); border-color: rgba(255,255,255,0.8); box-shadow: 0 8px 24px rgba(120,160,200,0.14); }
         .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
@@ -889,12 +910,11 @@
 
     <div class="home-screen" id="homeScreen">
         <div class="home-wallpaper-mask"></div>
-        <div class="home-master-track" id="homeMasterTrack" style="transform:translateX(-33.3333%);transition:none">
+        <div class="home-master-track" id="homeMasterTrack" style="transform:translateX(-25%);transition:none">
             <div class="home-master-page home-widgets-page">
                 <div class="wg-wrap">
+                    <div class="cal-week" id="calWeekBox"><div class="cal-week-row" id="calWeekRow"></div><div class="cal-week-tip">单击记天气心情 · 双击看整月</div></div>
                     <div class="wg wg-wish"><canvas id="starCanvas"></canvas><div class="wish-bar"><input id="wishInput" type="text" maxlength="60" placeholder="朝宇宙许个愿" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();starMakeWish();}"><button onclick="starMakeWish()" aria-label="送出"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7z" fill="currentColor" stroke="none"/><path d="M18.5 15.5c.25 1.8 1 2.5 2.5 2.7-1.5.2-2.25.9-2.5 2.7-.25-1.8-1-2.5-2.5-2.7 1.5-.2 2.25-.9 2.5-2.7z" fill="currentColor" stroke="none" opacity=".75"/></svg></button></div></div>
-                    <div class="wg wg-date" onclick="openDatingPage()"><canvas id="dateStripCanvas"></canvas><div class="wg-lab" id="dateStripLab">约会</div></div>
-                    <div class="wg wg-pet"><canvas id="petStripCanvas"></canvas><div class="wg-lab" id="petStripLab">宠物</div><div class="pet-mini" id="petMini"></div><div class="pet-msg" id="petMsgHome"></div><div class="pet-tray" id="petTray"></div><div class="pet-ctl" id="petCtl"></div></div>
                 </div>
             </div>
             <div class="home-master-page">
@@ -931,16 +951,7 @@
             </div>
             <div class="home-master-page">
                 <div class="home-page2-top">
-                    <div class="home-p2-calendar-card">
-                        <div class="cal-header">
-                            <button onclick="calendarPrevMonth()">‹</button>
-                            <span id="calMonthLabel">2026年8月</span>
-                            <button onclick="calendarNextMonth()">›</button>
-                        </div>
-                        <div class="cal-weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
-                        <div class="cal-grid" id="calGridBox"></div>
-                        <div class="cal-legend"><span class="cal-legend-dot"></span>点击日期添加日程 · 长按标记经期</div>
-                    </div>
+                    <div class="moon-card" id="moonCard"></div>
                     <div class="home-p2-notes-row">
                         <div class="home-p2-sticky-wrap">
                             <div class="home-p2-sticky-note">
@@ -952,11 +963,18 @@
                 </div>
                 <div class="home-pages" id="homePages2"></div>
             </div>
+            <div class="home-master-page">
+                <div class="wg-wrap">
+                    <div style="flex:1 1 0"></div>
+                    <div class="wg wg-pet"><canvas id="petStripCanvas"></canvas><div class="wg-lab" id="petStripLab">宠物</div><div class="pet-mini" id="petMini"></div><div class="pet-msg" id="petMsgHome"></div><div class="pet-tray" id="petTray"></div><div class="pet-ctl" id="petCtl"></div></div>
+                </div>
+            </div>
         </div>
         <div class="home-page-dots" id="homePageDots">
             <span class="home-page-dot" onclick="goToHomePage(0)"></span>
             <span class="home-page-dot active" onclick="goToHomePage(1)"></span>
             <span class="home-page-dot" onclick="goToHomePage(2)"></span>
+            <span class="home-page-dot" onclick="goToHomePage(3)"></span>
         </div>
     </div>
 
@@ -1184,6 +1202,33 @@
         </div>
     </div>
 
+    <div class="pyq-full-page" id="calFullPage">
+        <div class="app-page-header"><button class="pyq-back-pure-symbol" onclick="closeCalPage()"></button><div class="app-page-title">日历</div><div class="app-page-header-spacer"></div></div>
+        <div class="cm-wrap">
+            <div class="cm-head"><button onclick="calendarPrevMonth()">‹</button><span id="calMonthLabel"></span><button onclick="calendarNextMonth()">›</button></div>
+            <div class="cm-legend"><span><i style="background:#f3a9bb"></i>经期</span><span><i style="border:1.5px dashed #ee93aa;box-sizing:border-box"></i>预测</span></div>
+            <div class="cm-wd"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+            <div class="cm-grid" id="calGridBox"></div>
+            <div class="cm-day">
+                <h3 id="calSelLabel"></h3>
+                <div class="cm-md"><span id="calSelMD"></span><button onclick="openCalMood(currentDayDetailKey)">天气 / 心情</button></div>
+                <div id="calMonthEvents"></div>
+                <button class="btn" style="width:100%; margin-top:10px;" onclick="openScheduleEditModal(null)">+ 添加日程</button>
+                <div style="font-size:11px;opacity:.5;margin-top:8px;text-align:center;color:var(--text-main)">长按日期标记经期</div>
+            </div>
+        </div>
+    </div>
+    <div class="universal-modal" id="calMoodModal" onclick="closeModal('calMoodModal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 id="calMoodTitle">天气与心情</h2>
+            <div style="font-size:13px;color:var(--text-sub)">天气</div>
+            <div class="cmo-grid" id="calWeatherOpts"></div>
+            <div style="font-size:13px;color:var(--text-sub)">心情</div>
+            <div class="cmo-grid" id="calMoodOpts"></div>
+            <div style="display:flex; justify-content:flex-end;"><button class="btn" onclick="closeModal('calMoodModal')">完成</button></div>
+        </div>
+    </div>
+
     <div class="universal-modal" id="dayDetailModal" onclick="closeModal('dayDetailModal')">
         <div class="modal-box" onclick="event.stopPropagation()">
             <h2 id="dayDetailDateLabel">8月26日</h2>
@@ -1242,24 +1287,8 @@
         </div>
     </div>
 
-    <div class="pyq-full-page" id="datingFullPage">
-        <div class="app-page-header">
-            <button class="pyq-back-pure-symbol" onclick="closeDatingPage()"></button>
-            <div class="app-page-title">约会</div>
-            <div class="app-page-header-spacer"></div>
-        </div>
-        <div class="date-tabs" id="dateTabs"><button onclick="dateSwitchTab(0)">准备约会</button><button onclick="dateSwitchTab(1)">随机物品/事件</button><button onclick="dateSwitchTab(2)">轨迹</button></div>
-        <div class="lib-body" id="dateBody"></div>
-    </div>
-
-    <div class="universal-modal" id="datePlaceModal" onclick="closeModal('datePlaceModal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 id="datePlaceTitle">添加地点</h2>
-            <input class="modal-input" id="datePlaceName" placeholder="地点名称，如：海边、咖啡店">
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('datePlaceModal')">取消</button><button class="btn" onclick="dateSavePlace()">保存</button></div>
-        </div>
-    </div>
-
+    
+    
     <div class="pyq-full-page" id="petFullPage">
         <div class="app-page-header"><button class="pyq-back-pure-symbol" onclick="closePetPage()"></button><div class="app-page-title" id="petName" onclick="petRename()">团子</div><div class="app-page-header-spacer"></div></div>
         <div class="pet-scroll">
@@ -1296,36 +1325,9 @@
         </div>
     </div>
 
-    <div class="universal-modal" id="dateBatchModal" onclick="closeModal('dateBatchModal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2>批量添加（一行一条）</h2>
-            <select class="search-select" id="dateBatchGroup" style="margin-bottom:8px;"></select>
-            <textarea class="modal-textarea" id="dateBatchText" placeholder="一行写一个物品或事件"></textarea>
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('dateBatchModal')">取消</button><button class="btn" onclick="dateSubmitBatch()">添加</button></div>
-        </div>
-    </div>
-
-    <div class="universal-modal" id="dateStartModal" onclick="dateCloseStart()">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 id="dateStartTitle">约会</h2>
-            <div style="font-size:12.5px; color:var(--text-sub); line-height:1.7;" id="dateStartInfo"></div>
-            <div style="font-size:12px; color:var(--primary); margin-top:2px;" id="dateStartElapsed"></div>
-            <div id="dateStartItems" style="margin:12px 0 6px;"></div>
-            <div style="display:flex; gap:8px; margin-bottom:10px; align-items:center;"><input class="modal-input" id="dateStartWeather" placeholder="今天的天气" oninput="dateSaveWeather(this.value)" style="flex:1; margin:0;"><button class="btn" style="font-size:13px; padding:8px 16px;" onclick="dateReroll()">刷新</button></div>
-            <div style="display:flex; justify-content:space-between; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="dateAbandon()">放弃</button><button class="btn" onclick="dateCloseStart()">先收起</button></div>
-        </div>
-    </div>
-
-    <div class="universal-modal" id="dateWriteModal" onclick="closeModal('dateWriteModal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h2 id="dateWriteTitle">约会结束啦</h2>
-            <div style="font-size:12.5px; color:var(--text-sub); margin-bottom:8px;">把今天的物品和事件串成一句话，写下这次的轨迹吧</div>
-            <div id="dateWriteItems" style="margin-bottom:8px;"></div>
-            <textarea class="modal-textarea" id="dateStartSentence" placeholder="把它们串成一句话吧…" oninput="dateSaveSentenceDraft(this.value)" style="min-height:110px;"></textarea>
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('dateWriteModal')">稍后</button><button class="btn" id="dateFinishBtn" onclick="dateFinish()">完成</button></div>
-        </div>
-    </div>
-
+    
+    
+    
     <div class="pyq-full-page" id="gamesFullPage">
         <div class="app-page-header">
             <button class="pyq-back-pure-symbol" onclick="gameBack()"></button>
@@ -1480,7 +1482,7 @@
                 <div class="section" style="margin-bottom:0;">
                     <div class="flex-row-between"><span>念想更新间隔</span><div><input id="cfg_missing_every" type="number"> 分钟</div></div>
                     <div class="flex-row-between"><span>状态更新间隔</span><div><input id="cfg_status_every" type="number"> 分钟</div></div>
-                    <div class="flex-row-between"><span>书房说话间隔</span><div><input id="cfg_speak_every" type="number"> 秒</div></div>
+                    <div class="flex-row-between"><span>札记间隔</span><div><input id="cfg_speak_every" type="number"> 秒</div></div>
                     <div class="flex-row-between"><span>动作概率</span><div><input id="cfg_nudge_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>表情包概率</span><div><input id="cfg_emoji_pct" type="number"> %</div></div>
                     <div class="flex-row-between"><span>自由造句概率</span><div><input id="cfg_free_pct" type="number"> %</div></div>
@@ -1686,7 +1688,7 @@
 
     <div class="universal-modal" id="speakFreqModal" onclick="closeModal('speakFreqModal')">
         <div class="modal-box" onclick="event.stopPropagation()">
-            <h2>他说话的间隔</h2>
+            <h2>札记间隔</h2>
             <div class="flex-row-between"><span>两句之间隔</span><div><input id="sf_min" type="number" style="width:64px"> 秒</div></div>
             <div style="font-size:11.5px; color:var(--text-sub); margin:8px 2px;">每句话会停留 10 秒；这里设置的是一句消失后到下一句出现的等待时间。</div>
             <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;"><button class="btn btn-outline" onclick="closeModal('speakFreqModal')">取消</button><button class="btn" onclick="saveSpeakFreq()">保存</button></div>
@@ -2084,7 +2086,7 @@
             renderIconGrid("homePages2", apps2, palette);
             { const need = Math.ceil(apps1.length / 4) * 4, box2 = document.getElementById("homePages2"); if (box2) for (let k = Math.ceil(apps2.length / 4) * 4; k < need; k++) { const ph = document.createElement("div"); ph.className = "app-icon-item"; ph.style.visibility = "hidden"; ph.style.pointerEvents = "none"; ph.innerHTML = '<div class="app-icon-glyph"></div><div class="app-icon-label">&nbsp;</div>'; box2.appendChild(ph); } }
             renderStickyAndWishNotes();
-            renderCalendarGrid();
+            renderCalendarGrid(); renderMoonCard();
             syncHomeIconRowHeight();
         }
         // 强制让第二页的图标行与首页图标行精确对齐（不依赖写死的高度值，实时测量同步）
@@ -2133,7 +2135,7 @@
         }
 
         // ==================== 🌌 许愿宇宙 / 🏠 约会像素 / 🐾 宠物（首页最左页三个组件） ====================
-        const p2Vis = () => currentHomePage === 0 && !document.hidden && !document.querySelector(".pyq-full-page.open") && !Array.prototype.some.call(document.querySelectorAll(".pyq-full-page"), e => e.getBoundingClientRect().left < innerWidth - 2);
+        const p2Vis = () => !document.hidden && !document.querySelector(".pyq-full-page.open") && !Array.prototype.some.call(document.querySelectorAll(".pyq-full-page"), e => e.getBoundingClientRect().left < innerWidth - 2);
         function p2Fit(cv) { const r = cv.getBoundingClientRect(); if (!r.width) return null; const dpr = window.devicePixelRatio || 1, W = Math.round(r.width), H = Math.round(r.height); if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; } const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H); return { ctx, W, H }; }
         document.addEventListener("scroll", e => { if (e.target && e.target.classList && e.target.classList.contains("pet-ctl")) window.__ctlTs = performance.now(); }, true);
         let p2Raf = 0, p2Last = 0;
@@ -2146,7 +2148,7 @@
         function p2Frame(t) {
             p2Raf = requestAnimationFrame(p2Frame);
             if (t - p2Last < 33) return; p2Last = t;
-            if (p2Vis()) { if (t - (window.__ctlTs || -999) > 300) galDraw(t); dateStripDraw(t); petDrawStrip(t); }
+            if (p2Vis()) { if (currentHomePage === 0 && t - (window.__ctlTs || -999) > 300) galDraw(t); if (currentHomePage === 3) petDrawStrip(t); }
             const pp = document.getElementById("petFullPage"); if (pp && pp.classList.contains("open") && !document.hidden) petDrawPage(t);
         }
 
@@ -2321,11 +2323,6 @@
         const SCENE_RE = [["home", /^\s*(我的?)?家(里)?\s*$|^home$/i], ["small", /小客厅/], ["living", /客厅|living/i], ["terrace", /露台|阳台|terrace/i], ["bedroom", /房间|卧室|bedroom/i], ["study", /书房|study/i], ["flower", /花店|philo|花房/i]];
         function sceneOfName(n) { for (const s of SCENE_RE) if (s[1].test(n || "")) return s[0]; return null; }
         const isNightNow = () => { const h = new Date().getHours(); return h < 6 || h >= 18; };
-        let dateScene = null, dateSceneKey = "";
-        function dateStripPick() {
-            const o = db.dateOngoing; if (o) { let sc = sceneOfName(o.placeName); if (!sc) { let h = 0; for (const ch of o.placeName) h = (h * 31 + ch.charCodeAt(0)) >>> 0; sc = ["home", "small", "living", "terrace", "bedroom", "study", "flower"][h % 7]; } return { scene: sc, name: o.placeName, ongoing: true }; }
-            return { scene: "home", name: "家", ongoing: false };
-        }
         function pixScene(kind, night) {
             const cv = document.createElement("canvas"); cv.width = 90; cv.height = 50; const c = cv.getContext("2d"); const K = pxKit(c); const { R, B, E, L, P, sp, leaf } = K;
             const D = (a, b) => night ? b : a;
@@ -2593,18 +2590,6 @@
             }
             return { cv, sparks: K.sparks };
         }
-        function dateStripDraw(t) {
-            const cv = document.getElementById("dateStripCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; const { ctx, W, H } = f;
-            const pick = dateStripPick(), night = isNightNow(), key = pick.scene + (night ? "n" : "d");
-            if (key !== dateSceneKey) { dateScene = pixScene(pick.scene, night); dateSceneKey = key; }
-            ctx.imageSmoothingEnabled = false; const sc = Math.max(W / 90, H / 50), dw = 90 * sc, dh = 50 * sc, ox = (W - dw) / 2, oy = (H - dh) / 2; ctx.drawImage(dateScene.cv, ox, oy, dw, dh);
-            dateScene.sparks.forEach(s => { const a = 0.25 + 0.75 * Math.max(0, Math.sin(t / (380 + s.ph * 60) + s.ph)); const x = ox + s.x * sc, y = oy + s.y * sc; if (s.big) { const g = ctx.createRadialGradient(x + sc / 2, y + sc / 2, 0, x + sc / 2, y + sc / 2, sc * 4); g.addColorStop(0, s.col); g.addColorStop(1, "rgba(255,255,255,0)"); ctx.globalAlpha = a * 0.5; ctx.fillStyle = g; ctx.fillRect(x - sc * 4, y - sc * 4, sc * 9, sc * 9); ctx.globalAlpha = a; ctx.fillStyle = s.col; ctx.fillRect(x, y, sc, sc); ctx.fillRect(x - sc, y, sc, sc); ctx.fillRect(x + sc, y, sc, sc); ctx.fillRect(x, y - sc, sc, sc); ctx.fillRect(x, y + sc, sc, sc); } else { ctx.globalAlpha = a; ctx.fillStyle = s.col; ctx.fillRect(x, y, sc, sc); } });
-            ctx.globalAlpha = 1;
-            const lab = document.getElementById("dateStripLab"); if (lab) { const o = db.dateOngoing; lab.innerText = o ? "约会中 · " + o.placeName + dateRemainText() : "约会 · 家"; }
-        }
-        function dateRemainText() { const o = db.dateOngoing; if (!o) return ""; const left = Math.ceil((o.startTs + DATE_MIN * 60000 - Date.now()) / 60000); return left > 0 ? "（剩 " + left + " 分）" : "（可以写轨迹了）"; }
-        function dateQuickAdd(n) { dateInit(); if (!db.datePlaces.some(p => p.name === n)) { db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 5), name: n }); saveData(); } renderDating(); }
-
         // ---------- 🥚 拓麻歌子（蛋形掌机 + 你自己画的像素宠物） ----------
         const PET_FOODS = [
             { id: "rice", spr: "rice", n: "饭团", full: 30, mood: 3, digest: 70 }, { id: "apple", spr: "apple", n: "苹果", full: 18, mood: 4, water: 6, digest: 50 },
@@ -2629,13 +2614,13 @@
             if (p.sleeping) { p.energy = Math.min(100, p.energy + dt * 1.1); if (p.energy >= 100) p.sleeping = false; } else p.energy = Math.max(0, p.energy - dt * 0.1);
             if (p.digest > 0) { p.digest -= dt; if (p.digest <= 0) { p.digest = 0; p.poops = Math.min(4, p.poops + 1); } }
             // 会变脏、会生病：身上的脏污随时间和便便累积；太脏/太饿/太渴/便便多了就可能生病
-            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.008 : 0.032) + p.poops * dt * 0.015);
+            p.dirt = Math.min(100, (p.dirt || 0) + dt * (p.sleeping ? 0.004 : 0.015) + p.poops * dt * 0.006);
             if (!p.sick && (p.dirt > 88 || p.poops >= 4 || p.full < 4 || p.water < 4) && Math.random() < Math.min(0.25, dt * 0.01)) { p.sick = true; saveData(); }
             const base = (Math.min(p.full, 100) + Math.min(p.water, 100) + p.energy) / 3, target = Math.max(0, Math.min(100, base - p.poops * 9 - (p.dirt > 50 ? (p.dirt - 50) * 0.3 : 0) - (p.sick ? 25 : 0)));
             p.mood += (target - p.mood) * Math.min(1, dt * 0.05);
             if (Math.random() < 0.02) saveData();
         }
-        function petNeeds() { const p = db.pet; return !p.sleeping && (p.sick || p.dirt > 65 || p.full < 25 || p.water < 25 || p.poops >= 1 || p.energy < 18); }
+        function petNeeds() { const p = db.pet; return !p.sleeping && (p.sick || p.dirt > 70 || p.full < 25 || p.water < 25 || p.poops >= 1 || p.energy < 18); }
         function petState() {
             const p = db.pet, now = Date.now();
             if (p.sleeping) return "sleep"; if (petAnim.until > now) return petAnim.kind;
@@ -2652,8 +2637,8 @@
             petAnim = { kind: "eat", until: Date.now() + 2400, food: f.spr }; saveData(); closeModal("petFoodModal"); { const tr = document.getElementById("petTray"); if (tr) tr.classList.remove("on"); } petBars(); petMsg(f.drink ? "咕嘟咕嘟～" : "好吃！");
         }
         function petClean() { const p = db.pet; if (!p.poops) { petMsg("很干净呢"); return; } p.poops = 0; p.mood = Math.min(100, p.mood + 6); petAnim = { kind: "happy", until: Date.now() + 1500 }; saveData(); petBars(); petMsg("清理干净啦"); }
-        function petPlay() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (p.energy < 15) { petMsg("太累了，哄它睡吧"); return; } if (p.sick) { petMsg("生病了，先治疗吧"); return; } p.energy -= 10; p.mood = Math.min(100, p.mood + 14); p.dirt = Math.min(100, (p.dirt || 0) + 6); p.full = Math.max(0, p.full - 4); p.water = Math.max(0, p.water - 4); petAnim = { kind: "happy", until: Date.now() + 2200 }; saveData(); petBars(); petMsg("好开心！"); }
-        function petBath() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if ((p.dirt || 0) < 12) { petMsg("身上很干净呢"); return; } p.dirt = 0; p.mood = Math.min(100, p.mood + 8); petAnim = { kind: "bath", until: Date.now() + 3200 }; saveData(); petBars(); petMsg("洗香香～"); }
+        function petPlay() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (p.energy < 15) { petMsg("太累了，哄它睡吧"); return; } if (p.sick) { petMsg("生病了，先治疗吧"); return; } p.energy -= 10; p.mood = Math.min(100, p.mood + 14); p.dirt = Math.min(100, (p.dirt || 0) + 1.5); p.full = Math.max(0, p.full - 4); p.water = Math.max(0, p.water - 4); petAnim = { kind: "happy", until: Date.now() + 2200 }; saveData(); petBars(); petMsg("好开心！"); }
+        function petBath() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if ((p.dirt || 0) < 25) { petMsg("身上很干净呢"); return; } p.dirt = 0; p.mood = Math.min(100, p.mood + 8); petAnim = { kind: "bath", until: Date.now() + 3200 }; saveData(); petBars(); petMsg("洗香香～"); }
         function petHeal() { const p = db.pet; petTick(); if (p.sleeping) { petMsg("它在睡觉"); return; } if (!p.sick) { petMsg("没有生病，不用吃药"); return; } p.sick = false; p.mood = Math.min(100, p.mood + 6); p.energy = Math.max(0, p.energy - 5); petAnim = { kind: "heal", until: Date.now() + 2400 }; saveData(); petBars(); petMsg("吃了药，好多了"); }
         function petSleep() { const p = db.pet; petTick(); p.sleeping = !p.sleeping; petAnim = { kind: "", until: 0 }; saveData(); petBars(); petMsg(p.sleeping ? "晚安，zZ…" : "睡醒啦"); }
         function petSetScene(id) { db.pet.scene = id; saveData(); petBars(); }
@@ -2782,8 +2767,8 @@
                     for (let k = 0; k < 5; k++) { const fx = bx + 4 + ((k * 7 + Math.floor(t / 400)) % (bw - 8)); c.fillStyle = "#fff"; c.fillRect(fx, ty + 2 + (k % 2), 2, 2); } }
                 for (let i = 0; i < 8; i++) { const bx = dx - 2 + ((i * 13) % (sw + 4)) + Math.round(Math.sin(t / 300 + i) * 2), by = feet - 6 - ((t / 45 + i * 11) % (sh + 6)); c.drawImage(sprGet("bub"), bx, Math.round(by)); }
             }
-            if ((db.pet.dirt || 0) >= 24 && st !== "bath" && st !== "sleep") {
-                const lv = Math.min(3, 1 + Math.floor(((db.pet.dirt || 0) - 24) / 24));
+            if ((db.pet.dirt || 0) >= 45 && st !== "bath" && st !== "sleep") {
+                const lv = Math.min(3, 1 + Math.floor(((db.pet.dirt || 0) - 45) / 20));
                 for (let k = 0; k < lv + 1; k++) { const bx = dx + Math.round(sw * (0.15 + 0.7 * k / Math.max(1, lv))), ph = ((t / 1300) + k * 0.31) % 1; c.globalAlpha = Math.max(0, 1 - ph * 0.8); c.fillStyle = "#98a52c"; for (let yy = 0; yy < 9; yy++) { const px = bx + Math.round(Math.sin(t / 220 + yy * 0.9 + k * 2) * 1.6); c.fillRect(px, dy - 2 - Math.round(ph * 6) - yy, 1, 1); } c.globalAlpha = 1; }
                 for (let k = 0; k < Math.min(3, lv + 1); k++) { const ang = t / 240 + k * 2.1, fx = Math.round(dx + sw / 2 + Math.cos(ang) * (sw / 2 + 3)), fy = Math.round(dy - 3 + Math.sin(ang * 1.3) * 5); c.fillStyle = "#3d3640"; c.fillRect(fx, fy, 2, 1); c.fillStyle = "#c9d6e0"; c.fillRect(fx + (Math.floor(t / 90) % 2 ? -1 : 2), fy - 1, 1, 1); } }
             if (st === "heal") { for (let k = 0; k < 7; k++) { const ph = ((t / 1500) + k / 7) % 1, hx = dx + 1 + Math.round(((k * 37) % 100) / 100 * (sw - 4)) + Math.round(Math.sin(t / 300 + k) * 1), hy = dy + sh - 2 - Math.round(ph * (sh + 10)); c.globalAlpha = Math.min(1, (1 - ph) * 1.6); c.fillStyle = k % 2 ? "#4fc47a" : "#7ddc9a"; c.fillRect(hx, hy - 1, 1, 3); c.fillRect(hx - 1, hy, 3, 1); c.globalAlpha = 1; } }
@@ -2799,7 +2784,7 @@
         function petDrawPage(t) { const cv = document.getElementById("petCanvas"); if (!cv) return; const f = p2Fit(cv); if (!f) return; petScene(f.ctx, f.W, f.H, t); if (!petDrawPage._t || t - petDrawPage._t > 2500) { petDrawPage._t = t; petBars(); } }
         function petDrawStrip(t) {
             const cv = document.getElementById("petStripCanvas"); if (!cv || !db.pet) return; const f = p2Fit(cv); if (!f) return; petScene(f.ctx, f.W, f.H, t); if (!petDrawStrip._t || t - petDrawStrip._t > 2500) { petDrawStrip._t = t; petBars(); }
-            const p = db.pet, lab = document.getElementById("petStripLab"); if (lab) { const st = petState(), tx = p.name + " ✎" + (st === "sleep" ? " · 睡觉中" : p.sick ? " · 生病了" : (p.dirt || 0) > 65 ? " · 脏脏的" : petNeeds() ? " · 需要照顾！" : ""); if (lab.innerText !== tx) lab.innerText = tx; lab.style.pointerEvents = "auto"; lab.onclick = petRename; }
+            const p = db.pet, lab = document.getElementById("petStripLab"); if (lab) { const st = petState(), tx = p.name + " ✎" + (st === "sleep" ? " · 睡觉中" : p.sick ? " · 生病了" : (p.dirt || 0) > 70 ? " · 脏脏的" : petNeeds() ? " · 需要照顾！" : ""); if (lab.innerText !== tx) lab.innerText = tx; lab.style.pointerEvents = "auto"; lab.onclick = petRename; }
         }
 
         // ---------- ✏️ 画宠物（像素画板，透明底，保存时自动裁成实际大小） ----------
@@ -2944,37 +2929,88 @@
             const top = events.reduce((a, b) => (order[b.importance] > order[a.importance] ? b : a));
             return importanceColor(top.importance);
         }
+        const CAL_WEATHER = ["☀️","🌤️","☁️","🌧️","⛈️","❄️","🌫️"], CAL_MOOD = ["😊","🥰","😐","😔","😠","😴","🤒","🥳"];
+        function calTodayKey() { const n = new Date(); return calDateKey(n.getFullYear(), n.getMonth(), n.getDate()); }
+        function calDayIcons(key) { const c = (db.calDays || {})[key] || {}; return (c.weather || "") + (c.mood || ""); }
         function renderCalendarGrid() {
             initCalendarViewIfNeeded();
+            const predSet = periodPredKeySet(), now = new Date(), tk = calTodayKey();
+            const row = document.getElementById("calWeekRow");
+            if (row) {
+                const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+                let h = "";
+                for (let i = 0; i < 7; i++) {
+                    const dt = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i), key = calDateKey(dt.getFullYear(), dt.getMonth(), dt.getDate());
+                    const per = isDateInPeriodRanges(key), dot = getDayHighestImportanceColor(key);
+                    h += `<div class="cw-day ${key === tk ? 'today' : ''} ${per ? 'period' : ''} ${!per && predSet.has(key) ? 'pred' : ''}" onclick="calTapDay('${key}')"><span class="wk">${"日一二三四五六"[i]}</span><span class="dn">${dt.getDate()}</span><span class="ic">${calDayIcons(key) || "&nbsp;"}</span>${dot ? `<span class="ev" style="background:${dot}"></span>` : ""}</div>`;
+                }
+                row.innerHTML = h;
+            }
             const label = document.getElementById("calMonthLabel");
             if (label) label.innerText = `${calendarViewYear}年${calendarViewMonth + 1}月`;
             const grid = document.getElementById("calGridBox");
             if (!grid) return;
             const firstDay = new Date(calendarViewYear, calendarViewMonth, 1).getDay();
             const daysInMonth = new Date(calendarViewYear, calendarViewMonth + 1, 0).getDate();
-            const today = new Date(), predSet = periodPredKeySet();
             let html = "";
-            for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+            for (let i = 0; i < firstDay; i++) html += `<div class="cm-cell empty"></div>`;
             for (let d = 1; d <= daysInMonth; d++) {
-                const key = calDateKey(calendarViewYear, calendarViewMonth, d);
-                const dow = new Date(calendarViewYear, calendarViewMonth, d).getDay();
-                const isPeriod = isDateInPeriodRanges(key);
-                let periodClass = "";
-                if (isPeriod) {
-                    const hasLeft = dow !== 0 && isDateInPeriodRanges(shiftDateKey(calendarViewYear, calendarViewMonth, d, -1));
-                    const hasRight = dow !== 6 && isDateInPeriodRanges(shiftDateKey(calendarViewYear, calendarViewMonth, d, 1));
-                    periodClass = !hasLeft && !hasRight ? "period-solo" : (!hasLeft && hasRight ? "period-start" : (hasLeft && hasRight ? "period-mid" : "period-end"));
-                }
-                const isToday = today.getFullYear() === calendarViewYear && today.getMonth() === calendarViewMonth && today.getDate() === d;
-                const dotColor = getDayHighestImportanceColor(key);
-                const dayLabel = isToday ? `（${d}）` : d;
-                html += `<div class="cal-cell ${isToday ? 'today' : ''} ${isPeriod ? 'period ' + periodClass : ''} ${!isPeriod && predSet.has(key) ? 'pred' : ''}" data-key="${key}" onclick="openDayDetailModal('${key}')">${dayLabel}${dotColor ? `<span class="cal-cell-dot" style="background:${dotColor}"></span>` : ''}</div>`;
+                const key = calDateKey(calendarViewYear, calendarViewMonth, d), per = isDateInPeriodRanges(key), dot = getDayHighestImportanceColor(key);
+                html += `<div class="cm-cell ${key === tk ? 'today' : ''} ${per ? 'period' : ''} ${!per && predSet.has(key) ? 'pred' : ''} ${key === currentDayDetailKey ? 'sel' : ''}" data-key="${key}" onclick="calSelectDay('${key}')">${d}<span class="ic">${calDayIcons(key)}</span>${dot ? `<span class="ev" style="background:${dot}"></span>` : ""}</div>`;
             }
-            for (let i = firstDay + daysInMonth; i < 42; i++) html += `<div class="cal-cell empty"></div>`;
             grid.innerHTML = html;
-            grid.querySelectorAll(".cal-cell:not(.empty)").forEach(cell => {
-                attachLongPressDelete(cell, () => openPeriodMarkChoice(cell.dataset.key));
-            });
+            grid.querySelectorAll(".cm-cell:not(.empty)").forEach(cell => attachLongPressDelete(cell, () => openPeriodMarkChoice(cell.dataset.key)));
+            renderCalSel();
+        }
+        function renderCalSel() {
+            const k = currentDayDetailKey; if (!k) return;
+            const pa = k.split("-"), l = document.getElementById("calSelLabel"); if (l) l.innerText = `${pa[0]}年${pa[1]}月${pa[2]}日`;
+            const c = (db.calDays || {})[k] || {}, md = document.getElementById("calSelMD");
+            if (md) md.innerText = (c.weather || c.mood) ? `${c.weather || "—"}  ${c.mood || "—"}` : "还没记天气和心情";
+        }
+        function calSelectDay(key) { currentDayDetailKey = key; renderCalendarGrid(); renderDayDetailEventsList(); }
+        let calTapTimer = null, calTapKey = null;
+        function calTapDay(key) {
+            if (calTapTimer && calTapKey === key) { clearTimeout(calTapTimer); calTapTimer = null; openCalPage(key); return; }
+            if (calTapTimer) clearTimeout(calTapTimer);
+            calTapKey = key; calTapTimer = setTimeout(() => { calTapTimer = null; openCalMood(key); }, 280);
+        }
+        function openCalPage(key) {
+            const pa = key.split("-").map(Number); calendarViewYear = pa[0]; calendarViewMonth = pa[1] - 1; currentDayDetailKey = key;
+            renderCalendarGrid(); renderDayDetailEventsList(); document.getElementById("calFullPage").classList.add("open");
+        }
+        function closeCalPage() { document.getElementById("calFullPage").classList.remove("open"); }
+        let calMoodKey = null;
+        function openCalMood(key) {
+            calMoodKey = key; const pa = key.split("-");
+            document.getElementById("calMoodTitle").innerText = `${pa[1]}月${pa[2]}日 天气与心情`;
+            calMoodDraw(); openModalBox("calMoodModal");
+        }
+        function calMoodDraw() {
+            const c = (db.calDays || {})[calMoodKey] || {};
+            document.getElementById("calWeatherOpts").innerHTML = CAL_WEATHER.map((e, i) => `<button class="${c.weather === e ? 'on' : ''}" onclick="calMoodPick('weather',${i})">${e}</button>`).join("");
+            document.getElementById("calMoodOpts").innerHTML = CAL_MOOD.map((e, i) => `<button class="${c.mood === e ? 'on' : ''}" onclick="calMoodPick('mood',${i})">${e}</button>`).join("");
+        }
+        function calMoodPick(kind, i) {
+            if (!db.calDays) db.calDays = {};
+            const c = db.calDays[calMoodKey] || (db.calDays[calMoodKey] = {}), v = (kind === "weather" ? CAL_WEATHER : CAL_MOOD)[i];
+            if (c[kind] === v) delete c[kind]; else c[kind] = v;
+            if (!c.weather && !c.mood) delete db.calDays[calMoodKey];
+            saveData(); calMoodDraw(); renderCalendarGrid();
+        }
+        // ---------- 月相 ----------
+        const MOON_NAMES = ["新月", "娥眉月", "上弦月", "盈凸月", "满月", "亏凸月", "下弦月", "残月"];
+        function moonPhaseOf(date) { const jd = date.getTime() / 86400000 + 2440587.5, syn = 29.530588853; let p = ((jd - 2451550.1) / syn) % 1; if (p < 0) p += 1; return p; }
+        function moonSvg(p, size) {
+            const R = 50, k = Math.cos(2 * Math.PI * p), rx = (R * Math.abs(k)).toFixed(2), waxing = p < 0.5;
+            const outer = waxing ? 1 : 0, crescent = k > 0, term = waxing ? (crescent ? 0 : 1) : (crescent ? 1 : 0);
+            const lit = `M50 0 A50 50 0 0 ${outer} 50 100 A${rx} 50 0 0 ${term} 50 0 Z`;
+            return `<svg viewBox="-2 -2 104 104" width="${size}" height="${size}"><circle cx="50" cy="50" r="50" fill="#2b3040"/><path d="${lit}" fill="#f4eccb"/><circle cx="50" cy="50" r="50" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1"/></svg>`;
+        }
+        function renderMoonCard() {
+            const box = document.getElementById("moonCard"); if (!box) return;
+            const p = moonPhaseOf(new Date()), idx = Math.floor(p * 8 + 0.5) % 8, ill = Math.round((1 - Math.cos(2 * Math.PI * p)) / 2 * 100);
+            box.innerHTML = `<div class="moon-top">${moonSvg(p, 64)}<div><div class="moon-name">${MOON_NAMES[idx]}</div><div class="moon-sub">月面被照亮 ${ill}% · 月龄约 ${(p * 29.53).toFixed(1)} 天</div></div></div><div class="moon-row">${MOON_NAMES.map((n, i) => `<span class="${i === idx ? 'on' : ''}" title="${n}">${moonSvg(i / 8, 30)}</span>`).join("")}</div>`;
         }
 
         // ==================== 📅 日程：日期详情 / 新增编辑 ====================
@@ -2990,7 +3026,7 @@
         }
         function renderDayDetailEventsList() {
             const list = (db.scheduleEvents || []).filter(e => e.dateKey === currentDayDetailKey);
-            const box = document.getElementById("dayDetailEventsList");
+            const box = document.getElementById("calFullPage").classList.contains("open") ? document.getElementById("calMonthEvents") : document.getElementById("dayDetailEventsList");
             if (!list.length) { box.innerHTML = `<div class="empty-state" style="padding:10px 0;">这天还没有日程</div>`; return; }
             box.innerHTML = list.map(e => `
                 <div class="schedule-item-row">
@@ -3101,15 +3137,6 @@
                     if (!isMainChatViewOpen()) showInAppBanner(db.other.name || "他", reminderText, () => openMainChatView());
                 }
             });
-            { const o = db.dateOngoing; if (o && !o.endNotified && Date.now() - o.startTs >= DATE_MIN * 60000) { o.endNotified = true; changed = true; const nm = db.other.name || "他"; sendRealNotification(nm, "约会结束啦，来写写今天的轨迹吧"); if (!isMainChatViewOpen()) showInAppBanner(nm, "约会结束啦，来写写今天的轨迹吧"); if (document.visibilityState === "visible" && !isMainChatViewOpen() && document.getElementById("homeScreen").style.display !== "none") setTimeout(dateOpenWrite, 300); } }
-            // 他主动约会：每天一次，随机挑一个约会地点（需要至少有一个地点，且没有进行中的约会）
-            { const ymd = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(), hr = now.getHours();
-              if (!db.dateOngoing && (db.datePlaces || []).length && hr >= 10 && hr < 21 && db.dateAutoDay !== ymd && !replyRunning && !db.replyDue && Math.random() < 0.0001 * (db.freq.dateAutoMul || 1)) {
-                  db.dateAutoDay = ymd; const pl = db.datePlaces[Math.floor(Math.random() * db.datePlaces.length)], nm = db.other.name || "他";
-                  db.dateOngoing = { placeId: pl.id, placeName: pl.name, weather: "", items: [], startTs: Date.now(), sentence: "", by: "him" };
-                  db.chat.push({ type: "date-invite", text: pl.name, sub: nm + "带你去约会啦", time: now.getHours().toString().padStart(2, "0") + ":" + now.getMinutes().toString().padStart(2, "0") }); changed = true;
-                  sendRealNotification(nm, "想带你去「" + pl.name + "」约会"); if (!isMainChatViewOpen()) showInAppBanner(nm, "想带你去「" + pl.name + "」约会", () => openMainChatView());
-              } }
             // 纪念日：当天推送一次，聊天里他发一个特殊气泡
             (db.anniversaries || []).forEach(a => {
                 const m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(a.date || ""); if (!m) return;
@@ -3184,7 +3211,7 @@
         function goToHomePage(idx) {
             currentHomePage = idx;
             const track = document.getElementById("homeMasterTrack");
-            if (track) track.style.transform = `translateX(-${idx * 33.3333}%)`;
+            if (track) track.style.transform = `translateX(-${idx * 25}%)`;
             document.querySelectorAll(".home-page-dot").forEach((d, i) => d.classList.toggle("active", i === idx));
         }
         (function setupHomeSwipe() {
@@ -3205,7 +3232,7 @@
                     if (isHorizontal === null) isHorizontal = Math.abs(dx) > Math.abs(dy);
                     if (!isHorizontal) return;
                     e.preventDefault();
-                    const basePercent = -currentHomePage * 33.3333;
+                    const basePercent = -currentHomePage * 25;
                     const dragPercent = (dx / track.offsetWidth) * 100;
                     track.style.transform = `translateX(${basePercent + dragPercent}%)`;
                 }, { passive: false });
@@ -3216,7 +3243,7 @@
                     track.style.transition = "transform 0.3s cubic-bezier(.2,.8,.3,1)";
                     if (!isHorizontal) { goToHomePage(currentHomePage); return; }
                     const dx = (e.changedTouches[0].clientX - startX);
-                    if (dx < -50 && currentHomePage < 2) goToHomePage(currentHomePage + 1);
+                    if (dx < -50 && currentHomePage < 3) goToHomePage(currentHomePage + 1);
                     else if (dx > 50 && currentHomePage > 0) goToHomePage(currentHomePage - 1);
                     else goToHomePage(currentHomePage);
                 });
@@ -3526,11 +3553,6 @@
             if(!db.scheduleEvents) db.scheduleEvents = [];
             if(!db.books) db.books = [];
             if(!db.gameStats) db.gameStats = {};
-            if(!db.datePlaces) db.datePlaces = [];
-            db.datePlaces.forEach(p => { if (p.name === "房间") p.name = "卧室"; });
-            if(!db.datePlacesSeeded) { db.datePlacesSeeded = true; ["家", "小客厅", "卧室", "露台"].forEach(n => { if (!db.datePlaces.some(p => p.name === n)) db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 6), name: n }); }); }
-            if(!db.dateRecords) db.dateRecords = [];
-            if(!db.dateGroups || !db.dateGroups.length) db.dateGroups = [{ id: "g1", name: "物品", items: [] }, { id: "g2", name: "事件", items: [] }];
             ["homeIconOrder", "homeIconOrderPage2"].forEach(k => { if (Array.isArray(db[k])) db[k] = db[k].map(id => id === "wheel" ? "games" : id); });
             if(db.bubbleOpacity === undefined) db.bubbleOpacity = 85;
             if(!db.freq) { db.freq = { cardMin:1, cardMax:3, mergeCardMin:1, mergeCardMax:1, replyMin:1, replyMax:5, randMin:30, randMax:120, statusMin:5, statusMax:15, missingMin:5, missingMax:20, pyqMin:2, pyqMax:6, pyqCardMin:1, pyqCardMax:3, pyqReplyMin:1, pyqReplyMax:5, letterMin:1, letterMax:3, letterNumMin:1, letterNumMax:3 }; }
@@ -5937,8 +5959,7 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                     const tip = document.createElement("div"); tip.className = "anni-bubble";
                     tip.innerHTML = `<div class="ab-spark">✦ ✧ ✦</div><div class="ab-t">${escapeHtml(m.text)}</div><div class="ab-s">${escapeHtml(m.sub || "")}</div>`; container.appendChild(tip);
                 } else if (m.type === "date-invite") {
-                    const tip = document.createElement("div"); tip.className = "anni-bubble date-inv";
-                    tip.innerHTML = `<div class="ab-spark">♡ 约会邀请 ♡</div><div class="ab-t">「${escapeHtml(m.text)}」</div><div class="ab-s">${escapeHtml(m.sub || "")}　点我去看看</div>`; tip.onclick = () => openDatingPage(); container.appendChild(tip);
+                    const tip = document.createElement("div"); tip.className = "special-tip-msg"; tip.innerText = "约会邀请：" + (m.text || ""); container.appendChild(tip);
                 } else if (m.type === "diary-invite" || m.type === "diary-return" || m.type === "schedule-reminder") {
                     const tip = document.createElement("div"); tip.className = "special-tip-msg"; tip.innerText = m.text; container.appendChild(tip);
                 } else {
@@ -9613,160 +9634,6 @@ treaty:条约`
             score();
             gameCleanup = () => timers.forEach(clearTimeout);
         }
-
-        // ==================== 💞 约会 ====================
-        let dateTab = 0, dateSelectMode = false, dateSelected = new Set(), dateTimer = null, dateEditingId = null;
-        const DATE_DEFAULT_WEATHER = ["晴", "多云", "阴", "小雨"], DATE_MIN = 120;
-        function dateInit() {
-            if (!db.datePlaces) db.datePlaces = [];
-            if (!db.dateGroups || !db.dateGroups.length) db.dateGroups = db.dateGroups && db.dateGroups.length ? db.dateGroups : [{ id: "g1", name: "物品", items: [] }, { id: "g2", name: "事件", items: [] }];
-            if (!db.dateRecords) db.dateRecords = [];
-        }
-        function openDatingPage() { dateInit(); dateTab = 0; dateSelectMode = false; dateSelected.clear(); renderDating(); document.getElementById("datingFullPage").classList.add("open"); }
-        function closeDatingPage() { clearInterval(dateTimer); document.getElementById("datingFullPage").classList.remove("open"); }
-        function dateSwitchTab(i) { dateTab = i; dateSelectMode = false; dateSelected.clear(); renderDating(); }
-        function renderDating() {
-            document.querySelectorAll("#dateTabs button").forEach((b, i) => b.classList.toggle("on", i === dateTab));
-            const body = document.getElementById("dateBody");
-            if (dateTab === 0) body.innerHTML = renderDatePrepare();
-            else if (dateTab === 1) { body.innerHTML = renderDatePool(); }
-            else body.innerHTML = renderDateTrack();
-        }
-        // ---- 准备约会 ----
-        function renderDatePrepare() {
-            let h = `<div class="lib-bar" style="padding:4px 0 8px;"><div style="flex:1"></div><button class="btn" onclick="dateOpenPlaceModal()">添加地点</button></div>`;
-            if (db.dateOngoing) { const pl = db.datePlaces.find(x => x.id === db.dateOngoing.placeId); h += `<div class="date-ongoing" onclick="dateOpenStart('${db.dateOngoing.placeId}')">进行中的约会：${escapeHtml(pl ? pl.name : db.dateOngoing.placeName)}　继续 →</div>`; }
-            if (!db.datePlaces.length) return h + `<div class="lib-empty">还没有地点，点「添加地点」开始吧</div>`;
-            h += db.datePlaces.map(p => `<div class="date-row">
-                <div class="date-row-main"><div class="t">${escapeHtml(p.name)}</div></div>
-                <button class="date-go" onclick="dateOpenStart('${p.id}')">→</button><button class="simple-del-btn" onclick="dateDeletePlace('${p.id}')">×</button></div>`).join("");
-            return h;
-        }
-        function dateToggleSelect() { dateSelectMode = !dateSelectMode; dateSelected.clear(); renderDating(); }
-        function dateDeletePlace(id) { const p = db.datePlaces.find(x => x.id === id); if (!p || !confirm("删除地点「" + p.name + "」吗？")) return; db.datePlaces = db.datePlaces.filter(x => x.id !== id); saveData(); renderDating(); }
-        function dateRowTap(id) { if (dateSelectMode) { dateSelected.has(id) ? dateSelected.delete(id) : dateSelected.add(id); renderDating(); } else dateOpenPlaceModal(id); }
-        function dateDeletePlaces() {
-            if (!dateSelectMode) { dateToggleSelect(); return; }
-            if (!dateSelected.size) { alert("先点选要删除的地点"); return; }
-            if (!confirm("确定删除选中的 " + dateSelected.size + " 个地点吗？")) return;
-            db.datePlaces = db.datePlaces.filter(p => !dateSelected.has(p.id));
-            dateSelected.clear(); dateSelectMode = false; saveData(); renderDating();
-        }
-        function dateOpenPlaceModal(id) {
-            dateEditingId = id || null;
-            const p = id ? db.datePlaces.find(x => x.id === id) : null;
-            document.getElementById("datePlaceTitle").innerText = p ? "编辑地点" : "添加地点";
-            document.getElementById("datePlaceName").value = p ? p.name : "";
-            openModalBox("datePlaceModal");
-        }
-        function dateSavePlace() {
-            const name = document.getElementById("datePlaceName").value.trim(); if (!name) { alert("请填写地点名称"); return; }
-            if (dateEditingId) { const p = db.datePlaces.find(x => x.id === dateEditingId); if (p) p.name = name; }
-            else db.datePlaces.push({ id: "p" + Date.now() + Math.random().toString(36).slice(2, 5), name });
-            saveData(); closeModal("datePlaceModal"); renderDating();
-        }
-        // ---- 随机物品 / 事件 ----
-        function renderDatePool() {
-            return db.dateGroups.map(g => `<div class="date-group"><div class="date-group-head"><span class="t">${escapeHtml(g.name)}</span><span class="s">${g.items.length} 条</span><button class="btn btn-outline" style="padding:3px 10px;font-size:12px;margin-left:auto;" onclick="dateAddItem('${g.id}')">＋添加</button><button class="btn btn-outline" style="padding:3px 10px;font-size:12px;" onclick="dateOpenBatch('${g.id}')">批量添加</button></div>
-                ${g.items.length ? g.items.map((it, i) => `<div class="date-item"><span>${escapeHtml(it)}</span><button class="simple-del-btn" onclick="dateDeleteItem('${g.id}',${i})">×</button></div>`).join("") : `<div class="lib-empty" style="padding:12px 0;">这里还没有内容</div>`}</div>`).join("");
-        }
-        function dateAddItem(gid) { const g = db.dateGroups.find(x => x.id === gid); openSimpleEditModal('添加到「' + g.name + '」', '', v => { v = (v || '').trim(); if (!v) return; if (!g.items.includes(v)) g.items.push(v); saveData(); renderDating(); }); }
-        function dateDeleteItem(gid, i) { const g = db.dateGroups.find(x => x.id === gid); g.items.splice(i, 1); saveData(); renderDating(); }
-        function dateOpenBatch(gid) {
-            const sel = document.getElementById("dateBatchGroup"); sel.innerHTML = db.dateGroups.map(g => `<option value="${g.id}">${escapeHtml(g.name)}</option>`).join(""); sel.value = gid; sel.style.display = "none";
-            document.getElementById("dateBatchText").value = ""; openModalBox("dateBatchModal");
-        }
-        function dateSubmitBatch() {
-            const g = db.dateGroups.find(x => x.id === document.getElementById("dateBatchGroup").value); if (!g) return;
-            const lines = document.getElementById("dateBatchText").value.split("\n").map(x => x.trim()).filter(Boolean);
-            if (!lines.length) return;
-            let added = 0; lines.forEach(l => { if (!g.items.includes(l)) { g.items.push(l); added++; } });
-            saveData(); closeModal("dateBatchModal"); renderDating();
-        }
-        // ---- 出发 ----
-        function dateAllItems() { const out = []; db.dateGroups.forEach(g => g.items.forEach(it => out.push({ g: g.name, t: it }))); return out; }
-        function dateDraw() {
-            const pool = dateAllItems(); const n = Math.min(pool.length, 4 + Math.floor(Math.random() * 3));
-            const arr = pool.slice().sort(() => Math.random() - 0.5).slice(0, n); return arr.map(x => x.t);
-        }
-        function dateOpenStart(placeId) {
-            const place = db.datePlaces.find(x => x.id === placeId);
-            if (!db.dateOngoing || db.dateOngoing.placeId !== placeId) {
-                if (db.dateOngoing && !confirm("已有一场进行中的约会，要放弃它并开始新的吗？")) { placeId = db.dateOngoing.placeId; }
-                else {
-                    if (!place) return;
-                    if (!dateAllItems().length) { alert("「随机物品/事件」里还没有内容，先去添加一些吧"); return; }
-                                        db.dateOngoing = { placeId, placeName: place.name, weather: "", items: [], startTs: Date.now(), sentence: "" };
-                    saveData();
-                }
-            }
-            if (db.dateOngoing && Date.now() - db.dateOngoing.startTs >= DATE_MIN * 60000) { dateOpenWrite(); return; }
-            dateRenderStart(); openModalBox("dateStartModal");
-            clearInterval(dateTimer); dateTimer = setInterval(dateTickElapsed, 1000);
-        }
-        function dateFmtTime(ts) { const d = new Date(ts); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); }
-        function dateFmtDur(ms) { const m = Math.max(0, Math.round(ms / 60000)); const h = Math.floor(m / 60); return h ? `${h}小时${m % 60}分` : `${m}分钟`; }
-        function dateRenderStart() {
-            const o = db.dateOngoing; if (!o) return;
-            document.getElementById("dateStartTitle").innerText = o.placeName;
-            document.getElementById("dateStartInfo").innerText = `${dateFmtTime(o.startTs)} 出发，约 2 小时（预计 ${dateFmtTime(o.startTs + DATE_MIN * 60000)} 结束）`;
-            document.getElementById("dateStartWeather").value = o.weather || "";
-            document.getElementById("dateStartItems").innerHTML = o.items.length ? o.items.map(t => `<span class="date-chip">${escapeHtml(t)}</span>`).join("") : `<div style="font-size:12.5px;color:var(--text-sub);">填好天气，点「刷新」抽取今天的物品和事件</div>`;
-            document.getElementById("dateStartSentence").value = o.sentence || "";
-            dateTickElapsed();
-        }
-        function dateTickElapsed() {
-            const o = db.dateOngoing; const el = document.getElementById("dateStartElapsed"); if (!o || !el) return;
-            el.innerText = "已进行 " + dateFmtDur(Date.now() - o.startTs);
-        }
-        function dateOpenWrite() {
-            const o = db.dateOngoing; if (!o) return; dateRenderStart(); closeModal("dateStartModal"); clearInterval(dateTimer);
-            document.getElementById("dateWriteTitle").innerText = o.placeName + " · 约会结束啦";
-            document.getElementById("dateWriteItems").innerHTML = (o.items || []).map(t => `<span class="date-chip">${escapeHtml(t)}</span>`).join("");
-            openModalBox("dateWriteModal");
-        }
-        function dateSaveWeather(v) { if (db.dateOngoing) { db.dateOngoing.weather = v.trim(); saveData(); } }
-        let dateReelBusy = false;
-        function dateReroll() {
-            const o = db.dateOngoing; if (!o || dateReelBusy) return;
-            const pool = dateAllItems().map(x => x.t); if (!pool.length) { alert("「随机物品/事件」里还没有内容"); return; }
-            const finals = dateDraw(); dateReelBusy = true;
-            const box = document.getElementById("dateStartItems"); const H = 34;
-            box.innerHTML = finals.map(() => `<div class="date-reel"><div class="date-reel-strip"></div></div>`).join("");
-            const strips = box.querySelectorAll(".date-reel-strip");
-            strips.forEach((st, i) => {
-                const L = 24 + i * 6, arr = []; for (let k = 0; k < L; k++) arr.push(pool[Math.floor(Math.random() * pool.length)]); arr.push(finals[i]);
-                st.innerHTML = arr.map(t => `<div style="height:${H}px;line-height:${H}px;">${escapeHtml(t)}</div>`).join("");
-                st.style.transform = "translateY(0)"; st.getBoundingClientRect();
-                st.style.transition = `transform ${1.3 + i * 0.35}s cubic-bezier(.15,.7,.2,1)`; st.style.transform = `translateY(${-L * H}px)`;
-            });
-            const total = (1.3 + (finals.length - 1) * 0.35) * 1000 + 100;
-            try { gameSfx("tap"); } catch (e) { }
-            setTimeout(() => { dateReelBusy = false; if (!db.dateOngoing) return; db.dateOngoing.items = finals; saveData(); dateRenderStart(); }, total);
-        }
-        function dateSaveSentenceDraft(v) { if (db.dateOngoing) { db.dateOngoing.sentence = v; saveData(); } }
-        function dateCloseStart() { clearInterval(dateTimer); closeModal("dateStartModal"); renderDating(); }
-        function dateAbandon() { if (!confirm("放弃这场约会吗？不会生成轨迹记录。")) return; db.dateOngoing = null; saveData(); dateCloseStart(); }
-        function dateFinish() {
-            const o = db.dateOngoing; if (!o) return;
-            const sentence = document.getElementById("dateStartSentence").value.trim();
-            if (Date.now() - o.startTs < DATE_MIN * 60000) { alert("约会还没结束，要等满 2 小时才能写轨迹"); return; }
-            if (dateReelBusy) return;
-            if (!sentence && !confirm("还没有把它们写成一句话，直接完成吗？")) return;
-            db.dateRecords.unshift({ id: "r" + Date.now(), placeName: o.placeName, weather: o.weather || "未填", items: o.items, sentence, startTs: o.startTs, endTs: Date.now() });
-            db.dateOngoing = null; saveData(); closeModal("dateWriteModal"); dateCloseStart(); dateSwitchTab(2);
-        }
-        // ---- 轨迹 ----
-        function renderDateTrack() {
-            if (!db.dateRecords.length) return `<div class="lib-empty">还没有约会记录，完成一次约会就会出现在这里</div>`;
-            const wk = ["日", "一", "二", "三", "四", "五", "六"];
-            return db.dateRecords.map(r => { const d = new Date(r.startTs); return `<div class="date-rec" onclick="this.classList.toggle('open')"><div class="date-rec-head"><span>${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 周${wk[d.getDay()]}</span><button class="simple-del-btn" onclick="event.stopPropagation();dateDeleteRecord('${r.id}')">✕</button></div>
-                <div class="date-rec-place">${escapeHtml(r.placeName)} · ${escapeHtml(r.weather)}　<span class="rec-more">展开 ▾</span></div>
-                <div class="date-rec-detail"><div class="date-rec-time">${dateFmtTime(r.startTs)} – ${dateFmtTime(r.endTs)}（共 ${dateFmtDur(r.endTs - r.startTs)}）</div>
-                <div>${r.items.map(t => `<span class="date-chip">${escapeHtml(t)}</span>`).join("")}</div>
-                ${r.sentence ? `<div class="date-rec-sentence">${escapeHtml(r.sentence)}</div>` : `<div class="date-rec-sentence" style="opacity:.6">没有写下文字</div>`}</div></div>`; }).join("");
-        }
-        function dateDeleteRecord(id) { if (!confirm("删除这条约会记录吗？")) return; db.dateRecords = db.dateRecords.filter(r => r.id !== id); saveData(); renderDating(); }
 
         // ==================== ✍️ 自由造句（信号里的词语库） ====================
         let freeCat = "", freeSelectMode = false, freeSelectedSet = new Set(), freeSearch = "";
