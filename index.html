@@ -986,8 +986,8 @@
             <div class="home-master-page">
                 <div class="wg-wrap">
                     <div class="wg wg-house" id="houseWg">
-                        <div class="hs-floor" id="hsUp"><div class="hs-scroll" id="hsUpScroll"><div class="hs-in" id="hsUpIn"><canvas id="hsUpCv" onclick="hsTap('up',event)"></canvas></div></div><div class="hs-out" id="hsOut"></div></div>
-                        <div class="hs-floor" id="hsLo"><div class="hs-scroll" id="hsLoScroll"><div class="hs-in" id="hsLoIn"><canvas id="hsLoCv" onclick="hsTap('lo',event)"></canvas></div></div></div>
+                        <div class="hs-floor" id="hsUp"><div class="hs-scroll" id="hsUpScroll"><div class="hs-in" id="hsUpIn"><canvas id="hsUpCv" onclick="hsTap('up',event)" onpointerdown="hsPressStart('up',event)" onpointerup="hsPressEnd()" onpointercancel="hsPressEnd()" onpointermove="hsPressMove(event)"></canvas></div></div><div class="hs-out" id="hsOut"></div></div>
+                        <div class="hs-floor" id="hsLo"><div class="hs-scroll" id="hsLoScroll"><div class="hs-in" id="hsLoIn"><canvas id="hsLoCv" onclick="hsTap('lo',event)" onpointerdown="hsPressStart('lo',event)" onpointerup="hsPressEnd()" onpointercancel="hsPressEnd()" onpointermove="hsPressMove(event)"></canvas></div></div></div>
                         <div id="hsToast"></div>
                     </div>
                     <div class="wg wg-pet"><canvas id="petStripCanvas"></canvas><div class="wg-lab" id="petStripLab">宠物</div><div class="pet-mini" id="petMini"></div><div class="pet-msg" id="petMsgHome"></div><div class="pet-tray" id="petTray"></div><div class="pet-ctl" id="petCtl"></div></div>
@@ -1226,7 +1226,7 @@
         </div>
     </div>
 
-    <div id="hsFade"></div><div id="hsIris"></div>
+    <input type="file" id="hsSprFile" accept="image/*" style="display:none" onchange="hsSprFile(this)"><div id="hsFade"></div><div id="hsIris"></div>
     <div class="universal-modal" id="hsAskModal" onclick="closeModal('hsAskModal')"><div class="modal-box" onclick="event.stopPropagation()"><h2 id="hsAskTitle"></h2><div id="hsAskOpts"></div></div></div>
     <div class="pyq-full-page" id="calFullPage">
         <div class="app-page-header"><button class="pyq-back-pure-symbol" onclick="closeCalPage()"></button><div class="app-page-title">日历</div><div class="app-page-header-spacer"></div></div>
@@ -2161,258 +2161,288 @@
         }
 
         // ==================== 🏡 小屋（右-2屏：楼上他家 / 楼下我家，各自可横向滚动） ====================
-        // 想换小人：把 HS_SPR 里的 me / him 改成像素画（PNG 的 dataURL 或图片地址）即可，高度会自动缩放到 28 像素（和家具匹配）
-        const HS_SPR = { me: "", him: "" };
-        const HS_H = 90, HS_FY = 70, HS_FEET = 80, HS_CH = 28;
+        // 小人：长按小人可以上传自己画的图（透明底 PNG），分「站立图」和「俯视图」两种
+        const HS_H = 60, HS_FY = 46, HS_FEET = 53, HS_CH = 20, HS_CHT = 11, HS_SEP = 13;
+        const HS_OUT = "#a8857c";
         const HS_PLACES = [["咖啡馆", "☕"], ["书店", "📚"], ["公园", "🌳"], ["超市", "🛒"], ["电影院", "🎬"], ["花店", "💐"]];
-        const HS_UP = [{ id: "living", name: "客厅", x: 0, w: 130 }, { id: "study", name: "书房", x: 130, w: 110 }, { id: "hbed", name: "他的卧室", x: 240, w: 120 }, { id: "terrace", name: "露台", x: 360, w: 120 }];
-        const HS_LO = [{ id: "home", name: "我家", x: 0, w: 130 }, { id: "kitchen", name: "厨房", x: 130, w: 120 }, { id: "gym", name: "健身房", x: 250, w: 120 }, { id: "mybed", name: "我的卧室", x: 370, w: 240, top: true }];
-        const HS_FLOORS = { up: { rooms: HS_UP, W: 480 }, lo: { rooms: HS_LO, W: 610 } };
-        const HS_STAIR = 106, HS_DOOR = 4;
-        const HS = { me: null, him: null, hearts: [], s: 0, bg: {}, last: 0, aiT: 0, heartT: 0, ready: false, imgs: {} };
+        // lamps：灯罩位置（房间内坐标），点灯就是开关；door：门的位置
+        const HS_UP = [
+            { id: "living", name: "客厅", x: 0, w: 90, lamps: [{ x: 15, y: 7, w: 12, h: 8 }], door: 3 },
+            { id: "study", name: "书房", x: 90, w: 80, lamps: [{ x: 28, y: 17, w: 10, h: 6 }] },
+            { id: "hbed", name: "他的卧室", x: 170, w: 110, top: true, lamps: [{ x: 19, y: 11, w: 8, h: 8 }, { x: 83, y: 11, w: 8, h: 8 }] },
+            { id: "terrace", name: "露台", x: 280, w: 90, lamps: [{ x: 14, y: 4, w: 62, h: 6 }] }];
+        const HS_LO = [
+            { id: "home", name: "我家", x: 0, w: 90, lamps: [{ x: 62, y: 8, w: 14, h: 9 }], door: 3 },
+            { id: "kitchen", name: "厨房", x: 90, w: 85, lamps: [{ x: 60, y: 8, w: 14, h: 9 }] },
+            { id: "gym", name: "健身房", x: 175, w: 85, lamps: [{ x: 34, y: 0, w: 16, h: 11 }] },
+            { id: "mybed", name: "我的卧室", x: 260, w: 150, top: true, lamps: [{ x: 8, y: 14, w: 8, h: 8 }, { x: 118, y: 30, w: 8, h: 8 }] }];
+        const HS_FLOORS = { up: { rooms: HS_UP, W: 370 }, lo: { rooms: HS_LO, W: 410 } };
+        const HS = { me: null, him: null, hearts: [], fx: [], door: { up: -9999, lo: -9999 }, s: 0, bg: {}, last: 0, aiT: 0, heartT: 0, ready: false, imgs: {}, press: null };
         const hsNight = () => { const h = new Date().getHours(); return h < 6 || h >= 18; };
         const hsSleepTime = () => { const h = new Date().getHours(); return h >= 23 || h < 7; };
         const hsRoomAt = (fl, x) => { const rs = HS_FLOORS[fl].rooms; for (const r of rs) if (x < r.x + r.w) return r; return rs[rs.length - 1]; };
+        const hsSpr = (k) => (db.house && db.house.spr && db.house.spr[k]) || "";
 
-        // ---------- 画房间（白天色，夜晚用整体罩色 + 开灯控制） ----------
+        // ---------- 画房间（和宠物小屋同一画风：柔和描边、大块色、粉彩） ----------
         function hsDraw(fl, night) {
             const F = HS_FLOORS[fl], cv = document.createElement("canvas"); cv.width = F.W; cv.height = HS_H; const c = cv.getContext("2d"); c.imageSmoothingEnabled = false;
-            const K = pxKit(c); K.out = "#7a6670"; const { R, B, E, L, P } = K;
-            const sky = night ? "#151b4d" : "#bfe3ff", D = (a, b) => night ? b : a;
-            const wall = (w, wc, base, fa, fb) => { R(0, 0, w, HS_FY, wc); R(0, HS_FY - 3, w, 3, base); R(0, HS_FY, w, 20, fa); for (let y = HS_FY + 5; y < HS_H; y += 5) R(0, y, w, 1, fb); for (let i = 0, y = HS_FY; y < HS_H; y += 5, i++) for (let x = (i * 23) % 31; x < w; x += 31) R(x, y, 1, 5, fb); R(0, HS_FY, w, 1, "#6d5b62"); };
-            const win = (x, y, w, h) => { B(x, y, w, h, "#f6f1e8"); R(x + 2, y + 2, w - 4, h - 4, sky); if (night) { P(x + 5, y + 5, "#fff"); P(x + w - 8, y + 8, "#fff"); P(x + w / 2, y + 4, "#ffe9a8"); } else { R(x + 3, y + h - 10, 6, 6, "#a6c7e6"); R(x + 11, y + h - 14, 5, 10, "#98bcdc"); R(x + w - 12, y + h - 8, 7, 4, "#a6c7e6"); E(x + w - 9, y + 8, 3, 3, "#ffe08a"); } R(x + w / 2 - 1, y + 2, 2, h - 4, "#f6f1e8"); R(x + 2, y + h / 2 - 1, w - 4, 2, "#f6f1e8"); };
-            const plant = (x, yb, h) => { B(x - 4, yb - 8, 8, 8, "#d79a73"); for (let i = 0; i < 5; i++) { const a = -1.2 + i * 0.6; E(x + Math.sin(a) * 5, yb - 8 - h * 0.55 - Math.cos(a) * h * 0.3, 3, 4, i % 2 ? "#6fb06a" : "#85c47a"); } };
-            const door = (x) => { B(x, 34, 18, 36, "#c99066"); R(x + 3, 38, 12, 12, "#d8a47c"); R(x + 3, 53, 12, 13, "#d8a47c"); P(x + 14, 54, "#ffe08a"); R(x - 1, 33, 20, 1, "#6d5b62"); };
-            const stairs = (x, down) => { for (let i = 0; i < 6; i++) B(x + i * 3, HS_FY - 4 * (i + 1), 18 - i * 3, 4, i % 2 ? "#d9b58c" : "#c99d70"); R(x + 16, 40, 2, 3, "#7a6670"); L(x, 62, x + 16, 44, "#7a6670"); R(x + 3, 30, 12, 7, down ? "#9ec3f0" : "#f0b8a8"); if (down) { L(x + 5, 32, x + 9, 36, "#fff"); L(x + 13, 32, x + 9, 36, "#fff"); } else { L(x + 5, 35, x + 9, 31, "#fff"); L(x + 13, 35, x + 9, 31, "#fff"); } };
-            const lampF = (x) => { R(x, 30, 1, 40, "#8a8294"); B(x - 6, 22, 14, 10, D("#f6e6bf", "#ffe9a8")); R(x - 5, 69, 11, 1, "#8a8294"); };
-            const rug = (x, w, col) => { R(x, 73, w, 7, col); R(x, 73, w, 1, "#00000018"); for (let i = x + 2; i < x + w - 1; i += 4) P(i, 76, "#ffffff55"); };
+            const K = pxKit(c); K.out = HS_OUT; const { R, E, L, P } = K; const B = (x, y, w, h, col, o) => K.B(x, y, w, h, col, o || HS_OUT);
+            const sky = night ? "#1b2158" : "#bfe6ff", D = (a, b) => night ? b : a;
+            const wall = (w, wc, wc2, base, fa, fb) => { R(0, 0, w, HS_FY, wc); if (wc2) for (let x = 0; x < w; x += 8) R(x, 0, 4, HS_FY, wc2); R(0, HS_FY - 2, w, 2, base); R(0, HS_FY, w, HS_H - HS_FY, fa); for (let y = HS_FY + 4; y < HS_H; y += 4) R(0, y, w, 1, fb); for (let i = 0, y = HS_FY; y < HS_H; y += 4, i++) for (let x = (i * 17) % 23; x < w; x += 23) R(x, y, 1, 4, fb); R(0, HS_FY, w, 1, HS_OUT); };
+            const win = (x, y, w, h, bars) => { B(x, y, w, h, "#fffaf0"); R(x + 2, y + 2, w - 4, h - 4, sky); if (night) { P(x + 4, y + 4, "#fff"); P(x + w - 6, y + 7, "#fff"); P(x + w / 2, y + 3, "#ffe9a8"); } else { R(x + 3, y + h - 8, 4, 6, "#a6cbea"); R(x + 8, y + h - 11, 4, 9, "#98c0e0"); R(x + w - 9, y + h - 6, 5, 4, "#a6cbea"); P(x + w - 7, y + 5, "#ffe08a"); P(x + w - 6, y + 5, "#ffe08a"); } R(x + (w >> 1) - 1, y + 2, 1, h - 4, "#fffaf0"); if (bars) R(x + 2, y + (h >> 1), w - 4, 1, "#fffaf0"); };
+            const plant = (x, yb, h, big) => { B(x - 4, yb - 7, 8, 7, "#e8a07a"); R(x - 4, yb - 7, 8, 1, "#f2b894"); for (let i = 0; i < 5; i++) { const a = -1.3 + i * 0.65; E(x + Math.sin(a) * (big ? 6 : 4), yb - 8 - h * 0.5 - Math.cos(a) * h * 0.35, big ? 3 : 2, big ? 5 : 3, i % 2 ? "#7bbf72" : "#93d283"); } };
+            const door = (x, col) => { B(x, 20, 13, 26, col || "#e3a878"); R(x + 2, 23, 9, 9, "#efc197"); R(x + 2, 34, 9, 10, "#efc197"); P(x + 10, 35, "#ffe08a"); };
+            const frame = (x, y, w, h, col, inner) => { B(x, y, w, h, col || "#fff8ec"); R(x + 2, y + 2, w - 4, h - 4, inner || "#a9d9c4"); };
+            const rug = (x, y, w, h, col, col2) => { R(x, y, w, h, col); R(x, y, w, 1, col2); R(x, y + h - 1, w, 1, col2); for (let i = x + 3; i < x + w - 2; i += 4) P(i, y + (h >> 1), col2); };
             F.rooms.forEach(rm => {
-                c.save(); c.translate(rm.x, 0); c.beginPath(); c.rect(0, 0, rm.w, HS_H); c.clip();
-                const w = rm.w;
-                if (rm.id === "living") {
-                    wall(w, "#f1e8de", "#e2d4c4", "#e6c8a0", "#d3b085"); door(HS_DOOR); win(36, 10, 46, 30); rug(34, 50, "#e8b8b8");
-                    B(36, 50, 46, 20, "#cfd8e6"); B(36, 44, 46, 10, "#dbe3ee"); B(32, 52, 8, 18, "#b8c4d8"); B(78, 52, 8, 18, "#b8c4d8"); B(44, 47, 10, 7, "#f2c9d1"); B(66, 47, 10, 7, "#f6eac0");
-                    B(88, 62, 12, 8, "#c99d70"); R(90, 59, 3, 3, "#f2a0b0"); lampF(100); stairs(HS_STAIR + 6 > 112 ? 112 : HS_STAIR + 6, true);
-                } else if (rm.id === "study") {
-                    wall(w, "#e3dccb", "#cdbfa6", "#d6b88c", "#c2a074"); B(2, 10, 30, 60, "#b98a5e"); for (let r = 0; r < 4; r++) { R(4, 14 + r * 14 + 10, 26, 2, "#8f663f"); let bx = 5; const cols = ["#d86c7a", "#6fa8d8", "#f0c667", "#7dc08a", "#a98ad8", "#e89a62"]; for (let k = 0; k < 7; k++) { const bw = 2 + (k + r) % 3, bh = 7 + (k * 3 + r) % 4; R(bx, 14 + r * 14 + 10 - bh, bw, bh, cols[(k + r * 2) % 6]); bx += bw + 1; } }
-                    win(60, 8, 34, 28); B(100, 18, 10, 10, "#fff"); E(105, 23, 3, 3, "#fff"); L(105, 23, 105, 20, "#7a6670"); L(105, 23, 107, 24, "#7a6670");
-                    rug(36, 56, "#a9c8c0"); R(40, 54, 52, 3, "#c99d70"); B(38, 52, 56, 5, "#d8a47c"); R(41, 57, 3, 13, "#b98a5e"); R(88, 57, 3, 13, "#b98a5e"); B(48, 44, 16, 9, "#cfd3dc"); R(50, 46, 12, 5, "#7ec0f0"); R(66, 49, 8, 3, "#f0a0b0");
-                    R(84, 44, 1, 8, "#8a8294"); L(84, 44, 80, 40, "#8a8294"); B(76, 38, 9, 5, "#f0c667"); B(32, 58, 12, 12, "#e08a8a"); R(34, 56, 8, 3, "#e8a0a0");
-                } else if (rm.id === "hbed") {
-                    wall(w, "#dfe6f2", "#c6d0e2", "#d9b890", "#c4a074"); win(18, 10, 36, 26); B(70, 14, 14, 18, "#fff"); R(73, 18, 8, 6, "#f0a0b0"); R(73, 26, 8, 2, "#9ec3f0"); rug(10, 58, "#cdd6ee");
-                    B(6, 56, 56, 14, "#b98a5e"); B(6, 36, 6, 34, "#a97d52"); B(10, 48, 50, 10, "#f4eef8"); B(12, 43, 15, 7, "#fff"); B(10, 52, 50, 5, "#b8a8e0"); for (let x = 16; x < 58; x += 6) R(x, 52, 2, 5, "#a698d4");
-                    B(66, 56, 12, 14, "#c99d70"); R(68, 61, 8, 1, "#7a6670"); R(71, 49, 1, 7, "#8a8294"); B(67, 43, 10, 7, D("#fbe9b8", "#ffe9a8")); B(86, 18, 28, 52, "#c99d70"); R(99, 20, 1, 48, "#7a6670"); R(96, 42, 2, 5, "#ffe08a"); R(101, 42, 2, 5, "#ffe08a");
-                } else if (rm.id === "terrace") {
-                    R(0, 0, w, HS_FY, sky); if (night) { for (let i = 0; i < 22; i++) P((i * 37) % w, (i * 13) % 40, i % 3 ? "#fff" : "#ffe9a8"); E(100, 14, 5, 5, "#f4eccb"); } else { E(98, 14, 6, 6, "#ffe08a"); E(30, 16, 8, 3, "#fff"); E(40, 14, 6, 3, "#fff"); }
-                    for (let x = 0, i = 0; x < w; x += 7, i++) { const h = 14 + (i * 7) % 16; R(x, 54 - h, 7, h + 2, D(i % 2 ? "#9ab6d4" : "#aac4de", i % 2 ? "#0c1238" : "#141a4a")); if (night) for (let k = 0; k < 3; k++) if ((i + k) % 2) R(x + 2, 54 - h + 3 + k * 5, 2, 2, "#ffe9a8"); }
-                    R(0, 54, w, 16, D("#cdbca4", "#7c6f60")); R(0, HS_FY, w, 20, D("#d9c7aa", "#8a7b68")); for (let x = 0; x < w; x += 12) R(x, HS_FY, 1, 20, D("#c2ae90", "#74665a")); R(0, HS_FY, w, 1, "#6d5b62");
-                    R(0, 46, w, 2, "#7a6670"); for (let x = 4; x < w; x += 10) R(x, 46, 2, 24, "#8a7480"); R(0, 56, w, 2, "#8a7480");
-                    for (let x = 6; x < w - 4; x += 9) { P(x, 35 + ((x / 9) % 2) * 2, "#6d5b62"); E(x, 39 + ((x / 9) % 2) * 2, 2, 2, night ? "#ffe9a8" : "#e8d8b0"); } L(0, 34, w, 36, "#6d5b62");
-                    B(34, 58, 28, 4, "#e8d8b0"); R(46, 62, 4, 8, "#8a7480"); B(24, 62, 9, 8, "#e2a0a0"); B(63, 62, 9, 8, "#e2a0a0"); plant(100, 70, 12); plant(12, 70, 9); E(48, 56, 4, 2, "#f4a0b0");
-                } else if (rm.id === "home") {
-                    wall(w, "#f3dfdb", "#e2c4c0", "#d8b08a", "#c49a70"); door(HS_DOOR); R(2, 66, 22, 4, "#9ab0d8"); rug(34, 54, "#cfc2e8");
-                    B(40, 22, 22, 16, "#fff"); R(43, 25, 16, 10, "#9ec3f0"); R(48, 29, 6, 4, "#f0a0b0"); B(70, 20, 12, 14, "#fff"); E(76, 27, 3, 3, "#f0c667");
-                    B(36, 50, 50, 20, "#bca6cc"); B(36, 44, 50, 10, "#cbb8da"); B(32, 52, 8, 18, "#a890bc"); B(82, 52, 8, 18, "#a890bc"); B(46, 47, 11, 7, "#f6eac0"); B(66, 47, 11, 7, "#f2a0b0");
-                    plant(94, 70, 14); stairs(112, false); lampF(8 + 0 > 0 ? 28 : 28);
-                } else if (rm.id === "kitchen") {
-                    wall(w, "#b9a09b", "#a58a86", "#d2ae82", "#bc9568");
-                    R(0, 8, w, 3, "#c9a47a"); R(0, 11, w, 1, "#8f6f50"); for (let i = 0; i < 4; i++) B(6 + i * 3, 4 + i, 18 - i * 3 + 0, 3, "#b9c3e8");
-                    R(0, 28, w, 3, "#c9a47a"); R(0, 31, w, 1, "#8f6f50");
-                    [[6, "#e8a860"], [26, "#8a5a50"], [46, "#b04a48"], [66, "#c8d4e0"]].forEach(([x, col]) => { B(x, 15, 15, 13, "#cfe2ee"); R(x + 1, 18, 13, 9, col); R(x + 2, 12, 11, 3, "#6a5a60"); if (col === "#e8a860") { E(x + 7, 22, 3, 3, "#f08a4a"); E(x + 7, 22, 1, 1, "#fff"); } });
-                    E(104, 22, 9, 6, D("#fbe39a", "#ffe9a8")); R(98, 24, 12, 4, "#e8d8a0"); R(103, 27, 3, 3, "#c8b080");
-                    R(46, 34, 74, 26, "#efe6d2"); for (let gx = 50; gx < 120; gx += 12) for (let gy = 38; gy < 60; gy += 11) { const ox = (Math.round(gy / 11) % 2) * 6; for (let k = 0; k < 4; k++) { R(gx + ox + 5 - k, gy + k, 2 * k + 1, 1, "#6f8f6c"); R(gx + ox + 5 - k, gy + 7 - k, 2 * k + 1, 1, "#6f8f6c"); } }
-                    R(46, 34, 74, 1, "#c8b89a"); R(46, 60, 74, 1, "#c8b89a");
-                    B(70, 36, 9, 26, "#c99066"); E(74, 37, 4, 3, "#c99066"); [88, 98, 108].forEach(x => { R(x, 38, 4, 2, "#4a4850"); R(x, 40, 1, 3, "#4a4850"); L(x + 2, 42, x + 2, 43, "#4a4850"); B(x - 2, 43, 8, 17, "#8a7a58"); });
-                    R(0, 56, w, 4, "#ebe6ea"); R(0, 60, w, 10, "#c08a56"); for (let x = 0; x < w; x += 20) { R(x, 60, 1, 10, "#7a5a3e"); P(x + 8, 64, "#f0e0a0"); }
-                    R(5, 58, 32, 3, "#4a4c58"); R(7, 59, 28, 2, "#2d2f3a"); R(22, 36, 2, 20, "#4a4850"); R(14, 36, 8, 2, "#4a4850"); R(14, 37, 2, 5, "#4a4850"); R(13, 42, 4, 2, "#4a4850");
-                    B(50, 51, 14, 6, "#d9b878"); for (let i = 0; i < 3; i++) E(53 + i * 4, 50, 2, 2, ["#e8d04a", "#e8584a", "#9cc860"][i]);
-                    B(66, 44, 4, 12, "#6a5a60"); B(88 - 4, 52, 3, 6, "#7a6a5a");
-                } else if (rm.id === "gym") {
-                    wall(w, "#d6d9e3", "#bcc0cc", "#5d6068", "#4c4f56"); B(66, 12, 46, 40, "#eef3fa"); R(68, 14, 42, 36, D("#cfe6f6", "#7e93b0")); L(74, 48, 90, 16, "#ffffff90"); L(84, 48, 100, 16, "#ffffff60");
-                    B(6, 60, 42, 6, "#3a3d46"); R(8, 64, 38, 1, "#6a6e7a"); R(10, 66, 34, 4, "#2d2f3a"); R(43, 34, 4, 28, "#6a6e7a"); B(36, 32, 14, 7, "#8a8ea0"); R(38, 34, 8, 3, "#9ee0a8"); L(44, 40, 30, 40, "#6a6e7a");
-                    for (let i = 0; i < 6; i++) R(10 + i * 6, 62, 2, 1, "#555a66");
-                    E(88, 60, 7, 7, "#6a6e7a"); E(88, 60, 3, 3, "#a8aebd"); R(60, 66, 30, 3, "#4a4e5a"); B(56, 63, 9, 5, "#2d2f3a"); L(88, 60, 70, 36, "#8a8ea0"); L(72, 36, 66, 33, "#8a8ea0"); B(62, 30, 9, 4, "#2d2f3a"); L(82, 62, 78, 46, "#a8aebd"); R(60, 42, 14, 2, "#8a8ea0"); B(76, 38, 10, 5, "#8a8ea0"); R(78, 40, 6, 1, "#9ee0a8");
-                    B(98, 56, 16, 14, "#575b68"); R(100, 60, 12, 2, "#9a9eae"); B(100, 52, 5, 5, "#2d2f3a"); B(107, 52, 5, 5, "#2d2f3a"); R(100, 58, 12, 1, "#2d2f3a");
-                    B(96, 72, 24, 6, "#b69ae0"); R(98, 74, 20, 1, "#d2bef0"); B(96, 22, 6, 30, "#c4a6e8"); R(98, 24, 2, 26, "#d8c4f4");
-                    B(46, 66, 4, 4, "#6ec0e8");
-                } else if (rm.id === "mybed") {
-                    // 上方视角（俯视）：左半参照“弧形置物车 + 窗帘 + 黑皮沙发”，右半参照“灰沙发 + 灯 + 桉树 + 靠墙画框”
-                    R(0, 0, w, HS_H, "#a99a92"); R(0, 0, w, 10, "#8a7f8c"); R(0, 10, w, 2, "#6d5b62");
-                    for (let y = 14; y < HS_H; y += 8) R(0, y, w, 1, "#9a8a84"); for (let i = 0, y = 12; y < HS_H; y += 8, i++) for (let x = (i * 29) % 37; x < w; x += 37) R(x, y, 1, 8, "#9a8a84");
-                    R(2, 2, 52, 11, "#9cb2d4"); for (let x = 4; x < 52; x += 5) R(x, 2, 2, 11, "#b6c8e4"); R(2, 12, 52, 2, "#7f98be");
-                    R(70, 0, 44, 11, D("#c8dff4", "#6c82a8")); R(70, 0, 44, 2, "#f6f1e8"); R(91, 0, 2, 11, "#f6f1e8");
-                    R(126, 0, 40, 10, "#f3eddc"); R(126, 9, 40, 2, "#c4b496");
-                    R(4, 20, 50, 44, "#c4aa92"); R(4, 20, 50, 1, "#00000018");
-                    B(8, 14, 46, 46, "#7a5a44"); B(10, 18, 42, 40, "#e4e0f0"); B(12, 20, 16, 9, "#fff"); B(34, 20, 16, 9, "#fff"); B(10, 34, 42, 24, "#7b8fc4"); R(10, 34, 42, 2, "#9aaee0"); for (let x = 16; x < 50; x += 8) R(x, 38, 3, 18, "#6c80b6");
-                    B(66, 56, 46, 28, "#2e2c34"); B(66, 56, 46, 8, "#403e48"); B(70, 66, 18, 12, "#3a3842"); B(90, 66, 18, 12, "#3a3842"); B(72, 59, 12, 5, "#8a7a68"); R(75, 60, 6, 3, "#c8b090");
-                    B(100, 14, 14, 36, "#2d3a42"); R(102, 18, 10, 2, "#7a8a92"); R(102, 28, 10, 2, "#7a8a92"); R(102, 38, 10, 2, "#7a8a92"); E(106, 17, 3, 3, "#ffe9a8"); E(106, 36, 3, 3, "#9ab0c8");
-                    E(62, 22, 6, 6, "#3a5a48"); E(58, 22, 3, 5, "#4a7058"); E(66, 20, 3, 5, "#4a7058"); E(62, 25, 5, 3, "#35503f"); B(60, 28, 5, 5, "#6a5a5a"); E(116, 46, 5, 5, "#3e5a46"); E(113, 49, 3, 4, "#4a7058");
-                    B(124, 14, 46, 46, "#7a5a44"); B(126, 18, 42, 40, "#e8e0e8"); B(128, 20, 16, 9, "#fff"); B(150, 20, 16, 9, "#fff"); B(126, 34, 42, 24, "#c48a8a"); R(126, 34, 42, 2, "#dba5a5"); for (let x = 132; x < 166; x += 8) R(x, 38, 3, 18, "#b47a7a");
-                    // 右半：靠墙画框 / 桉树 / 小桌灯 / 灰沙发
-                    B(186, 12, 22, 16, "#f4f0e8"); R(188, 14, 18, 12, "#dbe2d6"); for (let i = 0; i < 3; i++) L(197, 25, 192 + i * 5, 17, "#4f6a58"); B(210, 12, 6, 16, "#8a6a50"); R(211, 14, 4, 12, "#c8d0c4");
-                    B(222, 14, 14, 14, "#7a5a44"); E(229, 18, 4, 3, "#fff"); B(218, 20, 8, 20, "#6a4e3a"); E(221, 17, 4, 3, "#c8b64a"); E(225, 13, 3, 3, "#4a7058"); E(217, 15, 3, 3, "#c8b64a"); E(223, 21, 2, 4, "#4a7058");
-                    B(176, 40, 54, 14, "#b0b0b8"); B(176, 54, 54, 10, "#9a9aa4"); B(172, 42, 8, 22, "#8a8a94"); B(226, 42, 8, 22, "#8a8a94"); B(188, 44, 12, 8, "#c8c6d0"); R(190, 46, 8, 4, "#a8a6b4"); B(210, 44, 12, 8, "#d8d4c0");
-                    B(176, 70, 14, 12, "#5e6a74"); E(183, 76, 5, 5, D("#fff2c0", "#ffe9a8")); R(181, 72, 4, 2, "#b0b8c0");
-                    B(150, 68, 20, 14, "#c8b8a0"); R(152, 70, 16, 10, "#d8c8b0");
+                c.save(); c.translate(rm.x, 0); c.beginPath(); c.rect(0, 0, rm.w, HS_H); c.clip(); const w = rm.w;
+                if (rm.id === "living") { // 参考：浅米白客厅，大沙发、弧形落地灯、绿植、菱格地毯
+                    wall(w, "#f6f1ea", "#f2ece3", "#e6d8c6", "#eccfa4", "#dcb888"); door(3, "#f6f2ee"); R(5, 22, 9, 1, "#e0d6ca");
+                    win(40, 4, 26, 26, true); R(46, 8, 1, 20, "#e6f0fa"); frame(18, 6, 9, 12, "#fff8ec", "#cfe3d2"); frame(30, 8, 9, 9, "#fff8ec", "#dbe7d2");
+                    rug(18, 48, 52, 8, "#fbf7ee", "#b8c4d8");
+                    B(20, 32, 44, 14, "#f1e3d1"); B(20, 26, 44, 10, "#f6ebdb"); B(16, 30, 9, 16, "#e9d6bf"); B(59, 30, 9, 16, "#e9d6bf"); E(30, 32, 5, 5, "#f4c8a8"); B(40, 29, 10, 8, "#fdf8ee"); R(42, 31, 6, 1, "#d8cfc0"); R(42, 34, 6, 1, "#d8cfc0"); B(50, 29, 10, 8, "#f6efe0");
+                    R(10, 12, 1, 33, "#b9a89a"); L(10, 12, 18, 9, "#b9a89a"); B(5, 44, 12, 2, "#b9a89a"); B(14, 7, 13, 8, "#fff3d6");
+                    B(72, 26, 14, 20, "#ecc999"); R(74, 28, 10, 1, "#a8857c"); for (let i = 0; i < 4; i++) R(75 + i * 2, 31, 1, 10, ["#c8a0a0", "#a0b8c8", "#e8d0a0", "#b0c8a0"][i]); B(73, 22, 12, 4, "#f7efe2");
+                    plant(78, 46 - 20, 10, false); plant(30, 45, 12, true); B(34, 40, 26, 5, "#e8c28f"); R(36, 42, 22, 1, "#c89c68");
+                } else if (rm.id === "study") { // 参考：拱形大窗+绿植、白大书桌、深色书架、挂钟、地图
+                    wall(w, "#f4e8e4", "#efe0dc", "#dbc2bc", "#ecd0a2", "#dcb888"); B(2, 3, 20, 38, "#fffaf0"); R(4, 5, 16, 34, sky); E(12, 8, 8, 6, sky); R(11, 5, 2, 34, "#fffaf0"); R(4, 20, 16, 1, "#fffaf0"); if (night) { P(8, 10, "#fff"); P(16, 14, "#fff"); } else { R(5, 24, 14, 13, "#9ccf94"); }
+                    E(36, 8, 5, 5, "#fffdf6"); L(36, 8, 36, 5, "#7a6a68"); L(36, 8, 38, 9, "#7a6a68"); frame(48, 3, 11, 9, "#d8a870", "#9cc4de"); frame(24, 5, 8, 9, "#fff8ec", "#d8d0b8");
+                    B(30, 14, 22, 16, "#f6ddb4"); R(32, 22, 18, 1, "#c89c68"); for (let i = 0; i < 6; i++) R(32 + i * 3, 17, 2, 5, ["#d86c7a", "#6fa8d8", "#f0c667", "#7dc08a", "#a98ad8", "#e89a62"][i]); E(44, 26, 3, 3, "#f0c667");
+                    B(62, 4, 17, 42, "#9b5f56"); for (let r = 0; r < 4; r++) { R(64, 14 + r * 9, 13, 1, "#6a3a34"); for (let k = 0; k < 5; k++) R(64 + k * 3, 8 + r * 9 + (k % 2), 2, 5 - (k % 2), ["#f0e0c0", "#7fb0d8", "#e8a860", "#d8d0e8", "#a0d0a0"][(k + r) % 5]); }
+                    B(52, 40, 9, 6, "#e0b878"); R(53, 42, 7, 1, "#c8985c");
+                    B(18, 31, 36, 3, "#fffaf2"); L(21, 34, 18, 46, "#bfb4b0"); L(51, 34, 54, 46, "#bfb4b0"); R(24, 41, 26, 1, "#d0c8c4"); B(24, 24, 11, 7, "#e8e4ee"); R(26, 26, 7, 3, "#a9d9f0"); B(40, 27, 6, 4, "#f0c8c8");
+                    B(8, 38, 10, 8, "#fffaf2"); plant(6, 46, 12, false);
+                } else if (rm.id === "hbed") { // 俯视：参考暖木床头柜+球形灯、米色双人床、灰地毯、墙上大画和搁架
+                    R(0, 0, w, HS_H, "#e8c9a0"); for (let y = 12; y < HS_H; y += 4) R(0, y, w, 1, "#dcb888"); for (let i = 0, y = 8; y < HS_H; y += 4, i++) for (let x = (i * 19) % 29; x < w; x += 29) R(x, y, 1, 4, "#dcb888");
+                    R(0, 0, w, 8, "#f4ece4"); R(0, 8, w, 1, HS_OUT); frame(36, 1, 28, 6, "#4a4a52", "#d8d0cc"); R(40, 3, 6, 2, "#9a9aa0"); R(2, 2, 22, 1, "#d8a870"); for (let k = 0; k < 6; k++) R(3 + k * 3, 0, 2, 2, ["#d86c7a", "#6fa8d8", "#f0c667", "#7dc08a"][k % 4]); R(76, 2, 22, 1, "#d8a870");
+                    R(w - 3, 9, 3, 51, D("#dff0fa", "#6c82a8")); R(w - 3, 9, 1, 51, "#fffaf0");
+                    rug(24, 28, 62, 28, "#b5aab0", "#8f858c"); B(30, 12, 50, 36, "#c99a6a"); B(33, 11, 44, 7, "#b5855a"); B(32, 17, 46, 31, "#efe2cc"); B(35, 18, 17, 9, "#fffaf2"); B(56, 18, 17, 9, "#fffaf2"); B(32, 30, 46, 18, "#c5b8b0"); for (let x = 34; x < 78; x += 5) R(x, 40, 2, 7, "#a89a94");
+                    B(18, 12, 12, 11, "#d8a870"); R(20, 17, 8, 1, "#a8857c"); B(80, 12, 12, 11, "#d8a870"); R(82, 17, 8, 1, "#a8857c");
+                    E(23, 15, 3, 3, "#fffdf2"); E(87, 15, 3, 3, "#fffdf2");
+                    B(92, 28, 11, 11, "#f2e0bc"); B(94, 26, 7, 4, "#f6ead0"); plant(98, 52, 10, true); B(88, 44, 20, 3, "#8a6a5a"); L(90, 47, 90, 56, "#6a5048"); L(106, 47, 106, 56, "#6a5048");
+                    B(2, 40, 12, 14, "#f2e0bc"); R(4, 42, 8, 1, "#c89c68");
+                } else if (rm.id === "terrace") { // 参考：藤蔓木棚架+星星挂饰、城市天际线、护栏、花箱、吊椅、圆地毯
+                    R(0, 0, w, HS_FY, sky); if (night) { for (let i = 0; i < 14; i++) P((i * 31) % w, (i * 11) % 26, i % 3 ? "#fff" : "#ffe9a8"); E(80, 12, 4, 4, "#f4eccb"); } else { E(18, 12, 7, 3, "#fff"); E(26, 10, 5, 3, "#fff"); E(72, 14, 6, 2, "#fff"); }
+                    for (let x = 0, i = 0; x < w; x += 6, i++) { const h = 10 + (i * 7) % 16; R(x, 36 - h, 6, h + 2, night ? (i % 2 ? "#0e1440" : "#161c52") : (i % 2 ? "#a0bedc" : "#b4cee6")); R(x + 1, 36 - h + 2, 1, h - 3, night ? "#2a3270" : "#d0e2f2"); if (night) for (let k = 0; k < 3; k++) if ((i + k) % 2) R(x + 2, 36 - h + 3 + k * 4, 2, 2, "#ffe9a8"); }
+                    R(0, 34, w, 12, night ? "#6a5d58" : "#e2ddd6"); R(0, 30, w, 2, "#6a5a68"); for (let x = 3; x < w; x += 7) R(x, 30, 1, 16, "#6a5a68"); R(0, 40, w, 1, "#6a5a68");
+                    R(0, HS_FY, w, HS_H - HS_FY, "#d9905e"); for (let y = HS_FY + 4; y < HS_H; y += 4) R(0, y, w, 1, "#c4774a"); for (let i = 0, y = HS_FY; y < HS_H; y += 4, i++) for (let x = (i * 13) % 19; x < w; x += 19) R(x, y, 1, 4, "#c4774a"); R(0, HS_FY, w, 1, HS_OUT);
+                    B(0, 0, w, 3, "#a98f78"); B(6, 0, 4, 40, "#a98f78"); B(w - 10, 0, 4, 40, "#a98f78");
+                    for (let x = 4; x < w - 4; x += 3) { const l = 4 + ((x * 7) % 9); R(x, 3, 2, l, x % 2 ? "#5f9a5a" : "#74b36c"); P(x, 3 + l, "#8ccf80"); }
+                    [[16, 8], [34, 6], [50, 9], [68, 7]].forEach(([x, y]) => { R(x, y, 3, 3, "#fffdf6"); P(x + 1, y - 1, "#fffdf6"); P(x + 1, y + 3, "#fffdf6"); });
+                    for (let x = 4; x < w - 2; x += 8) { P(x, 4 + ((x / 8) & 1), "#7a6a68"); E(x + 2, 7 + ((x / 8) & 1), 1, 1, night ? "#ffe9a8" : "#f4eacb"); }
+                    B(2, 26, 14, 20, "#c99a6a"); R(4, 34, 10, 1, "#8a6a5a"); R(4, 41, 10, 1, "#8a6a5a"); plant(8, 34, 6, false); plant(8, 41, 6, false); plant(8, 26, 5, false);
+                    B(20, 38, 18, 5, "#c99a6a"); for (let i = 0; i < 4; i++) E(23 + i * 4, 37, 2, 2, ["#7bbf72", "#93d283", "#e8788a", "#7bbf72"][i]);
+                    B(52, 20, 3, 14, "#a98f78"); E(62, 34, 11, 11, "#c9a97a"); E(62, 34, 9, 9, "#f4efe6"); B(56, 28, 12, 8, "#fdfaf4"); B(63, 27, 9, 9, "#f1ebe0");
+                    rug(36, 48, 30, 7, "#f6efe2", "#b8aa98"); E(44, 50, 4, 2, "#fdfaf4"); E(51, 51, 4, 2, "#f3ece0"); plant(w - 7, 46, 14, true);
+                } else if (rm.id === "home") { // 我家：粉色条纹墙（和宠物小屋一致）
+                    wall(w, "#f7dcd6", "#f2cdc8", "#e6b4b0", "#ecd0a2", "#dcb888"); door(3, "#e3a878"); R(2, 44, 15, 2, "#9bb3e0"); rug(22, 48, 48, 8, "#d9cff2", "#b8a8e0");
+                    frame(30, 6, 18, 13, "#fffaf0", "#a9d9c4"); E(39, 12, 4, 3, "#f08aa8"); frame(54, 8, 9, 10, "#fffaf0", "#ffe3a0");
+                    B(24, 32, 40, 14, "#bca6d8"); B(24, 26, 40, 9, "#ccb8e6"); B(20, 30, 8, 16, "#a890c8"); B(60, 30, 8, 16, "#a890c8"); B(32, 28, 10, 7, "#f6eac0"); B(48, 28, 10, 7, "#f4a0b8");
+                    R(70, 16, 1, 29, "#b9a89a"); B(62, 8, 17, 9, "#fff3d6"); R(66, 44, 9, 2, "#b9a89a"); plant(11, 46, 8, false); E(84, 38, 3, 3, "#fffaf0");
+                } else if (rm.id === "kitchen") { // 参考：灰粉墙、木架+玻璃罐、白瓷砖绿菱形、挂钩毛巾、砧板刀架、鹅颈龙头
+                    wall(w, "#cdb0aa", null, "#b69690", "#ecd0a2", "#dcb888");
+                    R(0, 8, w, 2, "#d8b088"); R(0, 10, w, 1, "#a8857c"); R(0, 24, w, 2, "#d8b088"); R(0, 26, w, 1, "#a8857c");
+                    for (let i = 0; i < 3; i++) B(5 + i * 2, 4 + i, 14 - i * 2, 3, "#c4cdee");
+                    [[4, "#e8a860"], [22, "#8a5a50"], [40, "#c8504c"]].forEach(([x, col]) => { B(x, 12, 12, 12, "#d6e8f2"); R(x + 2, 15, 8, 8, col); R(x + 2, 10, 8, 2, "#7a6a68"); }); B(66, 12, 12, 12, "#d6e8f2"); R(68, 15, 8, 8, "#e0e0e8");
+                    E(68, 21, 7, 5, D("#fbe39a", "#ffe9a8")); R(66, 24, 4, 1, "#e8d8a0");
+                    R(28, 28, 57, 20, "#f3ebd8"); for (let gx = 30; gx < 85; gx += 8) for (let gy = 30; gy < 46; gy += 8) { const ox = ((gy - 30) / 8 & 1) * 4; for (let k = 0; k < 3; k++) { R(gx + ox + 3 - k, gy + k, 2 * k + 1, 1, "#72a070"); R(gx + ox + 3 - k, gy + 5 - k, 2 * k + 1, 1, "#72a070"); } }
+                    B(46, 28, 7, 18, "#d8a070"); E(49, 29, 3, 3, "#d8a070"); [62, 70, 78].forEach(x => { R(x, 30, 3, 1, "#5a5860"); R(x, 31, 1, 2, "#5a5860"); B(x - 1, 33, 6, 12, "#9a8a64"); });
+                    R(0, 40, w, 3, "#f2eef0"); R(0, 43, w, 3, "#d8a070"); for (let x = 12; x < w; x += 18) R(x, 43, 1, 3, "#a8857c");
+                    B(2, 39, 24, 3, "#4f525e"); R(14, 22, 2, 17, "#4a4850"); R(8, 22, 8, 2, "#4a4850"); R(8, 23, 2, 4, "#4a4850");
+                    B(34, 36, 10, 4, "#dcb878"); for (let i = 0; i < 3; i++) E(36 + i * 3, 35, 2, 2, ["#e8d04a", "#e8584a", "#9cc860"][i]);
+                } else if (rm.id === "gym") { // 自行设计：镜子、跑步机、椭圆机、瑜伽垫
+                    wall(w, "#dfe3ee", null, "#c0c4d2", "#6d7080", "#5c5f6e");
+                    B(54, 8, 28, 28, "#f2f6fc"); R(56, 10, 24, 24, D("#d2e8f8", "#86a0c0")); L(60, 32, 70, 12, "#ffffffa0"); L(66, 32, 76, 12, "#ffffff70"); R(0, 44, w, 2, "#9a9eae");
+                    B(4, 41, 28, 5, "#454855"); R(6, 44, 24, 1, "#6a6e7a"); L(30, 41, 28, 24, "#8a8ea0"); B(22, 22, 12, 6, "#8a8ea0"); R(24, 24, 8, 2, "#9ee0a8"); R(31, 24, 2, 17, "#8a8ea0");
+                    E(70, 41, 5, 5, "#8a8ea0"); E(70, 41, 2, 2, "#c8cede"); B(42, 43, 26, 3, "#3a3d48"); B(40, 40, 7, 4, "#2d2f3a"); L(70, 41, 56, 22, "#8a8ea0"); L(56, 22, 50, 20, "#8a8ea0"); B(46, 18, 8, 3, "#2d2f3a"); B(58, 24, 8, 4, "#8a8ea0"); R(60, 25, 4, 1, "#9ee0a8");
+                    B(2, 22, 6, 18, "#c4a6e8"); R(4, 24, 2, 14, "#dcc8f6"); B(6, 22, 4, 20, "#c4a6e8");
+                    B(74, 36, 8, 10, "#6e7282"); R(75, 39, 6, 1, "#2d2f3a"); B(74, 33, 3, 3, "#2d2f3a"); B(79, 33, 3, 3, "#2d2f3a");
+                    R(28, 49, 28, 5, "#b69ae0"); R(28, 49, 28, 1, "#d2bef0"); R(28, 54, 28, 1, "#9a80c8"); B(78, 44, 3, 3, "#6ec0e8");
+                    R(36, 0, 1, 4, "#8a8ea0"); B(33, 3, 7, 8, "#fff3d6");
+                } else if (rm.id === "mybed") { // 俯视：一张大双人床居中；左半=弧形置物车+窗帘+黑皮沙发，右半=灰沙发+桌灯+桉树+靠墙画框
+                    R(0, 0, w, HS_H, "#9c8f98"); for (let y = 12; y < HS_H; y += 4) R(0, y, w, 1, "#8f8289"); for (let i = 0, y = 8; y < HS_H; y += 4, i++) for (let x = (i * 21) % 31; x < w; x += 31) R(x, y, 1, 4, "#8f8289");
+                    R(0, 0, w, 8, "#cdbfc4"); R(0, 8, w, 1, HS_OUT);
+                    R(2, 0, 40, 9, "#a7bcdc"); for (let x = 4; x < 40; x += 4) R(x, 0, 2, 9, "#c0d0ea"); R(2, 8, 40, 1, "#86a0c8"); R(110, 0, 36, 7, D("#d6e8f8", "#6c82a8")); R(110, 0, 36, 1, "#fffaf0"); R(127, 0, 2, 7, "#fffaf0");
+                    rug(40, 30, 70, 28, "#b0a6ad", "#8a8088");
+                    B(46, 11, 58, 40, "#8a6a54"); B(49, 9, 52, 7, "#74553f"); B(48, 15, 54, 35, "#e7dfef"); B(52, 17, 22, 10, "#fffaf2"); B(78, 17, 20, 10, "#fffaf2"); B(48, 29, 54, 21, "#8a9ad0"); R(48, 29, 54, 2, "#a8b6e4"); for (let x = 54; x < 98; x += 8) R(x, 34, 3, 15, "#7a8ac0");
+                    B(2, 12, 15, 30, "#2f3b42"); R(4, 17, 11, 1, "#7a8a92"); R(4, 27, 11, 1, "#7a8a92"); R(4, 37, 11, 1, "#7a8a92"); E(10, 14, 3, 3, "#ffe9a8"); E(10, 31, 3, 3, "#9ab0c8");
+                    E(25, 20, 6, 6, "#3e6650"); E(21, 20, 3, 5, "#4f7a62"); E(29, 18, 3, 5, "#4f7a62"); B(23, 24, 5, 5, "#7a6868");
+                    B(6, 46, 34, 12, "#35333c"); B(6, 46, 34, 4, "#47454f"); B(9, 52, 14, 5, "#403e48"); B(24, 52, 14, 5, "#403e48"); B(26, 47, 9, 4, "#9a8a78");
+                    B(112, 10, 16, 12, "#f4f0e8"); R(114, 12, 12, 8, "#dbe2d6"); L(120, 19, 116, 14, "#4f6a58"); L(120, 19, 120, 13, "#4f6a58"); B(130, 10, 5, 12, "#8a6a50");
+                    B(138, 12, 9, 9, "#8a6a50"); E(142, 14, 3, 3, "#fffdf6"); B(116, 22, 10, 13, "#6a4e3a"); E(118, 20, 3, 3, "#c8b64a"); E(122, 18, 3, 3, "#4a7058"); E(114, 21, 2, 2, "#c8b64a");
+                    B(112, 28, 12, 12, "#d8c4b0"); B(108, 40, 36, 15, "#b8b8c2"); B(108, 40, 36, 5, "#c8c8d0"); B(104, 42, 7, 14, "#9a9aa6"); B(141, 42, 7, 14, "#9a9aa6"); B(116, 44, 10, 6, "#d8d4c4"); B(130, 44, 9, 6, "#e8c8c8");
+                    B(125, 30, 9, 9, "#6a5a50");
                 }
                 c.restore();
             });
-            // 房间之间的墙（带门洞：脚边留空）
-            F.rooms.slice(1).forEach(rm => { if (rm.top) { R(rm.x - 1, 0, 2, HS_H, "#6d5b62"); R(rm.x - 1, 62, 2, 28, "#6d5b6200"); } else R(rm.x - 1, 0, 2, 38, "#6d5b62"); });
+            F.rooms.slice(1).forEach(rm => { if (rm.top || F.rooms[F.rooms.indexOf(rm) - 1].top) { R(rm.x - 1, 0, 2, 10, HS_OUT); R(rm.x - 1, 52, 2, 8, HS_OUT); } else R(rm.x - 1, 0, 2, 22, HS_OUT); });
             return cv;
         }
         // ---------- 状态 ----------
         function hsInit() {
             if (!db.house) db.house = {};
-            const h = db.house; if (!h.lights) h.lights = {};
-            if (!h.me) h.me = { fl: "lo", x: 56, y: HS_FEET, out: "" };
-            if (h.me.out === undefined) h.me.out = "";
-            HS.me = { fl: h.me.fl, x: h.me.x, y: h.me.y, out: h.me.out || "", wp: [], cb: null, face: 1, walking: false, ph: 0 };
-            HS.him = { fl: "up", x: 40 + Math.random() * 60, y: HS_FEET, out: "", wp: [], cb: null, face: -1, walking: false, ph: 0, visitUntil: 0, outUntil: 0 };
-            if (hsSleepTime()) { HS.him.x = 240 + 70; }
+            const h = db.house; if (!h.lights) h.lights = {}; if (!h.spr) h.spr = {};
+            if (!h.me || h.me.v !== 2) h.me = { v: 2, fl: "lo", x: 40, y: HS_FEET, out: "" };
+            HS.me = { fl: h.me.fl, x: h.me.x, y: h.me.y, out: h.me.out || "", wp: [], cb: null, face: 1, walking: false, ph: 0, hid: false };
+            HS.him = { fl: "up", x: 30 + Math.random() * 40, y: HS_FEET, out: "", wp: [], cb: null, face: -1, walking: false, ph: 0, visitUntil: 0, outUntil: 0, hid: false };
+            if (hsSleepTime()) { HS.him.x = 170 + 14; HS.him.y = 30; }
             HS.aiT = performance.now() + 4000; HS.ready = true; hsBuild();
         }
-        function hsSave() { if (!db.house) return; db.house.me = { fl: HS.me.fl, x: Math.round(HS.me.x), y: Math.round(HS.me.y), out: HS.me.out }; saveData(); }
+        function hsSave() { if (!db.house) return; db.house.me = { v: 2, fl: HS.me.fl, x: Math.round(HS.me.x), y: Math.round(HS.me.y), out: HS.me.out }; saveData(); }
         function hsBuild() {
-            ["up", "lo"].forEach(fl => {
-                const inn = document.getElementById(fl === "up" ? "hsUpIn" : "hsLoIn"); if (!inn) return;
-                inn.querySelectorAll(".hs-lab,.hs-bulb").forEach(e => e.remove());
-                HS_FLOORS[fl].rooms.forEach(rm => {
-                    const l = document.createElement("div"); l.className = "hs-lab"; l.dataset.x = rm.x; l.textContent = rm.name; inn.appendChild(l);
-                    if (fl === "lo") { const b = document.createElement("button"); b.className = "hs-bulb"; b.dataset.x = rm.x; b.dataset.id = rm.id; b.innerHTML = "💡"; b.onclick = (ev) => { ev.stopPropagation(); db.house.lights[rm.id] = !hsLit(rm.id); saveData(); hsBulbs(); }; inn.appendChild(b); }
-                });
-            });
-            hsBulbs();
+            ["up", "lo"].forEach(fl => { const inn = document.getElementById(fl === "up" ? "hsUpIn" : "hsLoIn"); if (!inn) return; inn.querySelectorAll(".hs-lab").forEach(e => e.remove()); HS_FLOORS[fl].rooms.forEach(rm => { const l = document.createElement("div"); l.className = "hs-lab"; l.dataset.x = rm.x; l.textContent = rm.name; inn.appendChild(l); }); });
+            HS.s = 0;
         }
         const hsLit = (id) => db.house.lights[id] !== false;
-        function hsBulbs() { document.querySelectorAll(".hs-bulb").forEach(b => b.classList.toggle("on", hsLit(b.dataset.id))); }
         // ---------- 走路 ----------
         function hsPlan(e, tx, ty) {
-            const top = HS_FLOORS[e.fl].rooms.find(r => r.top), tx0 = top ? top.x : 99999, wp = [];
-            const inTop = x => x >= tx0;
-            if (!top) return [{ x: tx, y: HS_FEET }];
-            if (inTop(tx)) { if (!inTop(e.x)) wp.push({ x: tx0 + 8, y: HS_FEET }); wp.push({ x: tx, y: ty }); }
-            else { if (inTop(e.x)) wp.push({ x: tx0 + 8, y: HS_FEET }); wp.push({ x: tx, y: HS_FEET }); }
-            return wp;
+            const F = HS_FLOORS[e.fl], rs = hsRoomAt(e.fl, e.x), rt = hsRoomAt(e.fl, tx), wp = [];
+            if (rs !== rt) { if (rs.top) wp.push({ x: e.x, y: HS_FEET }); if (rt.top) wp.push({ x: e.x < rt.x ? rt.x + 4 : rt.x + rt.w - 4, y: HS_FEET }); }
+            wp.push({ x: tx, y: rt.top ? ty : HS_FEET }); return wp;
         }
-        function hsGo(e, tx, ty, cb) { const F = HS_FLOORS[e.fl]; tx = Math.max(8, Math.min(F.W - 8, tx)); const top = F.rooms.find(r => r.top); ty = (top && tx >= top.x) ? Math.max(26, Math.min(84, ty)) : HS_FEET; e.wp = hsPlan(e, tx, ty); e.cb = cb || null; e.walking = e.wp.length > 0; }
+        function hsGo(e, tx, ty, cb) { const F = HS_FLOORS[e.fl]; tx = Math.max(6, Math.min(F.W - 6, tx)); const rt = hsRoomAt(e.fl, tx); ty = rt.top ? Math.max(14, Math.min(57, ty)) : HS_FEET; e.wp = hsPlan(e, tx, ty); e.cb = cb || null; e.walking = e.wp.length > 0; if (!e.walking && cb) { e.cb = null; cb(); } }
         function hsStep(e, dt) {
             if (!e.wp.length) { if (e.walking) { e.walking = false; const cb = e.cb; e.cb = null; if (cb) cb(); } return; }
-            const w = e.wp[0], dx = w.x - e.x, dy = w.y - e.y, d = Math.hypot(dx, dy), v = 34 * dt;
+            const w = e.wp[0], dx = w.x - e.x, dy = w.y - e.y, d = Math.hypot(dx, dy), v = 22 * dt;
             if (d <= v) { e.x = w.x; e.y = w.y; e.wp.shift(); } else { e.x += dx / d * v; e.y += dy / d * v; }
-            if (Math.abs(dx) > 0.5) e.face = dx > 0 ? 1 : -1; e.ph += dt * 8; e.walking = true;
+            if (Math.abs(dx) > 0.4) e.face = dx > 0 ? 1 : -1; e.ph += dt * 8; e.walking = true;
+        }
+        function hsSeparate(dt) { // 两个人不重叠：不在走路的那个被轻轻推开
+            const a = HS.me, b = HS.him; if (a.out || b.out || a.hid || b.hid || a.fl !== b.fl) return;
+            const dx = b.x - a.x, dy = b.y - a.y; if (Math.abs(dx) >= HS_SEP || Math.abs(dy) > 4) return;
+            const mover = b.walking && !a.walking ? a : (a.walking && !b.walking ? b : b), other = mover === a ? b : a, dir = (mover.x - other.x) >= 0 ? 1 : -1;
+            const F = HS_FLOORS[mover.fl]; mover.x = Math.max(6, Math.min(F.W - 6, mover.x + (mover === b ? (dx >= 0 ? 1 : -1) : (dx >= 0 ? -1 : 1)) * 24 * dt));
         }
         // ---------- 对话框 / 转场 ----------
         function hsAsk(title, opts) {
-            document.getElementById("hsAskTitle").innerText = title;
-            const box = document.getElementById("hsAskOpts"); box.innerHTML = "";
+            document.getElementById("hsAskTitle").innerText = title; const box = document.getElementById("hsAskOpts"); box.innerHTML = "";
             opts.forEach(o => { const b = document.createElement("button"); b.className = "btn" + (o.ghost ? " btn-outline" : ""); b.style.cssText = "width:100%;margin-top:8px"; b.textContent = o.t; b.onclick = () => { closeModal("hsAskModal"); if (o.fn) o.fn(); }; box.appendChild(b); });
             openModalBox("hsAskModal");
         }
         function hsIris(mid) {
             const ov = document.getElementById("hsIris"); if (!ov) { mid(); return; }
-            const W = innerWidth, H = innerHeight, max = Math.hypot(W, H) / 2 + 20; ov.style.display = "block";
+            const max = Math.hypot(innerWidth, innerHeight) / 2 + 20; ov.style.display = "block";
             const set = r => { const m = `radial-gradient(circle at 50% 50%, transparent ${r}px, #000 ${r + 1}px)`; ov.style.webkitMaskImage = m; ov.style.maskImage = m; };
-            const run = (from, to, dur, done) => { const t0 = performance.now(); const f = now => { let k = Math.min(1, (now - t0) / dur); k = k * k; set(from + (to - from) * k); if (k < 1 || now - t0 < dur) requestAnimationFrame(f); else done(); }; requestAnimationFrame(f); };
+            const run = (from, to, dur, done) => { const t0 = performance.now(); const f = now => { const k0 = Math.min(1, (now - t0) / dur), k = k0 * k0; set(from + (to - from) * k); if (k0 < 1) requestAnimationFrame(f); else done(); }; requestAnimationFrame(f); };
             set(max); run(max, 0, 520, () => { mid(); setTimeout(() => run(0, max, 560, () => { ov.style.display = "none"; }), 120); });
         }
         function hsFade(mid) { const ov = document.getElementById("hsFade"); ov.style.opacity = 1; setTimeout(() => { mid(); setTimeout(() => { ov.style.opacity = 0; }, 80); }, 260); }
+        function hsToast(t) { const e = document.getElementById("hsToast"); e.textContent = t; e.style.opacity = 1; clearTimeout(hsToast._t); hsToast._t = setTimeout(() => { e.style.opacity = 0; }, 1600); }
         // ---------- 我的操作 ----------
+        function hsPoof(fl, x, y) { HS.fx.push({ fl, x, y, t: 0 }); }
+        function hsDoorOpen(fl) { HS.door[fl] = performance.now(); }
         function hsTap(fl, ev) {
-            const me = HS.me; if (me.out) return;
-            if (me.fl !== fl) return;
-            const cv = ev.currentTarget, r = cv.getBoundingClientRect(), s = r.height / HS_H, x = (ev.clientX - r.left) / s, y = (ev.clientY - r.top) / s;
-            const rm = hsRoomAt(fl, x);
-            // 书桌：要看书吗？
-            if (fl === "up" && rm.id === "study" && x > 166 && x < 226 && y > 40 && y < 72) { hsGo(me, 192, HS_FEET, () => hsAsk("要看书吗？", [{ t: "阅读", fn: () => hsIris(() => openLibraryPage()) }, { t: "呆在这里", ghost: true }])); return; }
-            // 楼梯：串门
-            if (rm === HS_FLOORS[fl].rooms[0] && x > HS_STAIR - 4 && x < HS_STAIR + 26 && y > 24) { hsVisit(); return; }
-            // 门：出门
-            if (fl === "lo" && x < 28 && y > 28 && y < 74) { hsGo(me, 16, HS_FEET, () => hsAsk("要出门去哪里？", HS_PLACES.map(p => ({ t: p[1] + " " + p[0], fn: () => hsGoOut(p[0]) })).concat([{ t: "不出去了", ghost: true }]))); return; }
-            hsGo(me, x, y, () => { db.house.me.x = me.x; hsSave(); });
+            if (HS.press && HS.press.fired) { HS.press = null; return; }
+            const me = HS.me; if (me.out || me.fl !== fl) return;
+            const cv = ev.currentTarget, r = cv.getBoundingClientRect(), s = r.height / HS_H, x = (ev.clientX - r.left) / s, y = (ev.clientY - r.top) / s, rm = hsRoomAt(fl, x), lx = x - rm.x;
+            if (fl === "lo") for (const l of rm.lamps) if (lx > l.x - 5 && lx < l.x + l.w + 5 && y > l.y - 5 && y < l.y + l.h + 5) { db.house.lights[rm.id] = !hsLit(rm.id); saveData(); hsToast(hsLit(rm.id) ? "开灯" : "关灯"); return; }
+            if (rm.door !== undefined && lx > rm.door - 3 && lx < rm.door + 18 && y > 16 && y < 50) { hsGo(me, rm.x + rm.door + 16, HS_FEET, () => hsDoorAsk(fl)); return; }
+            if (fl === "up" && rm.id === "study" && lx > 16 && lx < 58 && y > 20 && y < 50) { hsGo(me, rm.x + 38, HS_FEET, () => hsAsk("要看书吗？", [{ t: "阅读", fn: () => hsIris(() => openLibraryPage()) }, { t: "呆在这里", ghost: true }])); return; }
+            let tx = x, ty = y; const o = HS.him; if (!o.out && !o.hid && o.fl === fl && Math.abs(tx - o.x) < HS_SEP && Math.abs(ty - o.y) < 8) tx = o.x + (tx >= o.x ? HS_SEP : -HS_SEP);
+            hsGo(me, tx, ty, () => hsSave());
+        }
+        function hsDoorAsk(fl) {
+            const me = HS.me;
+            hsAsk("要去哪里？", [{ t: fl === "lo" ? "上楼" : "下楼", fn: () => hsVisit() }, { t: "出门", fn: () => hsAsk("出门去哪里？", HS_PLACES.map(p => ({ t: p[1] + " " + p[0], fn: () => hsGoOut(p[0]) })).concat([{ t: "不出去了", ghost: true }])) }, { t: "取消", ghost: true }]);
         }
         function hsVisit() {
             const me = HS.me, target = me.fl === "lo" ? "up" : "lo";
             if (target === "up" && HS.him.out) { hsToast("他不在家，先不上去了"); return; }
-            hsGo(me, HS_STAIR + 8, HS_FEET, () => hsFade(() => { me.fl = target; me.x = HS_STAIR + 8; me.y = HS_FEET; hsSave(); const sc = document.getElementById(target === "up" ? "hsUpScroll" : "hsLoScroll"); sc.scrollLeft = 0; }));
+            hsFade(() => { me.fl = target; me.x = 24; me.y = HS_FEET; hsDoorOpen(target); hsSave(); const sc = document.getElementById(target === "up" ? "hsUpScroll" : "hsLoScroll"); sc.scrollLeft = 0; });
         }
         function hsGoOut(place) { const me = HS.me; hsFade(() => { me.out = place; hsSave(); hsOutUpdate(); }); }
-        function hsComeHome() { const me = HS.me; hsFade(() => { me.out = ""; me.fl = "lo"; me.x = 16; me.y = HS_FEET; hsSave(); hsOutUpdate(); }); }
-        function hsToast(t) { const e = document.getElementById("hsToast"); e.textContent = t; e.style.opacity = 1; clearTimeout(hsToast._t); hsToast._t = setTimeout(() => { e.style.opacity = 0; }, 1800); }
+        function hsComeHome() { const me = HS.me; hsFade(() => { me.out = ""; me.fl = "lo"; me.x = 24; me.y = HS_FEET; hsDoorOpen("lo"); hsSave(); hsOutUpdate(); }); }
         function hsOutUpdate() {
             const box = document.getElementById("hsOut"); if (!box) return;
             const me = HS.me, him = HS.him, pl = n => (HS_PLACES.find(p => p[0] === n) || ["", "🚶"]);
             if (!me.out && !him.out) { box.style.display = "none"; return; }
-            let h = "";
-            if (me.out) h += `<div class="hs-out-line"><span>${pl(me.out)[1]}</span> 我 在 ${me.out}</div>`;
-            if (him.out) h += `<div class="hs-out-line"><span>${pl(him.out)[1]}</span> 他 去了 ${him.out}</div>`;
-            if (me.out && !him.out) h += `<div class="hs-out-sub">他在家里</div>`;
-            if (me.out) h += `<button class="btn" style="margin-top:12px" onclick="hsComeHome()">回家</button>`;
+            let h = ""; if (me.out) h += `<div class="hs-out-line"><span>${pl(me.out)[1]}</span> 我 在 ${me.out}</div>`; if (him.out) h += `<div class="hs-out-line"><span>${pl(him.out)[1]}</span> 他 去了 ${him.out}</div>`;
+            if (me.out && !him.out) h += `<div class="hs-out-sub">他在家里</div>`; if (me.out) h += `<button class="btn" style="margin-top:12px" onclick="hsComeHome()">回家</button>`;
             box.innerHTML = h; box.style.display = "flex";
         }
+        // ---------- 长按小人：换成自己画的 ----------
+        function hsPressStart(fl, ev) {
+            const cv = ev.currentTarget, r = cv.getBoundingClientRect(), s = r.height / HS_H, x = (ev.clientX - r.left) / s, y = (ev.clientY - r.top) / s;
+            let who = null; [["me", HS.me], ["him", HS.him]].forEach(([k, e]) => { if (!e.out && !e.hid && e.fl === fl && Math.abs(x - e.x) < 9 && y < e.y + 3 && y > e.y - 26) who = k; });
+            if (!who) { HS.press = null; return; }
+            const st = { who, fired: false, x0: ev.clientX, y0: ev.clientY, t: setTimeout(() => { st.fired = true; hsSprAsk(who); }, 650) }; HS.press = st;
+        }
+        function hsPressMove(ev) { const p = HS.press; if (p && !p.fired) { if (!p.x0) { p.x0 = ev.clientX; p.y0 = ev.clientY; } else if (Math.hypot(ev.clientX - p.x0, ev.clientY - p.y0) > 8) { clearTimeout(p.t); HS.press = null; } } }
+        function hsPressEnd() { if (HS.press && !HS.press.fired) { clearTimeout(HS.press.t); HS.press = null; } }
+        let hsSprKey = "";
+        function hsSprAsk(who) {
+            hsAsk(who === "me" ? "换我的小人" : "换他的小人", [
+                { t: "上传站立图（透明底 PNG）", fn: () => hsSprPick(who) }, { t: "上传俯视图（卧室里用）", fn: () => hsSprPick(who + "Top") },
+                { t: "恢复默认", ghost: true, fn: () => { delete db.house.spr[who]; delete db.house.spr[who + "Top"]; saveData(); } }, { t: "取消", ghost: true }]);
+        }
+        function hsSprPick(key) { hsSprKey = key; const inp = document.getElementById("hsSprFile"); inp.value = ""; inp.click(); }
+        function hsSprFile(inp) {
+            const f = inp.files && inp.files[0]; if (!f) return; const rd = new FileReader();
+            rd.onload = () => { const im = new Image(); im.onload = () => { const H = 120, k = Math.min(1, H / im.naturalHeight), cv = document.createElement("canvas"); cv.width = Math.max(1, Math.round(im.naturalWidth * k)); cv.height = Math.max(1, Math.round(im.naturalHeight * k)); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); db.house.spr[hsSprKey] = cv.toDataURL("image/png"); saveData(); hsToast("换好了"); }; im.onerror = () => hsToast("图片打不开"); im.src = rd.result; };
+            rd.readAsDataURL(f);
+        }
         // ---------- 他的随机行动 ----------
+        function hsTele(e, fl, x, y, cb) { // 闪现：原地冒烟消失，目的地冒烟出现
+            if (!e.hid) hsPoof(e.fl, e.x, e.y - 8); e.hid = true; e.wp = []; e.walking = false;
+            setTimeout(() => { e.fl = fl; e.x = x; e.y = y; hsPoof(fl, x, y - 8); setTimeout(() => { e.hid = false; if (cb) cb(); }, 220); }, 320);
+        }
         function hsAI(now) {
             const him = HS.him, me = HS.me; if (now < HS.aiT) return; HS.aiT = now + 5000 + Math.random() * 9000;
-            if (him.walking) return;
-            const goRoomX = (fl) => { const rs = HS_FLOORS[fl].rooms; const r = rs[Math.floor(Math.random() * rs.length)]; return r.x + 16 + Math.random() * (r.w - 32); };
-            if (him.out) { if (now > him.outUntil) { him.out = ""; him.fl = "up"; him.x = 16; hsOutUpdate(); } return; }
-            if (hsSleepTime()) { const bx = 240 + 70; if (him.fl === "lo") { hsGo(him, HS_STAIR + 8, HS_FEET, () => { him.fl = "up"; him.x = HS_STAIR + 8; hsGo(him, bx, HS_FEET); }); } else if (Math.abs(him.x - bx) > 6) { if (Math.random() < .3) { him.x = bx; } else hsGo(him, bx, HS_FEET); } return; }
-            if (him.fl === "lo" && now > him.visitUntil) { hsGo(him, HS_STAIR + 8, HS_FEET, () => { him.fl = "up"; him.x = HS_STAIR + 8; him.y = HS_FEET; }); return; }
+            if (him.walking || him.hid) return;
+            const roomX = (fl) => { const rs = HS_FLOORS[fl].rooms, r = rs[Math.floor(Math.random() * rs.length)]; return r.x + 12 + Math.random() * (r.w - 24); };
+            const upDoor = 14, loDoor = 14;
+            if (him.out) { if (now > him.outUntil) { him.out = ""; him.fl = "up"; him.x = upDoor + 4; him.y = HS_FEET; hsDoorOpen("up"); hsOutUpdate(); } return; }
+            if (hsSleepTime()) { const bx = 170 + 14, by = 30; if (him.fl === "lo") { hsTele(him, "up", bx, by); } else if (Math.hypot(him.x - bx, him.y - by) > 5) { if (Math.random() < .35) hsTele(him, "up", bx, by); else hsGo(him, bx, by); } return; }
+            if (him.fl === "lo" && now > him.visitUntil) { if (Math.random() < .5) hsTele(him, "up", 30, HS_FEET); else hsGo(him, loDoor, HS_FEET, () => { hsDoorOpen("lo"); him.hid = true; setTimeout(() => { him.fl = "up"; him.x = upDoor + 6; him.y = HS_FEET; him.hid = false; hsDoorOpen("up"); }, 500); }); return; }
             const r = Math.random();
-            if (him.fl === "up" && !(me.fl === "up" && !me.out) && r < 0.06) { hsGo(him, 16, HS_FEET, () => { him.out = HS_PLACES[Math.floor(Math.random() * HS_PLACES.length)][0]; him.outUntil = performance.now() + 40000 + Math.random() * 80000; hsOutUpdate(); }); return; }
-            if (him.fl === "up" && !me.out && r < 0.14) { hsGo(him, HS_STAIR + 8, HS_FEET, () => { him.fl = "lo"; him.x = HS_STAIR + 8; him.y = HS_FEET; him.visitUntil = performance.now() + 30000 + Math.random() * 40000; }); return; }
-            const tx = r < 0.5 ? him.x + (Math.random() - .5) * 50 : goRoomX(him.fl);
-            if (r > 0.82) { him.x = Math.max(10, Math.min(HS_FLOORS[him.fl].W - 10, tx)); him.y = HS_FEET; } else hsGo(him, tx, HS_FEET);
+            if (him.fl === "up" && !(me.fl === "up" && !me.out) && r < 0.05) { hsGo(him, upDoor, HS_FEET, () => { hsDoorOpen("up"); him.out = HS_PLACES[Math.floor(Math.random() * HS_PLACES.length)][0]; him.outUntil = performance.now() + 40000 + Math.random() * 80000; hsOutUpdate(); }); return; }
+            if (him.fl === "up" && !me.out && r < 0.13) { const vu = performance.now() + 30000 + Math.random() * 40000; if (Math.random() < .5) hsTele(him, "lo", 30 + Math.random() * 40, HS_FEET, () => { him.visitUntil = vu; }); else hsGo(him, upDoor, HS_FEET, () => { hsDoorOpen("up"); him.hid = true; setTimeout(() => { him.fl = "lo"; him.x = loDoor + 6; him.y = HS_FEET; him.hid = false; him.visitUntil = vu; hsDoorOpen("lo"); }, 500); }); return; }
+            const tx = r < 0.5 ? him.x + (Math.random() - .5) * 40 : roomX(him.fl);
+            if (r > 0.85) { hsTele(him, him.fl, Math.max(10, Math.min(HS_FLOORS[him.fl].W - 10, tx)), HS_FEET); } else hsGo(him, tx, HS_FEET);
         }
         // ---------- 绘制 ----------
         function hsChar(c, e, who) {
-            const x = Math.round(e.x), y = Math.round(e.y), top = HS_FLOORS[e.fl].rooms.find(r => r.top) && e.x >= HS_FLOORS[e.fl].rooms.find(r => r.top).x;
-            const src = HS_SPR[who]; if (src) { let im = HS.imgs[who]; if (!im || im._s !== src) { im = new Image(); im._s = src; im.src = src; HS.imgs[who] = im; } if (im.complete && im.naturalHeight) { const h = top ? 14 : HS_CH, w = im.naturalWidth * h / im.naturalHeight; c.save(); c.translate(x, 0); c.scale(e.face, 1); c.drawImage(im, -w / 2, y - h, w, h); c.restore(); return; } }
-            const K = pxKit(c); K.out = "#5a4650"; const shirt = who === "me" ? "#f0a0b8" : "#8fb4e8", hair = who === "me" ? "#6a4a3a" : "#3a3a4a", skin = "#f6d2b8";
-            const sw = e.walking ? Math.round(Math.sin(e.ph) * 1.4) : 0, bob = e.walking && Math.sin(e.ph * 2) > 0 ? 1 : 0;
-            if (top) { c.fillStyle = "#00000025"; c.fillRect(x - 5, y + 2, 10, 2); K.E(x, y, 5, 4, shirt); K.E(x + e.face, y - 1, 3, 3, hair); return; }
-            c.fillStyle = "#00000028"; c.fillRect(x - 6, y - 1, 12, 2);
-            K.R(x - 3, y - 9 + (sw > 0 ? 0 : 0), 3, 9 - (sw > 0 ? 1 : 0), "#5a6a8a"); K.R(x + 1, y - 9, 3, 9 - (sw < 0 ? 1 : 0), "#5a6a8a");
-            K.B(x - 4, y - 20 - bob, 9, 12, shirt); K.R(x - 5 - sw, y - 18 - bob, 2, 8, skin); K.R(x + 4 + sw, y - 18 - bob, 2, 8, skin);
-            K.E(x, y - 25 - bob, 4, 4, skin); K.R(x - 4, y - 30 - bob, 9, 4, hair); K.R(x - 4, y - 27 - bob, 2, 3, hair); if (who === "me") K.R(x - 5, y - 27 - bob, 1, 6, hair);
-            K.P(x + e.face * 2, y - 25 - bob, "#3a2a30");
+            const x = Math.round(e.x), y = Math.round(e.y), top = hsRoomAt(e.fl, e.x).top;
+            const key = top && hsSpr(who + "Top") ? who + "Top" : who, src = hsSpr(key);
+            if (src) { let im = HS.imgs[key]; if (!im || im._s !== src) { im = new Image(); im._s = src; im.src = src; HS.imgs[key] = im; } if (im.complete && im.naturalHeight) { const h = top && key === who ? HS_CHT : (top ? HS_CHT + 2 : HS_CH), w = im.naturalWidth * h / im.naturalHeight, bob = e.walking && Math.sin(e.ph * 2) > 0 ? -1 : 0; c.save(); c.translate(x, 0); c.scale(e.face, 1); c.drawImage(im, -w / 2, y - h + bob, w, h); c.restore(); return; } }
+            const K = pxKit(c); K.out = "#7a5a56"; const shirt = who === "me" ? "#f4a6bc" : "#8fb4e8", hair = who === "me" ? "#7a5646" : "#4a4a5a", skin = "#fbdcc4";
+            const sw = e.walking ? (Math.sin(e.ph) > 0 ? 1 : -1) : 0, bob = e.walking && Math.sin(e.ph * 2) > 0 ? 1 : 0;
+            if (top) { c.fillStyle = "#00000022"; c.fillRect(x - 4, y + 2, 8, 2); K.E(x, y, 4, 3, shirt); K.E(x + e.face, y - 1, 2, 2, hair); return; }
+            c.fillStyle = "#00000024"; c.fillRect(x - 5, y - 1, 10, 2);
+            K.R(x - 3, y - 6, 2, 6 - (sw > 0 ? 1 : 0), "#6a7a9a"); K.R(x + 1, y - 6, 2, 6 - (sw < 0 ? 1 : 0), "#6a7a9a");
+            K.B(x - 3, y - 14 - bob, 7, 9, shirt); K.E(x, y - 18 - bob, 3, 3, skin); K.R(x - 3, y - 21 - bob, 7, 3, hair); K.P(x + e.face * 1, y - 18 - bob, "#3a2a30");
         }
         function hsFrame(t) {
             if (!HS.ready) { if (db && db.pet !== undefined) hsInit(); else return; }
             const dt = Math.min(0.1, HS.last ? (t - HS.last) / 1000 : 0.033); HS.last = t;
-            const me = HS.me, him = HS.him; hsStep(me, dt); hsStep(him, dt); hsAI(t);
-            const night = hsNight(), nk = night ? "n" : "d";
-            const hsEl = document.getElementById("hsLo"); if (!hsEl) return;
-            const H = hsEl.clientHeight; if (!H) return; const s = H / HS_H;
-            const outShown = !!(me.out || him.out);
+            const me = HS.me, him = HS.him; hsStep(me, dt); hsStep(him, dt); hsSeparate(dt); hsAI(t);
+            const night = hsNight(), nk = night ? "n" : "d", hsEl = document.getElementById("hsLo"); if (!hsEl) return;
+            const H = hsEl.clientHeight; if (!H) return; const s = H / HS_H, outShown = !!(me.out || him.out);
             ["up", "lo"].forEach(fl => {
                 const cv = document.getElementById(fl === "up" ? "hsUpCv" : "hsLoCv"), inn = cv.parentNode, F = HS_FLOORS[fl];
-                if (HS.s !== s) { cv.style.width = F.W * s + "px"; cv.style.height = H + "px"; inn.style.width = F.W * s + "px"; inn.querySelectorAll(".hs-lab,.hs-bulb").forEach(e => { e.style.left = (parseFloat(e.dataset.x) * s + (e.classList.contains("hs-bulb") ? 6 : 6)) + "px"; if (e.classList.contains("hs-bulb")) e.style.left = (parseFloat(e.dataset.x) * s + 6) + "px"; }); }
+                if (HS.s !== s) { cv.style.width = F.W * s + "px"; cv.style.height = H + "px"; inn.style.width = F.W * s + "px"; inn.querySelectorAll(".hs-lab").forEach(e => { e.style.left = (parseFloat(e.dataset.x) * s + 6) + "px"; }); }
                 if (cv.width !== F.W) { cv.width = F.W; cv.height = HS_H; }
                 const key = fl + nk; if (!HS.bg[key]) HS.bg[key] = hsDraw(fl, night);
                 const c = cv.getContext("2d"); c.imageSmoothingEnabled = false; c.drawImage(HS.bg[key], 0, 0);
                 if (fl === "up" && outShown) return;
-                const ents = [[me, "me"], [him, "him"]].filter(p => !p[0].out && p[0].fl === fl).sort((a, b) => a[0].y - b[0].y);
-                ents.forEach(p => hsChar(c, p[0], p[1]));
-                // 灯光
+                // 门开着的动画
+                if (t - HS.door[fl] < 1300) { const d = F.rooms[0].door; c.fillStyle = "#6a4c4c"; c.fillRect(d, 20, 13, 26); c.fillStyle = HS_OUT; c.fillRect(d, 20, 1, 26); c.fillStyle = "#e3a878"; c.fillRect(d + 9, 21, 4, 25); c.fillStyle = "#ffe9b8"; c.fillRect(d + 2, 22, 5, 24); }
+                [[me, "me"], [him, "him"]].filter(p => !p[0].out && !p[0].hid && p[0].fl === fl).sort((a, b) => a[0].y - b[0].y).forEach(p => hsChar(c, p[0], p[1]));
                 F.rooms.forEach(rm => {
-                    let lit; if (fl === "lo") lit = hsLit(rm.id); else lit = (!him.out && him.fl === "up" && hsRoomAt("up", him.x).id === rm.id) || (me.fl === "up" && !me.out && hsRoomAt("up", me.x).id === rm.id && false);
-                    if (fl === "up" && !night) lit = true;
-                    if (night) { if (!lit) { c.fillStyle = "rgba(12,16,52,.62)"; c.fillRect(rm.x, 0, rm.w, HS_H); } else { c.fillStyle = "rgba(255,214,140,.10)"; c.fillRect(rm.x, 0, rm.w, HS_H); } }
-                    else if (fl === "lo" && !lit) { c.fillStyle = "rgba(40,36,70,.14)"; c.fillRect(rm.x, 0, rm.w, HS_H); }
+                    let lit = fl === "lo" ? hsLit(rm.id) : (!him.out && !him.hid && him.fl === "up" && hsRoomAt("up", him.x) === rm); if (fl === "up" && !night) lit = true;
+                    if (night) { if (!lit) { c.fillStyle = "rgba(12,16,52,.62)"; c.fillRect(rm.x, 0, rm.w, HS_H); } else { c.fillStyle = "rgba(255,214,140,.10)"; c.fillRect(rm.x, 0, rm.w, HS_H); } } else if (fl === "lo" && !lit) { c.fillStyle = "rgba(40,36,70,.14)"; c.fillRect(rm.x, 0, rm.w, HS_H); }
+                    rm.lamps.forEach(l => { const lx = rm.x + l.x, cx = lx + l.w / 2, cy = l.y + l.h / 2; c.fillStyle = lit ? "#fff0b8" : "#d6cdc4"; c.fillRect(lx + 1, l.y + 1, l.w - 2, l.h - 2); c.fillStyle = lit ? "#fffbe6" : "#e8e0d8"; c.fillRect(lx + 2, l.y + 1, l.w - 4, 1);
+                        if (lit && night) { const g = c.createRadialGradient(cx, cy, 1, cx, cy, 26); g.addColorStop(0, "rgba(255,226,150,.55)"); g.addColorStop(1, "rgba(255,226,150,0)"); c.fillStyle = g; c.fillRect(rm.x, 0, rm.w, HS_H); } });
                 });
-                // 爱心
-                if (me.fl === fl && him.fl === fl && !me.out && !him.out && Math.abs(me.x - him.x) < 26 && Math.abs(me.y - him.y) < 14) {
-                    if (t - HS.heartT > 650) { HS.heartT = t; HS.hearts.push({ fl, x: (me.x + him.x) / 2 + (Math.random() - .5) * 6, y: Math.min(me.y, him.y) - 30, a: 0 }); }
-                }
-                const hs = sprGet("heart"); HS.hearts = HS.hearts.filter(h => h.a < 1.6);
-                HS.hearts.forEach(h => { if (h.fl !== fl) return; h.a += dt; c.globalAlpha = Math.max(0, 1 - h.a / 1.6); c.drawImage(hs, Math.round(h.x - 3), Math.round(h.y - h.a * 12)); c.globalAlpha = 1; });
+                if (me.fl === fl && him.fl === fl && !me.out && !him.out && !me.hid && !him.hid && Math.abs(me.x - him.x) < 24 && Math.abs(me.y - him.y) < 12 && t - HS.heartT > 650) { HS.heartT = t; HS.hearts.push({ fl, x: (me.x + him.x) / 2 + (Math.random() - .5) * 4, y: Math.min(me.y, him.y) - 22, a: 0 }); }
+                HS.hearts = HS.hearts.filter(h => h.a < 1.6); const hs = sprGet("heart");
+                HS.hearts.forEach(h => { if (h.fl !== fl) return; h.a += dt; c.globalAlpha = Math.max(0, 1 - h.a / 1.6); c.drawImage(hs, Math.round(h.x - 3), Math.round(h.y - h.a * 10)); c.globalAlpha = 1; });
+                HS.fx = HS.fx.filter(f => f.t < 0.6);
+                HS.fx.forEach(f => { if (f.fl !== fl) return; f.t += dt; const k = f.t / 0.6, rr = 2 + k * 11; c.globalAlpha = 1 - k; c.fillStyle = "#fff"; for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 + k, px = Math.round(f.x + Math.cos(a) * rr), py = Math.round(f.y + Math.sin(a) * rr); c.fillRect(px, py, 2, 2); if (i % 2) { c.fillStyle = "#ffd0e0"; c.fillRect(px + 1, py + 1, 1, 1); c.fillStyle = "#fff"; } } c.globalAlpha = 1; });
             });
             HS.s = s;
-            // 跟随我：保持在视野里
-            if (!me.out) { const sc = document.getElementById(me.fl === "up" ? "hsUpScroll" : "hsLoScroll"), px = me.x * s, l = sc.scrollLeft, w = sc.clientWidth; if (me.walking && (px < l + 40 || px > l + w - 40)) sc.scrollLeft = l + (px - (l + w / 2)) * 0.12; }
-            const up = document.getElementById("hsUp"); if (up && up.dataset.out !== (outShown ? "1" : "0")) { up.dataset.out = outShown ? "1" : "0"; }
-            hsOutUpdate._k !== (me.out + "|" + him.out) && (hsOutUpdate._k = me.out + "|" + him.out, hsOutUpdate());
+            if (!me.out && !me.hid) { const sc = document.getElementById(me.fl === "up" ? "hsUpScroll" : "hsLoScroll"), px = me.x * s, l = sc.scrollLeft, w = sc.clientWidth; if (me.walking && (px < l + 40 || px > l + w - 40)) sc.scrollLeft = l + (px - (l + w / 2)) * 0.12; }
+            const k = me.out + "|" + him.out; if (hsOutUpdate._k !== k) { hsOutUpdate._k = k; hsOutUpdate(); }
         }
 
         // ==================== 🌌 许愿宇宙 / 🏠 约会像素 / 🐾 宠物（首页最左页三个组件） ====================
