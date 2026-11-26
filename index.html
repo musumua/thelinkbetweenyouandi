@@ -2190,15 +2190,15 @@
         function hsPx(text, color, h) { const px = (h || 12) >= 14 ? 16 : 12; return `<span class="pxf" style="font-size:${px}px;color:${color || "#6a4a44"}">${text}</span>`; }
         // lamps：灯罩位置（房间内坐标），点灯就是开关；door：门的位置
         const HS_UP = [
-            { id: "living", name: "客厅", x: 0, w: 130, lamps: [{ x: 100, y: 8, w: 13, h: 8 }], door: 3 },
+            { id: "living", name: "客厅", x: 0, w: 130, lamps: [{ x: 35, y: 8, w: 12, h: 9 }], door: 3 },
             { id: "study", name: "书房", x: 130, w: 92, lamps: [{ x: 62, y: 19, w: 9, h: 5 }] },
             { id: "hbed", name: "他的卧室", x: 222, w: 122, top: true, bed: { x: 36, y: 12, w: 50, h: 36, slots: [[49, 22], [71, 22]] }, lamps: [{ x: 25, y: 11, w: 8, h: 8 }, { x: 89, y: 11, w: 8, h: 8 }] },
             { id: "terrace", name: "露台", x: 344, w: 102, lamps: [12, 24, 36, 48, 60, 72, 84].map((x, i) => ({ x: x + 1, y: 6 + Math.round(3 * Math.sin((i + 1) * 1.05)), w: 4, h: 4, star: 1 })) }];
         const HS_LO = [
-            { id: "home", name: "我家", x: 0, w: 120, lamps: [{ x: 40, y: 8, w: 12, h: 9 }], door: 3 },
+            { id: "home", name: "我家", x: 0, w: 120, lamps: [{ x: 100, y: 8, w: 13, h: 8 }], door: 3 },
             { id: "kitchen", name: "厨房", x: 120, w: 102, lamps: [{ x: 89, y: 7, w: 10, h: 6, cap: 1 }] },
-            { id: "gym", name: "健身房", x: 222, w: 102, lamps: [{ x: 52, y: 3, w: 14, h: 8 }] },
-            { id: "mybed", name: "我的卧室", x: 324, w: 138, top: true, bed: { x: 34, y: 11, w: 58, h: 40, slots: [[51, 22], [76, 22]] }, lamps: [{ x: 6, y: 4, w: 8, h: 5, cap: 1 }, { x: 103, y: 10, w: 8, h: 5, cap: 1 }] }];
+            { id: "gym", name: "健身房", x: 222, w: 102, lamps: [{ x: 86, y: 2, w: 12, h: 5 }] },
+            { id: "mybed", name: "我的卧室", x: 324, w: 138, top: true, bed: { x: 34, y: 11, w: 58, h: 40, slots: [[51, 22], [76, 22]] }, lamps: [{ x: 103, y: 20, w: 8, h: 8, top: 1 }] }];
         const HS_FLOORS = { up: { rooms: HS_UP, W: 446 }, lo: { rooms: HS_LO, W: 462 } };
         const HS = { me: null, him: null, hearts: [], fx: [], door: { up: -9999, lo: -9999 }, s: 0, bg: {}, last: 0, aiT: 0, heartT: 0, ready: false, imgs: {}, press: null };
         const hsNight = () => { const h = new Date().getHours(); return h < 6 || h >= 18; };
@@ -2229,6 +2229,10 @@
             const G1 = ["#6fb36c", "#8ccf80", "#5aa064"], G2 = ["#4f9a58", "#3f7a4a", "#62ad66"];
             const pTall = (x, yb, h, col) => { pot(x, yb, col || "#e8a07a"); [-0.95, -0.5, -0.05, 0.4, 0.85].forEach((a, i) => { const hh = h * (0.62 + 0.14 * ((i * 3) % 4) / 3), tx = x + Math.sin(a) * hh * 0.7, ty = yb - 7 - hh * Math.cos(a * 0.6); c.strokeStyle = "#5a8a58"; c.lineWidth = 0.6; c.beginPath(); c.moveTo(x, yb - 7); c.quadraticCurveTo(x + Math.sin(a) * hh * 0.2, yb - 7 - hh * 0.6, tx, ty); c.stroke(); lf(tx, ty, 12 + (i % 2) * 2, -1.57 + a * 0.75, i % 2 ? "#5aa064" : "#6fb36c", 3.1); }); };
             const pBush = (x, yb, col) => { pot(x, yb, col || "#d9a0b0", 9, 6); euc(x - 2, yb - 6, x - 5, yb - 16, 4, 1.7, -1); euc(x, yb - 6, x + 1, yb - 19, 5, 1.7, 1); euc(x + 2, yb - 6, x + 6, yb - 15, 4, 1.7, 1); };
+            const skyline = (x0, y0, w, h) => { c.save(); c.beginPath(); c.rect(x0, y0, w, h); c.clip(); const bot = y0 + h, L1 = [[0, 6, 11], [6, 7, 16], [13, 5, 9], [18, 8, 19], [26, 6, 12], [32, 7, 15], [39, 5, 10], [44, 8, 17], [52, 6, 13], [58, 7, 11]], L2 = [[3, 6, 8], [9, 8, 13], [17, 5, 7], [22, 7, 15], [29, 8, 9], [37, 6, 14], [43, 7, 8], [50, 8, 12], [58, 6, 9]];
+                [[L2, night ? "#1b2468" : "#c9dff2", night ? "#3a4690" : "#e4f0fa"], [L1, night ? "#0e1440" : "#a4c4e4", night ? "#ffe9a8" : "#e8f3fc"]].forEach(([arr, bc, wc], li) => arr.forEach(([dx, bw, bh], i) => { const bx = x0 + dx, by = bot - bh; if (bx > x0 + w) return; R(bx, by, bw, bh, bc); R(bx, by, bw, 1, pxMix(bc, "#ffffff", 0.2)); if (i % 3 === 0) R(bx + (bw >> 1), by - 2, 1, 2, bc); for (let yy = by + 2; yy < bot - 1; yy += 3) for (let xx = bx + 1; xx < bx + bw - 1; xx += 2) if (!night || ((xx * 7 + yy * 3 + i + li) % 3 !== 0)) R(xx, yy, 1, 1, night && li === 1 && (xx + yy) % 5 === 0 ? "#9fd0ff" : wc); })); c.restore(); };
+            const mLeaf = (x, y, ang, sc, col) => { c.save(); c.translate(x, y); c.rotate(ang); c.scale(sc, sc); const up = [[1, -1.5], [2.4, -3.8], [3.9, -3.2], [4.6, -5], [6.2, -3.6], [7, -5], [8.8, -3.2], [10.4, -1.6], [11.5, 0]]; c.beginPath(); c.moveTo(0, 0); up.forEach(([a, b]) => c.lineTo(a, b)); for (let i = up.length - 1; i >= 0; i--) c.lineTo(up[i][0], -up[i][1]); c.closePath(); c.fillStyle = col; c.fill(); c.fillStyle = pxMix(col, "#ffffff", 0.22); c.beginPath(); c.moveTo(0.5, 0); up.forEach(([a, b]) => c.lineTo(a, b * 0.7)); c.lineTo(10.5, 0); c.closePath(); c.fill(); c.strokeStyle = pxMix(col, "#1b1230", 0.5); c.lineWidth = 0.4 / sc; c.stroke(); c.strokeStyle = pxMix(col, "#1b1230", 0.3); c.lineWidth = 0.3 / sc; c.beginPath(); c.moveTo(0, 0); c.lineTo(10.5, 0); [[3, -2.4], [5.4, -3], [7.6, -2.6]].forEach(([a, b]) => { c.moveTo(a, 0); c.lineTo(a + 1.5, b); c.moveTo(a, 0); c.lineTo(a + 1.5, -b); }); c.stroke(); c.restore(); };
+            const pMonst2 = (x, yb, h, col) => { pot(x, yb, col || "#575c68", 11, 9); [[-9, 0.95, -2.7, 1.05], [8, 0.9, -0.45, 1.0], [-1, 1.15, -1.62, 1.2], [-11, 0.5, -3.4, 0.85], [10, 0.55, 0.2, 0.9]].forEach(([dx, k, a, sc], i) => { const tx = x + dx, ty = yb - 9 - h * k; c.strokeStyle = "#4f7a50"; c.lineWidth = 0.7; c.beginPath(); c.moveTo(x, yb - 9); c.quadraticCurveTo(x + dx * 0.3, yb - 9 - h * k * 0.7, tx, ty); c.stroke(); mLeaf(tx, ty, a, sc, i % 2 ? "#2f6a3f" : "#3f8a4f"); }); };
             const pTwig = (x, yb, h, col) => { B(x - 4, yb - 10, 8, 10, col || "#d8c8b8"); B(x - 2, yb - 12, 4, 3, col || "#d8c8b8"); for (let i = 0; i < 6; i++) { const tx = x + (i - 2.5) * 4.4, ty = yb - 12 - h * (0.62 + 0.38 * ((i * 5) % 3) / 2), mx = x + (i - 2.5) * 1.2, my = yb - 12 - h * 0.5; c.strokeStyle = "#6a5a4a"; c.lineWidth = 0.5; c.beginPath(); c.moveTo(x, yb - 12); c.quadraticCurveTo(mx, my, tx, ty); c.stroke(); for (let j = 1; j <= 5; j++) { const t = j / 5.5, m = 1 - t, px = m * m * x + 2 * m * t * mx + t * t * tx, py = m * m * (yb - 12) + 2 * m * t * my + t * t * ty; lf(px, py, 3.2, (j % 2 ? -0.9 : -2.3) + (i - 2.5) * 0.12, j % 2 ? "#4f8a58" : "#62a866", 0.95); } lf(tx, ty, 3.4, -1.57 + (i - 2.5) * 0.15, "#5a9a62", 1); } };
             const pEuc = (x, yb, h, col) => { B(x - 3, yb - 7, 6, 7, col || "#e8dcc8"); B(x - 2, yb - 9, 4, 3, col || "#e8dcc8"); euc(x, yb - 9, x - 5, yb - 9 - h, 5, 1.6, -2); euc(x, yb - 9, x + 3, yb - 11 - h, 5, 1.6, 2); euc(x, yb - 9, x + 7, yb - 8 - h * 0.7, 4, 1.5, 1); };
             const pFiddle = (x, yb, h, col) => { pot(x, yb, col || "#b98a6a", 10, 8); c.strokeStyle = "#7a5a44"; c.lineWidth = 0.9; c.beginPath(); c.moveTo(x, yb - 8); c.lineTo(x, yb - 8 - h); c.stroke(); [[-1, 0.3], [1, 0.45], [-1, 0.62], [1, 0.78], [-1, 0.92]].forEach(([d, k], i) => { const yy = yb - 8 - h * k; c.strokeStyle = "#7a5a44"; c.lineWidth = 0.4; c.beginPath(); c.moveTo(x, yy); c.lineTo(x + d * 2.5, yy - 1); c.stroke(); lf(x + d * 2.5, yy - 1, 6.5, d > 0 ? -0.5 : Math.PI + 0.5, i % 2 ? "#5f9f60" : "#78b872", 2.3); }); lf(x, yb - 8 - h, 5.5, -1.57, "#78b872", 2.1); };
@@ -2243,15 +2247,21 @@
             const rug = (x, y, w, h, col, col2) => { R(x, y, w, h, col); R(x, y, w, 1, col2); R(x, y + h - 1, w, 1, col2); for (let i = x + 3; i < x + w - 2; i += 4) P(i, y + (h >> 1), col2); };
             F.rooms.forEach(rm => {
                 c.save(); c.translate(rm.x, 0); c.beginPath(); c.rect(0, 0, rm.w, HS_H); c.clip(); const w = rm.w;
-                if (rm.id === "living") { // 参考：浅米白客厅，大沙发、弧形落地灯、绿植、唱片架、菱格地毯
-                    wall(w, "#f6f1ea", "#f2ece3", "#e6d8c6", "#eccfa4", "#dcb888"); door(3, "#f6f2ee"); c.save(); c.translate(8, 0);
-                    frame(22, 6, 11, 14, "#fff8ec", "#cfe3d2"); B(38, 2, 34, 44, "#fffaf0"); R(40, 4, 30, 40, sky); if (night) { P(44, 8, "#fff"); P(64, 12, "#fff"); P(52, 7, "#ffe9a8"); for (let i = 0; i < 6; i++) { const bx = 41 + i * 5, bh = 8 + (i * 7) % 10; R(bx, 44 - bh, 4, bh, "#161c52"); for (let k = 0; k < 3; k++) if ((i + k) % 2) R(bx + 1, 44 - bh + 2 + k * 3, 1, 1, "#ffe9a8"); } } else { R(41, 32, 6, 12, "#a6cbea"); R(49, 26, 5, 18, "#98c0e0"); R(58, 34, 8, 10, "#a6cbea"); P(64, 8, "#ffe08a"); P(65, 8, "#ffe08a"); }
-                    R(54, 4, 1, 40, "#fffaf0"); R(40, 17, 30, 1, "#fffaf0"); R(40, 31, 30, 1, "#fffaf0");
-                    rug(22, 48, 52, 8, "#fbf7ee", "#b8c4d8");
-                    B(24, 34, 42, 12, "#f1e3d1"); B(24, 27, 42, 10, "#f6ebdb"); B(20, 31, 8, 15, "#e9d6bf"); B(62, 31, 8, 15, "#e9d6bf"); E(34, 33, 5, 5, "#f4c8a8"); B(43, 30, 10, 8, "#fdf8ee"); R(45, 32, 6, 1, "#d8cfc0"); R(45, 35, 6, 1, "#d8cfc0"); B(54, 30, 9, 8, "#f6efe0");
-                    B(36, 42, 22, 4, "#e8c28f"); R(38, 40, 8, 2, "#fff"); R(48, 40, 6, 2, "#f0c8c8");
-                    c.translate(6, 0); pTwig(76, 46, 26, "#d8c8b8"); R(92, 15, 1, 29, "#b9a89a"); B(87, 44, 11, 2, "#b9a89a"); B(86, 8, 13, 8, "#fff3d6");
-                    B(102, 28, 11, 18, "#ecc999"); for (let i = 0; i < 4; i++) R(104 + i * 2, 32, 1, 10, ["#c8a0a0", "#a0b8c8", "#e8d0a0", "#b0c8a0"][i]); B(101, 24, 13, 4, "#f7efe2"); pEuc(108, 24, 12, "#e8dcc8"); c.restore();
+                if (rm.id === "living") { // 他的客厅：暖色小客厅（参考图）——城市大窗、窗帘、浅灰大沙发+抱枕、圆木茶几、落地灯、龟背竹
+                    wall(w, "#efe6e2", "#e8dcd8", "#d4c0b8", "#e6c898", "#d4b078"); door(3, "#e3a878"); c.save(); c.translate(8, 0);
+                    pMonst2(24, 46, 26, "#575c68");
+                    R(33, 17, 1, 17, "#8a7a6a"); L(33, 34, 28, 47, "#8a7a6a"); L(33, 34, 38, 47, "#8a7a6a"); L(33, 34, 33, 47, "#8a7a6a");
+                    c.save(); c.translate(-5, 0);
+                    rug(41, 48, 80, 8, "#f1ece4", "#b4aa9c");
+                    R(46, 2, 9, 40, "#e2cbc2"); for (let x = 47; x < 55; x += 3) R(x, 3, 1, 38, "#d2b8ae"); R(101, 2, 9, 40, "#e2cbc2"); for (let x = 102; x < 110; x += 3) R(x, 3, 1, 38, "#d2b8ae");
+                    B(55, 3, 46, 28, "#fffaf0"); R(57, 5, 42, 24, sky); skyline(57, 5, 42, 24); if (night) { P(60, 8, "#fff"); P(90, 7, "#fff"); P(76, 9, "#ffe9a8"); }
+                    R(67, 5, 1, 24, "#fffaf0"); R(79, 5, 1, 24, "#fffaf0"); R(89, 5, 1, 24, "#fffaf0"); R(53, 29, 50, 2, "#e8dcc8"); R(53, 31, 50, 1, "#c8b498");
+                    [["#d86c7a", 6], ["#6fa8d8", 5], ["#f0c667", 6], ["#7dc08a", 5], ["#e8e0d0", 6]].forEach(([cl, hh], i) => R(58 + i * 2, 29 - hh, 2, hh, cl)); B(90, 24, 6, 5, "#d8a888"); lf(93, 24, 5, -1.2, "#6fb36c", 1.2); lf(93, 24, 5, -1.9, "#5aa064", 1.2);
+                    B(54, 33, 54, 13, "#d9d2dc"); B(54, 26, 54, 9, "#e6e0ea"); B(50, 30, 7, 16, "#cdc6d2"); B(105, 30, 7, 16, "#cdc6d2"); R(58, 46, 2, 2, "#8a6a4a"); R(100, 46, 2, 2, "#8a6a4a");
+                    B(58, 27, 9, 8, "#f4eef2"); B(69, 26, 9, 9, "#e8e0ec"); R(70, 28, 7, 1, "#c8c0d0"); R(70, 31, 7, 1, "#c8c0d0"); B(80, 27, 9, 8, "#d8d4e6"); for (let i = 0; i < 3; i++) R(82 + i * 2, 28, 1, 6, "#b8b4d0"); B(92, 27, 10, 8, "#b8c8e0"); B(100, 31, 10, 7, "#c9bfb5"); B(104, 24, 8, 3, "#a8b8a0"); B(104, 27, 8, 3, "#b8a898");
+                    E(81, 44, 9, 2, "#e6c7a0"); L(74, 45, 72, 52, "#a8785a"); L(88, 45, 90, 52, "#a8785a"); L(81, 46, 81, 52, "#a8785a"); B(75, 41, 4, 3, "#fffaf0");
+                    B(82, 38, 4, 6, "#f4efe6"); B(83, 36, 2, 3, "#f4efe6"); [[-4, -9], [0, -12], [4, -8]].forEach(([dx, dy], i) => { c.strokeStyle = "#6a8a5a"; c.lineWidth = 0.4; c.beginPath(); c.moveTo(84, 36); c.quadraticCurveTo(84 + dx * 0.4, 36 + dy * 0.6, 84 + dx, 36 + dy); c.stroke(); for (let k = 0; k < 7; k++) { const t = 0.35 + k * 0.1, fx = 84 + dx * t + ((k * 37) % 5 - 2) * 0.5, fy = 36 + dy * t + ((k * 17) % 3 - 1) * 0.6; c.fillStyle = k % 2 ? "#f4eef8" : "#dccaee"; c.beginPath(); c.arc(fx, fy, 0.75, 0, 6.283); c.fill(); } });
+                    c.restore(); c.restore();
                 } else if (rm.id === "study") { // 参考：拱形大窗+绿植、白大书桌、深色书架、挂钟、地图
                     wall(w, "#f4e8e4", "#efe0dc", "#dbc2bc", "#ecd0a2", "#dcb888");
                     B(2, 6, 22, 36, "#fffaf0"); R(4, 8, 18, 32, sky); R(4, 8, 3, 2, "#fffaf0"); R(19, 8, 3, 2, "#fffaf0"); R(12, 8, 2, 32, "#fffaf0"); R(4, 22, 18, 2, "#fffaf0"); if (night) { P(8, 13, "#fff"); P(17, 16, "#fff"); } else { R(5, 30, 7, 9, "#9ccf94"); R(15, 28, 6, 11, "#b0daa0"); } B(0, 41, 26, 3, "#e8c28f"); c.save(); c.translate(12, 0);
@@ -2261,14 +2271,14 @@
                     B(62, 4, 17, 42, "#9b5f56"); for (let r = 0; r < 4; r++) { R(64, 14 + r * 10, 13, 1, "#6a3a34"); for (let k = 0; k < 5; k++) R(64 + k * 3, 8 + r * 10 + (k % 2), 2, 5 - (k % 2), ["#f0e0c0", "#7fb0d8", "#e8a860", "#d8d0e8", "#a0d0a0"][(k + r) % 5]); }
                     B(52, 38, 9, 8, "#e0b878"); R(53, 41, 7, 1, "#c8985c");
                     B(20, 32, 40, 3, "#fffaf2"); L(24, 35, 21, 46, "#bfb4b0"); L(56, 35, 59, 46, "#bfb4b0"); R(27, 41, 26, 1, "#d0c8c4"); B(26, 26, 11, 6, "#e8e4ee"); R(28, 28, 7, 2, "#a9d9f0"); L(54, 32, 54, 22, "#8a8294"); B(50, 19, 9, 5, "#fff3d6");
-                    pFiddle(28, 46, 12, "#b98a6a"); c.restore();
+                    pFiddle(14, 46, 12, "#b98a6a"); c.restore();
                 } else if (rm.id === "hbed") { // 俯视：暖木床头柜+球形灯、米色双人床、灰地毯、墙上大画和搁架
                     R(0, 0, w, HS_H, "#e8c9a0"); for (let y = 12; y < HS_H; y += 4) R(0, y, w, 1, "#dcb888"); for (let i = 0, y = 8; y < HS_H; y += 4, i++) for (let x = (i * 19) % 29; x < w; x += 29) R(x, y, 1, 4, "#dcb888");
                     R(0, 0, w, 8, "#f4ece4"); R(0, 8, w, 1, HS_OUT); c.save(); c.translate(6, 0); frame(36, 1, 28, 6, "#4a4a52", "#d8d0cc"); R(40, 3, 6, 2, "#9a9aa0"); R(2, 2, 22, 1, "#d8a870"); for (let k = 0; k < 6; k++) R(3 + k * 3, 0, 2, 2, ["#d86c7a", "#6fa8d8", "#f0c667", "#7dc08a"][k % 4]); R(76, 2, 22, 1, "#d8a870");
                     R(w - 9, 9, 3, 51, D("#dff0fa", "#6c82a8")); R(w - 9, 9, 1, 51, "#fffaf0");
                     rug(24, 28, 62, 28, "#b5aab0", "#8f858c"); B(30, 12, 50, 36, "#c99a6a"); B(33, 11, 44, 7, "#b5855a"); B(32, 17, 46, 31, "#efe2cc"); B(35, 18, 17, 9, "#fffaf2"); B(56, 18, 17, 9, "#fffaf2"); B(32, 30, 46, 18, "#c5b8b0"); for (let x = 34; x < 78; x += 5) R(x, 40, 2, 7, "#a89a94");
                     B(18, 12, 12, 11, "#d8a870"); R(20, 17, 8, 1, "#a8857c"); B(80, 12, 12, 11, "#d8a870"); R(82, 17, 8, 1, "#a8857c"); E(23, 15, 3, 3, "#fffdf2"); E(87, 15, 3, 3, "#fffdf2");
-                    B(92, 30, 11, 11, "#f2e0bc"); B(94, 28, 7, 4, "#f6ead0"); pTop(99, 52, 6, "#e8a07a"); B(2, 40, 12, 14, "#f2e0bc"); R(4, 42, 8, 1, "#c89c68"); pTop(8, 20, 5, "#d9a0b0"); c.restore();
+                    B(92, 30, 11, 11, "#f2e0bc"); B(94, 28, 7, 4, "#f6ead0"); B(2, 40, 12, 14, "#f2e0bc"); R(4, 42, 8, 1, "#c89c68"); pTop(8, 20, 5, "#d9a0b0"); c.restore();
                 } else if (rm.id === "terrace") { // 参考：藤蔓木棚架+星星挂饰、一盏一盏星星灯、城市天际线、护栏、花箱、吊椅、圆地毯
                     R(0, 0, w, HS_FY, sky); if (night) { for (let i = 0; i < 14; i++) P((i * 31) % w, (i * 11) % 26, i % 3 ? "#fff" : "#ffe9a8"); E(80, 14, 4, 4, "#f4eccb"); } else { E(18, 14, 7, 3, "#fff", "#fff"); E(26, 12, 5, 3, "#fff", "#fff"); E(72, 16, 6, 2, "#fff", "#fff"); }
                     for (let x = 0, i = 0; x < w; x += 6, i++) { const h = 10 + (i * 7) % 16; R(x, 36 - h, 6, h + 2, night ? (i % 2 ? "#0e1440" : "#161c52") : (i % 2 ? "#a0bedc" : "#b4cee6")); R(x + 1, 36 - h + 2, 1, h - 3, night ? "#2a3270" : "#d0e2f2"); if (night) for (let k = 0; k < 3; k++) if ((i + k) % 2) R(x + 2, 36 - h + 3 + k * 4, 2, 2, "#ffe9a8"); }
@@ -2278,24 +2288,18 @@
                     for (let x = 12; x < w - 12; x += 3) { const l = 3 + ((x * 7) % 8); R(x, 3, 2, l, x % 2 ? "#5f9a5a" : "#74b36c"); P(x, 3 + l, "#8ccf80"); }
                     [[22, 12], [50, 10], [78, 13]].forEach(([x, y]) => { L(x + 1, 3, x + 1, y, "#d8d4cc"); R(x, y, 3, 3, "#fffdf6"); P(x + 1, y - 1, "#fffdf6"); P(x + 1, y + 3, "#fffdf6"); });
                     { let px0 = 10, py0 = 5; for (let i = 1; i <= 6; i++) { const x = 11 + i * 12, y = 5 + Math.round(3 * Math.sin(i * 1.05)); L(px0, py0, x, y, "#7a6a68"); px0 = x; py0 = y; } }
-                    B(2, 26, 14, 20, "#c99a6a"); R(4, 34, 10, 1, "#8a6a5a"); R(4, 41, 10, 1, "#8a6a5a"); pSucc(6, 34, "#d8c8e0"); pFlower(11, 41, "#e8b8c0"); pBush(8, 26, "#d8c8a0");
+                    B(2, 26, 14, 20, "#c99a6a"); R(4, 34, 10, 1, "#8a6a5a"); R(4, 41, 10, 1, "#8a6a5a"); pSucc(6, 34, "#d8c8e0"); pFlower(11, 41, "#e8b8c0");
                     B(22, 38, 18, 5, "#c99a6a"); for (let i = 0; i < 4; i++) E(25 + i * 4, 37, 2, 2, ["#7bbf72", "#f08aa8", "#fff", "#93d283"][i]);
                     B(52, 20, 3, 14, "#a98f78"); E(62, 34, 11, 11, "#c9a97a"); E(62, 34, 9, 9, "#f4efe6"); B(56, 28, 12, 8, "#fdfaf4"); B(63, 27, 9, 9, "#f1ebe0");
                     rug(36, 48, 30, 7, "#f6efe2", "#b8aa98"); E(44, 50, 4, 2, "#fdfaf4"); E(51, 51, 4, 2, "#f3ece0"); pMonst(w - 8, 46, 20, "#f4efe6");
-                } else if (rm.id === "home") { // 我家：灰白条纹墙 + 暖木地板（我这层统一色调）
-                    wall(w, "#efe6e2", "#e8dcd8", "#d4c0b8", "#e6c898", "#d4b078"); door(3, "#e3a878"); c.save(); c.translate(8, 0);
-                    // 参考图：暖色小客厅——大窗城市夜景、窗帘、浅灰大沙发+一堆抱枕、圆木茶几、编织摇椅、落地灯、龟背竹
-                    rug(26, 48, 80, 8, "#f1ece4", "#b4aa9c");
-                    R(46, 2, 9, 40, "#e2cbc2"); for (let x = 47; x < 55; x += 3) R(x, 3, 1, 38, "#d2b8ae"); R(101, 2, 9, 40, "#e2cbc2"); for (let x = 102; x < 110; x += 3) R(x, 3, 1, 38, "#d2b8ae");
-                    B(55, 3, 46, 28, "#fffaf0"); R(57, 5, 42, 24, sky); for (let x = 57, i = 0; x < 97; x += 5, i++) { const h = 6 + ((i * 7) % 13); R(x, 29 - h, 4, h, night ? "#0e1440" : "#9cbfe0"); if (night) for (let k = 0; k < 4; k++) if ((i + k) % 2) R(x + 1, 29 - h + 2 + k * 3, 1, 1, "#ffe9a8"); } if (night) { P(60, 8, "#fff"); P(88, 9, "#fff"); }
-                    R(67, 5, 1, 24, "#fffaf0"); R(79, 5, 1, 24, "#fffaf0"); R(89, 5, 1, 24, "#fffaf0"); R(53, 29, 50, 2, "#e8dcc8"); R(53, 31, 50, 1, "#c8b498");
-                    [["#d86c7a", 6], ["#6fa8d8", 5], ["#f0c667", 6], ["#7dc08a", 5], ["#e8e0d0", 6]].forEach(([cl, hh], i) => R(58 + i * 2, 29 - hh, 2, hh, cl)); B(90, 24, 6, 5, "#d8a888"); lf(93, 24, 5, -1.2, "#6fb36c", 1.2); lf(93, 24, 5, -1.9, "#5aa064", 1.2);
-                    R(38, 17, 1, 17, "#8a7a6a"); L(38, 34, 32, 47, "#8a7a6a"); L(38, 34, 44, 47, "#8a7a6a"); L(38, 34, 38, 47, "#8a7a6a");
-                    pMonst(20, 46, 26, "#575c68");
-                    B(54, 33, 54, 13, "#d9d2dc"); B(54, 26, 54, 9, "#e6e0ea"); B(50, 30, 7, 16, "#cdc6d2"); B(105, 30, 7, 16, "#cdc6d2"); R(58, 46, 2, 2, "#8a6a4a"); R(100, 46, 2, 2, "#8a6a4a");
-                    B(58, 27, 9, 8, "#f4eef2"); B(69, 26, 9, 9, "#e8e0ec"); R(70, 28, 7, 1, "#c8c0d0"); R(70, 31, 7, 1, "#c8c0d0"); B(80, 27, 9, 8, "#d8d4e6"); for (let i = 0; i < 3; i++) { R(82 + i * 2, 28, 1, 6, "#b8b4d0"); } B(92, 27, 10, 8, "#b8c8e0"); B(100, 31, 10, 7, "#c9bfb5"); B(104, 24, 8, 3, "#a8b8a0"); B(104, 27, 8, 3, "#b8a898");
-                    E(70, 44, 9, 2, "#e6c7a0"); L(63, 45, 61, 52, "#a8785a"); L(77, 45, 79, 52, "#a8785a"); L(70, 46, 70, 52, "#a8785a"); B(66, 40, 4, 3, "#fffaf0"); B(72, 38, 4, 6, "#f4efe6"); L(74, 38, 74, 33, "#6fb36c"); P(73, 32, "#e8d8f0"); P(75, 33, "#f0e0f4"); P(74, 31, "#e8d8f0");
-                    B(86, 47, 14, 3, "#d8a878"); B(98, 36, 3, 14, "#c89868"); R(99, 38, 1, 10, "#e8c898"); B(88, 43, 10, 2, "#d8a878"); L(84, 56, 102, 56, "#a8784a"); L(84, 56, 86, 51, "#a8784a"); L(102, 56, 100, 51, "#a8784a");
+                } else if (rm.id === "home") { // 我家：浅米白客厅（大落地窗、沙发、弧形落地灯、枝条花瓶）
+                    wall(w, "#f6f1ea", "#f2ece3", "#e6d8c6", "#eccfa4", "#dcb888"); door(3, "#f6f2ee"); c.save(); c.translate(8, 0);
+                    frame(22, 6, 11, 14, "#fff8ec", "#cfe3d2"); B(38, 2, 34, 44, "#fffaf0"); R(40, 4, 30, 40, sky); if (night) { P(44, 8, "#fff"); P(64, 12, "#fff"); P(52, 7, "#ffe9a8"); for (let i = 0; i < 6; i++) { const bx = 41 + i * 5, bh = 8 + (i * 7) % 10; R(bx, 44 - bh, 4, bh, "#161c52"); for (let k = 0; k < 3; k++) if ((i + k) % 2) R(bx + 1, 44 - bh + 2 + k * 3, 1, 1, "#ffe9a8"); } } else { R(41, 32, 6, 12, "#a6cbea"); R(49, 26, 5, 18, "#98c0e0"); R(58, 34, 8, 10, "#a6cbea"); P(64, 8, "#ffe08a"); P(65, 8, "#ffe08a"); }
+                    R(54, 4, 1, 40, "#fffaf0"); R(40, 17, 30, 1, "#fffaf0"); R(40, 31, 30, 1, "#fffaf0");
+                    rug(22, 48, 52, 8, "#fbf7ee", "#b8c4d8");
+                    B(24, 34, 42, 12, "#f1e3d1"); B(24, 27, 42, 10, "#f6ebdb"); B(20, 31, 8, 15, "#e9d6bf"); B(62, 31, 8, 15, "#e9d6bf"); E(34, 33, 5, 5, "#f4c8a8"); B(43, 30, 10, 8, "#fdf8ee"); R(45, 32, 6, 1, "#d8cfc0"); R(45, 35, 6, 1, "#d8cfc0"); B(54, 30, 9, 8, "#f6efe0");
+                    B(36, 42, 22, 4, "#e8c28f"); R(38, 40, 8, 2, "#fff"); R(48, 40, 6, 2, "#f0c8c8");
+                    c.translate(6, 0); pTwig(76, 46, 26, "#d8c8b8"); R(92, 15, 1, 29, "#b9a89a"); B(87, 44, 11, 2, "#b9a89a"); B(86, 8, 13, 8, "#fff3d6");
                     c.restore();
                 } else if (rm.id === "kitchen") { // 参考：木架+小调料罐、锅碗瓢盆/刀架/抹布那层更高、瓷砖绿菱形、蘑菇灯、台面+柜子
                     wall(w, ...MYW); c.save(); c.translate(12, 0);
@@ -2318,13 +2322,13 @@
                     B(9, 16, 3, 24, "#c8ccd8"); B(28, 16, 3, 24, "#c8ccd8"); B(9, 14, 22, 3, "#c8ccd8"); B(5, 22, 5, 3, "#e6e9f0"); B(30, 22, 5, 3, "#e6e9f0");
                     B(12, 8, 16, 9, "#4a4e5c"); R(14, 10, 12, 4, "#9ee0a8"); P(15, 15, "#f08a8a"); P(18, 15, "#ffe08a"); P(21, 15, "#8ac0f0"); P(24, 15, "#f0f0f0");
                     // 椭圆机（朝右侧视）：后置大飞轮罩、前立柱 + 控制台、长摆臂 + 把手、脚踏板
-                    B(38, 44, 36, 2, "#e6e9f0"); B(38, 45, 5, 2, "#4a4e5c"); B(69, 45, 5, 2, "#4a4e5c"); B(55, 31, 17, 13, "#e6e9f0"); E(63, 38, 4, 4, "#aab0c0"); E(63, 38, 1, 1, "#e6e9f0");
-                    B(63, 13, 5, 19, "#c8ccd8"); B(60, 7, 10, 7, "#4a4e5c"); R(60, 8, 1, 5, "#9ee0a8"); P(66, 12, "#f08a8a");
-                    L(64, 15, 46, 38, "#aab0c0"); L(65, 15, 47, 38, "#c8ccd8"); L(66, 15, 48, 38, "#aab0c0"); B(54, 14, 3, 13, "#8a6a8a"); L(56, 15, 64, 16, "#aab0c0");
-                    B(40, 38, 13, 3, "#4a4e5c"); L(53, 41, 58, 40, "#aab0c0");
+                    // 椭圆机（参考图：前立柱+手柄在左，大飞轮罩在右后下方，踏板在中间低处，长摆臂）
+                    B(38, 44, 36, 2, "#4a4e5c"); B(38, 42, 6, 3, "#4a4e5c"); B(68, 42, 6, 3, "#4a4e5c"); B(57, 33, 16, 11, "#e6e9f0"); E(65, 39, 5, 5, "#c8ccd8"); E(65, 39, 3, 3, "#8a8ea0"); E(65, 39, 1, 1, "#e6e9f0");
+                    B(41, 12, 3, 31, "#c8ccd8"); B(37, 5, 11, 7, "#4a4e5c"); R(38, 6, 9, 3, "#9ee0a8"); P(40, 10, "#f08a8a"); B(34, 12, 4, 3, "#8a6a8a"); B(47, 12, 4, 3, "#8a6a8a");
+                    L(44, 13, 56, 36, "#aab0c0"); L(45, 13, 57, 36, "#c8ccd8"); L(46, 13, 58, 36, "#aab0c0"); L(44, 42, 58, 38, "#aab0c0"); B(46, 37, 13, 3, "#4a4e5c"); B(52, 8, 3, 16, "#8a6a8a");
                     B(76, 36, 12, 10, "#6e7282"); R(77, 40, 10, 1, "#2d2f3a"); B(77, 33, 4, 3, "#2d2f3a"); B(83, 33, 4, 3, "#2d2f3a");
                     R(40, 49, 34, 5, "#b69ae0"); R(40, 49, 34, 1, "#d2bef0"); R(40, 54, 34, 1, "#9a80c8"); B(86, 41, 3, 5, "#6ec0e8");
-                    R(46, 0, 1, 3, "#8a8ea0"); B(40, 3, 14, 8, "#fff3d6"); c.restore();
+                    R(80, 0, 1, 2, "#8a8ea0"); c.restore();
                 } else if (rm.id === "mybed") { // 俯视：一张大双人床居中；左=弧形置物车+窗帘+黑皮沙发，右=灰沙发+桌灯+桉树+靠墙画框
                     R(0, 0, w, HS_H, "#ecd0a2"); for (let y = 12; y < HS_H; y += 4) R(0, y, w, 1, "#dcb888"); for (let i = 0, y = 8; y < HS_H; y += 4, i++) for (let x = (i * 21) % 31; x < w; x += 31) R(x, y, 1, 4, "#dcb888");
                     R(0, 0, w, 8, "#eef0f3"); for (let x = 0; x < w; x += 8) R(x, 0, 4, 8, "#dfe2e8"); R(0, 7, w, 1, "#c3c8d2"); R(0, 8, w, 1, HS_OUT);
@@ -2516,7 +2520,7 @@
                     if (night) { if (!lit) { c.fillStyle = "rgba(12,16,52,.62)"; c.fillRect(rm.x, 0, rm.w, HS_H); } else { c.fillStyle = "rgba(255,214,140,.10)"; c.fillRect(rm.x, 0, rm.w, HS_H); } } else if (fl === "lo" && !lit) { c.fillStyle = "rgba(40,36,70,.14)"; c.fillRect(rm.x, 0, rm.w, HS_H); }
                     rm.lamps.forEach((l, li) => { const lx = rm.x + l.x, cx = lx + l.w / 2, cy = l.y + l.h / 2;
                         if (l.star) { const on = night, tw = on ? 0.55 + 0.45 * Math.sin(t / 520 + li * 1.9) : 0; c.fillStyle = !on ? "#cfc8c0" : (tw > 0.55 ? "#fff2a0" : (tw > 0.2 ? "#ffd75a" : "#c8a040")); c.fillRect(lx + 1, l.y, 2, 4); c.fillRect(lx, l.y + 1, 4, 2); if (on) { const g = c.createRadialGradient(cx, cy, 0, cx, cy, 11); g.addColorStop(0, `rgba(255,226,120,${night ? 0.15 + 0.5 * tw : 0.5 * (tw - 0.5)})`); g.addColorStop(1, "rgba(255,226,120,0)"); c.fillStyle = g; c.fillRect(cx - 12, cy - 12, 24, 24); } return; }
-                        c.fillStyle = lit ? "#fff0b8" : "#d6cdc4"; if (l.cap) { for (let yy = 0; yy < l.h; yy++) { const hw = Math.round((l.w / 2) * Math.sqrt(1 - Math.pow((yy + 0.5 - l.h) / l.h, 2))); c.fillRect(Math.round(cx - hw), l.y + yy, hw * 2, 1); } c.fillStyle = "#cdbfae"; c.fillRect(Math.round(cx) - 1, l.y + l.h, 3, 3); } else c.fillRect(lx + 1, l.y + 1, l.w - 2, l.h - 2); c.fillStyle = lit ? "#fffbe6" : "#e8e0d8"; c.fillRect(lx + 2, l.y + 1, l.w - 4, 1);
+                        c.fillStyle = lit ? "#fff0b8" : "#d6cdc4"; if (l.top) { c.fillStyle = "#a8857c"; c.beginPath(); c.arc(cx, cy, l.w / 2 + 0.6, 0, 6.283); c.fill(); c.fillStyle = lit ? "#fff0b8" : "#e4dcd2"; c.beginPath(); c.arc(cx, cy, l.w / 2, 0, 6.283); c.fill(); c.fillStyle = lit ? "#fffbe6" : "#f2ece4"; c.beginPath(); c.arc(cx - 0.5, cy - 0.5, l.w / 2 - 2, 0, 6.283); c.fill(); c.fillStyle = "#b9a89a"; c.fillRect(cx - 0.5, cy - 0.5, 1, 1); } else if (l.cap) { for (let yy = 0; yy < l.h; yy++) { const hw = Math.round((l.w / 2) * Math.sqrt(1 - Math.pow((yy + 0.5 - l.h) / l.h, 2))); c.fillRect(Math.round(cx - hw), l.y + yy, hw * 2, 1); } c.fillStyle = "#cdbfae"; c.fillRect(Math.round(cx) - 1, l.y + l.h, 3, 3); } else c.fillRect(lx + 1, l.y + 1, l.w - 2, l.h - 2); if (!l.top) { c.fillStyle = lit ? "#fffbe6" : "#e8e0d8"; c.fillRect(lx + 2, l.y + 1, l.w - 4, 1); }
                         if (lit && night) { const g = c.createRadialGradient(cx, cy, 1, cx, cy, 26); g.addColorStop(0, "rgba(255,226,150,.55)"); g.addColorStop(1, "rgba(255,226,150,0)"); c.fillStyle = g; c.fillRect(rm.x, 0, rm.w, HS_H); } });
                 });
                 if (me.fl === fl && him.fl === fl && !me.out && !him.out && !me.hid && !him.hid && Math.abs(me.x - him.x) < 24 && Math.abs(me.y - him.y) < 12 && t - HS.heartT > 650) { HS.heartT = t; HS.hearts.push({ fl, x: (me.x + him.x) / 2 + (Math.random() - .5) * 4, y: Math.min(me.y, him.y) - 34, a: 0 }); }
