@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>亲爱的TA</title>
     <!-- 手写体字体改为页面加载完成后异步注入，避免因外部字体服务访问慢/被墙而拖慢或卡住首次打开 -->
     <style>
@@ -102,7 +102,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        html, body { height: 100%; width: 100%; position: fixed; overflow: hidden; touch-action: manipulation; background: var(--bg); color: var(--text-main); }
+        html, body { height: 100%; width: 100%; position: fixed; overflow: hidden; touch-action: pan-x pan-y; background: var(--bg); color: var(--text-main); }
         body { display: flex; flex-direction: column; position: relative; }
 
         .bg-layer { position: absolute; top:0; left:0; width:100%; height:100%; background-size: cover; background-position: center; z-index: 1; pointer-events: none; }
@@ -600,7 +600,7 @@
         .pet-hint { text-align:center; font-size:11px; color:var(--text-sub); margin:4px 0 2px; }
         .pet-tools { display:flex; gap:8px; padding:10px 20px; } .pet-tools button { flex:1; border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:12px; padding:10px 0; font-size:13px; }
         .pet-food img { width:48px; height:48px; image-rendering:pixelated; display:block; margin:0 auto 2px; }
-        .ped-wrap { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+        #petEditPage, #petEditPage * { touch-action: pan-x pan-y; } .ped-wrap { flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; align-items:center; gap:10px; }
         #pedCanvas { touch-action:none; border:3px solid #2b2238; border-radius:4px; background:#fff; image-rendering:pixelated; }
         .ped-scroll { max-width:100%; flex:0 0 auto; overflow:auto; border-radius:8px; -webkit-overflow-scrolling:touch; } #pedCanvas { touch-action:none; display:block; }
         .ped-tools { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; } .ped-tools button { border:1px solid var(--border); background:var(--panel); color:var(--text-main); border-radius:10px; padding:8px 10px; font-size:12.5px; } .ped-tools button.on { background:var(--primary); color:var(--bg); }
@@ -2251,14 +2251,14 @@
                 c.save(); c.translate(rm.x, 0); c.beginPath(); c.rect(0, 0, rm.w, HS_H); c.clip(); const w = rm.w;
                 if (rm.id === "living") { // 他的客厅：暖色小客厅（参考图）——城市大窗、窗帘、浅灰大沙发+抱枕、圆木茶几、落地灯、龟背竹
                     wall(w, "#efe6e2", "#e8dcd8", "#d4c0b8", "#e6c898", "#d4b078"); door(3, "#e3a878"); c.save(); c.translate(8, 0);
-                    pSlim(30, 46, 34, "#575c68");
+                    pMonst2(30, 46, 26, "#575c68");
                     R(41, 17, 1, 17, "#8a7a6a"); L(41, 34, 36, 47, "#8a7a6a"); L(41, 34, 46, 47, "#8a7a6a"); L(41, 34, 41, 47, "#8a7a6a");
                     c.save(); c.translate(-1, 0);
                     rug(41, 48, 80, 8, "#f1ece4", "#b4aa9c"); c.save(); c.translate(3, 0);
                     R(46, 2, 9, 40, "#e2cbc2"); for (let x = 47; x < 55; x += 3) R(x, 3, 1, 38, "#d2b8ae"); R(101, 2, 9, 40, "#e2cbc2"); for (let x = 102; x < 110; x += 3) R(x, 3, 1, 38, "#d2b8ae");
                     B(55, 3, 46, 28, "#fffaf0"); R(57, 5, 42, 24, sky); skyline(57, 5, 42, 24, 0.8, 29); if (night) { P(60, 8, "#fff"); P(90, 7, "#fff"); P(76, 9, "#ffe9a8"); }
                     R(67, 5, 1, 24, "#fffaf0"); R(79, 5, 1, 24, "#fffaf0"); R(89, 5, 1, 24, "#fffaf0"); R(53, 29, 50, 2, "#e8dcc8"); R(53, 31, 50, 1, "#c8b498");
-                    [["#d86c7a", 6], ["#6fa8d8", 5], ["#f0c667", 6], ["#7dc08a", 5], ["#e8e0d0", 6]].forEach(([cl, hh], i) => R(58 + i * 2, 29 - hh, 2, hh, cl)); B(90, 25, 6, 4, "#d8a888"); [[-1.62, 9], [-1.5, 12], [-1.4, 8]].forEach(([a, l], i) => lf(91.5 + i * 1.3, 25, l, a, i % 2 ? "#3f7a4a" : "#4f9a58", 0.7)); c.restore();
+                    [["#d86c7a", 6], ["#6fa8d8", 5], ["#f0c667", 6], ["#7dc08a", 5], ["#e8e0d0", 6]].forEach(([cl, hh], i) => R(58 + i * 2, 29 - hh, 2, hh, cl)); B(90, 25, 6, 4, "#d8a888"); [[-2.9, 5], [-2.5, 6.5], [-2.1, 7.5], [-1.75, 8], [-1.4, 8], [-1.05, 7.5], [-0.65, 6.5], [-0.25, 5], [-1.57, 9]].forEach(([a, l], i) => lf(93, 25, l, a, ["#4f9a58", "#6fb36c", "#3f8a4f"][i % 3], 1.9)); c.restore();
                     B(54, 33, 54, 13, "#d9d2dc"); B(54, 26, 54, 9, "#e6e0ea"); B(50, 30, 7, 16, "#cdc6d2"); B(105, 30, 7, 16, "#cdc6d2"); R(58, 46, 2, 2, "#8a6a4a"); R(100, 46, 2, 2, "#8a6a4a");
                     B(58, 27, 9, 8, "#f4eef2"); B(69, 26, 9, 9, "#e8e0ec"); R(70, 28, 7, 1, "#c8c0d0"); R(70, 31, 7, 1, "#c8c0d0"); B(80, 27, 9, 8, "#d8d4e6"); for (let i = 0; i < 3; i++) R(82 + i * 2, 28, 1, 6, "#b8b4d0"); B(92, 27, 10, 8, "#b8c8e0"); B(100, 31, 10, 7, "#c9bfb5"); B(104, 24, 8, 3, "#a8b8a0"); B(104, 27, 8, 3, "#b8a898");
                     B(72, 42, 18, 4, "#e6c7a0"); R(73, 46, 16, 1, "#c8a070"); B(73, 46, 2, 6, "#a8785a"); B(87, 46, 2, 6, "#a8785a"); B(74, 39, 4, 3, "#fffaf0");
@@ -2278,7 +2278,7 @@
                     R(w - 14, 9, 3, 51, D("#dff0fa", "#6c82a8")); R(w - 14, 9, 1, 51, "#fffaf0");
                     rug(24, 28, 62, 28, "#b5aab0", "#8f858c"); B(30, 12, 50, 36, "#c99a6a"); B(33, 11, 44, 7, "#b5855a"); B(32, 17, 46, 31, "#efe2cc"); B(35, 18, 17, 9, "#fffaf2"); B(56, 18, 17, 9, "#fffaf2"); B(32, 30, 46, 18, "#c5b8b0"); for (let x = 34; x < 78; x += 5) R(x, 40, 2, 7, "#a89a94");
                     B(18, 12, 12, 11, "#d8a870"); R(20, 17, 8, 1, "#a8857c"); B(80, 12, 12, 11, "#d8a870"); R(82, 17, 8, 1, "#a8857c"); E(23, 15, 3, 3, "#fffdf2"); E(87, 15, 3, 3, "#fffdf2");
-                    B(93, 9, 14, 10, "#fbfbf8"); R(94, 18, 12, 1, "#e4e4de"); B(95, 11, 4, 3, "#e8dcc8"); E(103, 13, 2, 2, "#c9d4e6"); E(100, 25, 5, 5, "#fbfbf8"); R(97, 21, 7, 2, "#e4e4de");
+                    B(110, 14, 10, 32, "#fbfbf8"); R(111, 15, 1, 30, "#e4e4de"); R(118, 15, 1, 30, "#e4e4de"); B(102, 26, 8, 8, "#fbfbf8"); R(102, 26, 2, 8, "#e4e4de");
                     pTop(8, 20, 5, "#d9a0b0"); c.restore();
                 } else if (rm.id === "terrace") { // 参考：藤蔓木棚架+星星挂饰、一盏一盏星星灯、城市天际线、护栏、花箱、吊椅、圆地毯
                     R(0, 0, w, HS_FY, sky); if (night) { for (let i = 0; i < 14; i++) P((i * 31) % w, (i * 11) % 26, i % 3 ? "#fff" : "#ffe9a8"); E(80, 14, 4, 4, "#f4eccb"); } else { E(18, 14, 7, 3, "#fff", "#fff"); E(26, 12, 5, 3, "#fff", "#fff"); E(72, 16, 6, 2, "#fff", "#fff"); }
@@ -2304,7 +2304,7 @@
                     rug(19, 48, 52, 8, "#fbf7ee", "#b8c4d8");
                     B(24, 34, 42, 12, "#f1e3d1"); B(24, 27, 42, 10, "#f6ebdb"); B(20, 31, 8, 15, "#e9d6bf"); B(62, 31, 8, 15, "#e9d6bf"); E(34, 33, 5, 5, "#f4c8a8"); B(43, 30, 10, 8, "#fdf8ee"); R(45, 32, 6, 1, "#d8cfc0"); R(45, 35, 6, 1, "#d8cfc0"); B(54, 30, 9, 8, "#f6efe0");
                     B(37, 42, 16, 4, "#e6c7a0"); R(38, 46, 14, 1, "#c8a070"); B(38, 46, 2, 6, "#a8785a"); B(50, 46, 2, 6, "#a8785a");
-                    c.save(); c.translate(-40, 0); B(84, 35, 3, 2, "#e4f2f8"); B(82, 37, 7, 5, "#d4eaf2"); R(83, 39, 5, 2, "#a9d4e8"); R(83, 38, 1, 3, "#fff"); [[-3, -14, "#f08aa8"], [0, -16, "#e8506a"], [3, -13, "#ffd36a"]].forEach(([dx, dy, col]) => { const sx = 85.5, sy = 41; c.strokeStyle = "#5a9a5a"; c.lineWidth = 0.5; c.beginPath(); c.moveTo(sx, sy); c.quadraticCurveTo(sx + dx * 0.3, sy + dy * 0.6, sx + dx, sy + dy); c.stroke(); const hx = sx + dx, hy = sy + dy; c.fillStyle = col; c.beginPath(); c.moveTo(hx - 1.5, hy); c.quadraticCurveTo(hx - 1.8, hy + 2.6, hx, hy + 3); c.quadraticCurveTo(hx + 1.8, hy + 2.6, hx + 1.5, hy); c.lineTo(hx + 0.8, hy - 1); c.lineTo(hx, hy); c.lineTo(hx - 0.8, hy - 1); c.closePath(); c.fill(); c.strokeStyle = pxMix(col, "#1b1230", 0.4); c.lineWidth = 0.3; c.stroke(); });  c.restore();
+                    c.save(); c.translate(-40, 0);  [[-3, -14, "#f08aa8"], [0, -16, "#e8506a"], [3, -13, "#ffd36a"]].forEach(([dx, dy, col]) => { const sx = 85.5, sy = 41; c.strokeStyle = "#5a9a5a"; c.lineWidth = 0.5; c.beginPath(); c.moveTo(sx, sy); c.quadraticCurveTo(sx + dx * 0.3, sy + dy * 0.6, sx + dx, sy + dy); c.stroke(); const hx = sx + dx, hy = sy + dy; c.fillStyle = col; c.beginPath(); c.moveTo(hx - 1.5, hy); c.quadraticCurveTo(hx - 1.8, hy + 2.6, hx, hy + 3); c.quadraticCurveTo(hx + 1.8, hy + 2.6, hx + 1.5, hy); c.lineTo(hx + 0.8, hy - 1); c.lineTo(hx, hy); c.lineTo(hx - 0.8, hy - 1); c.closePath(); c.fill(); c.strokeStyle = pxMix(col, "#1b1230", 0.4); c.lineWidth = 0.3; c.stroke(); }); c.fillStyle = "rgba(236,246,252,0.72)"; c.strokeStyle = HS_OUT; c.lineWidth = 0.5; c.beginPath(); c.moveTo(84.5, 33); c.lineTo(84.5, 35.6); c.bezierCurveTo(80.6, 36.8, 80.8, 41.6, 83.2, 42); c.lineTo(87.8, 42); c.bezierCurveTo(90.2, 41.6, 90.4, 36.8, 86.5, 35.6); c.lineTo(86.5, 33); c.closePath(); c.fill(); c.stroke(); R(83.8, 32.6, 3.4, 0.7, "#fff"); R(83.4, 37.5, 0.7, 3, "#fff"); R(83.2, 41, 4.6, 1, "#cfe0ea"); c.restore();
                     c.translate(6, 0); pSnake(80, 46, 30, "#d8c8b8"); R(92, 15, 1, 29, "#b9a89a"); B(87, 44, 11, 2, "#b9a89a"); B(86, 8, 13, 8, "#fff3d6");
                     c.restore();
                 } else if (rm.id === "kitchen") { // 参考：木架+小调料罐、锅碗瓢盆/刀架/抹布那层更高、瓷砖绿菱形、蘑菇灯、台面+柜子
@@ -2492,9 +2492,9 @@
                 const K = pxKit(c), rmB = hsRoomAt(e.fl, e.x), duv = rmB.id === "mybed" ? "#b8a8e4" : "#efe2cc", dk = pxMix(duv, "#5a4a60", 0.18), lt = pxMix(duv, "#ffffff", 0.45), hair = who === "me" ? "#7a5646" : "#4a4a5a", skin = "#fbdcc4";
                 // 被子盖到哪是哪：和床上被子同色，从脖子下面自然盖下去（带肩膀的起伏和折边），头露在枕头上
                 const bl = rmB.id === "mybed" ? "#b8a8e4" : "#c5b8b0", bd = pxMix(bl, "#5a4a60", 0.2), bh = pxMix(bl, "#ffffff", 0.4);
-                K.R(x - 8, y + 5, 17, 12, bd); K.R(x - 7, y + 4, 15, 13, bl); K.R(x - 6, y + 3, 13, 1, bl); K.R(x - 6, y + 3, 13, 1, bh); K.R(x - 7, y + 5, 15, 1, bh); K.R(x - 5, y + 8, 2, 8, bd); K.R(x + 4, y + 8, 2, 8, bh);
-                K.E(x, y, 4, 4, skin); K.R(x - 4, y - 4, 9, 3, hair); K.R(x - 5, y - 2, 2, 4, hair); K.R(x + 4, y - 2, 2, 4, hair);
-                K.R(x - 3, y, 2, 1, "#6a4a46"); K.R(x + 2, y, 2, 1, "#6a4a46"); K.P(x - 3, y + 2, "#f4a8a8"); K.P(x + 3, y + 2, "#f4a8a8"); K.R(x - 1, y + 3, 2, 1, "#e89a98"); return;
+                K.E(x, y, 4, 4, skin); K.R(x - 4, y - 4, 9, 3, hair); K.R(x - 5, y - 2, 2, 3, hair); K.R(x + 4, y - 2, 2, 3, hair);
+                K.R(x - 3, y, 2, 1, "#6a4a46"); K.R(x + 2, y, 2, 1, "#6a4a46"); K.P(x - 3, y + 2, "#f4a8a8"); K.P(x + 3, y + 2, "#f4a8a8");
+                K.R(x - 6, y + 4, 13, 1, bd); K.R(x - 8, y + 5, 17, 12, bd); K.R(x - 7, y + 5, 15, 11, bl); K.R(x - 6, y + 4, 13, 1, bh); K.R(x - 7, y + 6, 15, 1, bh); K.R(x - 4, y + 9, 9, 1, bd); K.R(x - 6, y + 12, 5, 1, bd); K.R(x + 2, y + 13, 5, 1, bd); return;
             }
             const x = Math.round(e.x), y = Math.round(e.y), top = hsRoomAt(e.fl, e.x).top, bob = e.walking && Math.sin(e.ph * 2) > 0 ? -1 : 0;
             const key = top && hsSpr(who + "Top") ? who + "Top" : who, im = hsSprCv(key);
@@ -2673,7 +2673,7 @@
             gal.halo.forEach(h => { const x = h.x * W, y = h.y * H, g = ctx.createRadialGradient(x, y, 0, x, y, h.r * 2.6); g.addColorStop(0, `rgba(${h.c},.95)`); g.addColorStop(0.3, `rgba(${h.c},.3)`); g.addColorStop(1, `rgba(${h.c},0)`); ctx.fillStyle = g; ctx.fillRect(x - h.r * 3, y - h.r * 3, h.r * 6, h.r * 6); });
             // 一颗星星从下方飞进去
             if (galFly) {
-                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.12 + w.r * 0.5, [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
+                const k = performance.now() - galFly.t0, w = galFly.w; const sx = W * 0.5, sy = H - 26; const wr2 = 0.12 + w.r * 0.5; if (!galFly.fixed) { galFly.fixed = 1; for (let n = 0; n < 60; n++) { if (pos(wr2, w.a + omega(wr2) * t)[1] < H * 0.55) break; w.a = Math.random() * 6.283; } saveData(); } const [tx, ty] = pos(wr2, w.a + omega(wr2) * t);
                 if (k < 1200) { // 一颗亮晶晶的星从输入框沿一条直线越飞越快，直接飞进星河（不转向、不走弧线）
                     const q = k / 1200, e = q * q * (0.35 + 0.65 * q), x0 = sx, y0 = sy - 6, bx = x0 + (tx - x0) * e, by = y0 + (ty - y0) * e;
                     for (let j = 1; j <= 9; j++) { const ee = Math.max(0, e - j * 0.035); ctx.fillStyle = `rgba(255,255,255,${0.38 * (1 - j / 10)})`; ctx.beginPath(); ctx.arc(x0 + (tx - x0) * ee, y0 + (ty - y0) * ee, 2.3 * (1 - j / 11), 0, 6.283); ctx.fill(); }
@@ -3207,6 +3207,8 @@
             "#d4f0c8", "#c8f0d8", "#a8e4c4", "#c8e8b4", "#9fd4a4", "#b8e0e0", "#cfe6fb", "#a8d4f0", "#bcd4f4", "#e0d4f8", "#d4c6f6", "#cdbff0", "#b4a0e0",
             "#e8584a", "#d04a5a", "#8a3a4a", "#6a9ae0", "#7ac8c0", "#3a4a7a", "#e8c060", "#8d7a82", "#b79e98", "#d9b8a0", "#f0cfb0", "#fbe3a8", "#fffaf2", "#ffe3d6"];
         let ped = { G: 32, px: [], tool: "pen", color: "#8d7a82", undo: [], drawing: false, last: null, cs: 10 };
+        ["gesturestart", "gesturechange", "gestureend"].forEach(n => document.addEventListener(n, ev => ev.preventDefault(), { passive: false }));
+        document.addEventListener("touchmove", ev => { if (ev.touches && ev.touches.length > 1) ev.preventDefault(); }, { passive: false });
         function petEditOpen(target) {
             petInit(); const T = ped.target = (typeof target === "string" ? target : "pet"), SP = T === "pet" ? db.pet.sprite : ((db.house && db.house.spr && db.house.spr[T]) || null); ped.G = T === "pet" ? 32 : 96; ped.zoom = T === "pet" ? 1 : 2; const G = ped.G;
             { const tt = document.querySelector("#petEditPage .app-page-title"); if (tt) tt.innerText = T === "pet" ? "画宠物" : (T.endsWith("Top") ? "画小人（俯视）" : T.endsWith("Sleep") ? "画小人（睡着）" : "画小人（站立）"); } ped.px = new Array(G * G).fill(0); ped.undo = [];
