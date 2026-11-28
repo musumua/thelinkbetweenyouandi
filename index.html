@@ -3364,9 +3364,9 @@
             const top = events.reduce((a, b) => (order[b.importance] > order[a.importance] ? b : a));
             return importanceColor(top.importance);
         }
-        const CAL_WEATHER = ["☀️","🌤️","☁️","🌧️","⛈️","❄️","🌫️"], CAL_MOOD = ["😊","🥰","😐","😔","😠","😴","🤒","🥳"];
+        const CAL_WEATHER = ["☀️","🌤️","☁️","🌧️","⛈️","❄️","🌫️"], CAL_MOOD = ["😊","🥰","😐","😔","😠","😫","🤒","🥳"];
         function calTodayKey() { const n = new Date(); return calDateKey(n.getFullYear(), n.getMonth(), n.getDate()); }
-        function calDayIcons(key) { const c = (db.calDays || {})[key] || {}; return (c.weather || "") + (c.mood || ""); }
+        function calDayIcons(key) { const c = (db.calDays || {})[key] || {}; return (c.weather || "") + (c.mood === "😴" ? "😫" : (c.mood || "")); }
         function renderCalendarGrid() {
             initCalendarViewIfNeeded();
             const predSet = periodPredKeySet(), now = new Date(), tk = calTodayKey();
@@ -3401,7 +3401,7 @@
             const k = currentDayDetailKey; if (!k) return;
             const pa = k.split("-"), l = document.getElementById("calSelLabel"); if (l) l.innerText = `${pa[0]}年${pa[1]}月${pa[2]}日`;
             const c = (db.calDays || {})[k] || {}, md = document.getElementById("calSelMD");
-            if (md) md.innerText = (c.weather || c.mood) ? `${c.weather || "—"}  ${c.mood || "—"}` : "还没记天气和心情";
+            if (md) md.innerText = (c.weather || c.mood) ? `${c.weather || "—"}  ${c.mood === "😴" ? "😫" : (c.mood || "—")}` : "还没记天气和心情";
         }
         function calSelectDay(key) { currentDayDetailKey = key; renderCalendarGrid(); renderDayDetailEventsList(); }
         let calTapTimer = null, calTapKey = null;
@@ -3422,7 +3422,7 @@
             calMoodDraw(); openModalBox("calMoodModal");
         }
         function calMoodDraw() {
-            const c = (db.calDays || {})[calMoodKey] || {};
+            const c = (db.calDays || {})[calMoodKey] || {}; if (c.mood === "😴") c.mood = "😫";
             document.getElementById("calWeatherOpts").innerHTML = CAL_WEATHER.map((e, i) => `<button class="${c.weather === e ? 'on' : ''}" onclick="calMoodPick('weather',${i})">${e}</button>`).join("");
             document.getElementById("calMoodOpts").innerHTML = CAL_MOOD.map((e, i) => `<button class="${c.mood === e ? 'on' : ''}" onclick="calMoodPick('mood',${i})">${e}</button>`).join("");
         }
