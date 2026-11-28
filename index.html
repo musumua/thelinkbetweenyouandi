@@ -923,7 +923,7 @@
         .mb-card .mb-rm:active { background: rgba(224,82,74,.18); color: #d0443c; }
         .mb-card .mb-un { position: absolute; right: 10px; top: 8px; background: #e0403a; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 9px; }
         .mb-real.mb-stack { background: transparent; box-shadow: none; overflow: visible; padding: 0; }
-        .mb-sheet { position: absolute; inset: 0; box-sizing: border-box; padding: 14px 18px 48px; background: #fffdf8; box-shadow: 0 3px 12px rgba(0,0,0,.35); font-size: 14px; line-height: 1.85; color: #3a3a36; white-space: pre-wrap; word-break: break-word; overflow: hidden; will-change: transform; }
+        .mb-sheet { position: absolute; inset: 0; box-sizing: border-box; padding: 14px 18px 26px; background: #fffdf8; box-shadow: 0 3px 12px rgba(0,0,0,.35); font-size: 14px; line-height: 1.85; color: #3a3a36; white-space: pre-wrap; word-break: break-word; overflow: hidden; will-change: transform; }
         .mb-stack.me .mb-sheet { color: #2f3b5c; } .mb-stack.his .mb-sheet { color: #7b3b3b; }
         .mb-sheet .mb-r { text-align: right; }
         .mb-sheet .mb-fn { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-size: 11px; color: #b5afa2; }
@@ -2192,13 +2192,13 @@
         const HS_UP = [
             { id: "living", name: "客厅", x: 0, w: 128, lamps: [{ x: 43, y: 8, w: 12, h: 9 }], door: 3 },
             { id: "study", name: "储物室", x: 128, w: 102, lamps: [{ x: 53, y: 22, w: 9, h: 5 }] },
-            { id: "hbed", name: "他的卧室", x: 230, w: 132, top: true, bed: { x: 41, y: 12, w: 50, h: 36, slots: [[54, 22], [76, 22]] }, lamps: [{ x: 30, y: 11, w: 8, h: 8 }, { x: 94, y: 11, w: 8, h: 8 }] },
+            { id: "hbed", name: "他的卧室", x: 230, w: 132, top: true, bed: { x: 41, y: 12, w: 50, h: 36, quilt: { x: 43, y: 30, w: 46, h: 18 }, slots: [[54, 22], [76, 22]] }, lamps: [{ x: 30, y: 11, w: 8, h: 8 }, { x: 94, y: 11, w: 8, h: 8 }] },
             { id: "terrace", name: "露台", x: 362, w: 102, lamps: [12, 24, 36, 48, 60, 72, 84].map((x, i) => ({ x: x + 1, y: 6 + Math.round(3 * Math.sin((i + 1) * 1.05)), w: 4, h: 4, star: 1 })) }];
         const HS_LO = [
             { id: "home", name: "我家", x: 0, w: 130, lamps: [{ x: 105, y: 8, w: 13, h: 8 }], door: 3 },
             { id: "kitchen", name: "厨房", x: 130, w: 112, lamps: [{ x: 94, y: 7, w: 10, h: 6, cap: 1 }] },
             { id: "gym", name: "健身房", x: 242, w: 112, lamps: [{ x: 91, y: 2, w: 12, h: 5 }] },
-            { id: "mybed", name: "我的卧室", x: 354, w: 138, top: true, bed: { x: 34, y: 11, w: 58, h: 40, slots: [[51, 22], [76, 22]] }, lamps: [{ x: 103, y: 20, w: 8, h: 8, top: 1 }] }];
+            { id: "mybed", name: "我的卧室", x: 354, w: 138, top: true, bed: { x: 34, y: 11, w: 58, h: 40, quilt: { x: 36, y: 29, w: 54, h: 21 }, slots: [[51, 22], [76, 22]] }, lamps: [{ x: 103, y: 20, w: 8, h: 8, top: 1 }] }];
         const HS_FLOORS = { up: { rooms: HS_UP, W: 464 }, lo: { rooms: HS_LO, W: 492 } };
         const HS = { me: null, him: null, hearts: [], fx: [], door: { up: -9999, lo: -9999 }, s: 0, bg: {}, last: 0, aiT: 0, heartT: 0, ready: false, imgs: {}, press: null };
         const hsNight = () => { const h = new Date().getHours(); return h < 6 || h >= 18; };
@@ -2322,7 +2322,7 @@
                     pSucc(-6, 33, "#e8c8d0"); c.restore();
                 } else if (rm.id === "gym") { // 自行设计：窗、镜子、跑步机、椭圆机、瑜伽垫
                     wall(w, ...MYW); c.save(); c.translate(17, 0); pFern(-5, 46, "#d8b890"); win(44, 5, 24, 22, true);
-                    B(72, 6, 14, 28, "#f2f6fc"); R(74, 8, 10, 24, D("#d2e8f8", "#86a0c0")); L(75, 30, 82, 12, "#ffffffa0");
+                    B(72, 11, 14, 25, "#f2f6fc"); R(74, 13, 10, 21, D("#d2e8f8", "#86a0c0")); L(75, 31, 82, 16, "#ffffffa0");
                     // 跑步机（正面朝向我们）：宽履带台面、两根立柱 + 扶手横杆、中间控制台
                     B(5, 40, 30, 6, "#e6e9f0"); R(8, 42, 24, 2, "#4a4e5c"); R(8, 42, 24, 1, "#6c7080"); B(10, 35, 20, 6, "#d4d8e2"); R(12, 37, 16, 1, "#b8bccc");
                     B(9, 16, 3, 24, "#c8ccd8"); B(28, 16, 3, 24, "#c8ccd8"); B(9, 14, 22, 3, "#c8ccd8"); B(5, 22, 5, 3, "#e6e9f0"); B(30, 22, 5, 3, "#e6e9f0");
@@ -2415,6 +2415,7 @@
         function hsDoorOpen(fl) { HS.door[fl] = performance.now(); }
         function hsTap(fl, ev) {
             if (HS.press && HS.press.fired) { HS.press = null; return; }
+            if (fl === "lo") { const cv0 = ev.currentTarget, r0 = cv0.getBoundingClientRect(), s0 = r0.height / HS_H, x0 = (ev.clientX - r0.left) / s0, y0 = (ev.clientY - r0.top) / s0, rm0 = hsRoomAt("lo", x0), lx0 = x0 - rm0.x; for (const l of rm0.lamps) if (lx0 > l.x - 5 && lx0 < l.x + l.w + 5 && y0 > l.y - 5 && y0 < l.y + l.h + 5) { db.house.lights[rm0.id] = !hsLit(rm0.id); saveData(); return; } }
             const me = HS.me; if (me.out) { hsAsk("我在 " + me.out + "，要回家吗？", [{ t: "回家", fn: () => hsComeHome() }, { t: "再逛逛", ghost: true }]); return; } if (me.fl !== fl) return; if (me.sleep) { if (performance.now() - (me.sleepT || 0) < 1200) return; hsWake(me); }
             const cv = ev.currentTarget, r = cv.getBoundingClientRect(), s = r.height / HS_H, x = (ev.clientX - r.left) / s, y = (ev.clientY - r.top) / s, rm = hsRoomAt(fl, x), lx = x - rm.x;
             if (fl === "lo") for (const l of rm.lamps) if (lx > l.x - 5 && lx < l.x + l.w + 5 && y > l.y - 5 && y < l.y + l.h + 5) { db.house.lights[rm.id] = !hsLit(rm.id); saveData(); return; }
@@ -2488,13 +2489,14 @@
         function hsChar(c, e, who) {
             if (e.sleep) { // 睡着：躺在枕头上，正对屏幕，盖着被子
                 const x = Math.round(e.x), y = Math.round(e.y), im = hsSprCv(who + "Sleep");
-                if (im) { const h = 28, w = im.width * h / im.height; c.drawImage(im, e.x - w / 2, y - 6, w, h); return; }
+                const qv = () => { const rb = hsRoomAt(e.fl, e.x), q = rb.bed && rb.bed.quilt; if (q && HS.curBg) c.drawImage(HS.curBg, (rb.x + q.x) * 2, q.y * 2, q.w * 2, q.h * 2, rb.x + q.x, q.y, q.w, q.h); };
+                if (im) { const h = 28, w = im.width * h / im.height; c.drawImage(im, e.x - w / 2, y - 6, w, h); qv(); return; }
                 const K = pxKit(c), rmB = hsRoomAt(e.fl, e.x), duv = rmB.id === "mybed" ? "#b8a8e4" : "#efe2cc", dk = pxMix(duv, "#5a4a60", 0.18), lt = pxMix(duv, "#ffffff", 0.45), hair = who === "me" ? "#7a5646" : "#4a4a5a", skin = "#fbdcc4";
                 // 被子盖到哪是哪：和床上被子同色，从脖子下面自然盖下去（带肩膀的起伏和折边），头露在枕头上
                 const bl = rmB.id === "mybed" ? "#b8a8e4" : "#c5b8b0", bd = pxMix(bl, "#5a4a60", 0.2), bh = pxMix(bl, "#ffffff", 0.4);
                 K.E(x, y, 4, 4, skin); K.R(x - 4, y - 4, 9, 3, hair); K.R(x - 5, y - 2, 2, 3, hair); K.R(x + 4, y - 2, 2, 3, hair);
                 K.R(x - 3, y, 2, 1, "#6a4a46"); K.R(x + 2, y, 2, 1, "#6a4a46"); K.P(x - 3, y + 2, "#f4a8a8"); K.P(x + 3, y + 2, "#f4a8a8");
-                K.R(x - 6, y + 4, 13, 1, bd); K.R(x - 8, y + 5, 17, 12, bd); K.R(x - 7, y + 5, 15, 11, bl); K.R(x - 6, y + 4, 13, 1, bh); K.R(x - 7, y + 6, 15, 1, bh); K.R(x - 4, y + 9, 9, 1, bd); K.R(x - 6, y + 12, 5, 1, bd); K.R(x + 2, y + 13, 5, 1, bd); return;
+                K.R(x - 6, y + 4, 13, 6, who === "me" ? "#d8cff0" : "#e8e0d8"); K.R(x - 6, y + 4, 13, 1, "#fff"); qv(); return;
             }
             const x = Math.round(e.x), y = Math.round(e.y), top = hsRoomAt(e.fl, e.x).top, bob = e.walking && Math.sin(e.ph * 2) > 0 ? -1 : 0;
             const key = top && hsSpr(who + "Top") ? who + "Top" : who, im = hsSprCv(key);
@@ -2518,7 +2520,7 @@
                 const cv = document.getElementById(fl === "up" ? "hsUpCv" : "hsLoCv"), inn = cv.parentNode, F = HS_FLOORS[fl];
                 if (HS.s !== s) { cv.style.width = F.W * s + "px"; cv.style.height = H + "px"; inn.style.width = F.W * s + "px"; inn.querySelectorAll(".hs-lab").forEach(e => { e.style.left = (parseFloat(e.dataset.x) * s + 6) + "px"; }); }
                 if (cv.width !== F.W * 2) { cv.width = F.W * 2; cv.height = HS_H * 2; }
-                const key = fl + nk; if (!HS.bg[key]) HS.bg[key] = hsDraw(fl, night);
+                const key = fl + nk; if (!HS.bg[key]) HS.bg[key] = hsDraw(fl, night); HS.curBg = HS.bg[key];
                 const c = cv.getContext("2d"); c.setTransform(2, 0, 0, 2, 0, 0); c.imageSmoothingEnabled = false; c.clearRect(0, 0, F.W, HS_H); c.drawImage(HS.bg[key], 0, 0, F.W, HS_H);
                 if (fl === "up" && outShown) return;
                 // 门开着的动画
@@ -6166,9 +6168,9 @@ function pickOtherEmoji() { emojiPick("other_emoji_file", "his"); }
                 pages.push(hd + mbBodyHtml(rest.slice(0, cut))); rest = rest.slice(cut).replace(/^\n+/, ""); } });
             meas.remove(); if (!pages.length) pages.push(head);
             const n = pages.length, el = document.createElement("div"); el.className = "mb-real mb-stack " + who;
-            el.innerHTML = pages.map((h, i) => `<div class="mb-sheet" style="overflow-y:auto">${h}<div class="mb-fn">${n > 1 ? `第 ${i + 1} / ${n} 页` : ""}</div></div>`).join("") + (n > 1 ? `<button class="mb-nv" style="position:absolute;left:22px;bottom:-34px;color:#fff;font-size:13px;border:none;background:rgba(255,255,255,.14);border-radius:14px;padding:5px 14px" data-d="-1">‹ 上一页</button><button class="mb-nv" style="position:absolute;right:22px;bottom:-34px;color:#fff;font-size:13px;border:none;background:rgba(255,255,255,.14);border-radius:14px;padding:5px 14px;width:auto;height:auto" data-d="1">下一页 ›</button>` : "");
+            el.innerHTML = pages.map((h, i) => `<div class="mb-sheet" style="overflow-y:auto">${h}</div>`).join("") + (n > 1 ? `<div class="mb-pgn" style="position:absolute;left:0;right:0;bottom:-31px;text-align:center;color:rgba(255,255,255,.85);font-size:12px;pointer-events:none">第 1 / ${n} 页</div>` : "") + (n > 1 ? `<button class="mb-nv" style="position:absolute;left:22px;bottom:-34px;color:#fff;font-size:13px;border:none;background:rgba(255,255,255,.14);border-radius:14px;padding:5px 14px" data-d="-1">‹ 上一页</button><button class="mb-nv" style="position:absolute;right:22px;bottom:-34px;color:#fff;font-size:13px;border:none;background:rgba(255,255,255,.14);border-radius:14px;padding:5px 14px;width:auto;height:auto" data-d="1">下一页 ›</button>` : "");
             const sheets = Array.from(el.querySelectorAll(".mb-sheet")); let cur = 0, busy = false;
-            const lay = () => sheets.forEach((sh, i) => { const d = i - cur; sh.style.transition = "transform .4s ease"; if (d === 0) { sh.style.zIndex = 20; sh.style.transform = "none"; } else if (d > 0) { sh.style.zIndex = 20 - d; sh.style.transform = `translate(${Math.min(d, 3) * 4}px,${Math.min(d, 3) * 4}px)`; } else { sh.style.zIndex = 1 + i; sh.style.transform = "translate(-5px,-4px)"; } });
+            const lay = () => { const pg = el.querySelector(".mb-pgn"); if (pg) pg.textContent = `第 ${cur + 1} / ${n} 页`; sheets.forEach((sh, i) => { const d = i - cur; sh.style.transition = "transform .4s ease"; if (d === 0) { sh.style.zIndex = 20; sh.style.transform = "none"; } else if (d > 0) { sh.style.zIndex = 20 - d; sh.style.transform = `translate(${Math.min(d, 3) * 4}px,${Math.min(d, 3) * 4}px)`; } else { sh.style.zIndex = 1 + i; sh.style.transform = "translate(-5px,-4px)"; } }); };
             const go = async dir => { const ni = cur + dir; if (busy || ni < 0 || ni >= n) return; busy = true;
                 if (dir > 0) { const t = sheets[cur]; t.style.transition = "transform .32s ease"; t.style.transform = "translateX(-118%) rotate(-6deg)"; await mbSleep(320); cur = ni; lay(); await mbSleep(420); }
                 else { const t = sheets[ni]; t.style.transition = "none"; t.style.zIndex = 30; t.style.transform = "translateX(-118%) rotate(-6deg)"; void t.offsetWidth; t.style.transition = "transform .36s ease"; t.style.transform = "none"; await mbSleep(370); cur = ni; lay(); await mbSleep(60); }
